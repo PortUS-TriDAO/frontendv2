@@ -3,79 +3,56 @@ import ERC20_ABI from '@/abi/erc20.abi.json'
 import PROJECT_ABI from '@/abi/project.abi.json'
 import ROUTER_ABI from '@/abi/router.abi.json'
 import { type addressType } from '@/types'
+import { getNetwork, writeContract, WriteContractResult } from '@wagmi/core'
+import { ContractAddress } from '@/constant/contracts'
 
-interface IFunction {
-  [functionName: string]: (...args: any[]) => {
-    functionName: string
-    args: any[]
+export function getContracts() {
+  const network = getNetwork()
+  const chainId = network.chain.id
+  const routerContract = {
+    address: ContractAddress[chainId].router,
+    abi: ROUTER_ABI
   }
-}
 
-// ERC20 Contract
-export const ERC20Functions: IFunction = {
-  balanceOf: (address: string) => {
-    return {
-      functionName: 'balance',
-      args: [address]
-    }
+  const projectContract = {
+    address: ContractAddress[chainId].project,
+    abi: PROJECT_ABI
   }
-}
-export function makeERC20Contract(contractAddress: addressType) {
-  return getContract({
-    address: contractAddress,
-    abi: ERC20_ABI
-  })
+
+  return { routerContract, projectContract }
 }
 
-// PortusRouter Contract
-export const RouterFunctions: IFunction = {
-  createProject: (
+export function getRouterContractFunctions() {
+  function createProject(
     name: string,
     symbol: string,
     rightsT: addressType,
     fundsT: addressType,
     chargeERC20: addressType,
     sharePercentage: string
-  ) => {
-    return {
-      functionName: 'createProject',
-      args: [name, symbol, rightsT, fundsT, chargeERC20, sharePercentage]
-    }
+  ): Promise<WriteContractResult> {
+    const { routerContract } = getContracts()
+    return writeContract(
+      Object.assign({}, routerContract, {
+        functionName: 'createProject',
+        args: [name, symbol, rightsT, fundsT, chargeERC20, sharePercentage]
+      })
+    )
   }
+
+  return { createProject }
 }
 
-export function makeRouterContract(contractAddress: addressType) {
-  return getContract({
-    address: contractAddress,
-    abi: ROUTER_ABI
-  })
-}
-
-export const ProjectFunctions: IFunction = {
-  charge: (erc20: addressType, amount: string, referralToken: number | string) => {
-    return {
-      functionName: 'charge',
-      args: [erc20, amount, referralToken]
-    }
-  },
-  // KOL mint 权益NFT
-  referrerSign: () => {
-    return {
-      functionName: 'referrerSign',
-      args: []
-    }
-  },
-  // KOL Withdraw
-  referrerWithdraw: (referralToken: string | number) => {
-    return {
-      functionName: 'referrerWithdraw',
-      args: [referralToken]
-    }
+export function getProjectContractFunctions() {
+  function referrerSign(): Promise<WriteContractResult> {
+    const { projectContract } = getContracts()
+    return writeContract(
+      Object.assign({}, projectContract, {
+        functionName: 'referrerSign',
+        args: []
+      })
+    )
   }
-}
-export function makeProjectContract(contractAddress: addressType) {
-  return getContract({
-    address: contractAddress,
-    abi: PROJECT_ABI
-  })
+
+  return { referrerSign }
 }
