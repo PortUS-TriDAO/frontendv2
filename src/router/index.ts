@@ -11,9 +11,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/game-create',
-      name: 'GameCreate',
-      component: () => import('../views/games/GameCreate.vue')
+      path: '/project/create',
+      name: 'ProjectCreate',
+      component: () => import('../views/projects/ProjectCreate.vue')
     }
   ]
 })

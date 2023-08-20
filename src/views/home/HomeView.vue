@@ -9,16 +9,12 @@ import { useWalletStore } from '@/stores/useWallet'
 import { watchNetwork } from '@wagmi/core'
 
 const walletStore = useWalletStore()
-const contractStore = useContractStore()
 
 function connect() {
   walletStore.connect()
 }
 
-function getContract() {
-  const address = contractStore.getContractAddress()
-  console.log('address===', address)
-}
+function getContract() {}
 
 watchNetwork((network) => {
   console.log('newnetwork', network)

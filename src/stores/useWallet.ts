@@ -5,7 +5,7 @@ import { ethereumClient, web3modal } from '@/utils/wallet'
 
 export const useWalletStore = defineStore('wallet', () => {
   const state = reactive({
-    address: ''
+    account: ''
   })
 
   function connect() {
@@ -18,7 +18,7 @@ export const useWalletStore = defineStore('wallet', () => {
 
   ethereumClient.watchAccount((newAccount) => {
     console.log({ newAccount })
-    state.address = newAccount.address
+    state.account = newAccount.address
   })
 
   return { state, connect }
