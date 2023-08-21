@@ -16,9 +16,9 @@
   width: 100vw;
   height: 160px;
   color: #fff;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  // position: fixed;
+  // bottom: 0;
+  // left: 0;
   .footer-container {
     width: 1400px;
     line-height: 160px;

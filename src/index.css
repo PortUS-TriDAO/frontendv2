@@ -5,9 +5,13 @@
 body {
   background-color: #f7f7f7;
 }
+a {
+  text-decoration: none;
+}
 
 .main-width {
   width: 1400px;
+  margin: 0 auto;
 }
 .flex-row {
   display: flex;
@@ -23,4 +27,14 @@ body {
   border-radius: 10px;
   background: #ffffff;
   box-sizing: border-box;
+}
+.page-title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* element ui */
+.el-input__wrapper,
+.el-textarea__inner {
+  background: #ededed;
 }

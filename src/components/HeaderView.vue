@@ -1,13 +1,11 @@
 <template>
   <div class="page-header">
     <div class="header-container">
-      <div class="logo"></div>
+      <router-link class="logo" to="/"></router-link>
       <div class="menus">
-        <ul>
-          <li>Home</li>
-          <li>Project</li>
-          <li>Mine</li>
-        </ul>
+        <router-link to="/">Home</router-link>
+        <router-link to="/project/list">Project</router-link>
+        <router-link to="/mine/tasks">Mine</router-link>
         <button v-if="!account" @click="connect">connect</button>
         <button v-else>{{ shortAddress }}</button>
       </div>
@@ -52,20 +50,6 @@ function connect() {
       flex-direction: row;
       align-items: center;
       color: #fff;
-      > ul {
-        display: flex;
-        flex-direction: row;
-        list-style-type: none;
-        > li {
-          margin-right: 80px;
-          font-size: 16px;
-          cursor: pointer;
-          opacity: 0.5;
-        }
-        .hight-light {
-          opacity: 1;
-        }
-      }
       > button {
         width: 185px;
         height: 40px;
@@ -74,6 +58,12 @@ function connect() {
         color: #fff;
         cursor: pointer;
         background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
+      }
+      > a {
+        color: #fff;
+        opacity: 0.5;
+        display: inline-block;
+        margin-right: 80px;
       }
     }
   }

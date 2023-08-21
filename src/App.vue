@@ -5,9 +5,9 @@ import FooterView from './components/FooterView.vue'
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <HeaderView />
-    <div class="container">
+    <div class="main">
       <router-view></router-view>
     </div>
     <FooterView />
@@ -16,6 +16,13 @@ import FooterView from './components/FooterView.vue'
 
 <style scoped>
 .container {
-  margin-bottom: 160px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .main {
+    display: flex;
+    flex: 1;
+  }
 }
 </style>

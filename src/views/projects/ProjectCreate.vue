@@ -17,10 +17,20 @@
           <el-input placeholder="My Game/ NFT homePage"></el-input>
         </el-form-item>
         <el-form-item label="Detailed introduction">
-          <el-input rows="5" type="textarea" placeholder="MAX 1000 character"></el-input>
+          <el-input
+            rows="5"
+            resize="none"
+            type="textarea"
+            placeholder="MAX 1000 character"
+          ></el-input>
         </el-form-item>
         <el-form-item label="Notice">
-          <el-input rows="5" type="textarea" placeholder="MAX 500 character"></el-input>
+          <el-input
+            rows="5"
+            resize="none"
+            type="textarea"
+            placeholder="MAX 500 character"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <div class="uploads">
