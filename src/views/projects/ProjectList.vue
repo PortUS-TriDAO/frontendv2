@@ -1,5 +1,5 @@
 <template>
-  <div class="page-project-list">
+  <div class="main-width page-project-list">
     <div class="project-header">
       <span class="page-title">My Projects</span>
       <div>
@@ -9,7 +9,11 @@
     </div>
     <div class="main-container">
       <el-table row-class-name="row-style" :data="tableData">
-        <el-table-column prop="pic" label="Pic"></el-table-column>
+        <el-table-column prop="pic" label="Pic">
+          <template #default="scope">
+            <img class="project-icon" :src="scope.row.pic" alt="" srcset="" />
+          </template>
+        </el-table-column>
         <el-table-column prop="name" label="Name"></el-table-column>
         <el-table-column prop="amount" label="Amount"></el-table-column>
         <el-table-column prop="operator" label="Operator"></el-table-column>
@@ -17,8 +21,8 @@
           <template #default>
             <div class="operates">
               <el-button link type="primary" size="small">Withdraw</el-button>
-              <el-button link type="primary" size="small">Detail</el-button>
-              <el-button link type="primary" size="small">Edit</el-button>
+              <el-button link type="primary" size="small" @click="toDetail">Detail</el-button>
+              <el-button link type="primary" size="small" @click="toEdit">Edit</el-button>
             </div>
           </template>
         </el-table-column>
@@ -66,61 +70,19 @@ const handleCurrentChange = (val: number) => {
 
 const tableData = [
   {
-    pic: '',
+    pic: 'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-logo-166x166_a8c719dcf7a8e5c2de3fe764a465f9fd.png',
     name: 'Axie',
     amount: 10000,
     operator: 'John'
   },
   {
-    pic: '',
+    pic: 'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-logo-166x166_a8c719dcf7a8e5c2de3fe764a465f9fd.png',
     name: 'Axie',
     amount: 10000,
     operator: 'John'
   },
   {
-    pic: '',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: '',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: '',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: '',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: '',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: '',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: '',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: '',
+    pic: 'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-logo-166x166_a8c719dcf7a8e5c2de3fe764a465f9fd.png',
     name: 'Axie',
     amount: 10000,
     operator: 'John'
@@ -130,6 +92,12 @@ const tableData = [
 function createProject() {
   router.push('/project/create')
 }
+function toDetail() {
+  router.push('/project/detail')
+}
+function toEdit() {
+  router.push('/project/create')
+}
 </script>
 <style lang="less">
 .project-header {
@@ -137,7 +105,6 @@ function createProject() {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 1400px;
   height: 36px;
   margin: 0 auto;
   margin-top: 35px;
@@ -159,6 +126,11 @@ function createProject() {
 .row-style {
   height: 59px;
   font-size: 16px;
+  .project-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+  }
 }
 .operates {
   .el-button {
