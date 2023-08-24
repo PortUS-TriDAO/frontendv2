@@ -1,5 +1,5 @@
 <template>
-  <div class="page-project-detail">
+  <div class="main-width page-project-detail">
     <img
       src="https://dynamic-kvl-assets.dappradar.com/b99dd80ca18445f9bf2bb121dc9fb968.jpg"
       alt=""

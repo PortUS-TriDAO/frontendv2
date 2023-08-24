@@ -1,5 +1,5 @@
 <template>
-  <div class="page-project-create">
+  <div class="main-width page-project-create">
     <div class="banner"></div>
     <span>Project Create</span>
     <div class="main-container create-container">
@@ -79,6 +79,7 @@
     background: url('@/assets/images/banner.png') center center no-repeat;
     background-size: cover;
     height: 257px;
+    width: 100vw;
   }
   > span {
     font-size: 28px;
@@ -91,7 +92,9 @@
     margin-bottom: 16px;
   }
   .create-container {
+    margin: 0 auto;
     padding: 30px;
+    width: 1400px;
   }
   .demo-form-inline .el-input {
     --el-input-width: 638px;
@@ -124,6 +127,10 @@
       font-size: 16px;
       font-weight: 500;
     }
+  }
+  .el-form {
+    // flex-direction: row;
+    justify-content: center;
   }
 }
 </style>

@@ -26,9 +26,9 @@ const router = createRouter({
       component: () => import('../views/projects/ProjectDetail.vue')
     },
     {
-      path: '/mine/tasks',
-      name: 'MyTask',
-      component: () => import('../views/mine/MyTask.vue')
+      path: '/mine/projects',
+      name: 'MyProjects',
+      component: () => import('../views/mine/MyProjects.vue')
     }
   ]
 })
