@@ -96,31 +96,6 @@ function toEdit() {
 </script>
 <style lang="less">
 .page-project-list {
-  width: 1400px;
-  .project-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 36px;
-    margin: 0 auto;
-    margin-top: 35px;
-    margin-bottom: 16px;
-    width: 100%;
-    > div {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      .el-input {
-        margin-right: 14px;
-        width: 200px;
-      }
-      .el-button {
-        width: 150px;
-        height: 36px;
-      }
-    }
-  }
   .project-list-container {
     width: 1400px;
   }

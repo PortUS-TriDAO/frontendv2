@@ -4,55 +4,47 @@
 
     <div class="item-list-box">
       <ul>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
-        </li>
-        <li>
-          <project-item></project-item>
+        <li v-for="project in status.projectList" :key="project.name">
+          <project-item :data="project"></project-item>
         </li>
       </ul>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import ProjectItem from '@/components/ProjectItem.vue'
+import { onMounted, reactive } from 'vue'
+import ProjectItem, { type IProps as IProjectItemProps } from '@/components/ProjectItem.vue'
 import ContentHeader from '@/components/ContentHeader.vue'
+import { queryAllProjects } from '@/api'
+
+const status = reactive({
+  projectList: [],
+  currentPage: 1,
+  totalPage: 20
+})
+
+interface IResponse {
+  success: boolean
+  currentPage: number
+  totalPage: number
+  data: IProjectItemProps[]
+}
+
+onMounted(async () => {
+  const res = (await queryAllProjects({})) as IResponse
+  if (res.success) {
+    status.currentPage = res.currentPage
+    status.totalPage = res.totalPage
+    status.projectList = res.data
+  }
+})
 </script>
 <style lang="less">
 .page-project-list {
   display: flex;
   flex-direction: column;
   background: #f7f7f7;
+  width: 1400px;
   .project-list-header {
     display: flex;
     flex-direction: row;
@@ -69,10 +61,6 @@ import ContentHeader from '@/components/ContentHeader.vue'
   }
   .item-list-box {
     width: 1400px;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
     ul {
       display: flex;
       flex-direction: row;

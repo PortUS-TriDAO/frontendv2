@@ -2,8 +2,8 @@ import { getContract } from '@wagmi/core'
 import ERC20_ABI from '@/abi/erc20.abi.json'
 import PROJECT_ABI from '@/abi/project.abi.json'
 import ROUTER_ABI from '@/abi/router.abi.json'
-import { type addressType } from '@/types'
-import { getNetwork, writeContract, WriteContractResult } from '@wagmi/core'
+import type { Address } from '@/types'
+import { getNetwork, writeContract, type WriteContractResult } from '@wagmi/core'
 import { ContractAddress } from '@/constant/contracts'
 
 export function getContracts() {
@@ -26,16 +26,16 @@ export function getRouterContractFunctions() {
   function createProject(
     name: string,
     symbol: string,
-    rightsT: addressType,
-    fundsT: addressType,
-    chargeERC20: addressType,
+    chargeERC20: Address,
     sharePercentage: string
   ): Promise<WriteContractResult> {
+    const network = getNetwork()
+    const { rights, funds } = ContractAddress[network.chain.id]
     const { routerContract } = getContracts()
     return writeContract(
       Object.assign({}, routerContract, {
         functionName: 'createProject',
-        args: [name, symbol, rightsT, fundsT, chargeERC20, sharePercentage]
+        args: [name, symbol, rights, funds, chargeERC20, sharePercentage]
       })
     )
   }

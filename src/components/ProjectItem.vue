@@ -1,29 +1,40 @@
 <template>
   <div class="project-item" @click="onClick">
-    <img
-      src="https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png"
-      alt=""
-    />
-    <h3>Farmers World</h3>
-    <span>About Farmers</span>
+    <img :src="props.data.icon" alt="" />
+    <h3>{{ props.data.name }}</h3>
+    <!-- <span>About Farmers</span> -->
     <el-divider />
     <p>
-      Farmers World is the first farming game to function on the NFTs platform. Pick for yourself
-      suitable tools, exploit various resources, buy land to build enormous farms, and enjoy the
-      fascinating experiences of a farmer working in Farmers World’s Ecosystem.
+      {{ $props.data.briefIntro }}
     </p>
     <div>
-      <el-button>Mint</el-button>
+      <el-button @click="mint">Mint</el-button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
+export interface IProps {
+  data: {
+    id: number
+    icon: string
+    name: string
+    briefIntro: string
+    minted: boolean
+  }
+}
+const props = defineProps<IProps>()
+
 const router = useRouter()
 
 function onClick() {
-  router.push('/project/detail')
+  router.push({ name: 'ProjectDetail', params: { id: props.data.id } })
+}
+
+function mint(event) {
+  console.log('mint', event)
+  event.stopPropagation()
 }
 </script>
 <style lang="less" scoped>

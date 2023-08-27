@@ -1,46 +1,29 @@
 <template>
   <div class="main-width page-project-detail">
-    <img
-      src="https://dynamic-kvl-assets.dappradar.com/b99dd80ca18445f9bf2bb121dc9fb968.jpg"
-      alt=""
-    />
+    <img :src="state.banner" alt="" />
     <div class="project-info">
-      <img
-        src="https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png"
-        alt=""
-      />
+      <img :src="state.icon" alt="" />
       <div class="project-info-detail">
-        <h3>Farmers World</h3>
+        <h3>{{ state.name }}</h3>
         <span>Stephen Enzo</span>
-        <p>Farmers World is the first farming game to function on the NFTs platformRead more.</p>
+        <p>{{ state.briefIntro }}</p>
       </div>
     </div>
     <el-divider />
     <p class="project-desc">
-      Farmers World is the first farming game to function on the NFTs platform. Pick for yourself
-      suitable tools, exploit various resourcesbuy land to build enormous farms, and enjoy the
-      fascinating experiences of a farmer working in Farmers World’s Ecosystem.
+      {{ state.description }}
     </p>
+
     <div class="swiper">
       <el-carousel trigger="click" height="219px">
         <el-carousel-item v-for="item in 4" :key="item">
-          <!-- <h3 class="small justify-center" text="2xl">{{ item }}</h3> -->
           <div class="swiper-item-box">
             <img
-              src="https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png"
-              alt=""
-            />
-            <img
-              src="https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image2-500x315_ae97fa670d1af1c025ce23ad1fc12856.png"
-              alt=""
-            />
-            <img
-              src="https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image3-500x315_e5b4ceeb96c05e25adfb058c9fe3cb23.png"
-              alt=""
-            />
-            <img
-              src="https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-image2-500x315_dd3a0ade17b2cc54e0a783b6ee7fa2b4.png"
-              alt=""
+              width="329"
+              height="219"
+              v-for="item in state.screenShots"
+              :key="item"
+              :src="item"
             />
           </div>
         </el-carousel-item>
@@ -48,8 +31,43 @@
     </div>
   </div>
 </template>
-<script>
-export default {}
+<script setup lang="ts">
+import { onMounted, reactive } from 'vue'
+import { useRoute } from 'vue-router'
+import { getProjectDetail } from '@/api'
+const route = useRoute()
+
+interface IState {
+  banner: string
+  icon: string
+  name: string
+  briefIntro: string
+  description: string
+  screenShots: string[]
+}
+
+let state: IState = reactive({
+  banner: '',
+  icon: '',
+  name: '',
+  briefIntro: '',
+  description: '',
+  screenShots: []
+})
+
+onMounted(async () => {
+  const id = route.params.id
+  const result = await getProjectDetail({})
+  console.log({ result })
+  if (result.success) {
+    const { data } = result
+    state.banner = data.banner
+    state.icon = data.icon
+    state.name = data.name
+    state.description = data.description
+    state.screenShots = data.screenShots
+  }
+})
 </script>
 <style lang="less">
 .page-project-detail {
@@ -120,6 +138,7 @@ export default {}
         width: 329px;
         height: 219px;
         border-radius: 10px;
+        margin: 0 10px;
       }
     }
   }
