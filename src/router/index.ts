@@ -26,9 +26,21 @@ const router = createRouter({
       component: () => import('../views/projects/ProjectDetail.vue')
     },
     {
-      path: '/mine/projects',
-      name: 'MyProjects',
-      component: () => import('../views/mine/MyProjects.vue')
+      path: '/mine/container',
+      name: 'MineContainer',
+      component: () => import('../views/mine/MineContainer.vue'),
+      children: [
+        {
+          path: '/mine/games',
+          name: 'MyGames',
+          component: () => import('../views/mine/MyGames.vue')
+        },
+        {
+          path: '/mine/distribution',
+          name: 'MyDistribution',
+          component: () => import('../views/mine/MyDistribution.vue')
+        }
+      ]
     }
   ]
 })

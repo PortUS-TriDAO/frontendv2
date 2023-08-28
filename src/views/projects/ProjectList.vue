@@ -32,6 +32,7 @@ interface IResponse {
 
 onMounted(async () => {
   const res = (await queryAllProjects({})) as IResponse
+  console.log({ res })
   if (res.success) {
     status.currentPage = res.currentPage
     status.totalPage = res.totalPage

@@ -11,5 +11,7 @@ export const getProjectDetail = (params: any): Promise<IResponse> =>
   axios.get('/project/detail', { params })
 
 // 获取我的推广列表
-export const getMyDistributionProjects = (params: any) =>
-  axios.get('/mine/distributions', { params })
+export const getMyDistributions = (params: any) => axios.get('/mine/distributions', { params })
+
+// 获取我的games列表
+export const getMyGames = (params: any) => axios.get('/mine/games', { params })

@@ -5,7 +5,7 @@
       <div class="menus">
         <router-link to="/">Home</router-link>
         <router-link to="/project/list">Project</router-link>
-        <router-link to="/mine/projects">Mine</router-link>
+        <router-link to="/mine/games">Mine</router-link>
         <button v-if="!account" @click="connect">connect</button>
         <button v-else>{{ shortAddress }}</button>
       </div>

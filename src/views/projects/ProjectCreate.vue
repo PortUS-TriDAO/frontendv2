@@ -23,11 +23,16 @@
         <el-form-item label="Charge Token">
           <el-input
             placeholder="Charge Token e.g. USDT contract address"
-            v-model="state.symbol"
+            v-model="state.token"
           ></el-input>
         </el-form-item>
         <el-form-item label="Share Percentage">
-          <el-input placeholder="Share Percentage max 100" v-model="state.symbol"></el-input>
+          <el-input
+            placeholder="Share Percentage max 1"
+            type="number"
+            max="1"
+            v-model="state.sharePercentage"
+          ></el-input>
         </el-form-item>
         <el-form-item label="HomePage">
           <el-input placeholder="Home Page" v-model="state.website"></el-input>
@@ -63,31 +68,48 @@
         <el-form-item> </el-form-item>
       </el-form>
       <div class="buttons">
-        <button class="submit-btn" @click="handleCreateProject">submit</button>
+        <button v-if="!account" class="submit-btn" @click="connectWallet">connect</button>
+        <el-button :loading="loading" v-else class="submit-btn" @click="handleCreateProject">
+          Create Project
+        </el-button>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue'
-import type { UploadProps } from 'element-plus'
+import { reactive, computed, ref } from 'vue'
+import { type UploadProps, ElMessage } from 'element-plus'
 import ossClient from '@/utils/ossClient'
 import { utils } from 'ethers'
 import { getRouterContractFunctions } from '@/stores/useContract'
+import * as api from '@/api'
+import { useWalletStore } from '@/stores/useWallet'
+import type { Address } from '@/types'
+import { waitForTransaction } from '@wagmi/core'
 
-const { createProject } = getRouterContractFunctions()
+const walletStore = useWalletStore()
+const account = computed(() => walletStore.state.account)
+
+const { createProject, getProjectAddress } = getRouterContractFunctions()
 
 const state = reactive({
   banner: '',
   name: '',
   symbol: '',
+  token: '',
   website: '',
   briefIntro: '',
-  description: ''
+  description: '',
+  sharePercentage: '',
+  screenShots: []
 })
+const loading = ref(false)
+
+const connectWallet = () => {
+  walletStore.connect()
+}
 
 const handleBannerUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
-  console.log({ response, uploadFile })
   const filename = response.file.name
   const result = await ossClient.put('/filename/' + filename, response.file, {
     headers: {
@@ -101,15 +123,37 @@ const uploadBannerSuccess = () => {}
 
 const handleCreateProject = async () => {
   try {
+    loading.value = true
+    const sharePercentage = utils.parseEther(state.sharePercentage).toString()
     const tx = await createProject(
       state.name,
       state.symbol,
-      '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964',
-      utils.parseEther('0.3').toString()
+      state.token as Address,
+      sharePercentage
     )
-    console.log({ tx })
+    await waitForTransaction({ hash: tx.hash })
+
+    // 获取本次创建项目的地址
+    const projectAddress = await getProjectAddress()
+    // 保存数据到服务端
+    await api.createProject({
+      banner: state.banner,
+      name: state.name,
+      symbol: state.symbol,
+      token: state.token,
+      website: state.website,
+      briefIntro: state.briefIntro,
+      description: state.description,
+      sharePercentage: sharePercentage,
+      screenShots: state.screenShots,
+      projectAddress
+    })
+    ElMessage.success('Project create success')
   } catch (error) {
-    console.log({ error })
+    console.log({ createProjectError: error })
+    ElMessage.error('Project create failed')
+  } finally {
+    loading.value = false
   }
 }
 </script>

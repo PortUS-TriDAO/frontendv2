@@ -8,12 +8,20 @@
       {{ $props.data.briefIntro }}
     </p>
     <div>
-      <el-button @click="mint">Mint</el-button>
+      <el-button :loading="loading" @click="mint">Mint</el-button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { getProjectContractFunctions } from '@/stores/useContract'
+import type { Address } from '@/types'
+import { ElMessage } from 'element-plus'
+import { waitForTransaction } from '@wagmi/core'
+
+const { referrerSign } = getProjectContractFunctions()
+const loading = ref(false)
 
 export interface IProps {
   data: {
@@ -22,6 +30,7 @@ export interface IProps {
     name: string
     briefIntro: string
     minted: boolean
+    projectAddress: Address
   }
 }
 const props = defineProps<IProps>()
@@ -32,9 +41,19 @@ function onClick() {
   router.push({ name: 'ProjectDetail', params: { id: props.data.id } })
 }
 
-function mint(event) {
-  console.log('mint', event)
+async function mint(event) {
   event.stopPropagation()
+  try {
+    console.log('mint', event)
+    loading.value = true
+    const { hash } = await referrerSign(props.data.projectAddress!)
+    await waitForTransaction({ hash })
+    ElMessage.success('Mint Success')
+  } catch (error) {
+    ElMessage.error('Mint failed')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 <style lang="less" scoped>
