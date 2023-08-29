@@ -1,8 +1,8 @@
 <template>
-  <div class="main-width page-project-create">
-    <div class="banner"></div>
+  <div class="page-project-create">
+    <!-- <div class="banner"></div> -->
     <span>Project Create</span>
-    <div class="main-container create-container">
+    <div class="create-container">
       <el-upload
         class="avatar-uploader"
         action=""
@@ -85,7 +85,7 @@ import { getRouterContractFunctions } from '@/stores/useContract'
 import * as api from '@/api'
 import { useWalletStore } from '@/stores/useWallet'
 import type { Address } from '@/types'
-import { waitForTransaction } from '@wagmi/core'
+import { waitForTransaction, getAccount } from '@wagmi/core'
 
 const walletStore = useWalletStore()
 const account = computed(() => walletStore.state.account)
@@ -135,6 +135,7 @@ const handleCreateProject = async () => {
 
     // 获取本次创建项目的地址
     const projectAddress = await getProjectAddress()
+    const { address } = getAccount()
     // 保存数据到服务端
     await api.createProject({
       banner: state.banner,
@@ -146,7 +147,8 @@ const handleCreateProject = async () => {
       description: state.description,
       sharePercentage: sharePercentage,
       screenShots: state.screenShots,
-      projectAddress
+      projectAddress,
+      creatorAddress: address
     })
     ElMessage.success('Project create success')
   } catch (error) {
@@ -160,18 +162,18 @@ const handleCreateProject = async () => {
 
 <style lang="less">
 .page-project-create {
-  .banner {
-    background: url('@/assets/images/banner.png') center center no-repeat;
-    background-size: cover;
-    height: 257px;
-    width: 100vw;
-  }
+  // .banner {
+  //   background: url('@/assets/images/banner.png') center center no-repeat;
+  //   background-size: cover;
+  //   height: 257px;
+  //   width: 100vw;
+  // }
   > span {
     font-size: 28px;
     font-weight: bold;
     line-height: 150%;
     display: block;
-    width: 1400px;
+    width: 1135px;
     margin: 0 auto;
     margin-top: 30px;
     margin-bottom: 16px;
@@ -179,9 +181,9 @@ const handleCreateProject = async () => {
   .create-container {
     margin: 0 auto;
     padding: 30px;
-    width: 1400px;
+    width: 1135px;
     .avatar-uploader {
-      width: 1300px;
+      width: 1135px;
       height: 300px;
       display: flex;
       align-items: center;

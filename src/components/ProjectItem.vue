@@ -19,6 +19,8 @@ import { getProjectContractFunctions } from '@/stores/useContract'
 import type { Address } from '@/types'
 import { ElMessage } from 'element-plus'
 import { waitForTransaction } from '@wagmi/core'
+import { postProjectMint } from '@/api'
+import { getAccount } from '@wagmi/core'
 
 const { referrerSign } = getProjectContractFunctions()
 const loading = ref(false)
@@ -44,10 +46,14 @@ function onClick() {
 async function mint(event) {
   event.stopPropagation()
   try {
-    console.log('mint', event)
     loading.value = true
+    const { address } = getAccount()
     const { hash } = await referrerSign(props.data.projectAddress!)
     await waitForTransaction({ hash })
+    await postProjectMint({
+      projectId: props.data.id,
+      account: address
+    })
     ElMessage.success('Mint Success')
   } catch (error) {
     ElMessage.error('Mint failed')

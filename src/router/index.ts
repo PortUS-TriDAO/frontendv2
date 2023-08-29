@@ -11,11 +11,6 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/project/create',
-      name: 'ProjectCreate',
-      component: () => import('../views/projects/ProjectCreate.vue')
-    },
-    {
       path: '/project/list',
       name: 'ProjectList',
       component: () => import('../views/projects/ProjectList.vue')
@@ -30,6 +25,11 @@ const router = createRouter({
       name: 'MineContainer',
       component: () => import('../views/mine/MineContainer.vue'),
       children: [
+        {
+          path: '/project/create',
+          name: 'ProjectCreate',
+          component: () => import('../views/projects/ProjectCreate.vue')
+        },
         {
           path: '/mine/games',
           name: 'MyGames',

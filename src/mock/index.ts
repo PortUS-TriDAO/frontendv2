@@ -15,6 +15,7 @@ Mock.mock(
     symbol: string
     sharePercentage: number
     projectAddress: string // 新创建项目的合约地址
+    creatorAddress: string
     screenShorts: [string]
   }) => {
     return {
@@ -154,5 +155,19 @@ Mock.mock('/project/mint', 'post', (params: { projectId: string; account: string
   return {
     success: true,
     data: 'mint success'
+  }
+})
+
+Mock.mock('/user/generateReferCode', 'post', {
+  success: true,
+  data: {
+    referCode: 'XqxuO9rMnj885x8RAJ4bQpV4'
+  }
+})
+
+Mock.mock('/user/share/statistic', 'post', {
+  success: true,
+  data: {
+    redirectUrl: 'http://www.baidu.com'
   }
 })

@@ -11,7 +11,12 @@ export const getProjectDetail = (params: any): Promise<IResponse> =>
   axios.get('/project/detail', { params })
 
 // 获取我的推广列表
-export const getMyDistributions = (params: any) => axios.get('/mine/distributions', { params })
+export const getMyDistributions = (params: any): Promise<IResponse> =>
+  axios.get('/mine/distributions', { params })
 
 // 获取我的games列表
-export const getMyGames = (params: any) => axios.get('/mine/games', { params })
+export const getMyGames = (params: any): Promise<IResponse> => axios.get('/mine/games', { params })
+
+// 提交项目已经mint过
+export const postProjectMint = (params: any): Promise<IResponse> =>
+  axios.post('/project/mint', { data: params })

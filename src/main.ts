@@ -7,7 +7,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import 'normalize.css'
 import './index.css'
-import './mock'
+// import './mock'
 
 import App from './App.vue'
 import router from './router'

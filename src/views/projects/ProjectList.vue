@@ -31,12 +31,12 @@ interface IResponse {
 }
 
 onMounted(async () => {
-  const res = (await queryAllProjects({})) as IResponse
+  const { success, data } = (await queryAllProjects({})) as IResponse
   console.log({ res })
-  if (res.success) {
-    status.currentPage = res.currentPage
-    status.totalPage = res.totalPage
-    status.projectList = res.data
+  if (success) {
+    status.currentPage = data.currentPage
+    status.totalPage = data.totalPage
+    status.projectList = data.rows
   }
 })
 </script>

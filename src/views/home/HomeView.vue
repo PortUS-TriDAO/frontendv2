@@ -1,23 +1,30 @@
 <template lang="">
   <div>
-    <el-button @click="connect">connect</el-button>
-    <el-button @click="getContract">getContract</el-button>
+    <H1>Home Page</H1>
   </div>
 </template>
 <script setup lang="ts">
-import { useWalletStore } from '@/stores/useWallet'
-import { watchNetwork } from '@wagmi/core'
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { statistic } from '@/api'
 
-const walletStore = useWalletStore()
+const route = useRoute()
 
-function connect() {
-  walletStore.connect()
-}
+onMounted(async () => {
+  const refer = route.query.refer
+  if (!refer) return
+  const { success, data } = await statistic({
+    referCode: refer
+  })
 
-function getContract() {}
-
-watchNetwork((network) => {
-  console.log('newnetwork', network)
+  if (success) {
+    const redirectURL =
+      data.redirectUrl.slice(0, 4) === 'http'
+        ? `${data.redirectUrl}?refer=${refer}`
+        : `http://${data.redirectUrl}?refer=${refer}`
+    console.log('redirectURL', redirectURL)
+    window.location.href = redirectURL
+  }
 })
 </script>
 <style lang="less"></style>

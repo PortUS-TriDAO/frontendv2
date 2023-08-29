@@ -2,6 +2,7 @@ import { getContract } from '@wagmi/core'
 import ERC20_ABI from '@/abi/erc20.abi.json'
 import PROJECT_ABI from '@/abi/project.abi.json'
 import ROUTER_ABI from '@/abi/router.abi.json'
+import RIGHTS_ABI from '@/abi/rights.abi.json'
 import type { Address } from '@/types'
 import {
   getNetwork,
@@ -70,6 +71,7 @@ export function getRouterContractFunctions() {
   return { createProject, getProjectAddress }
 }
 
+// Project Contract Functions
 export function getProjectContractFunctions() {
   async function referrerSign(projectAddress: Address) {
     const params: IContractCall = {
@@ -81,5 +83,28 @@ export function getProjectContractFunctions() {
     return writeContract(params)
   }
 
-  return { referrerSign }
+  async function getRights(projectAddress: Address) {
+    return readContract({
+      address: projectAddress,
+      abi: PROJECT_ABI,
+      functionName: 'rights',
+      args: []
+    })
+  }
+
+  return { referrerSign, getRights }
+}
+
+// Rights Contract Functions
+export function getRightsContractFunctions() {
+  async function tokenOfOwnerByIndex(rightsContractAddress: Address, kolAddress: Address) {
+    return readContract({
+      address: rightsContractAddress,
+      abi: RIGHTS_ABI,
+      functionName: 'tokenOfOwnerByIndex',
+      args: [kolAddress, 0]
+    })
+  }
+
+  return { tokenOfOwnerByIndex }
 }

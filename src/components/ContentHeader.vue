@@ -1,6 +1,6 @@
 <template>
   <div class="main-width project-header">
-    <span class="page-title">My Projects</span>
+    <span class="page-title">Projects</span>
     <div>
       <el-input placeholder="Search Name" :prefix-icon="Search"></el-input>
       <el-button type="primary" @click="createProject">Create Project</el-button>

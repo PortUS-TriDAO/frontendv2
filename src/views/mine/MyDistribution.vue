@@ -12,10 +12,12 @@
         <el-table-column prop="amount" label="Amount"></el-table-column>
         <el-table-column prop="website" label="Home Page"></el-table-column>
         <el-table-column label="Opeate">
-          <template #default>
+          <template #default="scope">
             <div class="operates">
-              <el-button type="primary">Withdraw</el-button>
-              <el-button type="primary" @click="copyShareLink">ShareLink</el-button>
+              <el-button :loading="widthdrawLoading" type="primary">Withdraw</el-button>
+              <el-button :loading="shareLoading" type="primary" @click="copyShareLink(scope.row)"
+                >ShareLink</el-button
+              >
             </div>
           </template>
         </el-table-column>
@@ -24,31 +26,64 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
-import { getMyDistributions } from '@/api'
+import { reactive, onMounted, ref } from 'vue'
+import { getMyDistributions, generateReferCode } from '@/api'
 import { ElMessage } from 'element-plus'
 import useClipboard from 'vue-clipboard3'
+import { getProjectContractFunctions, getRightsContractFunctions } from '@/stores/useContract'
+import { getAccount, getNetwork } from '@wagmi/core'
+import type { Address } from '@/types'
+
+const { getRights } = getProjectContractFunctions()
+const { tokenOfOwnerByIndex } = getRightsContractFunctions()
 
 const { toClipboard } = useClipboard()
 
+const shareLoading = ref(false)
+const widthdrawLoading = ref(false)
 const state = reactive({
   myDistributions: []
 })
 
 onMounted(async () => {
   try {
-    const result = await getMyDistributions({})
-    if (result.success) {
-      state.myDistributions = result.data
+    const { success, data } = await getMyDistributions({})
+    if (success) {
+      state.myDistributions = data
     }
   } catch (error) {
     ElMessage.error('request data failed')
   }
 })
 
-function copyShareLink() {
-  // 复制到剪切板
-  toClipboard('')
+async function copyShareLink(row) {
+  console.log({ row })
+  shareLoading.value = true
+  const { address } = getAccount()
+  const { chain } = getNetwork()
+  const projectAddress = row.projectAddress
+  const website = row.website
+  const rightsContractAddress = (await getRights(projectAddress)) as Address
+  const tokenId = await tokenOfOwnerByIndex(rightsContractAddress, address)
+  console.log({ tokenId })
+
+  // generate share link
+  const { success, data } = await generateReferCode({
+    tokenId: Number(tokenId),
+    chainId: chain.id,
+    contractAddress: projectAddress,
+    redirectUrl: website
+  })
+  if (success) {
+    const text = `${window.location.origin}/?refer=${data.referCode}`
+    await toClipboard(text)
+    ElMessage({
+      type: 'success',
+      message: `copy success`
+    })
+  }
+
+  shareLoading.value = false
 }
 </script>
 <style lang="less">

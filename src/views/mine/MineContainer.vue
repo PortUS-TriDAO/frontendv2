@@ -3,6 +3,9 @@
     <div class="left-menu">
       <ul>
         <li>
+          <router-link to="/project/create">Create Project</router-link>
+        </li>
+        <li>
           <router-link to="/mine/games">My Games</router-link>
         </li>
         <li>
