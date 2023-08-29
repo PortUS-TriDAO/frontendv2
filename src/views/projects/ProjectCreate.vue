@@ -8,12 +8,11 @@
         action=""
         :http-request="handleBannerUpload"
         :show-file-list="false"
-        :on-success="uploadBannerSuccess"
       >
         <img v-if="state.banner" :src="state.banner" />
         <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
       </el-upload>
-      <el-form label-position="top">
+      <el-form label-width="150px">
         <el-form-item label="Name">
           <el-input placeholder="Project Name" v-model="state.name"></el-input>
         </el-form-item>
@@ -51,17 +50,44 @@
         </el-form-item>
         <el-form-item>
           <div class="uploads">
-            <el-upload class="upload-demo" drag action="" multiple>
-              <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-              <div class="el-upload__text">Drop Icon here or <em>click to upload</em></div>
+            <el-upload
+              class="upload-demo"
+              drag
+              :http-request="handleIconUpload"
+              action=""
+              :show-file-list="false"
+            >
+              <img v-if="state.icon" :src="state.icon" />
+              <div v-else>
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div class="el-upload__text">Drop Icon here or <em>click to upload</em></div>
+              </div>
             </el-upload>
-            <el-upload class="upload-demo" drag action="" multiple>
-              <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-              <div class="el-upload__text">Drop ScreenShot here or <em>click to upload</em></div>
+            <el-upload
+              class="upload-demo"
+              drag
+              :http-request="handleScreenShotsUpload"
+              action=""
+              :show-file-list="false"
+            >
+              <img v-if="state.screenShots.length > 0" :src="state.screenShots[0]" />
+              <div v-else>
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div class="el-upload__text">Drop Icon here or <em>click to upload</em></div>
+              </div>
             </el-upload>
-            <el-upload class="upload-demo" drag action="" multiple>
-              <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-              <div class="el-upload__text">Drop ScreenShot here or <em>click to upload</em></div>
+            <el-upload
+              class="upload-demo"
+              drag
+              :http-request="handleScreenShotsUpload"
+              action=""
+              :show-file-list="false"
+            >
+              <img v-if="state.screenShots.length > 1" :src="state.screenShots[1]" />
+              <div v-else>
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div class="el-upload__text">Drop Icon here or <em>click to upload</em></div>
+              </div>
             </el-upload>
           </div>
         </el-form-item>
@@ -94,6 +120,7 @@ const { createProject, getProjectAddress } = getRouterContractFunctions()
 
 const state = reactive({
   banner: '',
+  icon: '',
   name: '',
   symbol: '',
   token: '',
@@ -119,10 +146,32 @@ const handleBannerUpload: UploadProps['onSuccess'] = async (response, uploadFile
   await ossClient.putACL('/filename/' + filename, 'public-read')
   state.banner = result.url
 }
-const uploadBannerSuccess = () => {}
+
+const handleIconUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
+  const filename = response.file.name
+  const result = await ossClient.put('/filename/' + filename, response.file, {
+    headers: {
+      'x-oss-object-acl': 'public-read'
+    }
+  })
+  await ossClient.putACL('/filename/' + filename, 'public-read')
+  state.icon = result.url
+}
+
+const handleScreenShotsUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
+  const filename = response.file.name
+  const result = await ossClient.put('/filename/' + filename, response.file, {
+    headers: {
+      'x-oss-object-acl': 'public-read'
+    }
+  })
+  await ossClient.putACL('/filename/' + filename, 'public-read')
+  state.screenShots.push(result.url)
+}
 
 const handleCreateProject = async () => {
   try {
+    console.log({ state })
     loading.value = true
     const sharePercentage = utils.parseEther(state.sharePercentage).toString()
     const tx = await createProject(
@@ -139,6 +188,7 @@ const handleCreateProject = async () => {
     // 保存数据到服务端
     await api.createProject({
       banner: state.banner,
+      icon: state.icon,
       name: state.name,
       symbol: state.symbol,
       token: state.token,
@@ -215,10 +265,18 @@ const handleCreateProject = async () => {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    .el-upload-dragger,
+    .upload-demo {
+      // > img {
+      width: 278px;
+      height: 178px;
+      // }
+    }
   }
+
   .buttons {
     width: 1340px;
-    margin-top: 15px;
+    margin-top: 30px;
     display: flex;
     flex-direction: row;
     justify-content: center;

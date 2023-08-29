@@ -12,9 +12,11 @@
         <el-table-column prop="website" label="Home Page"></el-table-column>
         <el-table-column prop="amount" label="Amount"></el-table-column>
         <el-table-column label="Opeate">
-          <template #default>
+          <template #default="scope">
             <div class="operates">
-              <el-button type="primary">Withdraw</el-button>
+              <el-button :loading="loading" type="primary" @click="handleWithdraw(scope.row)"
+                >Withdraw</el-button
+              >
             </div>
           </template>
         </el-table-column>
@@ -37,11 +39,14 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { getMyGames } from '@/api'
-import { getAccount } from '@wagmi/core'
+import { getAccount, waitForTransaction } from '@wagmi/core'
 import { ElMessage } from 'element-plus'
+import { getProjectContractFunctions } from '@/stores/useContract'
 
+const { operatorWithdraw } = getProjectContractFunctions()
+
+const loading = ref(false)
 const state = reactive({
   myGames: []
 })
@@ -59,6 +64,21 @@ onMounted(async () => {
     ElMessage.error('request data failed')
   }
 })
+
+async function handleWithdraw(row) {
+  try {
+    loading.value = true
+    const projectAddress = row.projectAddress
+    const { address } = getAccount()
+    const { hash } = await operatorWithdraw(projectAddress, address)
+    await waitForTransaction({ hash })
+    ElMessage.success('withdraw success')
+  } catch (error) {
+    ElMessage.error('withdraw faied')
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 <style lang="less">
 .page-project-list {

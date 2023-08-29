@@ -92,7 +92,27 @@ export function getProjectContractFunctions() {
     })
   }
 
-  return { referrerSign, getRights }
+  // KOL 领奖励
+  async function referrerWithdraw(projectAddress: Address, tokenId: number | string) {
+    return writeContract({
+      address: projectAddress,
+      abi: PROJECT_ABI,
+      functionName: 'referrerWithdraw',
+      args: [tokenId]
+    })
+  }
+
+  // 项目方领收益
+  async function operatorWithdraw(projectAddress: Address, account: Address) {
+    return writeContract({
+      address: projectAddress,
+      abi: PROJECT_ABI,
+      functionName: 'operatorWithdraw',
+      args: [account]
+    })
+  }
+
+  return { referrerSign, getRights, referrerWithdraw, operatorWithdraw }
 }
 
 // Rights Contract Functions

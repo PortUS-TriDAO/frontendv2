@@ -74,7 +74,7 @@ async function mint(event) {
   > img {
     display: block;
     width: 236px;
-    // height: 236px;
+    height: 236px;
     border-radius: 10px;
     margin: 0 auto;
   }

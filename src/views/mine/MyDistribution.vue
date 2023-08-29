@@ -14,7 +14,12 @@
         <el-table-column label="Opeate">
           <template #default="scope">
             <div class="operates">
-              <el-button :loading="widthdrawLoading" type="primary">Withdraw</el-button>
+              <el-button
+                :loading="widthdrawLoading"
+                type="primary"
+                @click="handleWithdraw(scope.row)"
+                >Withdraw</el-button
+              >
               <el-button :loading="shareLoading" type="primary" @click="copyShareLink(scope.row)"
                 >ShareLink</el-button
               >
@@ -31,10 +36,10 @@ import { getMyDistributions, generateReferCode } from '@/api'
 import { ElMessage } from 'element-plus'
 import useClipboard from 'vue-clipboard3'
 import { getProjectContractFunctions, getRightsContractFunctions } from '@/stores/useContract'
-import { getAccount, getNetwork } from '@wagmi/core'
+import { getAccount, getNetwork, waitForTransaction } from '@wagmi/core'
 import type { Address } from '@/types'
 
-const { getRights } = getProjectContractFunctions()
+const { getRights, referrerWithdraw } = getProjectContractFunctions()
 const { tokenOfOwnerByIndex } = getRightsContractFunctions()
 
 const { toClipboard } = useClipboard()
@@ -56,34 +61,60 @@ onMounted(async () => {
   }
 })
 
-async function copyShareLink(row) {
-  console.log({ row })
-  shareLoading.value = true
+async function getTokenId(projectAddress: Address) {
   const { address } = getAccount()
-  const { chain } = getNetwork()
-  const projectAddress = row.projectAddress
-  const website = row.website
+
   const rightsContractAddress = (await getRights(projectAddress)) as Address
   const tokenId = await tokenOfOwnerByIndex(rightsContractAddress, address)
   console.log({ tokenId })
+  return Number(tokenId)
+}
 
-  // generate share link
-  const { success, data } = await generateReferCode({
-    tokenId: Number(tokenId),
-    chainId: chain.id,
-    contractAddress: projectAddress,
-    redirectUrl: website
-  })
-  if (success) {
-    const text = `${window.location.origin}/?refer=${data.referCode}`
-    await toClipboard(text)
-    ElMessage({
-      type: 'success',
-      message: `copy success`
+async function copyShareLink(row) {
+  try {
+    console.log({ row })
+    shareLoading.value = true
+    const projectAddress = row.projectAddress
+    const website = row.website
+    const { chain } = getNetwork()
+    const tokenId = await getTokenId(projectAddress)
+
+    // generate share link
+    const { success, data } = await generateReferCode({
+      tokenId: Number(tokenId),
+      chainId: chain.id,
+      contractAddress: projectAddress,
+      redirectUrl: website
     })
-  }
+    if (success) {
+      const text = `${window.location.origin}/?refer=${data.referCode}`
+      await toClipboard(text)
+      ElMessage({
+        type: 'success',
+        message: `copy success`
+      })
+    }
 
-  shareLoading.value = false
+    shareLoading.value = false
+  } catch (error) {
+    ElMessage.error('get share link failed')
+  }
+}
+
+// KOL 领取奖励
+async function handleWithdraw(row) {
+  try {
+    widthdrawLoading.value = true
+    const projectAddress = row.projectAddress
+    const tokenId = await getTokenId(projectAddress)
+    const { hash } = await referrerWithdraw(projectAddress, tokenId)
+    await waitForTransaction({ hash })
+    ElMessage.success('withdraw success')
+  } catch (error) {
+    ElMessage.error('withdraw failed')
+  } finally {
+    widthdrawLoading.value = false
+  }
 }
 </script>
 <style lang="less">

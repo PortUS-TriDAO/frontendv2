@@ -16,7 +16,7 @@
 
     <div class="swiper">
       <el-carousel trigger="click" height="219px">
-        <el-carousel-item v-for="item in 4" :key="item">
+        <el-carousel-item v-for="item in 1" :key="item">
           <div class="swiper-item-box">
             <img
               width="329"
