@@ -62,7 +62,7 @@ export function getRouterContractFunctions() {
     const projectAddress = await readContract({
       ...routerContract,
       functionName: 'projectsOfCreator',
-      args: [address, 0]
+      args: [address, length]
     })
     console.log({ projectAddress })
     return projectAddress

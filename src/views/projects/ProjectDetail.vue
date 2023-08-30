@@ -57,7 +57,7 @@ let state: IState = reactive({
 
 onMounted(async () => {
   const id = route.params.id
-  const result = await getProjectDetail({})
+  const result = await getProjectDetail({ id })
   console.log({ result })
   if (result.success) {
     const { data } = result

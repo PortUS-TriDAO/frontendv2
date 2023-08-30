@@ -38,7 +38,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
       },
       {
         id: 24234523422,
@@ -46,7 +46,7 @@ Mock.mock('/project/all', 'get', {
         name: 'Splinterlands',
         briefIntro: 'Splinterlands is a collectible trading card game',
         minted: true,
-        projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
       },
       {
         id: 24234523423,
@@ -54,7 +54,7 @@ Mock.mock('/project/all', 'get', {
         name: 'Untitled Platformer',
         briefIntro: 'Untitled Platformer',
         minted: false,
-        projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
       },
       {
         id: 24234523424,
@@ -63,7 +63,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
       },
       {
         id: 24234523425,
@@ -72,7 +72,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
       },
       {
         id: 24234523426,
@@ -81,7 +81,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
       },
       {
         id: 24234523427,
@@ -90,7 +90,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
       }
     ]
   }
@@ -128,9 +128,9 @@ Mock.mock('/mine/games', 'get', {
       id: 238472394, // projectId
       icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
       name: 'Farmers World',
-      website: 'https://farmersworld.io/',
+      website: 'http://34.238.85.169/',
       amount: '10000',
-      projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+      projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
     }
   ]
 })
@@ -145,9 +145,9 @@ Mock.mock('/mine/distributions', 'get', {
       id: 238472394, // projectId
       icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
       name: 'Farmers World',
-      website: 'https://farmersworld.io/',
+      website: 'http://34.238.85.169/',
       amount: '237482394',
-      projectAddress: '0x9929659547F5215D05bEf63066677cA398D0289a'
+      projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
     }
   ]
 })
@@ -170,6 +170,6 @@ Mock.mock('/user/generateReferCode', 'post', {
 Mock.mock('/user/share/statistic', 'post', {
   success: true,
   data: {
-    redirectUrl: 'http://www.baidu.com'
+    redirectUrl: 'http://34.238.85.169/'
   }
 })

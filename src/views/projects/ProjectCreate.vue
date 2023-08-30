@@ -184,6 +184,7 @@ const handleCreateProject = async () => {
 
     // 获取本次创建项目的地址
     const projectAddress = await getProjectAddress()
+    console.log(`project ADDRESS: ${projectAddress}`)
     const { address } = getAccount()
     // 保存数据到服务端
     await api.createProject({
@@ -239,6 +240,10 @@ const handleCreateProject = async () => {
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
       .el-upload {
         width: 100%;
         height: 100%;
@@ -268,8 +273,10 @@ const handleCreateProject = async () => {
     .el-upload-dragger,
     .upload-demo {
       // > img {
-      width: 278px;
+      width: 178px;
       height: 178px;
+      padding: 0;
+      margin: 0;
       // }
     }
   }

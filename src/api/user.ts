@@ -3,8 +3,8 @@ import type { IResponse } from '@/types/response'
 
 // generateReferCode
 export const generateReferCode = (params: any): Promise<IResponse> =>
-  axios.post('/user/generateReferCode', { data: params })
+  axios.post('/user/generateReferCode', params)
 
 // statistic
 export const statistic = (params: any): Promise<IResponse> =>
-  axios.post('/user/share/statistic', { data: params })
+  axios.post('/user/share/statistic', params)

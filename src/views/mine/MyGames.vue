@@ -54,8 +54,7 @@ const state = reactive({
 onMounted(async () => {
   try {
     const { address } = getAccount()
-    // const result = await getMyGames({ account: address })
-    const result = await getMyGames({})
+    const result = await getMyGames({ account: address })
     console.log({ result })
     if (result.success) {
       state.myGames = result.data

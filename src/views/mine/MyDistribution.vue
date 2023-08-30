@@ -52,9 +52,10 @@ const state = reactive({
 
 onMounted(async () => {
   try {
-    const { success, data } = await getMyDistributions({})
+    const { address } = getAccount()
+    const { success, data } = await getMyDistributions({ kolAddress: address })
     if (success) {
-      state.myDistributions = data
+      state.myDistributions = data.rows
     }
   } catch (error) {
     ElMessage.error('request data failed')
@@ -88,6 +89,7 @@ async function copyShareLink(row) {
     })
     if (success) {
       const text = `${window.location.origin}/?refer=${data.referCode}`
+      console.log({ success, text })
       await toClipboard(text)
       ElMessage({
         type: 'success',
