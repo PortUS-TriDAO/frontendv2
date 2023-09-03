@@ -96,7 +96,7 @@ async function mint(event) {
     margin-bottom: 16px;
     font-size: 14px;
     color: #666666;
-    height: 63px;
+    height: 83px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: Roboto;

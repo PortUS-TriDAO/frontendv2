@@ -171,7 +171,6 @@ const handleScreenShotsUpload: UploadProps['onSuccess'] = async (response, uploa
 
 const handleCreateProject = async () => {
   try {
-    console.log({ state })
     loading.value = true
     const sharePercentage = utils.parseEther(state.sharePercentage).toString()
     const tx = await createProject(
@@ -184,7 +183,6 @@ const handleCreateProject = async () => {
 
     // 获取本次创建项目的地址
     const projectAddress = await getProjectAddress()
-    console.log(`project ADDRESS: ${projectAddress}`)
     const { address } = getAccount()
     // 保存数据到服务端
     await api.createProject({

@@ -1,0 +1,4 @@
+@localhost=http//127.0.0.1:8000
+@remotehost=http://8.217.91.191:8000
+
+GET  {{remotehost}}/project/detail?id=3

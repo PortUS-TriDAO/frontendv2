@@ -1,28 +1,31 @@
 <template>
-  <div class="main-width page-project-list">
-    <content-header></content-header>
-    <div class="main-container project-list-container">
-      <el-table row-class-name="row-style" :data="tableData">
-        <el-table-column prop="pic" label="Pic">
+  <div class="page-project-list">
+    <!-- <content-header></content-header> -->
+    <div class="project-list-container">
+      <el-table row-class-name="row-style" :data="state.myGames">
+        <el-table-column prop="icon" label="logo">
           <template #default="scope">
-            <img class="project-icon" :src="scope.row.pic" alt="" srcset="" />
+            <img class="project-icon" :src="scope.row.icon" alt="" srcset="" />
           </template>
         </el-table-column>
         <el-table-column prop="name" label="Name"></el-table-column>
+        <el-table-column prop="website" label="Home Page"></el-table-column>
         <el-table-column prop="amount" label="Amount"></el-table-column>
-        <el-table-column prop="operator" label="Operator"></el-table-column>
         <el-table-column label="Opeate">
-          <template #default>
+          <template #default="scope">
             <div class="operates">
-              <el-button link type="primary" size="small">Withdraw</el-button>
-              <el-button link type="primary" size="small" @click="toDetail">Detail</el-button>
-              <el-button link type="primary" size="small" @click="toEdit">Edit</el-button>
+              <el-button
+                :loading="loading && activeId === scope.row.id"
+                type="primary"
+                @click="handleWithdraw(scope.row)"
+                >Withdraw</el-button
+              >
             </div>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <div class="main-width pagination-block">
+    <!-- <div class="main-width pagination-block">
       <el-pagination
         v-model:current-page="currentPage3"
         v-model:page-size="pageSize3"
@@ -34,70 +37,58 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts">
-// import { Search } from '@element-plus/icons-vue'
-import ContentHeader from '@/components/ContentHeader.vue'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, onMounted } from 'vue'
+import { getMyGames } from '@/api'
+import { getAccount, waitForTransaction } from '@wagmi/core'
+import { ElMessage } from 'element-plus'
+import { getProjectContractFunctions } from '@/stores/useContract'
 
-const router = useRouter()
+const { operatorWithdraw } = getProjectContractFunctions()
 
-const currentPage1 = ref(5)
-const currentPage2 = ref(5)
-const currentPage3 = ref(5)
-const currentPage4 = ref(4)
-const pageSize2 = ref(100)
-const pageSize3 = ref(100)
-const pageSize4 = ref(100)
-const small = ref(false)
-const background = ref(false)
-const disabled = ref(false)
+const loading = ref(false)
+const activeId = ref(0)
+const state = reactive({
+  myGames: []
+})
 
-const handleSizeChange = (val: number) => {
-  console.log(`${val} items per page`)
-}
-const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
-}
-
-const tableData = [
-  {
-    pic: 'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-logo-166x166_a8c719dcf7a8e5c2de3fe764a465f9fd.png',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: 'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-logo-166x166_a8c719dcf7a8e5c2de3fe764a465f9fd.png',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
-  },
-  {
-    pic: 'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-logo-166x166_a8c719dcf7a8e5c2de3fe764a465f9fd.png',
-    name: 'Axie',
-    amount: 10000,
-    operator: 'John'
+onMounted(async () => {
+  try {
+    const { address } = getAccount()
+    const result = await getMyGames({ account: address })
+    console.log({ result })
+    if (result.success) {
+      state.myGames = result.data
+    }
+  } catch (error) {
+    ElMessage.error('request data failed')
   }
-]
+})
 
-function createProject() {
-  router.push('/project/create')
-}
-function toDetail() {
-  router.push('/project/detail')
-}
-function toEdit() {
-  router.push('/project/create')
+async function handleWithdraw(row) {
+  try {
+    loading.value = true
+    activeId.value = row.id
+    const projectAddress = row.projectAddress
+    const { address } = getAccount()
+    const { hash } = await operatorWithdraw(projectAddress, address)
+    await waitForTransaction({ hash })
+    ElMessage.success('withdraw success')
+  } catch (error) {
+    ElMessage.error('withdraw faied')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 <style lang="less">
 .page-project-list {
+  width: 1135px;
   .project-list-container {
-    width: 1400px;
+    width: 1135px;
   }
   .row-style {
     height: 59px;
@@ -109,10 +100,14 @@ function toEdit() {
     }
   }
   .operates {
+    display: flex;
+    flex-direction: row;
     .el-button {
-      color: #ff3300;
-      font-size: 16px;
+      color: #fff;
+      font-size: 14px;
       font-weight: 400;
+      border: none;
+      background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
     }
   }
   .pagination-block {

@@ -20,7 +20,10 @@
                 @click="handleWithdraw(scope.row)"
                 >Withdraw</el-button
               >
-              <el-button :loading="shareLoading" type="primary" @click="copyShareLink(scope.row)"
+              <el-button
+                :loading="shareLoading && shareActiveId === scope.row.id"
+                type="primary"
+                @click="copyShareLink(scope.row)"
                 >ShareLink</el-button
               >
             </div>
@@ -45,6 +48,7 @@ const { tokenOfOwnerByIndex } = getRightsContractFunctions()
 const { toClipboard } = useClipboard()
 
 const shareLoading = ref(false)
+const shareActiveId = ref(0)
 const widthdrawLoading = ref(false)
 const state = reactive({
   myDistributions: []
@@ -75,6 +79,7 @@ async function copyShareLink(row) {
   try {
     console.log({ row })
     shareLoading.value = true
+    shareActiveId.value = row.id
     const projectAddress = row.projectAddress
     const website = row.website
     const { chain } = getNetwork()

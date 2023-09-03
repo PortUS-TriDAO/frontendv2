@@ -31,9 +31,9 @@ const router = createRouter({
           component: () => import('../views/projects/ProjectCreate.vue')
         },
         {
-          path: '/mine/games',
-          name: 'MyGames',
-          component: () => import('../views/mine/MyGames.vue')
+          path: '/mine/projects',
+          name: 'MyProjects',
+          component: () => import('../views/mine/MyProjects.vue')
         },
         {
           path: '/mine/distribution',

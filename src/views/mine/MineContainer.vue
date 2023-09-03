@@ -6,7 +6,7 @@
           <router-link to="/project/create">Create Project</router-link>
         </li>
         <li>
-          <router-link to="/mine/games">My Games</router-link>
+          <router-link to="/mine/projects">My Projects</router-link>
         </li>
         <li>
           <router-link to="/mine/distribution">My Distribution</router-link>
