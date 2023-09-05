@@ -58,10 +58,9 @@ const state = reactive({
 onMounted(async () => {
   try {
     const { address } = getAccount()
-    const result = await getMyGames({ account: address })
-    console.log({ result })
-    if (result.success) {
-      state.myGames = result.data
+    const { success, data } = await getMyGames({ creatorAddress: address })
+    if (success) {
+      state.myGames = data.rows
     }
   } catch (error) {
     ElMessage.error('request data failed')

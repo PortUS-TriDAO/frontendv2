@@ -70,6 +70,7 @@ async function mint(event) {
   background-color: #fff;
   padding: 14px;
   box-sizing: border-box;
+  position: relative;
   cursor: pointer;
   > img {
     display: block;
@@ -102,7 +103,10 @@ async function mint(event) {
     font-family: Roboto;
   }
   .el-button {
-    width: 100%;
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    width: 236px;
     color: #fff;
     background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
   }
