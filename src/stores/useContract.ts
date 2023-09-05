@@ -56,7 +56,7 @@ export function getRouterContractFunctions() {
       ...routerContract,
       functionName: 'getCountOfProjects',
       args: [address]
-    })) as BigInt
+    })) as bigint
 
     const length = count > 0n ? count - 1n : 0n
     const projectAddress = await readContract({

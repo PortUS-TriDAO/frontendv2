@@ -504,7 +504,7 @@ function goToDistribute() {
     .choose-content {
       margin-top: 60px;
     }
-    /deep/.el-carousel__container {
+    /deep/ .el-carousel__container {
       width: 1400px;
       height: 789px;
     }

@@ -25,9 +25,11 @@ const status = reactive({
 
 interface IResponse {
   success: boolean
-  currentPage: number
-  totalPage: number
-  data: IProjectItemProps[]
+  data: {
+    currentPage: number
+    totalPage: number
+    rows: IProjectItemProps[]
+  }
 }
 
 onMounted(async () => {

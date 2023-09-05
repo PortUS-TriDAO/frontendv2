@@ -1,0 +1,1 @@
+scp -r dist root@8.217.91.191:/var/www
