@@ -79,8 +79,10 @@ const props = defineProps({
           font-family: Roboto;
         }
         p {
-          font-size: 16px;
-          line-height: 44px;
+          // font-size: 16px;
+          // line-height: 44px;
+          font-size: 15px;
+          line-height: 28px;
           color: #c9c9c9;
         }
         .divider {

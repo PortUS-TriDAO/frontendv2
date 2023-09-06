@@ -123,8 +123,15 @@
     <div class="choose-box">
       <h2 class="title">Why choose PortUS</h2>
       <div class="choose-content">
-        <el-carousel arrow="always">
-          <el-carousel-item v-for="(item, index) in data" :key="index">
+        <div class="arrow arrow-left" @click="changeSwiper('left')"></div>
+        <el-carousel
+          ref="carousel"
+          arrow="never"
+          :autoplay="false"
+          indicator-position="none"
+          loop="false"
+        >
+          <el-carousel-item v-for="(item, index) in swiperData" :key="index">
             <swiper-item
               :title1="item.title1"
               :title2="item.title2"
@@ -133,111 +140,21 @@
             ></swiper-item>
           </el-carousel-item>
         </el-carousel>
+        <div class="arrow arrow-right" @click="changeSwiper('right')"></div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { statistic } from '@/api'
 import SwiperItem from './components/SwiperItem.vue'
+import { swiperData } from './data'
 
 const route = useRoute()
 const router = useRouter()
-
-interface ISwiperItem {
-  title1: string
-  title2: string
-  desc: string
-  list: Array<{
-    title: string
-    desc: string
-  }>
-}
-
-const data: ISwiperItem[] = [
-  {
-    title1: 'DeCPS features',
-    title2: '',
-    desc: `
-    Project owners can mint DeCPS equity NFT at their own liberty.
-    `,
-    list: [
-      {
-        title: 'INO',
-        desc: 'The minting income/ royalty income from transferring DeCPS NFTs can serve as a financing method for project owners.'
-      },
-      {
-        title: 'Deposit into Smart Contract',
-        desc: 'All in-app purchases by users is paid to the DeCPS equity smart contract, which is open and transparent, with data queryable at any time.'
-      },
-      {
-        title: 'Automatic Allocation',
-        desc: 'The income generated from the product (top- up/ads) is automatically allocated under the support of the NFT smart contract, without needing to wait for settlement periods.'
-      }
-    ]
-  },
-  {
-    title1: 'Portal for Web 2 Consumers',
-    title2: 'Automated Exchange Settlement Payment Interface',
-    desc: 'Partnership with multiple licensed payment institutions, that can provide automated exchange settlement payment interface. This will allow web 2 user can complete transactions without feeling any presence of web 3',
-    list: [
-      {
-        title: 'Frictionless Experience',
-        desc: 'Web 2 user can use their most familiar payment methods, without the need to download wallet or CEX apps'
-      },
-      {
-        title: 'Automated Exchange & Settlement',
-        desc: 'Upon receieveing fiat currency from web 2 user it can be automatically exchanged into crypto currency'
-      },
-      {
-        title: 'Bridge between web 2 and web 3',
-        desc: 'Through the automated exchange and settlement interface, weeb 2 user can cross the web 3 barrier seamlessly. Thus promoting web 2 user enter into web 3'
-      }
-    ]
-  },
-  {
-    title1: 'DID',
-    title2: '',
-    desc: 'The SBTs held in the DIDs of all participants on the platform serve as their identity credentials and equity credentials. All participants of the platform can use these to prove their qualifications and authority to engage in platform business activities.',
-    list: [
-      {
-        title: 'How to Acquire',
-        desc: 'Participants initiate applications based on proof of their participation in platform activities, or the platform business activities grant qualifications to the corresponding participants. After approval, platform tokens are paid to mint the SBTs.'
-      },
-      {
-        title: 'Basis for Incentives',
-        desc: 'The sole basis for rewarding players with tokens, an important means to eliminate malicious behaviors such as using scripts, bots and brushing fake volume.'
-      },
-      {
-        title: 'Trustless Community',
-        desc: 'Identity recognition based on SBTs makes the composition of the user community more clear and orderly, strengthening community functions and making content more authoritative.'
-      }
-    ]
-  },
-  {
-    title1: 'Private Domain Store',
-    title2: '',
-    desc: `
-    Each private domain KOL can display all of the distribution rights NFTs they have minted in a customized store for their fans/members to browse and download/participate at any time.
-    `,
-    list: [
-      {
-        title: 'Personalised App store',
-        desc: 'With the platform features supported by PortUS, everyone can open their own App Store, so their fans and guild members can browse personalized product recommendations'
-      },
-      {
-        title: 'Refined Management',
-        desc: 'The operation status of private domain store can be checked at any time on a fully-featured, data-rich dashboard, enabling private domain traffic masters to effectively manage them.'
-      },
-      {
-        title: 'Accumilative Reputation',
-        desc: 'As the transaction volume of the shops expands, their reputation will continuously accumulate and be clearly displayed through on-chain data, facilitating the effective expansion of business scale.'
-      }
-    ]
-  }
-]
+const carousel = ref(null)
 
 onMounted(async () => {
   const refer = route.query.refer
@@ -262,6 +179,14 @@ function goToCreate() {
 function goToDistribute() {
   router.push('/mine/distribution')
 }
+
+function changeSwiper(direction) {
+  if (direction === 'left') {
+    carousel.value.prev()
+  } else if (direction === 'right') {
+    carousel.value.next()
+  }
+}
 </script>
 <style lang="less" scoped>
 .page-home {
@@ -272,7 +197,6 @@ function goToDistribute() {
   background: #06173a;
   color: #fff;
   .header-box {
-    background-color: red;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -286,7 +210,7 @@ function goToDistribute() {
       flex-direction: row;
       .h-box {
         color: #fff;
-        margin-top: 100px;
+        margin-top: 168px;
         > h5 {
           font-family: Roboto;
           font-weight: 600;
@@ -294,7 +218,7 @@ function goToDistribute() {
           line-height: 80px;
         }
         > div {
-          margin-top: 20px;
+          margin-top: 34px;
           font-size: 18px;
           line-height: 50px;
         }
@@ -302,7 +226,7 @@ function goToDistribute() {
           cursor: pointer;
           width: 344px;
           height: 84px;
-          margin-top: 60px;
+          margin-top: 80px;
           border-radius: 42px;
           border: solid 1px #91affb;
           background: transparent;
@@ -336,13 +260,13 @@ function goToDistribute() {
     .h-desc {
       color: #bcbcbc;
       text-align: center;
-      margin-top: 100px;
+      margin-top: 104px;
       font-size: 18px;
       line-height: 50px;
     }
   }
   .title {
-    margin-top: 60px;
+    margin-top: 100px;
     font-weight: 700;
     font-size: 52px;
     line-height: 80px;
@@ -356,25 +280,26 @@ function goToDistribute() {
       width: 14px;
       height: 14px;
       border-radius: 50px;
-      background-color: red;
+      background: linear-gradient(90deg, #f6250c 4.69%, #fb722f 95.43%);
       vertical-align: middle;
-      margin: 25px;
+      margin: 30px;
     }
   }
 
   .operating-box {
-    padding-bottom: 200px;
+    padding-bottom: 216px;
     .img-left,
     .img-right {
-      margin-top: 240px;
+      margin-top: 216px;
       display: flex;
       flex-direction: row;
+      align-items: center;
       border: solid 2px #2e3e5f;
       border-radius: 42px;
       position: relative;
       width: 1400px;
       height: 377px;
-      padding: 80px;
+      padding: 84px 80px;
       box-sizing: border-box;
       > div {
         h5 {
@@ -383,35 +308,37 @@ function goToDistribute() {
           font-weight: 700;
         }
         p {
+          margin-top: 30px;
           font-weight: 400;
           font-size: 20px;
           line-height: 36px;
           width: 678px;
           color: #c9c9c9;
+          font-family: Roboto;
         }
       }
       .icon-box {
-        width: 503px;
-        height: 492px;
+        width: 420px;
+        height: 464px;
       }
     }
     .img-left {
       > div {
         position: absolute;
         right: 80px;
-        top: 80px;
+        // top: 113px;
       }
       .icon-box {
         position: absolute;
-        left: 0;
-        top: -135px;
+        left: 86px;
+        top: -116px;
       }
     }
     .img-right {
       .icon-box {
         position: absolute;
-        right: 0;
-        top: -135px;
+        right: 86px;
+        top: -116px;
       }
     }
     .decps {
@@ -446,10 +373,10 @@ function goToDistribute() {
     flex-direction: column;
     align-items: center;
     background-color: #01071e;
-    padding-bottom: 100px;
+    padding-bottom: 140px;
     > p {
-      margin-top: 30px;
-      margin-bottom: 50px;
+      margin-top: 28px;
+      margin-bottom: 102px;
     }
     .sat-content-box {
       min-width: 1400px;
@@ -457,11 +384,11 @@ function goToDistribute() {
       flex-direction: row;
       justify-content: space-between;
       .sat-item-box {
-        width: 675px;
+        width: 674px;
         height: 606px;
         border: solid 2px #2e3e5f;
         border-radius: 42px;
-        padding: 30px;
+        padding: 60px 40px 85px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -484,7 +411,6 @@ function goToDistribute() {
           margin-bottom: 60px;
         }
         > ul {
-          // margin-left: 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -503,6 +429,25 @@ function goToDistribute() {
     background-color: #06173a;
     .choose-content {
       margin-top: 60px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .arrow {
+        width: 60px;
+        height: 60px;
+        border-radius: 50px;
+        margin: 50px;
+        background-color: #05122d;
+        cursor: pointer;
+        &-left {
+          background: url('@/assets/images/arrow-left.png') center center no-repeat;
+          background-size: contain;
+        }
+        &-right {
+          background: url('@/assets/images/arrow-right.png') center center no-repeat;
+          background-size: contain;
+        }
+      }
     }
     /deep/ .el-carousel__container {
       width: 1400px;
