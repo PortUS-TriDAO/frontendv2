@@ -32,7 +32,7 @@ function connect() {
   height: 66px;
   background-color: #000425;
   .header-container {
-    width: 1400px;
+    // width: 1400px;
     margin: 0 auto;
     line-height: 66px;
     display: flex;

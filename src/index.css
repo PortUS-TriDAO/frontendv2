@@ -3,15 +3,14 @@
   padding: 0;
 }
 body {
-  background-color: #f7f7f7;
+  background-color: #06173a;
 }
 a {
   text-decoration: none;
 }
 
 .main-width {
-  min-width: 1200px;
-  max-width: 1400px;
+  min-width: 1400px;
   margin: 0 auto;
 }
 .flex-row {
