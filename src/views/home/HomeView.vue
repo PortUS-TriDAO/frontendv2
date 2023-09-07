@@ -436,14 +436,15 @@ function changeSwiper(direction) {
         width: 60px;
         height: 60px;
         border-radius: 50px;
-        margin: 50px;
         background-color: #05122d;
         cursor: pointer;
         &-left {
+          margin-right: 50px;
           background: url('@/assets/images/arrow-left.png') center center no-repeat;
           background-size: contain;
         }
         &-right {
+          margin-left: 50px;
           background: url('@/assets/images/arrow-right.png') center center no-repeat;
           background-size: contain;
         }
