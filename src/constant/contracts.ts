@@ -11,3 +11,10 @@ export const ContractAddress = {
     usdt: '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964'
   }
 }
+
+export const SelectTokenList = [
+  {
+    label: 'USDT',
+    value: '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964'
+  }
+]
