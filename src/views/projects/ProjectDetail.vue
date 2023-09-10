@@ -2,11 +2,17 @@
   <div class="main-width page-project-detail">
     <img :src="state.banner" alt="" />
     <div class="project-info">
-      <img :src="state.icon" alt="" />
-      <div class="project-info-detail">
-        <h3>{{ state.name }}</h3>
-        <span>Stephen Enzo</span>
-        <p>{{ state.briefIntro }}</p>
+      <div class="info-detail">
+        <img :src="state.icon" alt="" />
+        <div class="project-info-detail">
+          <h3>{{ state.name }}</h3>
+          <span>Stephen Enzo</span>
+          <p>{{ state.briefIntro }}</p>
+        </div>
+      </div>
+      <div class="mint-detail">
+        <span>Percent : 90%</span>
+        <el-button class="mint-btn">Mint</el-button>
       </div>
     </div>
     <el-divider />
@@ -85,37 +91,58 @@ onMounted(async () => {
     margin-bottom: 40px;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    > img {
-      width: 160px;
-      height: 160px;
-      border-radius: 10px;
-      margin-right: 24px;
+    justify-content: space-between;
+    // align-items: flex-start;
+    align-items: center;
+    .info-detail {
+      > img {
+        width: 160px;
+        height: 160px;
+        border-radius: 10px;
+        margin-right: 24px;
+      }
+      .project-info-detail {
+        position: relative;
+        width: 100%;
+        > h3 {
+          font-size: 28px;
+          font-weight: bold;
+          line-height: 150%;
+          margin-bottom: 9px;
+        }
+        > span {
+          font-size: 20px;
+          font-weight: 500;
+          line-height: 150%;
+          color: #333333;
+        }
+        > p {
+          font-size: 16px;
+          font-weight: normal;
+          line-height: 150%;
+          color: #666;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+        }
+      }
     }
-    &-detail {
-      position: relative;
-      width: 100%;
-      height: 160px;
-      > h3 {
-        font-size: 28px;
-        font-weight: bold;
-        line-height: 150%;
-        margin-bottom: 9px;
-      }
+    .mint-detail {
+      display: flex;
+      flex-direction: column;
       > span {
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 150%;
-        color: #333333;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 42px;
       }
-      > p {
-        font-size: 16px;
-        font-weight: normal;
-        line-height: 150%;
-        color: #666;
-        position: absolute;
-        left: 0;
-        bottom: 0;
+      .mint-btn {
+        color: #fff;
+        width: 220px;
+        height: 65px;
+        border-radius: 12px;
+        font-size: 22px;
+        font-weight: 500;
+        background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
       }
     }
   }
