@@ -450,7 +450,7 @@ function changeSwiper(direction) {
         }
       }
     }
-    /deep/ .el-carousel__container {
+    :deep(.el-carousel__container) {
       width: 1400px;
       height: 789px;
     }
