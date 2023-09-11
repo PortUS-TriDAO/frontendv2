@@ -12,7 +12,10 @@
       </div>
       <div class="mint-detail">
         <span>Percent : 90%</span>
-        <el-button class="mint-btn">Mint</el-button>
+        <el-button v-if="account" :loading="loading" class="mint-btn" @click="handleMint"
+          >Mint</el-button
+        >
+        <el-button v-else class="mint-btn" @click="connectWallet">Connect Wallet</el-button>
       </div>
     </div>
     <el-divider />
@@ -38,17 +41,26 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { getProjectDetail } from '@/api'
+import { getProjectDetail, postProjectMint } from '@/api'
+import { getAccount, waitForTransaction } from '@wagmi/core'
+import { getProjectContractFunctions } from '@/stores/useContract'
+import { useWalletStore } from '@/stores/useWallet'
+import { ElMessage } from 'element-plus'
+import type { Address } from '@/types'
+const { referrerSign } = getProjectContractFunctions()
 const route = useRoute()
-
+const walletStore = useWalletStore()
+const loading = ref(false)
+const account = computed(() => walletStore.state.account)
 interface IState {
   banner: string
   icon: string
   name: string
   briefIntro: string
   description: string
+  projectAddress: Address
   screenShots: string[]
 }
 
@@ -58,6 +70,7 @@ let state: IState = reactive({
   name: '',
   briefIntro: '',
   description: '',
+  projectAddress: '0x',
   screenShots: []
 })
 
@@ -72,8 +85,32 @@ onMounted(async () => {
     state.name = data.name
     state.description = data.description
     state.screenShots = data.screenShots
+    state.projectAddress = data.projectAddress
   }
 })
+
+async function handleMint() {
+  try {
+    const id = route.params.id
+    loading.value = true
+    const { address } = getAccount()
+    const { hash } = await referrerSign(state.projectAddress)
+    await waitForTransaction({ hash })
+    await postProjectMint({
+      projectId: id,
+      account: address
+    })
+    ElMessage.success('Mint Success')
+  } catch (error) {
+    ElMessage.error('Mint failed')
+  } finally {
+    loading.value = false
+  }
+}
+
+function connectWallet() {
+  walletStore.connect()
+}
 </script>
 <style lang="less">
 .page-project-detail {

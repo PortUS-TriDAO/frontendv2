@@ -8,8 +8,24 @@
       {{ $props.data.briefIntro }}
     </p>
     <div>
-      <el-button :loading="loading" @click="mint">Mint</el-button>
+      <el-button class="item-mint-btn" @click="showDialog">Mint</el-button>
     </div>
+
+    <el-dialog @click="onClosed" v-model="dialogVisible" :close-on-click-modal="false" with="50%">
+      <div class="dialog-box">
+        <div class="detail-info">
+          <img :src="props.data.icon" alt="" />
+          <div>
+            <h5>{{ props.data.name }}</h5>
+            <p>Percent: 90%</p>
+          </div>
+        </div>
+        <p>
+          {{ $props.data.briefIntro }}
+        </p>
+        <el-button :loading="loading" class="mint-btn" @click="mint">Mint</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script setup lang="ts">
@@ -24,6 +40,7 @@ import { getAccount } from '@wagmi/core'
 
 const { referrerSign } = getProjectContractFunctions()
 const loading = ref(false)
+const dialogVisible = ref(false)
 
 export interface IProps {
   data: {
@@ -43,6 +60,10 @@ function onClick() {
   router.push({ name: 'ProjectDetail', params: { id: props.data.id } })
 }
 
+function onClosed(event) {
+  event.stopPropagation()
+}
+
 async function mint(event) {
   event.stopPropagation()
   try {
@@ -60,6 +81,12 @@ async function mint(event) {
   } finally {
     loading.value = false
   }
+}
+
+function showDialog(event) {
+  console.log('showDialog+++', event)
+  event.stopPropagation()
+  dialogVisible.value = true
 }
 </script>
 <style lang="less" scoped>
@@ -103,12 +130,65 @@ async function mint(event) {
     font-family: Roboto;
   }
   .el-button {
-    position: absolute;
-    left: 14px;
-    bottom: 14px;
     width: 236px;
     color: #fff;
     background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
+  }
+  .item-mint-btn {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+  }
+}
+
+.dialog-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // text-align: center;
+  .detail-info {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    > img {
+      width: 120px;
+      height: 120px;
+    }
+    > div {
+      height: 120px;
+      width: 100%;
+      margin-left: 24px;
+      position: relative;
+      > h5 {
+        position: absolute;
+        left: 0;
+        top: 11px;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 42px;
+        color: #000;
+      }
+      > p {
+        position: absolute;
+        left: 0;
+        bottom: 14px;
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 500;
+        color: #333333;
+      }
+    }
+  }
+  > p {
+    width: 100%;
+    margin-top: 17px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666;
+  }
+  .mint-btn {
+    margin-top: 40px;
   }
 }
 </style>
