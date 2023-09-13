@@ -37,7 +37,8 @@ export function getRouterContractFunctions() {
     name: string,
     symbol: string,
     chargeERC20: Address,
-    sharePercentage: string
+    sharePercentage: string,
+    maxRights: number
   ): Promise<WriteContractResult> {
     const network = getNetwork()
     const { rights, funds } = ContractAddress[network.chain.id]
@@ -45,7 +46,7 @@ export function getRouterContractFunctions() {
     return writeContract({
       ...routerContract,
       functionName: 'createProject',
-      args: [name, symbol, rights, funds, chargeERC20, sharePercentage]
+      args: [name, symbol, rights, funds, chargeERC20, sharePercentage, maxRights]
     })
   }
 

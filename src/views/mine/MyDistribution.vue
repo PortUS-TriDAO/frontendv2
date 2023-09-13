@@ -31,6 +31,12 @@
         </el-table-column>
       </el-table>
     </div>
+    <share-dialog
+      :visible="dialogVisible"
+      :text="shareText"
+      :cancel="() => (dialogVisible = false)"
+      :confirm="() => (dialogVisible = false)"
+    ></share-dialog>
   </div>
 </template>
 <script setup lang="ts">
@@ -40,6 +46,7 @@ import { ElMessage } from 'element-plus'
 import useClipboard from 'vue-clipboard3'
 import { getProjectContractFunctions, getRightsContractFunctions } from '@/stores/useContract'
 import { getAccount, getNetwork, waitForTransaction } from '@wagmi/core'
+import ShareDialog from './components/ShareDialog.vue'
 import type { Address } from '@/types'
 
 const { getRights, referrerWithdraw } = getProjectContractFunctions()
@@ -50,6 +57,8 @@ const { toClipboard } = useClipboard()
 const shareLoading = ref(false)
 const shareActiveId = ref(0)
 const widthdrawLoading = ref(false)
+const dialogVisible = ref(false)
+const shareText = ref('')
 const state = reactive({
   myDistributions: []
 })
@@ -96,10 +105,12 @@ async function copyShareLink(row) {
       const text = `${window.location.origin}/?refer=${data.referCode}`
       console.log({ success, text })
       await toClipboard(text)
-      ElMessage({
-        type: 'success',
-        message: `copy success`
-      })
+      // ElMessage({
+      //   type: 'success',
+      //   message: `copy success`
+      // })
+      shareText.value = text
+      dialogVisible.value = true
     }
 
     shareLoading.value = false

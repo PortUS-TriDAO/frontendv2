@@ -41,6 +41,11 @@ const router = createRouter({
           component: () => import('../views/mine/MyDistribution.vue')
         }
       ]
+    },
+    {
+      path: '/project/createsuccess',
+      name: 'CreateSuccess',
+      component: () => import('../views/projects/components/CreateSuccess.vue')
     }
   ]
 })

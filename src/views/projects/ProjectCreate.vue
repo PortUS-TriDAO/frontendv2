@@ -20,18 +20,32 @@
           <el-input placeholder="Token Symbol" v-model="state.symbol"></el-input>
         </el-form-item>
         <el-form-item label="Charge Token">
-          <el-input
-            placeholder="Charge Token e.g. USDT contract address"
-            v-model="state.token"
-          ></el-input>
+          <el-select v-model="state.token" placeholder="select charge token">
+            <el-option
+              v-for="item in SelectTokenList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="Share Percentage">
-          <el-input
-            placeholder="Share Percentage max 1"
-            type="number"
-            max="1"
+          <el-input-number
             v-model="state.sharePercentage"
-          ></el-input>
+            :min="0"
+            :max="100"
+            placeholder="min=0 max=100"
+            @change="handlePercentageChange"
+          ></el-input-number>
+        </el-form-item>
+        <el-form-item label="Max Rights">
+          <el-input-number
+            v-model="state.maxRights"
+            :min="0"
+            placeholder="min=0 max=100"
+            @change="handlePercentageChange"
+          ></el-input-number>
         </el-form-item>
         <el-form-item label="HomePage">
           <el-input placeholder="Home Page" v-model="state.website"></el-input>
@@ -73,7 +87,7 @@
               <img v-if="state.screenShots.length > 0" :src="state.screenShots[0]" />
               <div v-else>
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                <div class="el-upload__text">Drop Icon here or <em>click to upload</em></div>
+                <div class="el-upload__text">Drop ScreenShot here or <em>click to upload</em></div>
               </div>
             </el-upload>
             <el-upload
@@ -86,7 +100,7 @@
               <img v-if="state.screenShots.length > 1" :src="state.screenShots[1]" />
               <div v-else>
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                <div class="el-upload__text">Drop Icon here or <em>click to upload</em></div>
+                <div class="el-upload__text">Drop ScreenShot here or <em>click to upload</em></div>
               </div>
             </el-upload>
           </div>
@@ -112,12 +126,14 @@ import * as api from '@/api'
 import { useWalletStore } from '@/stores/useWallet'
 import type { Address } from '@/types'
 import { waitForTransaction, getAccount } from '@wagmi/core'
+import { useRouter } from 'vue-router'
+import { SelectTokenList } from '@/constant/contracts'
 
 const walletStore = useWalletStore()
 const account = computed(() => walletStore.state.account)
+const router = useRouter()
 
 const { createProject, getProjectAddress } = getRouterContractFunctions()
-
 const state = reactive({
   banner: '',
   icon: '',
@@ -127,7 +143,8 @@ const state = reactive({
   website: '',
   briefIntro: '',
   description: '',
-  sharePercentage: '',
+  sharePercentage: 0,
+  maxRights: 0,
   screenShots: []
 })
 const loading = ref(false)
@@ -145,6 +162,21 @@ const handleBannerUpload: UploadProps['onSuccess'] = async (response, uploadFile
   })
   await ossClient.putACL('/filename/' + filename, 'public-read')
   state.banner = result.url
+}
+
+const handlePercentageChange = (value: number) => {
+  console.log({ value })
+  let num = 0
+  if (value < 0) {
+    num = 0
+  } else if (value > 100) {
+    num = 100
+  } else {
+    num = Number(value)
+  }
+
+  console.log({ num })
+  state.sharePercentage = num
 }
 
 const handleIconUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
@@ -172,12 +204,13 @@ const handleScreenShotsUpload: UploadProps['onSuccess'] = async (response, uploa
 const handleCreateProject = async () => {
   try {
     loading.value = true
-    const sharePercentage = utils.parseEther(state.sharePercentage).toString()
+    const sharePercentage = utils.parseEther((state.sharePercentage / 100).toString()).toString()
     const tx = await createProject(
       state.name,
       state.symbol,
       state.token as Address,
-      sharePercentage
+      sharePercentage,
+      state.maxRights
     )
     await waitForTransaction({ hash: tx.hash })
 
@@ -197,9 +230,11 @@ const handleCreateProject = async () => {
       sharePercentage: sharePercentage,
       screenShots: state.screenShots,
       projectAddress,
-      creatorAddress: address
+      creatorAddress: address,
+      maxSupply: state.maxRights
     })
     ElMessage.success('Project create success')
+    router.push('/project/createsuccess')
   } catch (error) {
     console.log({ createProjectError: error })
     ElMessage.error('Project create failed')
@@ -271,7 +306,7 @@ const handleCreateProject = async () => {
     .el-upload-dragger,
     .upload-demo {
       // > img {
-      width: 178px;
+      width: 308px;
       height: 178px;
       padding: 0;
       margin: 0;
