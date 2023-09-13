@@ -17,7 +17,10 @@
           <img :src="props.data.icon" alt="" />
           <div>
             <h5>{{ props.data.name }}</h5>
-            <p>Percent: 90%</p>
+            <p v-if="$props.data.maxSupply === 0">Percent: +∞</p>
+            <p v-else>
+              Percent: {{ ($props.data.totalSupply / $props.data.maxSupply).toFixed(2) }} %
+            </p>
           </div>
         </div>
         <p>
@@ -50,10 +53,11 @@ export interface IProps {
     briefIntro: string
     minted: boolean
     projectAddress: Address
+    maxSupply: number
+    totalSupply: number
   }
 }
 const props = defineProps<IProps>()
-
 const router = useRouter()
 
 function onClick() {

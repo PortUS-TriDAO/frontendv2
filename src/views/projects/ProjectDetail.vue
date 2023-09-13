@@ -11,7 +11,8 @@
         </div>
       </div>
       <div class="mint-detail">
-        <span>Percent : 90%</span>
+        <span v-if="state.maxSupply === 0">+∞</span>
+        <span v-else>Percent : {{ (state.totalSupply / state.maxSupply).toFixed(2) }} %</span>
         <el-button v-if="account" :loading="loading" class="mint-btn" @click="handleMint"
           >Mint</el-button
         >
@@ -61,6 +62,8 @@ interface IState {
   briefIntro: string
   description: string
   projectAddress: Address
+  maxSupply: number
+  totalSupply: number
   screenShots: string[]
 }
 
@@ -71,6 +74,8 @@ let state: IState = reactive({
   briefIntro: '',
   description: '',
   projectAddress: '0x',
+  maxSupply: 0,
+  totalSupply: 0,
   screenShots: []
 })
 
@@ -86,6 +91,8 @@ onMounted(async () => {
     state.description = data.description
     state.screenShots = data.screenShots
     state.projectAddress = data.projectAddress
+    state.maxSupply = data.maxSupply
+    state.totalSupply = data.totalSupply
   }
 })
 

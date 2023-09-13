@@ -39,6 +39,14 @@
             @change="handlePercentageChange"
           ></el-input-number>
         </el-form-item>
+        <el-form-item label="Max Rights">
+          <el-input-number
+            v-model="state.maxRights"
+            :min="0"
+            placeholder="min=0 max=100"
+            @change="handlePercentageChange"
+          ></el-input-number>
+        </el-form-item>
         <el-form-item label="HomePage">
           <el-input placeholder="Home Page" v-model="state.website"></el-input>
         </el-form-item>
@@ -136,6 +144,7 @@ const state = reactive({
   briefIntro: '',
   description: '',
   sharePercentage: 0,
+  maxRights: 0,
   screenShots: []
 })
 const loading = ref(false)
@@ -200,7 +209,8 @@ const handleCreateProject = async () => {
       state.name,
       state.symbol,
       state.token as Address,
-      sharePercentage
+      sharePercentage,
+      state.maxRights
     )
     await waitForTransaction({ hash: tx.hash })
 
@@ -220,7 +230,8 @@ const handleCreateProject = async () => {
       sharePercentage: sharePercentage,
       screenShots: state.screenShots,
       projectAddress,
-      creatorAddress: address
+      creatorAddress: address,
+      maxSupply: state.maxRights
     })
     ElMessage.success('Project create success')
     router.push('/project/createsuccess')
