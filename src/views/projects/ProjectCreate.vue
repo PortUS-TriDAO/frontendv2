@@ -44,7 +44,6 @@
             v-model="state.maxRights"
             :min="0"
             placeholder="min=0 max=100"
-            @change="handlePercentageChange"
           ></el-input-number>
         </el-form-item>
         <el-form-item label="HomePage">
