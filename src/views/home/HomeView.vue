@@ -12,7 +12,7 @@
             </p>
             <span>• Efficient profit allocation through DeCPS</span>
           </div>
-          <button @click="goToCreate">Create</button>
+          <!-- <button @click="goToCreate">Create</button> -->
         </div>
         <div></div>
         <div class="h-box right-box">
@@ -24,7 +24,7 @@
             </p>
             <span>• Earnings are safe and transparent </span>
           </div>
-          <button @click="goToDistribute">Referral</button>
+          <!-- <button @click="goToDistribute">Referral</button> -->
         </div>
       </div>
       <p class="h-desc">Monetize Your Influence Instantly</p>
