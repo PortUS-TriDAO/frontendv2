@@ -1,7 +1,7 @@
 <template>
   <div class="page-project-create">
-    <!-- <div class="banner"></div> -->
-    <span>Project Create</span>
+    <div class="banner"></div>
+    <!-- <span>Project Create</span> -->
     <div class="create-container">
       <el-upload
         class="avatar-uploader"
@@ -73,7 +73,7 @@
               <img v-if="state.icon" :src="state.icon" />
               <div v-else>
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                <div class="el-upload__text">Drop Icon here or <em>click to upload</em></div>
+                <div class="el-upload__text">Drop Icon here</div>
               </div>
             </el-upload>
             <el-upload
@@ -86,7 +86,7 @@
               <img v-if="state.screenShots.length > 0" :src="state.screenShots[0]" />
               <div v-else>
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                <div class="el-upload__text">Drop ScreenShot here or <em>click to upload</em></div>
+                <div class="el-upload__text">Drop ScreenShot here</div>
               </div>
             </el-upload>
             <el-upload
@@ -99,19 +99,27 @@
               <img v-if="state.screenShots.length > 1" :src="state.screenShots[1]" />
               <div v-else>
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                <div class="el-upload__text">Drop ScreenShot here or <em>click to upload</em></div>
+                <div class="el-upload__text">Drop ScreenShot here</div>
               </div>
             </el-upload>
           </div>
         </el-form-item>
-        <el-form-item> </el-form-item>
+        <el-form-item>
+          <el-button v-if="!account" class="submit-btn" @click="connectWallet">connect</el-button>
+          <el-button :loading="loading" v-else class="submit-btn" @click="handleCreateProject">
+            Create Project
+          </el-button>
+        </el-form-item>
       </el-form>
-      <div class="buttons">
-        <button v-if="!account" class="submit-btn" @click="connectWallet">connect</button>
+      <!-- <el-form >
+        <el-button v-if="!account" class="submit-btn" @click="connectWallet">connect</el-button>
         <el-button :loading="loading" v-else class="submit-btn" @click="handleCreateProject">
           Create Project
         </el-button>
-      </div>
+      </el-form> -->
+      <!-- <div class="buttons"> -->
+
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -245,28 +253,20 @@ const handleCreateProject = async () => {
 
 <style lang="less">
 .page-project-create {
-  // .banner {
-  //   background: url('@/assets/images/banner.png') center center no-repeat;
-  //   background-size: cover;
-  //   height: 257px;
-  //   width: 100vw;
-  // }
   > span {
     font-size: 28px;
     font-weight: bold;
     line-height: 150%;
     display: block;
-    width: 1135px;
     margin: 0 auto;
     margin-top: 30px;
     margin-bottom: 16px;
   }
   .create-container {
     margin: 0 auto;
-    padding: 30px;
-    width: 1135px;
+    // padding: 30px;
+    margin-bottom: 60px;
     .avatar-uploader {
-      width: 1135px;
       height: 300px;
       display: flex;
       align-items: center;
@@ -290,49 +290,40 @@ const handleCreateProject = async () => {
       text-align: center;
     }
   }
-  .demo-form-inline .el-input {
-    --el-input-width: 638px;
-  }
-  .demo-form-inline .el-textarea {
-    width: 1310px;
-  }
   .uploads {
-    width: 1340px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    flex: 1;
     .el-upload-dragger,
     .upload-demo {
-      // > img {
-      width: 308px;
       height: 178px;
       padding: 0;
-      margin: 0;
-      // }
+      min-width: 170px;
+      margin: 0 5px;
     }
   }
 
-  .buttons {
-    width: 1340px;
-    margin-top: 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  // .buttons {
+  //   margin-top: 30px;
+  //   display: flex;
+  //   flex-direction: row;
+  //   justify-content: center;
 
-    .submit-btn {
-      margin: 0 auto;
-      width: 655px;
-      height: 48px;
-      background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
-      border-radius: 8px;
-      border: none;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-    }
+  .submit-btn {
+    margin: 0 auto;
+    width: 185px;
+    height: 40px;
+    background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
   }
+  // }
   .el-form {
     // flex-direction: row;
     justify-content: center;

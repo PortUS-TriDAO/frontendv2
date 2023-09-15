@@ -34,7 +34,6 @@ interface IResponse {
 
 onMounted(async () => {
   const { success, data } = (await queryAllProjects({})) as IResponse
-  console.log({ success, data })
   if (success) {
     status.currentPage = data.currentPage
     status.totalPage = data.totalPage
@@ -42,7 +41,7 @@ onMounted(async () => {
   }
 })
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .page-project-list {
   display: flex;
   flex-direction: column;

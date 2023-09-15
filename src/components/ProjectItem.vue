@@ -88,7 +88,6 @@ async function mint(event) {
 }
 
 function showDialog(event) {
-  console.log('showDialog+++', event)
   event.stopPropagation()
   dialogVisible.value = true
 }
