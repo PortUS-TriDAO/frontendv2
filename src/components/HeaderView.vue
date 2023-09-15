@@ -2,20 +2,35 @@
   <div class="page-header">
     <div class="header-container">
       <router-link class="logo" to="/"></router-link>
-      <div class="menus">
-        <router-link to="/">Home</router-link>
-        <router-link to="/project/list">Project</router-link>
-        <router-link to="/mine/projects">Mine</router-link>
+      <div class="menus" ref="elMenu">
+        <router-link to="/" @click="switchMenu(true)">Home</router-link>
+        <router-link to="/project/list" @click="switchMenu(true)">Project</router-link>
+        <router-link to="/mine/projects" @click="switchMenu(true)">Mine</router-link>
         <button v-if="!account" @click="connect">connect</button>
         <button v-else>{{ shortAddress }}</button>
       </div>
+      <button class="btn-menus" @click="switchMenu()">
+        <svg width="40" height="37" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.73913C0 0.778635 0.778636 0 1.73913 0H38.2609C39.2214 0 40 0.778635 40 1.73913C40 2.69963 39.2214 3.47826 38.2609 3.47826H1.73913C0.778637 3.47826 0 2.69963 0 1.73913ZM0 18.2611C0 17.3006 0.778636 16.522 1.73913 16.522H38.2609C39.2214 16.522 40 17.3006 40 18.2611C40 19.2216 39.2214 20.0002 38.2609 20.0002H1.73913C0.778637 20.0002 0 19.2216 0 18.2611ZM1.73913 33.0435C0.778636 33.0435 0 33.8221 0 34.7826C0 35.7431 0.778637 36.5217 1.73913 36.5217H38.2609C39.2214 36.5217 40 35.7431 40 34.7826C40 33.8221 39.2214 33.0435 38.2609 33.0435H1.73913Z" fill="white"/>
+        </svg>
+      </button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed,ref } from 'vue'
 import { useWalletStore } from '@/stores/useWallet'
 const walletStore = useWalletStore()
+
+const elMenu = ref(null)
+function switchMenu(hideForce?:boolean) {
+  const el = elMenu.value;
+  if (el.classList.contains('menus-show') || hideForce === true) {
+    el.classList.remove('menus-show');
+  } else {
+    el.classList.add('menus-show');
+  }
+}
 
 const account = computed(() => walletStore.state.account)
 const shortAddress = computed(
@@ -24,15 +39,17 @@ const shortAddress = computed(
     `${walletStore.state.account.slice(0, 6)}...${walletStore.state.account.slice(-4)}`
 )
 function connect() {
+  switchMenu(true)
   walletStore.connect()
 }
+
 </script>
 <style lang="less">
 .page-header {
   height: 66px;
   background-color: #000425;
   .header-container {
-    width: 1400px;
+    width: var(--container-width);
     margin: 0 auto;
     line-height: 66px;
     display: flex;
@@ -64,6 +81,49 @@ function connect() {
         opacity: 0.5;
         display: inline-block;
         margin-right: 80px;
+      }
+    }
+    .btn-menus {
+      display: none;
+      background-color: transparent;
+      border-style: none;
+      width: 20px;
+      height: 20px;
+      > svg {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
+  @media screen and (max-width: 800px) {
+    height: 60px;
+    padding-left: var(--container-padding-left);
+    padding-right: var(--container-padding-right);
+    .header-container {
+      height: 60px;
+      align-items: center;
+      line-height: 60px;
+      position: relative;
+      z-index: 9;
+      .btn-menus {
+        display: block;
+      }
+      .menus {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: -20px;
+        right: -20px;
+        z-index: 9;
+        padding: 0 20px;
+        background-color: #000425;
+        > a {
+          display: block;
+          margin-right: 0;
+        }
+      }
+      .menus-show {
+        display: block;
       }
     }
   }

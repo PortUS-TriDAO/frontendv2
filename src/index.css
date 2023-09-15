@@ -38,3 +38,16 @@ a {
 .el-textarea__inner {
   background: #ededed;
 }
+
+:root {
+  --container-width: 1200px;
+  --container-padding-left: 0;
+  --container-padding-right: 0;
+}
+@media screen and (max-width: 800px) {
+  :root {
+    --container-width: 100%;
+    --container-padding-left: 20px;
+    --container-padding-right: 20px;
+  }
+}
