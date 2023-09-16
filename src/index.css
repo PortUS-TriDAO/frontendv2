@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 body {
   background-color: #f7f7f7;
@@ -37,4 +38,26 @@ a {
 .el-input__wrapper,
 .el-textarea__inner {
   background: #ededed;
+}
+
+:root {
+  --container-width: 1200px;
+  --container-max-width: 1200px;
+  --container-padding-left: 0;
+  --container-padding-right: 0;
+}
+@media screen and (max-width: 1260px) {
+  :root {
+    --container-width: 100%;
+    --container-padding-left: 30px;
+    --container-padding-right: 30px;
+  }
+}
+@media screen and (max-width: 800px) {
+  :root {
+    --container-width: 100%;
+    --container-max-width: 100vw;
+    --container-padding-left: 16px;
+    --container-padding-right: 16px;
+  }
 }
