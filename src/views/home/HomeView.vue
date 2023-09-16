@@ -91,30 +91,33 @@
       </p>
 
       <div class="sat-content-box">
-        <div class="sat-item-box">
-          <h5>creators</h5>
-          <p>Demands for Traffic and Cost Control</p>
-          <div class="devider"></div>
-          <ul>
-            <li>Adopt CPS</li>
-            <li>New form of distributionplatform</li>
-            <li>Genuine and authentic traffic</li>
-            <li>Reduce TAC</li>
-            <li>No need to worry about conversion rates</li>
-          </ul>
+        <div>
+          <div class="sat-item-box">
+            <h5>creators</h5>
+            <p>Demands for Traffic and Cost Control</p>
+            <div class="devider"></div>
+            <ul>
+              <li>Adopt CPS</li>
+              <li>New form of distributionplatform</li>
+              <li>Genuine and authentic traffic</li>
+              <li>Reduce TAC</li>
+              <li>No need to worry about conversion rates</li>
+            </ul>
+          </div>
         </div>
-
-        <div class="sat-item-box">
-          <h5>distributer</h5>
-          <p>Private Domain m10n</p>
-          <div class="devider"></div>
-          <ul>
-            <li>Income can be verified publically</li>
-            <li>Automated clearing and settlement</li>
-            <li>Ensure settlement security</li>
-            <li>Sustained returns on traffic</li>
-            <li>Reduce business cost</li>
-          </ul>
+        <div>
+          <div class="sat-item-box">
+            <h5>distributer</h5>
+            <p>Private Domain m10n</p>
+            <div class="devider"></div>
+            <ul>
+              <li>Income can be verified publically</li>
+              <li>Automated clearing and settlement</li>
+              <li>Ensure settlement security</li>
+              <li>Sustained returns on traffic</li>
+              <li>Reduce business cost</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -148,7 +151,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
 import { statistic } from '@/api'
+
 import SwiperItem from './components/SwiperItem.vue'
 import { swiperData } from './data'
 
@@ -160,7 +165,7 @@ onMounted(async () => {
   const refer = route.query.refer
   if (!refer) return
   const { success, data } = await statistic({
-    referCode: refer
+    referCode: refer,
   })
 
   if (success) {
@@ -200,11 +205,16 @@ function changeSwiper(direction) {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-width: 1400px;
+    // min-width: 1400px;
     height: 825px;
     background: url('@/assets/images/home-header-bg.png') center center no-repeat;
     background-size: cover;
+    padding-left: var(--container-padding-left);
+    padding-right: var(--container-padding-right);
     > div {
+      max-width: var(--container-max-width);
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       justify-content: center;
       flex-direction: row;
@@ -264,6 +274,75 @@ function changeSwiper(direction) {
       font-size: 18px;
       line-height: 50px;
     }
+    @media screen and (max-width: 800px) {
+      height: auto;
+      width: 100%;
+      overflow: hidden;
+      > div {
+        flex-direction: column;
+        .left-box,
+        .right-box {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          margin-left: 0;
+          margin-right: 0;
+          margin-top: 0;
+          h5 {
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1;
+          }
+          > div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+            > p {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              > span {
+                margin-left: 0;
+                margin-right: 0;
+                font-size: 14px;
+                font-weight: 300;
+                line-height: 25px;
+              }
+            }
+            > span {
+              font-size: 14px;
+              font-weight: 300;
+              line-height: 25px;
+            }
+          }
+          > button {
+            margin-top: 20px;
+            width: 250px;
+            height: 45px;
+            border-radius: 1000px;
+            border: 1.4px solid #91affb;
+            background: rgba(24, 51, 104, 0.6);
+            backdrop-filter: blur(8px);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 25px;
+          }
+        }
+        .left-box {
+          margin-top: 35px;
+        }
+        .right-box {
+          margin-top: 50px;
+        }
+      }
+      .h-desc {
+        margin-top: 25px;
+        font-size: 16px;
+      }
+    }
   }
   .title {
     margin-top: 100px;
@@ -288,6 +367,10 @@ function changeSwiper(direction) {
 
   .operating-box {
     padding-bottom: 216px;
+    width: 100%;
+    max-width: var(--container-max-width);
+    padding-left: var(--container-padding-left);
+    padding-right: var(--container-padding-right);
     .img-left,
     .img-right {
       margin-top: 216px;
@@ -297,7 +380,7 @@ function changeSwiper(direction) {
       border: solid 2px #2e3e5f;
       border-radius: 42px;
       position: relative;
-      width: 1400px;
+      // width: 1400px;
       height: 377px;
       padding: 84px 80px;
       box-sizing: border-box;
@@ -365,6 +448,64 @@ function changeSwiper(direction) {
         background-size: contain;
       }
     }
+    @media screen and (max-width: 800px) {
+      padding-top: 50px;
+      padding-bottom: 50px;
+      width: 100%;
+
+      .title {
+        margin: 0;
+        font-size: 26px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        // margin-bottom: 119px;
+        &::before,
+        &::after {
+          margin: 12px;
+          width: 7px;
+          height: 7px;
+        }
+      }
+
+      .img-right,
+      .img-left {
+        height: auto;
+        margin-top: 114px;
+        padding: 116px 26px 35px 26px;
+        position: relative;
+        > .icon-box {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          right: auto;
+          width: 190px;
+          height: 190px;
+          flex-shrink: 0;
+          transform: translate(-50%, -50%);
+        }
+        > div {
+          position: initial;
+          h5 {
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+          }
+          p {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 25px;
+            width: 100%;
+            margin: 0;
+            margin-top: 15px;
+            color: #c9c9c9;
+          }
+        }
+      }
+    }
   }
 
   .sat-box {
@@ -379,12 +520,16 @@ function changeSwiper(direction) {
       margin-bottom: 102px;
     }
     .sat-content-box {
-      min-width: 1400px;
+      // min-width: 1400px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      > div {
+        width: 50%;
+        padding: 0 25px;
+      }
       .sat-item-box {
-        width: 674px;
+        // width: 674px;
         height: 606px;
         border: solid 2px #2e3e5f;
         border-radius: 42px;
@@ -423,15 +568,94 @@ function changeSwiper(direction) {
         }
       }
     }
+    @media screen and (max-width: 800px) {
+      padding-top: 50px;
+      padding-bottom: 50px;
+      padding-left: var(--container-padding-left);
+      padding-right: var(--container-padding-right);
+      width: 100%;
+
+      .title {
+        margin: 0;
+        font-size: 26px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        // margin-bottom: 119px;
+        &::before,
+        &::after {
+          margin: 12px;
+          width: 7px;
+          height: 7px;
+        }
+      }
+      > p {
+        margin-top: 10px;
+        padding-left: 45px;
+        padding-right: 45px;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
+        text-align: center;
+        margin-bottom: 35px;
+      }
+      .sat-content-box {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        > div {
+          width: 100%;
+          padding: 15px 0;
+        }
+        .sat-item-box {
+          padding: 35px 16px;
+          height: auto;
+          h5 {
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 25px;
+          }
+          p {
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 25px;
+          }
+          .devider {
+            width: 100%;
+            margin: 20px 0;
+          }
+          ul {
+            display: block;
+            > li {
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 25px;
+            }
+          }
+        }
+      }
+    }
   }
   .choose-box {
     height: 1169px;
     background-color: #06173a;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .choose-content {
       margin-top: 60px;
       display: flex;
       flex-direction: row;
       align-items: center;
+      width: 100%;
+      // max-width: var(--container-max-width);
+      max-width: 1400px;
+
       .arrow {
         width: 60px;
         height: 60px;
@@ -451,8 +675,45 @@ function changeSwiper(direction) {
       }
     }
     :deep(.el-carousel__container) {
-      width: 1400px;
+      // width: 1200px;
+      width: 100%;
       height: 789px;
+    }
+    :deep(.el-carousel) {
+      width: 100%;
+      // height: 789px;
+    }
+    @media screen and (max-width: 800px) {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      padding-left: var(--container-padding-left);
+      padding-right: var(--container-padding-right);
+      height: auto;
+
+      .choose-content {
+        margin-top: 30px;
+        :deep(.arrow) {
+          display: none;
+        }
+      }
+      :deep(.el-carousel__container) {
+        height: 820px;
+      }
+
+      .title {
+        margin: 0;
+        font-size: 26px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        // margin-bottom: 119px;
+        &::before,
+        &::after {
+          margin: 12px;
+          width: 7px;
+          height: 7px;
+        }
+      }
     }
   }
 }
