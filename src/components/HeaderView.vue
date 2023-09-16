@@ -4,13 +4,13 @@
       <div class="header-container">
         <router-link class="logo" to="/"></router-link>
         <div class="menus" ref="elMenu">
-          <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
+          <!-- <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
           <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
           <router-link to="/mine/projects" @click.stop="switchMenu(true)">Mine</router-link>
           <button v-if="!account" @click.stop="connect">connect</button>
-          <button v-else @click.stop>{{ shortAddress }}</button>
+          <button v-else @click.stop>{{ shortAddress }}</button> -->
         </div>
-        <button class="btn-menus" @click.stop="switchMenu()">
+        <!-- <button class="btn-menus" @click.stop="switchMenu()">
           <svg
             width="40"
             height="37"
@@ -25,7 +25,7 @@
               fill="white"
             />
           </svg>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -73,6 +73,7 @@ function connect() {
     padding-left: var(--container-padding-left);
     padding-right: var(--container-padding-right);
     margin: 0 auto;
+    height: 66px;
     line-height: 66px;
     display: flex;
     flex-direction: row;
