@@ -44,6 +44,7 @@
     height: auto;
     .footer-container {
       flex-direction: column;
+      justify-content: center;
       .logo {
         margin-top: 0;
       }
