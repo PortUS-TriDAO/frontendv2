@@ -1,29 +1,43 @@
 <template>
   <div class="page-header">
-    <div class="header-container">
-      <router-link class="logo" to="/"></router-link>
-      <div class="menus" ref="elMenu">
-        <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
-        <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
-        <router-link to="/mine/projects" @click.stop="switchMenu(true)">Mine</router-link>
-        <button v-if="!account" @click.stop="connect">connect</button>
-        <button v-else @click.stop>{{ shortAddress }}</button>
+    <div class="header-section">
+      <div class="header-container">
+        <router-link class="logo" to="/"></router-link>
+        <div class="menus" ref="elMenu">
+          <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
+          <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
+          <router-link to="/mine/projects" @click.stop="switchMenu(true)">Mine</router-link>
+          <button v-if="!account" @click.stop="connect">connect</button>
+          <button v-else @click.stop>{{ shortAddress }}</button>
+        </div>
+        <button class="btn-menus" @click.stop="switchMenu()">
+          <svg
+            width="40"
+            height="37"
+            viewBox="0 0 40 37"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M0 1.73913C0 0.778635 0.778636 0 1.73913 0H38.2609C39.2214 0 40 0.778635 40 1.73913C40 2.69963 39.2214 3.47826 38.2609 3.47826H1.73913C0.778637 3.47826 0 2.69963 0 1.73913ZM0 18.2611C0 17.3006 0.778636 16.522 1.73913 16.522H38.2609C39.2214 16.522 40 17.3006 40 18.2611C40 19.2216 39.2214 20.0002 38.2609 20.0002H1.73913C0.778637 20.0002 0 19.2216 0 18.2611ZM1.73913 33.0435C0.778636 33.0435 0 33.8221 0 34.7826C0 35.7431 0.778637 36.5217 1.73913 36.5217H38.2609C39.2214 36.5217 40 35.7431 40 34.7826C40 33.8221 39.2214 33.0435 38.2609 33.0435H1.73913Z"
+              fill="white"
+            />
+          </svg>
+        </button>
       </div>
-      <button class="btn-menus" @click.stop="switchMenu()">
-        <svg width="40" height="37" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.73913C0 0.778635 0.778636 0 1.73913 0H38.2609C39.2214 0 40 0.778635 40 1.73913C40 2.69963 39.2214 3.47826 38.2609 3.47826H1.73913C0.778637 3.47826 0 2.69963 0 1.73913ZM0 18.2611C0 17.3006 0.778636 16.522 1.73913 16.522H38.2609C39.2214 16.522 40 17.3006 40 18.2611C40 19.2216 39.2214 20.0002 38.2609 20.0002H1.73913C0.778637 20.0002 0 19.2216 0 18.2611ZM1.73913 33.0435C0.778636 33.0435 0 33.8221 0 34.7826C0 35.7431 0.778637 36.5217 1.73913 36.5217H38.2609C39.2214 36.5217 40 35.7431 40 34.7826C40 33.8221 39.2214 33.0435 38.2609 33.0435H1.73913Z" fill="white"/>
-        </svg>
-      </button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { computed,ref,onMounted } from 'vue'
-import { useWalletStore } from '@/stores/useWallet'
-const walletStore = useWalletStore()
+import { computed, onMounted, ref } from 'vue';
 
-const elMenu = ref(null)
-function switchMenu(hideForce?:boolean) {
+import { useWalletStore } from '@/stores/useWallet';
+const walletStore = useWalletStore();
+
+const elMenu = ref(null);
+function switchMenu(hideForce?: boolean) {
   const el = elMenu.value;
   if (el.classList.contains('menus-show') || hideForce === true) {
     el.classList.remove('menus-show');
@@ -35,20 +49,19 @@ function switchMenu(hideForce?:boolean) {
 onMounted(() => {
   document.addEventListener('click', () => {
     switchMenu(true);
-  })
+  });
 });
 
-const account = computed(() => walletStore.state.account)
+const account = computed(() => walletStore.state.account);
 const shortAddress = computed(
   () =>
     walletStore.state.account &&
-    `${walletStore.state.account.slice(0, 6)}...${walletStore.state.account.slice(-4)}`
-)
+    `${walletStore.state.account.slice(0, 6)}...${walletStore.state.account.slice(-4)}`,
+);
 function connect() {
-  switchMenu(true)
-  walletStore.connect()
+  switchMenu(true);
+  walletStore.connect();
 }
-
 </script>
 <style lang="less">
 .page-header {
@@ -106,6 +119,12 @@ function connect() {
   }
   @media screen and (max-width: 800px) {
     height: 60px;
+    .header-section {
+      position: fixed;
+      width: 100%;
+      z-index: 99;
+      background-color: #000425;
+    }
     .header-container {
       height: 60px;
       align-items: center;
