@@ -274,6 +274,21 @@ function changeSwiper(direction) {
       font-size: 18px;
       line-height: 50px;
     }
+    @media screen and (max-width: 1260px) {
+      .left-box,
+      .right-box {
+        > div {
+          > p {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+      }
+      .left-box > div > p {
+        align-items: flex-end;
+      }
+    }
     @media screen and (max-width: 800px) {
       height: auto;
       width: 100%;
@@ -395,7 +410,7 @@ function changeSwiper(direction) {
           font-weight: 400;
           font-size: 20px;
           line-height: 36px;
-          width: 678px;
+          // width: 678px;
           color: #c9c9c9;
           font-family: Roboto;
         }
@@ -406,11 +421,12 @@ function changeSwiper(direction) {
       }
     }
     .img-left {
-      > div {
-        position: absolute;
-        right: 80px;
-        // top: 113px;
-      }
+      padding-left: 580px;
+      // > div {
+      //   position: absolute;
+      //   right: 80px;
+      //   // top: 113px;
+      // }
       .icon-box {
         position: absolute;
         left: 86px;
@@ -418,6 +434,7 @@ function changeSwiper(direction) {
       }
     }
     .img-right {
+      padding-right: 580px;
       .icon-box {
         position: absolute;
         right: 86px;

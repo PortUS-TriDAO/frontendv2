@@ -43,7 +43,7 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 70px 90px 80px 90px;
+  padding: 70px 80px 80px 80px;
   box-sizing: border-box;
   > h5 {
     font-size: 36px;
