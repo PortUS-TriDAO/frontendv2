@@ -13,11 +13,14 @@
 <style lang="less">
 .page-footer {
   background: #000425;
-  height: 160px;
   color: #fff;
   .footer-container {
-    width: 1400px;
-    line-height: 160px;
+    width: var(--container-width);
+    padding-left: var(--container-padding-left);
+    padding-right: var(--container-padding-right);
+    // line-height: 160px;
+    height: 160px;
+    line-height: 1.5;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -33,6 +36,23 @@
       color: #fff;
       opacity: 0.8;
       margin-left: 24px;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: auto;
+    .footer-container {
+      flex-direction: column;
+      .logo {
+        margin-top: 0;
+      }
+      > div {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
   }
 }
