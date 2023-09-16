@@ -131,7 +131,7 @@
           ref="carousel"
           arrow="never"
           :autoplay="false"
-          indicator-position="none"
+          indicator-position="bottom"
           loop="false"
         >
           <el-carousel-item v-for="(item, index) in swiperData" :key="index">
@@ -691,6 +691,9 @@ function changeSwiper(direction) {
         }
       }
     }
+    :deep(.el-carousel__indicators) {
+      display: none;
+    }
     :deep(.el-carousel__container) {
       // width: 1200px;
       width: 100%;
@@ -709,12 +712,15 @@ function changeSwiper(direction) {
 
       .choose-content {
         margin-top: 30px;
-        :deep(.arrow) {
+        .arrow {
           display: none;
+        }
+        :deep(.el-carousel__indicators) {
+          display: block;
         }
       }
       :deep(.el-carousel__container) {
-        height: 820px;
+        height: 980px;
       }
 
       .title {

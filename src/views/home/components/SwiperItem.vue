@@ -106,7 +106,7 @@ const props = defineProps({
   @media screen and (max-width: 800px) {
     border-radius: 21px;
     padding: 40px 18px 10px;
-    height: auto;
+    height: 100%;
     h5 {
       font-size: 22px;
       font-style: normal;
