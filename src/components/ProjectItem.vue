@@ -32,81 +32,80 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { getProjectContractFunctions } from '@/stores/useContract'
-import type { Address } from '@/types'
-import { ElMessage } from 'element-plus'
-import { waitForTransaction } from '@wagmi/core'
-import { postProjectMint } from '@/api'
-import { getAccount } from '@wagmi/core'
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { getProjectContractFunctions } from '@/stores/useContract';
+import type { Address } from '@/types';
+import { ElMessage } from 'element-plus';
+import { waitForTransaction } from '@wagmi/core';
+import { postProjectMint } from '@/api';
+import { getAccount } from '@wagmi/core';
 
-const { referrerSign } = getProjectContractFunctions()
-const loading = ref(false)
-const dialogVisible = ref(false)
+const { referrerSign } = getProjectContractFunctions();
+const loading = ref(false);
+const dialogVisible = ref(false);
 
 export interface IProps {
   data: {
-    id: number
-    icon: string
-    name: string
-    briefIntro: string
-    minted: boolean
-    projectAddress: Address
-    maxSupply: number
-    totalSupply: number
-  }
+    id: number;
+    icon: string;
+    name: string;
+    briefIntro: string;
+    minted: boolean;
+    projectAddress: Address;
+    maxSupply: number;
+    totalSupply: number;
+  };
 }
-const props = defineProps<IProps>()
-const router = useRouter()
+const props = defineProps<IProps>();
+const router = useRouter();
 
 function onClick() {
-  router.push({ name: 'ProjectDetail', params: { id: props.data.id } })
+  router.push({ name: 'ProjectDetail', params: { id: props.data.id } });
 }
 
 function onClosed(event) {
-  event.stopPropagation()
+  event.stopPropagation();
 }
 
 async function mint(event) {
-  event.stopPropagation()
+  event.stopPropagation();
   try {
-    loading.value = true
-    const { address } = getAccount()
-    const { hash } = await referrerSign(props.data.projectAddress!)
-    await waitForTransaction({ hash })
+    loading.value = true;
+    const { address } = getAccount();
+    const { hash } = await referrerSign(props.data.projectAddress!);
+    await waitForTransaction({ hash });
     await postProjectMint({
       projectId: props.data.id,
-      account: address
-    })
-    ElMessage.success('Mint Success')
+      account: address,
+    });
+    ElMessage.success('Mint Success');
   } catch (error) {
-    ElMessage.error('Mint failed')
+    ElMessage.error('Mint failed');
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 function showDialog(event) {
-  console.log('showDialog+++', event)
-  event.stopPropagation()
-  dialogVisible.value = true
+  event.stopPropagation();
+  dialogVisible.value = true;
 }
 </script>
 <style lang="less" scoped>
 .project-item {
-  width: 264px;
-  height: 456px;
+  width: 225px;
+  height: 398px;
   border-radius: 10px;
   background-color: #fff;
-  padding: 14px;
+  padding: 8px;
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
   > img {
     display: block;
-    width: 236px;
-    height: 236px;
+    width: 202px;
+    height: 202px;
     border-radius: 10px;
     margin: 0 auto;
   }
@@ -134,7 +133,7 @@ function showDialog(event) {
     font-family: Roboto;
   }
   .el-button {
-    width: 236px;
+    width: 197px;
     color: #fff;
     background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
   }

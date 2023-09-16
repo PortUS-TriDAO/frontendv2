@@ -3,7 +3,7 @@
     <!-- <content-header></content-header> -->
     <div class="project-list-container">
       <el-table row-class-name="row-style" :data="state.myDistributions">
-        <el-table-column prop="icon" label="Logo">
+        <el-table-column prop="icon" label="Logo" width="100">
           <template #default="scope">
             <img class="project-icon" :src="scope.row.icon" alt="" srcset="" />
           </template>
@@ -11,7 +11,7 @@
         <el-table-column prop="name" label="Name"></el-table-column>
         <el-table-column prop="amount" label="Amount"></el-table-column>
         <el-table-column prop="website" label="Home Page"></el-table-column>
-        <el-table-column label="Opeate">
+        <el-table-column label="Opeate" width="280px">
           <template #default="scope">
             <div class="operates">
               <el-button
@@ -135,11 +135,12 @@ async function handleWithdraw(row) {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .page-project-list {
-  width: 1135px;
+  // width: 1135px;
+  min-width: 800px;
   .project-list-container {
-    width: 1135px;
+    // width: 1135px;
   }
   .row-style {
     height: 59px;

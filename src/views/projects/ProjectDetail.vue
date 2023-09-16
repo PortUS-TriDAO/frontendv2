@@ -42,29 +42,29 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive, ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { getProjectDetail, postProjectMint } from '@/api'
-import { getAccount, waitForTransaction } from '@wagmi/core'
-import { getProjectContractFunctions } from '@/stores/useContract'
-import { useWalletStore } from '@/stores/useWallet'
-import { ElMessage } from 'element-plus'
-import type { Address } from '@/types'
-const { referrerSign } = getProjectContractFunctions()
-const route = useRoute()
-const walletStore = useWalletStore()
-const loading = ref(false)
-const account = computed(() => walletStore.state.account)
+import { onMounted, reactive, ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { getProjectDetail, postProjectMint } from '@/api';
+import { getAccount, waitForTransaction } from '@wagmi/core';
+import { getProjectContractFunctions } from '@/stores/useContract';
+import { useWalletStore } from '@/stores/useWallet';
+import { ElMessage } from 'element-plus';
+import type { Address } from '@/types';
+const { referrerSign } = getProjectContractFunctions();
+const route = useRoute();
+const walletStore = useWalletStore();
+const loading = ref(false);
+const account = computed(() => walletStore.state.account);
 interface IState {
-  banner: string
-  icon: string
-  name: string
-  briefIntro: string
-  description: string
-  projectAddress: Address
-  maxSupply: number
-  totalSupply: number
-  screenShots: string[]
+  banner: string;
+  icon: string;
+  name: string;
+  briefIntro: string;
+  description: string;
+  projectAddress: Address;
+  maxSupply: number;
+  totalSupply: number;
+  screenShots: string[];
 }
 
 let state: IState = reactive({
@@ -76,59 +76,63 @@ let state: IState = reactive({
   projectAddress: '0x',
   maxSupply: 0,
   totalSupply: 0,
-  screenShots: []
-})
+  screenShots: [],
+});
 
 onMounted(async () => {
-  const id = route.params.id
-  const result = await getProjectDetail({ id })
-  console.log({ result })
+  const id = route.params.id;
+  const result = await getProjectDetail({ id });
+  console.log({ result });
   if (result.success) {
-    const { data } = result
-    state.banner = data.banner
-    state.icon = data.icon
-    state.name = data.name
-    state.description = data.description
-    state.screenShots = data.screenShots
-    state.projectAddress = data.projectAddress
-    state.maxSupply = data.maxSupply
-    state.totalSupply = data.totalSupply
+    const { data } = result;
+    state.banner = data.banner;
+    state.icon = data.icon;
+    state.name = data.name;
+    state.description = data.description;
+    state.screenShots = data.screenShots;
+    state.projectAddress = data.projectAddress;
+    state.maxSupply = data.maxSupply;
+    state.totalSupply = data.totalSupply;
   }
-})
+});
 
 async function handleMint() {
   try {
-    const id = route.params.id
-    loading.value = true
-    const { address } = getAccount()
-    const { hash } = await referrerSign(state.projectAddress)
-    await waitForTransaction({ hash })
+    const id = route.params.id;
+    loading.value = true;
+    const { address } = getAccount();
+    const { hash } = await referrerSign(state.projectAddress);
+    await waitForTransaction({ hash });
     await postProjectMint({
       projectId: id,
-      account: address
-    })
-    ElMessage.success('Mint Success')
+      account: address,
+    });
+    ElMessage.success('Mint Success');
   } catch (error) {
-    ElMessage.error('Mint failed')
+    ElMessage.error('Mint failed');
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 function connectWallet() {
-  walletStore.connect()
+  walletStore.connect();
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .page-project-detail {
-  min-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
   margin-top: 40px;
   margin-bottom: 70px;
+  @banner-width: 100%;
   > img {
+    position: relative;
     width: 100%;
-    height: 300px;
+    height: @banner-width / 2;
+    max-height: 300px;
     border-radius: 10px;
+    overflow-x: hidden;
   }
   .project-info {
     margin-top: 40px;

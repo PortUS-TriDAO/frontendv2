@@ -83,11 +83,12 @@ async function handleWithdraw(row) {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .page-project-list {
-  width: 1135px;
+  // width: 1135px;
   .project-list-container {
-    width: 1135px;
+    // width: 1135px;
+    min-width: 900px;
   }
   .row-style {
     height: 59px;
