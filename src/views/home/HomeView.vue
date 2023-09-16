@@ -149,47 +149,47 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
-import { statistic } from '@/api'
+import { statistic } from '@/api';
 
-import SwiperItem from './components/SwiperItem.vue'
-import { swiperData } from './data'
+import SwiperItem from './components/SwiperItem.vue';
+import { swiperData } from './data';
 
-const route = useRoute()
-const router = useRouter()
-const carousel = ref(null)
+const route = useRoute();
+const router = useRouter();
+const carousel = ref(null);
 
 onMounted(async () => {
-  const refer = route.query.refer
-  if (!refer) return
+  const refer = route.query.refer;
+  if (!refer) return;
   const { success, data } = await statistic({
     referCode: refer,
-  })
+  });
 
   if (success) {
     const redirectURL =
       data.redirectUrl.slice(0, 4) === 'http'
         ? `${data.redirectUrl}?refer=${refer}`
-        : `http://${data.redirectUrl}?refer=${refer}`
-    console.log('redirectURL', redirectURL)
-    window.location.href = redirectURL
+        : `http://${data.redirectUrl}?refer=${refer}`;
+    console.log('redirectURL', redirectURL);
+    window.location.href = redirectURL;
   }
-})
+});
 
 function goToCreate() {
-  router.push('/project/create')
+  router.push('/project/create');
 }
 function goToDistribute() {
-  router.push('/mine/distribution')
+  router.push('/mine/distribution');
 }
 
 function changeSwiper(direction) {
   if (direction === 'left') {
-    carousel.value.prev()
+    carousel.value.prev();
   } else if (direction === 'right') {
-    carousel.value.next()
+    carousel.value.next();
   }
 }
 </script>
@@ -671,7 +671,7 @@ function changeSwiper(direction) {
       align-items: center;
       width: 100%;
       // max-width: var(--container-max-width);
-      max-width: 1400px;
+      // max-width: 1400px;
 
       .arrow {
         width: 60px;

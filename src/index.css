@@ -11,7 +11,7 @@ a {
 }
 
 .main-width {
-  min-width: 1400px;
+  /* min-width: 1400px; */
   margin: 0 auto;
 }
 .flex-row {
@@ -23,7 +23,7 @@ a {
   flex-direction: column;
 }
 .main-container {
-  min-width: 1400px;
+  /* min-width: 1400px; */
   margin: 0 auto;
   border-radius: 10px;
   background: #ffffff;

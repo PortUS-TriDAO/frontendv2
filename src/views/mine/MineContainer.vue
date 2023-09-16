@@ -23,7 +23,6 @@
 <script setup lang="ts"></script>
 <style lang="less">
 .mine-container {
-  // width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -34,7 +33,8 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      width: 217px;
+      width: 210px;
+      margin-right: 17px;
       > li {
         height: 40px;
         margin-bottom: 10px;
@@ -73,6 +73,7 @@
   }
   .mine-content {
     flex: 1;
+    width: 976px;
   }
 }
 </style>

@@ -12,41 +12,41 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
-import ProjectItem, { type IProps as IProjectItemProps } from '@/components/ProjectItem.vue'
-import ContentHeader from '@/components/ContentHeader.vue'
-import { queryAllProjects } from '@/api'
+import { onMounted, reactive } from 'vue';
+import ProjectItem, { type IProps as IProjectItemProps } from '@/components/ProjectItem.vue';
+import ContentHeader from '@/components/ContentHeader.vue';
+import { queryAllProjects } from '@/api';
 
 const status = reactive({
   projectList: [],
   currentPage: 1,
-  totalPage: 20
-})
+  totalPage: 20,
+});
 
 interface IResponse {
-  success: boolean
+  success: boolean;
   data: {
-    currentPage: number
-    totalPage: number
-    rows: IProjectItemProps[]
-  }
+    currentPage: number;
+    totalPage: number;
+    rows: IProjectItemProps[];
+  };
 }
 
 onMounted(async () => {
-  const { success, data } = (await queryAllProjects({})) as IResponse
+  const { success, data } = (await queryAllProjects({})) as IResponse;
   if (success) {
-    status.currentPage = data.currentPage
-    status.totalPage = data.totalPage
-    status.projectList = data.rows
+    status.currentPage = data.currentPage;
+    status.totalPage = data.totalPage;
+    status.projectList = data.rows;
   }
-})
+});
 </script>
 <style lang="less" scoped>
 .page-project-list {
   display: flex;
   flex-direction: column;
   background: #f7f7f7;
-  width: 1400px;
+  width: 1200px;
   .project-list-header {
     display: flex;
     flex-direction: row;
@@ -62,15 +62,14 @@ onMounted(async () => {
     }
   }
   .item-list-box {
-    width: 1400px;
     ul {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       list-style: none;
       > li {
-        margin-right: 20px;
-        margin-bottom: 20px;
+        margin-right: 17px;
+        margin-bottom: 19px;
         &:nth-child(5n) {
           margin-right: 0px;
         }

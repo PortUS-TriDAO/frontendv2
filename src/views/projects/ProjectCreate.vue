@@ -111,36 +111,27 @@
           </el-button>
         </el-form-item>
       </el-form>
-      <!-- <el-form >
-        <el-button v-if="!account" class="submit-btn" @click="connectWallet">connect</el-button>
-        <el-button :loading="loading" v-else class="submit-btn" @click="handleCreateProject">
-          Create Project
-        </el-button>
-      </el-form> -->
-      <!-- <div class="buttons"> -->
-
-      <!-- </div> -->
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, computed, ref } from 'vue'
-import { type UploadProps, ElMessage } from 'element-plus'
-import ossClient from '@/utils/ossClient'
-import { utils } from 'ethers'
-import { getRouterContractFunctions } from '@/stores/useContract'
-import * as api from '@/api'
-import { useWalletStore } from '@/stores/useWallet'
-import type { Address } from '@/types'
-import { waitForTransaction, getAccount } from '@wagmi/core'
-import { useRouter } from 'vue-router'
-import { SelectTokenList } from '@/constant/contracts'
+import { reactive, computed, ref } from 'vue';
+import { type UploadProps, ElMessage } from 'element-plus';
+import ossClient from '@/utils/ossClient';
+import { utils } from 'ethers';
+import { getRouterContractFunctions } from '@/stores/useContract';
+import * as api from '@/api';
+import { useWalletStore } from '@/stores/useWallet';
+import type { Address } from '@/types';
+import { waitForTransaction, getAccount } from '@wagmi/core';
+import { useRouter } from 'vue-router';
+import { SelectTokenList } from '@/constant/contracts';
 
-const walletStore = useWalletStore()
-const account = computed(() => walletStore.state.account)
-const router = useRouter()
+const walletStore = useWalletStore();
+const account = computed(() => walletStore.state.account);
+const router = useRouter();
 
-const { createProject, getProjectAddress } = getRouterContractFunctions()
+const { createProject, getProjectAddress } = getRouterContractFunctions();
 const state = reactive({
   banner: '',
   icon: '',
@@ -152,78 +143,75 @@ const state = reactive({
   description: '',
   sharePercentage: 0,
   maxRights: 0,
-  screenShots: []
-})
-const loading = ref(false)
+  screenShots: [],
+});
+const loading = ref(false);
 
 const connectWallet = () => {
-  walletStore.connect()
-}
+  walletStore.connect();
+};
 
 const handleBannerUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
-  const filename = response.file.name
+  const filename = response.file.name;
   const result = await ossClient.put('/filename/' + filename, response.file, {
     headers: {
-      'x-oss-object-acl': 'public-read'
-    }
-  })
-  await ossClient.putACL('/filename/' + filename, 'public-read')
-  state.banner = result.url
-}
+      'x-oss-object-acl': 'public-read',
+    },
+  });
+  await ossClient.putACL('/filename/' + filename, 'public-read');
+  state.banner = result.url;
+};
 
 const handlePercentageChange = (value: number) => {
-  console.log({ value })
-  let num = 0
+  let num = 0;
   if (value < 0) {
-    num = 0
+    num = 0;
   } else if (value > 100) {
-    num = 100
+    num = 100;
   } else {
-    num = Number(value)
+    num = Number(value);
   }
-
-  console.log({ num })
-  state.sharePercentage = num
-}
+  state.sharePercentage = num;
+};
 
 const handleIconUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
-  const filename = response.file.name
+  const filename = response.file.name;
   const result = await ossClient.put('/filename/' + filename, response.file, {
     headers: {
-      'x-oss-object-acl': 'public-read'
-    }
-  })
-  await ossClient.putACL('/filename/' + filename, 'public-read')
-  state.icon = result.url
-}
+      'x-oss-object-acl': 'public-read',
+    },
+  });
+  await ossClient.putACL('/filename/' + filename, 'public-read');
+  state.icon = result.url;
+};
 
 const handleScreenShotsUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
-  const filename = response.file.name
+  const filename = response.file.name;
   const result = await ossClient.put('/filename/' + filename, response.file, {
     headers: {
-      'x-oss-object-acl': 'public-read'
-    }
-  })
-  await ossClient.putACL('/filename/' + filename, 'public-read')
-  state.screenShots.push(result.url)
-}
+      'x-oss-object-acl': 'public-read',
+    },
+  });
+  await ossClient.putACL('/filename/' + filename, 'public-read');
+  state.screenShots.push(result.url);
+};
 
 const handleCreateProject = async () => {
   try {
-    loading.value = true
-    const sharePercentage = utils.parseEther((state.sharePercentage / 100).toString()).toString()
+    loading.value = true;
+    const sharePercentage = utils.parseEther((state.sharePercentage / 100).toString()).toString();
     const tx = await createProject(
       state.name,
       state.symbol,
       state.token as Address,
       sharePercentage,
-      state.maxRights
-    )
-    await waitForTransaction({ hash: tx.hash })
+      state.maxRights,
+    );
+    await waitForTransaction({ hash: tx.hash });
 
     // 获取本次创建项目的地址
-    const projectAddress = await getProjectAddress()
-    const { address } = getAccount()
+    const projectAddress = await getProjectAddress();
+    const { address } = getAccount();
     // 保存数据到服务端
     await api.createProject({
       banner: state.banner,
@@ -238,17 +226,17 @@ const handleCreateProject = async () => {
       screenShots: state.screenShots,
       projectAddress,
       creatorAddress: address,
-      maxSupply: state.maxRights
-    })
-    ElMessage.success('Project create success')
-    router.push('/project/createsuccess')
+      maxSupply: state.maxRights,
+    });
+    ElMessage.success('Project create success');
+    router.push('/project/createsuccess');
   } catch (error) {
-    console.log({ createProjectError: error })
-    ElMessage.error('Project create failed')
+    console.log({ createProjectError: error });
+    ElMessage.error('Project create failed');
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 </script>
 
 <style lang="less">
@@ -300,17 +288,10 @@ const handleCreateProject = async () => {
     .upload-demo {
       height: 178px;
       padding: 0;
-      min-width: 170px;
+      width: 170px;
       margin: 0 5px;
     }
   }
-
-  // .buttons {
-  //   margin-top: 30px;
-  //   display: flex;
-  //   flex-direction: row;
-  //   justify-content: center;
-
   .submit-btn {
     margin: 0 auto;
     width: 185px;
@@ -323,9 +304,7 @@ const handleCreateProject = async () => {
     font-weight: 500;
     cursor: pointer;
   }
-  // }
   .el-form {
-    // flex-direction: row;
     justify-content: center;
   }
 }
