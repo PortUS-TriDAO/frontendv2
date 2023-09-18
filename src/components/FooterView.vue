@@ -3,8 +3,8 @@
     <div class="footer-container">
       <div class="logo"></div>
       <div>
-        <span>List of services that we’re using to calculate data:</span>
-        <span> © 2018-2023 DappRadar, UAB </span>
+        <!-- <span>List of services that we’re using to calculate data:</span> -->
+        <span> © 2023 PortUS </span>
         <span class="icons">
           <a href="https://twitter.com/PortUS_DeCPS" target="_blank" class="icon-twitter"></a>
           <a href="https://t.co/lippmVY1t1" target="_blank" class="icon-discord"></a>
