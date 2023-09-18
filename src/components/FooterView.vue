@@ -5,12 +5,16 @@
       <div>
         <span>List of services that we’re using to calculate data:</span>
         <span> © 2018-2023 DappRadar, UAB </span>
+        <span class="icons">
+          <a href="https://twitter.com/PortUS_DeCPS" target="_blank" class="icon-twitter"></a>
+          <a href="https://t.co/lippmVY1t1" target="_blank" class="icon-discord"></a>
+        </span>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts"></script>
-<style lang="less">
+<style lang="less" scoped>
 .page-footer {
   background: #000425;
   color: #fff;
@@ -36,6 +40,27 @@
       color: #fff;
       opacity: 0.8;
       margin-left: 24px;
+    }
+    .icons {
+      display: inline-block;
+      > a {
+        display: inline-block;
+        width: 25px;
+        line-height: 25px;
+        margin-right: 10px;
+      }
+      .icon-discord {
+        background: url('@/assets/images/icon-discord.png') center center no-repeat;
+        background-size: contain;
+        width: 25px;
+        height: 25px;
+      }
+      .icon-twitter {
+        background: url('@/assets/images/icon-footer-twitter.png') center center no-repeat;
+        background-size: contain;
+        width: 25px;
+        height: 25px;
+      }
     }
   }
   @media screen and (max-width: 800px) {
