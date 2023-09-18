@@ -115,17 +115,18 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, computed, ref } from 'vue';
-import { type UploadProps, ElMessage } from 'element-plus';
-import ossClient from '@/utils/ossClient';
+import { getAccount, waitForTransaction } from '@wagmi/core';
+import { ElMessage, type UploadProps } from 'element-plus';
 import { utils } from 'ethers';
-import { getRouterContractFunctions } from '@/stores/useContract';
+import { computed, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 import * as api from '@/api';
+import { SelectTokenList } from '@/constant/contracts';
+import { getRouterContractFunctions } from '@/stores/useContract';
 import { useWalletStore } from '@/stores/useWallet';
 import type { Address } from '@/types';
-import { waitForTransaction, getAccount } from '@wagmi/core';
-import { useRouter } from 'vue-router';
-import { SelectTokenList } from '@/constant/contracts';
+import ossClient from '@/utils/ossClient';
 
 const walletStore = useWalletStore();
 const account = computed(() => walletStore.state.account);
@@ -222,7 +223,7 @@ const handleCreateProject = async () => {
       website: state.website,
       briefIntro: state.briefIntro,
       description: state.description,
-      sharePercentage: sharePercentage,
+      sharePercentage: state.sharePercentage / 100,
       screenShots: state.screenShots,
       projectAddress,
       creatorAddress: address,
