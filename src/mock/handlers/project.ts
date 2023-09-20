@@ -7,7 +7,7 @@ const handlers: RestHandler[] = [
       ctx.json({
         success: true,
         data: {
-          totalPage: 20,
+          total: 2000,
           currentPage: 5,
           rows: [
             {
@@ -73,6 +73,43 @@ const handlers: RestHandler[] = [
             },
           ],
         },
+      }),
+    );
+  }),
+
+  // 获取项目详情
+  rest.get('/project/detail', (req, res, ctx) => {
+    const { id } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          banner: 'https://dynamic-kvl-assets.dappradar.com/a831cd86241745cb81ce22a4b88b1095.png',
+          icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+          name: 'Alen World',
+          website: 'https://farmersworld.io/',
+          briefIntro:
+            'Farmers World is the first farming game to function on the NFTs platformRead more.',
+          description:
+            'Farmers World is the first farming game to function on the NFTs platform. Pick for yourself suitable tools, exploit various resourcesbuy land to build enormous farms, and enjoy the fascinating experiences of a farmer working in Farmers World’s Ecosystem.',
+          screenShots: [
+            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png',
+            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image2-500x315_ae97fa670d1af1c025ce23ad1fc12856.png',
+            'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-image2-500x315_dd3a0ade17b2cc54e0a783b6ee7fa2b4.png',
+            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png',
+          ],
+        },
+      }),
+    );
+  }),
+
+  // mint成功以后像服务端上报数据
+  rest.post('/project/mint', (req, res, ctx) => {
+    const { projectId, account } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: 'mint success',
       }),
     );
   }),
@@ -185,103 +222,6 @@ const handlers: RestHandler[] = [
       ctx.json({
         success: true,
         data: 'publish success',
-      }),
-    );
-  }),
-
-  // Mine页面 两个收益统计
-  rest.get('/mine/profits', (req, res, ctx) => {
-    // 当前登录KOL的地址
-    const { address } = req.params;
-    return res(
-      ctx.json({
-        success: true,
-        data: {
-          publishedIncome: 4234234, // 创建项目总收益
-          participatedIncome: 255345345, // 参与项目总收益
-        },
-      }),
-    );
-  }),
-
-  // 获取我提交的商业合约列表
-  rest.get('/mine/submited', (req, res, ctx) => {
-    const { address } = req.params;
-    return res(
-      ctx.json({
-        success: true,
-        data: {
-          rows: [
-            {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
-            },
-            {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
-            },
-          ],
-          currentPage: 2,
-          total: 1000, // 总条目数
-        },
-      }),
-    );
-  }),
-
-  // 获取我参与的商业合约列表
-  rest.get('/mine/participat', (req, res, ctx) => {
-    const { address } = req.params;
-    return res(
-      ctx.json({
-        success: true,
-        data: {
-          rows: [
-            {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
-            },
-            {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
-            },
-          ],
-          currentPage: 2,
-          total: 1000, // 总条目数
-        },
-      }),
-    );
-  }),
-
-  // 获取我参与的/创建的商业合约详情
-  rest.get('/mine/commercial/detial', (req, res, ctx) => {
-    const { address, tokenId } = req.params;
-    return res(
-      ctx.json({
-        success: true,
-        data: {
-          tokenId,
-          icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-          income: 2938482304,
-          rights: [
-            {
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              isSold: true,
-            },
-          ],
-        },
       }),
     );
   }),

@@ -1,9 +1,11 @@
-import { RestHandler } from 'msw'
-import projectHandlers from './project'
+import { RestHandler } from 'msw';
 
-let handlers: RestHandler[] = []
-for (const handler of [projectHandlers]) {
-  handlers = handlers.concat(handler)
+import mineHandlers from './mine';
+import projectHandlers from './project';
+
+let handlers: RestHandler[] = [];
+for (const handler of [projectHandlers, mineHandlers]) {
+  handlers = handlers.concat(handler);
 }
 
-export default handlers
+export default handlers;
