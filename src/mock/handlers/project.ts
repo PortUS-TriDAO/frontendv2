@@ -145,32 +145,34 @@ const handlers: RestHandler[] = [
     return res(
       ctx.json({
         success: true,
-        data: [
-          {
-            tokenId: 1,
-            type: 1, // 1 表示SKU  2 表示SPU
-            name: 'sphpp',
-            icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-          },
-          {
-            tokenId: 2,
-            type: 1,
-            name: 'sphpp',
-            icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-          },
-          {
-            tokenId: 3,
-            type: 1,
-            name: 'sphpp',
-            icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-          },
-          {
-            tokenId: 4,
-            type: 1,
-            name: 'sphpp',
-            icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-          },
-        ],
+        data: {
+          rows: [
+            {
+              tokenId: 1,
+              type: 1, // 1 表示SKU  2 表示SPU
+              name: 'sphpp',
+              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
+            },
+            {
+              tokenId: 2,
+              type: 1,
+              name: 'sphpp',
+              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
+            },
+            {
+              tokenId: 3,
+              type: 1,
+              name: 'sphpp',
+              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
+            },
+            {
+              tokenId: 4,
+              type: 1,
+              name: 'sphpp',
+              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
+            },
+          ],
+        },
       }),
     );
   }),

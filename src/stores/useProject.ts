@@ -9,6 +9,8 @@ export const useProjectStore = defineStore('project', () => {
     currentPage: 5,
     projectList: [],
     projectDetail: {},
+    skuList: [],
+    skuDetail: {},
   });
 
   // 查询项目列表
@@ -36,5 +38,17 @@ export const useProjectStore = defineStore('project', () => {
     state.projectDetail = data;
   }
 
-  return { state, getProjects };
+  async function getSkuList(id: string) {
+    const { success, data } = await projectApi.getSkuList({ id });
+    if (!success) throw new Error('request failed');
+    state.skuList = data.rows;
+  }
+
+  async function getSkuDetail(tokenId: string) {
+    const { success, data } = await projectApi.getSkuDetail({ tokenId });
+    if (!success) throw new Error(data);
+    state.skuDetail = data;
+  }
+
+  return { state, getProjects, createProject, getProjectDetail, getSkuDetail, getSkuList };
 });
