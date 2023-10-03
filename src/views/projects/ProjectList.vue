@@ -15,7 +15,7 @@
 import { onMounted, reactive } from 'vue';
 import ProjectItem, { type IProps as IProjectItemProps } from '@/components/ProjectItem.vue';
 import ContentHeader from '@/components/ContentHeader.vue';
-import { queryAllProjects } from '@/api';
+import { getProjects } from '@/api';
 
 const status = reactive({
   projectList: [],
@@ -33,7 +33,7 @@ interface IResponse {
 }
 
 onMounted(async () => {
-  const { success, data } = (await queryAllProjects({})) as IResponse;
+  const { success, data } = (await getProjects({})) as IResponse;
   if (success) {
     status.currentPage = data.currentPage;
     status.totalPage = data.totalPage;
