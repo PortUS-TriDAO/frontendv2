@@ -23,7 +23,7 @@
     padding-left: var(--container-padding-left);
     padding-right: var(--container-padding-right);
     // line-height: 160px;
-    height: 160px;
+    height: 66px;
     line-height: 1.5;
     margin: 0 auto;
     display: flex;

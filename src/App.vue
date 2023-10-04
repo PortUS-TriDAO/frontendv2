@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import HeaderView from './components/HeaderView.vue'
-import FooterView from './components/FooterView.vue'
+import { RouterView } from 'vue-router';
+
+import FooterView from './components/FooterView.vue';
+import HeaderView from './components/HeaderView.vue';
 </script>
 
 <template>
@@ -14,7 +15,7 @@ import FooterView from './components/FooterView.vue'
   </div>
 </template>
 
-<style scoped>
+<style lang="less" scoped>
 .container {
   min-height: 100vh;
   display: flex;
