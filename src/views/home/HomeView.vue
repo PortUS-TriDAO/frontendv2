@@ -2,150 +2,182 @@
   <div class="page-home">
     <!-- Header Box -->
     <div class="header-box">
-      <div>
+      <h2>Monetize Your Influence Instantly</h2>
+      <div class="h-content">
         <div class="h-box left-box">
-          <H5>Creator</H5>
+          <h3>Creator</h3>
           <div>
-            <p>
-              <span>• Ouick and easy way to distribute tasks</span>
-              <span>• Access to adudant traffic cache</span>
-            </p>
-            <span>• Efficient profit allocation through DeCPS</span>
+            <p>• Ouick and easy way to distribute tasks</p>
+            <p>• Access to adudant traffic cache</p>
+            <p>• Efficient profit allocation through DeCPS</p>
           </div>
-          <button @click="goToCreate">Create</button>
+          <button class="btn" @click="goToCreate">Create</button>
         </div>
-        <div></div>
+        <div class="h-divider"></div>
         <div class="h-box right-box">
-          <h5>Distributer</h5>
+          <h3>Distributer</h3>
           <div>
-            <p>
-              <span>• Everyone can become incluencer</span>
-              <span>• Monetization of private domain traffic</span>
-            </p>
-            <span>• Earnings are safe and transparent </span>
+            <p>• Everyone can become incluencer</p>
+            <p>• Monetization of private domain traffic</p>
+            <p>• Earnings are safe and transparent</p>
           </div>
-          <button @click="goToDistribute">Referral</button>
+          <button class="btn" @click="goToDistribute">Referral</button>
         </div>
       </div>
-      <p class="h-desc">Monetize Your Influence Instantly</p>
     </div>
-
     <!-- Operating Mechanism -->
-    <div class="operating-box">
-      <h2 class="title">Operating Mechanism</h2>
-      <div class="img-right decps">
-        <div>
-          <h5>DeCPS</h5>
-          <p>
-            By leveraging on the DeCPS mechanism to mint NFT, we help incorporate products to users
-            and empower private domain influencers to swiftly and securely monetize their traffic.
-            At the same time, we return the pricing power of real traffic back to demand and supply
-            sides.
-          </p>
-        </div>
-        <div class="icon-box"></div>
-      </div>
-      <div class="img-left across-mutiple">
-        <div class="icon-box"></div>
-        <div>
-          <h5>Across mutiple sector and industries</h5>
-          <p>
-            PortUS can provide services for all industry verticals, including but not limited to
-            gaming, ecommerce, art and education, in both web2 and web3
-          </p>
-        </div>
-      </div>
-      <div class="img-right permiseless">
-        <div>
-          <h5>Permissionless</h5>
-          <p>
-            Our goal is to eliminate traditional centralized web 2.0 platforms where a few dominant
-            players control the network and the means of publication and distribution for products.
-            Instead, we envision a new open ecosystem where all members will have equal rights to
-            participate in the formation of the network, publication of products, and obtain
-            distribution rights
-          </p>
-        </div>
-        <div class="icon-box"></div>
-      </div>
-      <div class="img-left gamification">
-        <div class="icon-box"></div>
-        <div>
-          <h5>Gamification-based incentive system</h5>
-          <p>
-            We will utilize interior gamification to motivate all participants on the platform,
-            including project owners, traffic leaders, and consumers. We will implement gaming
-            features such as user groups, leaderboards, and achievement systems to continuously
-            boost audience engagement, loyalty, and enjoyment.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Satisfies Industry Needs -->
-    <div class="sat-box">
-      <h2 class="title">Satisfies Industry Needs</h2>
-      <p>
-        The content distribution and traffic monetization demands of larger-scale, smaller-volume
-        project creators and traffic leaders.
-      </p>
-
-      <div class="sat-content-box">
-        <div>
-          <div class="sat-item-box">
-            <h5>creators</h5>
-            <p>Demands for Traffic and Cost Control</p>
-            <div class="devider"></div>
-            <ul>
-              <li>Adopt CPS</li>
-              <li>New form of distributionplatform</li>
-              <li>Genuine and authentic traffic</li>
-              <li>Reduce TAC</li>
-              <li>No need to worry about conversion rates</li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <div class="sat-item-box">
-            <h5>distributer</h5>
-            <p>Private Domain m10n</p>
-            <div class="devider"></div>
-            <ul>
-              <li>Income can be verified publically</li>
-              <li>Automated clearing and settlement</li>
-              <li>Ensure settlement security</li>
-              <li>Sustained returns on traffic</li>
-              <li>Reduce business cost</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Why choose PortUS -->
-    <div class="choose-box">
-      <h2 class="title">Why choose PortUS</h2>
-      <div class="choose-content">
-        <div class="arrow arrow-left" @click="changeSwiper('left')"></div>
+    <section>
+      <h2>Operating Mechanism</h2>
+      <div class="section-content">
         <el-carousel
           ref="carousel"
           arrow="never"
           :autoplay="false"
-          indicator-position="bottom"
-          loop="false"
+          indicator-position="outside"
+          :loop="false"
+          height="500"
         >
-          <el-carousel-item v-for="(item, index) in swiperData" :key="index">
-            <swiper-item
-              :title1="item.title1"
-              :title2="item.title2"
-              :desc="item.desc"
-              :list="item.list"
-            ></swiper-item>
+          <el-carousel-item>
+            <div class="op-box">
+              <div class="op-box-content">
+                <div>
+                  <h3>DeCPS</h3>
+                  <p>
+                    By leveraging on the DeCPS mechanism to mint NFT, we help incorporate products
+                    to users and empower private domain influencers to swiftly and securely monetize
+                    their traffic. At the same time, we return the pricing power of real traffic
+                    back to demand and supply sides.
+                  </p>
+                </div>
+                <div class="op-box-icon"></div>
+              </div>
+            </div>
+          </el-carousel-item>
+          <el-carousel-item>
+            <div class="op-box">
+              <div class="op-box-content">
+                <div>
+                  <h3>Across mutiple sector and industries</h3>
+                  <p>
+                    PortUS can provide services for all industry verticals, including but not
+                    limited to gaming, ecommerce, art and education, in both web2 and web3
+                  </p>
+                </div>
+                <div class="op-box-icon across-mutiple"></div>
+              </div>
+            </div>
+          </el-carousel-item>
+          <el-carousel-item>
+            <div class="op-box">
+              <div class="op-box-content">
+                <div>
+                  <h3>Permissionless</h3>
+                  <p>
+                    Our goal is to eliminate traditional centralized web 2.0 platforms where a few
+                    dominant players control the network and the means of publication and
+                    distribution for products. Instead, we envision a new open ecosystem where all
+                    members will have equal rights to participate in the formation of the network,
+                    publication of products, and obtain distribution rights.
+                  </p>
+                </div>
+                <div class="op-box-icon permissionless"></div>
+              </div>
+            </div>
+          </el-carousel-item>
+          <el-carousel-item>
+            <div class="op-box">
+              <div class="op-box-content">
+                <div>
+                  <h3>Gamification-based incentive system</h3>
+                  <p>
+                    We will utilize interior gamification to motivate all participants on the
+                    platform, including project owners, traffic leaders, and consumers. We will
+                    implement gaming features such as user groups, leaderboards, and achievement
+                    systems to continuously boost audience engagement, loyalty, and enjoyment.
+                  </p>
+                </div>
+                <div class="op-box-icon gamification"></div>
+              </div>
+            </div>
           </el-carousel-item>
         </el-carousel>
-        <div class="arrow arrow-right" @click="changeSwiper('right')"></div>
       </div>
-    </div>
+    </section>
+    <!-- Satisfies Industry Needs -->
+    <section class="satisfies">
+      <h2>Satisfies Industry Needs</h2>
+      <p>
+        The content distribution and traffic monetization demands of larger-scale, smaller-volume
+        project creators and traffic leaders.
+      </p>
+      <div class="satisfies-content">
+        <div>
+          <h3>creators</h3>
+          <p>Demands for Traffic and Cost Control</p>
+          <div class="satisfies-devier"></div>
+          <ul>
+            <li>Adopt CPS</li>
+            <li>New form of distributionplatform</li>
+            <li>Genuine and authentic traffic</li>
+            <li>Reduce TAC</li>
+            <li>No need to worry about conversion rates</li>
+          </ul>
+        </div>
+        <div>
+          <h3>distributer</h3>
+          <p>Private Domain m10n</p>
+          <div class="satisfies-devier"></div>
+          <ul>
+            <li>Income can be verified publically</li>
+            <li>Automated clearing and settlement</li>
+            <li>Ensure settlement security</li>
+            <li>Sustained returns on traffic</li>
+            <li>Reduce business cost</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Latest News -->
+    <section class="news">
+      <h2>Latest News</h2>
+    </section>
+    <!-- Satisfies Industry Needs -->
+    <section class="case">
+      <h2>Customer Case</h2>
+      <div class="section-content">
+        <div class="case-content">
+          <div>
+            <img src="./assets/case.png" />
+            <div style="text-align: center; padding-top: 8px">Brief introduction</div>
+          </div>
+          <div class="case-detail">
+            <h3>RAINBOX SIX OCACA</h3>
+            <div>
+              <label>Items</label>
+              <span style="margin-right: 116px">1,259</span>
+              <label>Chain</label>
+              <strong>Ethereum</strong>
+            </div>
+            <div>
+              <label>Share precentage:</label>
+              <span>xx%</span>
+            </div>
+            <button>Mint</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Monetize Your Influence Instantly -->
+    <section class="monetize">
+      <h2>Monetize Your Influence Instantly</h2>
+      <h1>Start Earning</h1>
+      <div class="section-content">
+        <div class="monetize-action">
+          <button class="btn">Submit</button>
+          <button class="btn">Referral</button>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 <script setup lang="ts">
@@ -154,8 +186,8 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { statistic } from '@/api';
 
-import SwiperItem from './components/SwiperItem.vue';
-import { swiperData } from './data';
+// import SwiperItem from './components/SwiperItem.vue';
+// import { swiperData } from './data';
 
 const route = useRoute();
 const router = useRouter();
@@ -185,14 +217,15 @@ function goToDistribute() {
   router.push('/mine/distribution');
 }
 
-function changeSwiper(direction) {
-  if (direction === 'left') {
-    carousel.value.prev();
-  } else if (direction === 'right') {
-    carousel.value.next();
-  }
-}
+// function changeSwiper(direction) {
+//   if (direction === 'left') {
+//     carousel.value.prev();
+//   } else if (direction === 'right') {
+//     carousel.value.next();
+//   }
+// }
 </script>
+
 <style lang="less" scoped>
 .page-home {
   width: 100%;
@@ -201,17 +234,42 @@ function changeSwiper(direction) {
   align-items: center;
   background: #06173a;
   color: #fff;
+
+  .btn {
+    cursor: pointer;
+    color: #fff;
+    width: 180px;
+    height: 50px;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 67px;
+    background: rgba(145, 175, 251, 0.1);
+    border: 1px solid rgba(145, 175, 251, 1);
+    backdrop-filter: blur(10px);
+  }
+
   .header-box {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
-    // min-width: 1400px;
-    height: 825px;
     background: url('@/assets/images/home-header-bg.png') center center no-repeat;
     background-size: cover;
     padding-left: var(--container-padding-left);
     padding-right: var(--container-padding-right);
-    > div {
+    padding-top: 114px;
+    padding-bottom: 113px;
+    > h2 {
+      height: 57px;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 0px;
+      line-height: 56px;
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .h-content {
       max-width: var(--container-max-width);
       margin-left: auto;
       margin-right: auto;
@@ -220,524 +278,461 @@ function changeSwiper(direction) {
       flex-direction: row;
       .h-box {
         color: #fff;
-        margin-top: 168px;
-        > h5 {
-          font-family: Roboto;
-          font-weight: 600;
-          font-size: 84px;
-          line-height: 80px;
+        > h3 {
+          font-size: 36px;
+          font-weight: 500;
+          letter-spacing: 0px;
+          line-height: 42px;
+          margin-bottom: 20px;
         }
-        > div {
-          margin-top: 34px;
+        p {
+          height: 40px;
+          line-height: 40px;
           font-size: 18px;
-          line-height: 50px;
+          font-weight: 400;
         }
-        > button {
-          cursor: pointer;
-          width: 344px;
-          height: 84px;
-          margin-top: 80px;
-          border-radius: 42px;
-          border: solid 1px #91affb;
-          background: transparent;
-          font-size: 28px;
-          font-weight: 600;
-          color: #fff;
-        }
+      }
+      .h-divider {
+        width: 164px;
       }
       .left-box {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        margin-right: 30px;
-        div {
+        p {
           text-align: right;
-          span {
-            margin-left: 15px;
-          }
         }
       }
-      .right-box {
-        margin-left: 30px;
-        div {
-          text-align: left;
-          span {
-            margin-right: 15px;
-          }
-        }
+      .btn {
+        margin-top: 28px;
       }
     }
-    .h-desc {
-      color: #bcbcbc;
-      text-align: center;
-      margin-top: 104px;
-      font-size: 18px;
-      line-height: 50px;
-    }
-    @media screen and (max-width: 1260px) {
-      .left-box,
-      .right-box {
-        > div {
-          > p {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-          }
+    @media screen and (max-width: 960px) {
+      .h-content {
+        .h-divider {
+          width: 82px;
         }
-      }
-      .left-box > div > p {
-        align-items: flex-end;
       }
     }
     @media screen and (max-width: 800px) {
       height: auto;
       width: 100%;
       overflow: hidden;
-      > div {
-        flex-direction: column;
-        .left-box,
-        .right-box {
-          display: flex;
-          align-items: center;
-          flex-direction: column;
-          margin-left: 0;
-          margin-right: 0;
-          margin-top: 0;
-          h5 {
-            font-size: 40px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 1;
-          }
-          > div {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            margin-top: 20px;
-            > p {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              > span {
-                margin-left: 0;
-                margin-right: 0;
-                font-size: 14px;
-                font-weight: 300;
-                line-height: 25px;
-              }
-            }
-            > span {
-              font-size: 14px;
-              font-weight: 300;
-              line-height: 25px;
-            }
-          }
-          > button {
-            margin-top: 20px;
-            width: 250px;
-            height: 45px;
-            border-radius: 1000px;
-            border: 1.4px solid #91affb;
-            background: rgba(24, 51, 104, 0.6);
-            backdrop-filter: blur(8px);
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 25px;
-          }
-        }
-        .left-box {
-          margin-top: 35px;
-        }
-        .right-box {
-          margin-top: 50px;
-        }
-      }
-      .h-desc {
-        margin-top: 25px;
-        font-size: 16px;
-      }
-    }
-  }
-  .title {
-    margin-top: 100px;
-    font-weight: 700;
-    font-size: 52px;
-    line-height: 80px;
-    font-family: Roboto;
-    text-align: center;
-    color: #fff;
-    &::before,
-    &::after {
-      content: '';
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border-radius: 50px;
-      background: linear-gradient(90deg, #f6250c 4.69%, #fb722f 95.43%);
-      vertical-align: middle;
-      margin: 30px;
-    }
-  }
-
-  .operating-box {
-    padding-bottom: 216px;
-    width: 100%;
-    max-width: var(--container-max-width);
-    padding-left: var(--container-padding-left);
-    padding-right: var(--container-padding-right);
-    .img-left,
-    .img-right {
-      margin-top: 216px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      border: solid 2px #2e3e5f;
-      border-radius: 42px;
-      position: relative;
-      // width: 1400px;
-      height: 377px;
-      padding: 84px 80px;
-      box-sizing: border-box;
-      > div {
-        h5 {
-          font-size: 36px;
-          line-height: 36px;
-          font-weight: 700;
-        }
-        p {
-          margin-top: 30px;
-          font-weight: 400;
-          font-size: 20px;
-          line-height: 36px;
-          // width: 678px;
-          color: #c9c9c9;
-          font-family: Roboto;
-        }
-      }
-      .icon-box {
-        width: 420px;
-        height: 464px;
-      }
-    }
-    .img-left {
-      padding-left: 580px;
-      // > div {
-      //   position: absolute;
-      //   right: 80px;
-      //   // top: 113px;
-      // }
-      .icon-box {
-        position: absolute;
-        left: 86px;
-        top: -116px;
-      }
-    }
-    .img-right {
-      padding-right: 580px;
-      .icon-box {
-        position: absolute;
-        right: 86px;
-        top: -116px;
-      }
-    }
-    .decps {
-      .icon-box {
-        background: url('@/assets/images/decps.png') center center no-repeat;
-        background-size: contain;
-      }
-    }
-    .across-mutiple {
-      .icon-box {
-        background: url('@/assets/images/across-mutiple.png') center center no-repeat;
-        background-size: contain;
-      }
-    }
-    .permiseless {
-      .icon-box {
-        background: url('@/assets/images/permissionless.png') center center no-repeat;
-        background-size: contain;
-      }
-    }
-    .gamification {
-      .icon-box {
-        background: url('@/assets/images/gamification.png') center center no-repeat;
-        background-size: contain;
-      }
-    }
-    @media screen and (max-width: 800px) {
       padding-top: 50px;
       padding-bottom: 50px;
-      width: 100%;
-
-      .title {
-        margin: 0;
+      > h2 {
         font-size: 26px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 40px;
-        // margin-bottom: 119px;
-        &::before,
-        &::after {
-          margin: 12px;
-          width: 7px;
-          height: 7px;
-        }
       }
-
-      .img-right,
-      .img-left {
-        height: auto;
-        margin-top: 114px;
-        padding: 116px 26px 35px 26px;
-        position: relative;
-        > .icon-box {
-          position: absolute;
-          top: 0;
-          left: 50%;
-          right: auto;
-          width: 190px;
-          height: 190px;
-          flex-shrink: 0;
-          transform: translate(-50%, -50%);
-        }
-        > div {
-          position: initial;
-          h5 {
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 1;
+      .h-content {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        > .h-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          p {
             text-align: center;
           }
-          p {
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 25px;
-            width: 100%;
-            margin: 0;
-            margin-top: 15px;
-            color: #c9c9c9;
-          }
+        }
+        .h-divider {
+          height: 60px;
         }
       }
     }
   }
 
-  .sat-box {
+  section {
+    padding: 50px 0;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #01071e;
-    padding-bottom: 140px;
-    > p {
-      margin-top: 28px;
-      margin-bottom: 102px;
+    > h2 {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 0px;
+      line-height: 56px;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 32px;
+      &::before,
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border-radius: 50px;
+        background: linear-gradient(90deg, #f6250c 4.69%, #fb722f 95.43%);
+        vertical-align: middle;
+        margin: 30px 50px;
+      }
     }
-    .sat-content-box {
-      // min-width: 1400px;
+
+    > .section-content {
+      width: 960px;
+    }
+  }
+
+  .op-box {
+    height: 360px;
+    width: 960px;
+    padding-top: 88px;
+    .op-box-content {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      > div {
-        width: 50%;
-        padding: 0 25px;
+      // align-items: center;
+      position: relative;
+      gap: 20px;
+      width: 100%;
+      height: 258px;
+      border-radius: 16px;
+      background: rgba(46, 62, 95, 0.3);
+      border: 1px solid #2e3e5f;
+      box-sizing: border-box;
+      padding: 16px 22px 16px 22px;
+      // padding: 16px 390px 16px 22px;
+
+      h3 {
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: 0px;
+        line-height: 34px;
+        color: #ffffff;
+        margin-bottom: 20px;
       }
-      .sat-item-box {
-        // width: 674px;
-        height: 606px;
-        border: solid 2px #2e3e5f;
-        border-radius: 42px;
-        padding: 60px 40px 85px;
-        box-sizing: border-box;
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0px;
+        line-height: 32px;
+        color: #c9c9c9;
+      }
+    }
+
+    .op-box-icon {
+      // position: absolute;
+      // right: 0;
+      // bottom: 0;
+      transform: translateY(-80px);
+      flex-shrink: 0;
+      width: 300px;
+      height: 300px;
+      background: url('@/assets/images/decps.png') center center no-repeat;
+      background-size: contain;
+      &.across-mutiple {
+        background-image: url('@/assets/images/across-mutiple.png');
+      }
+      &.permissionless {
+        background-image: url('@/assets/images/permissionless.png');
+      }
+      &.gamification {
+        background-image: url('@/assets/images/gamification.png');
+      }
+    }
+  }
+  :deep(.el-carousel__container) {
+    width: 100%;
+    height: 360px;
+  }
+
+  .satisfies {
+    background-color: #01071e;
+    > p {
+      max-width: 557px;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0px;
+      line-height: 31px;
+      color: #c9c9c9;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .satisfies-content {
+      display: flex;
+      gap: 60px;
+      > div {
+        width: 450px;
+        height: 400px;
+        border-radius: 17px;
+        background: rgba(46, 62, 95, 0.3);
+        border: 1px solid rgba(46, 62, 95, 1);
+        padding: 34px 42px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        > h5 {
-          font-weight: 700;
-          font-size: 36px;
-          line-height: 36px;
-        }
-        > p {
-          font-size: 20px;
-          font-weight: 400;
-          line-height: 36px;
-        }
-        .devider {
-          width: 353px;
-          height: 1px;
-          background-color: #151d35;
-          margin-top: 40px;
-          margin-bottom: 60px;
-        }
-        > ul {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          > li {
-            font-size: 16px;
-            line-height: 50px;
-            font-weight: 400;
-            color: #f1f1f1;
-          }
-        }
       }
-    }
-    @media screen and (max-width: 800px) {
-      padding-top: 50px;
-      padding-bottom: 50px;
-      padding-left: var(--container-padding-left);
-      padding-right: var(--container-padding-right);
-      width: 100%;
-
-      .title {
-        margin: 0;
-        font-size: 26px;
-        font-style: normal;
+      .satisfies-devier {
+        margin: 27px 0 20px;
+        height: 2px;
+        width: 100%;
+        background-color: #151d35;
+        flex-shrink: 0;
+      }
+      h3 {
+        font-size: 30px;
         font-weight: 700;
-        line-height: 40px;
-        // margin-bottom: 119px;
-        &::before,
-        &::after {
-          margin: 12px;
-          width: 7px;
-          height: 7px;
-        }
+        letter-spacing: 0px;
+        line-height: 36px;
+        color: #ffffff;
+        margin-bottom: 16px;
       }
-      > p {
-        margin-top: 10px;
-        padding-left: 45px;
-        padding-right: 45px;
-        font-size: 12px;
-        font-style: normal;
+      p {
+        font-size: 14px;
         font-weight: 400;
-        line-height: 22px;
+        letter-spacing: 0px;
+        line-height: 18px;
+        color: #c9c9c9;
         text-align: center;
-        margin-bottom: 35px;
       }
-      .sat-content-box {
+      ul {
         display: flex;
         flex-direction: column;
-        width: 100%;
-        > div {
-          width: 100%;
-          padding: 15px 0;
-        }
-        .sat-item-box {
-          padding: 35px 16px;
-          height: auto;
-          h5 {
-            font-size: 22px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 25px;
-          }
-          p {
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 25px;
-          }
-          .devider {
-            width: 100%;
-            margin: 20px 0;
-          }
-          ul {
-            display: block;
-            > li {
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: 25px;
-            }
-          }
-        }
+        align-items: center;
+        width: 249px;
+        height: 215px;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0px;
+        line-height: 43px;
+        color: rgba(201, 201, 201, 1);
+        text-align: center;
       }
     }
   }
-  .choose-box {
-    height: 1169px;
-    background-color: #06173a;
-    width: 100%;
+
+  .news {
+    height: 380px;
+    background: rgba(0, 13, 45, 1);
+  }
+  .case-content {
+    left: 120px;
+    top: 2501px;
+    height: 340px;
+    opacity: 1;
+    background: rgba(46, 62, 95, 0.3);
+    border: 1px solid #2e3e5f;
+    border-radius: 16px;
+    padding: 16px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    .choose-content {
-      margin-top: 60px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      // max-width: var(--container-max-width);
-      // max-width: 1400px;
-
-      .arrow {
-        width: 60px;
-        height: 60px;
-        border-radius: 50px;
-        background-color: #05122d;
-        cursor: pointer;
-        &-left {
-          margin-right: 50px;
-          background: url('@/assets/images/arrow-left.png') center center no-repeat;
-          background-size: contain;
-        }
-        &-right {
-          margin-left: 50px;
-          background: url('@/assets/images/arrow-right.png') center center no-repeat;
-          background-size: contain;
-        }
-      }
+    gap: 32px;
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
     }
-    :deep(.el-carousel__indicators) {
-      display: none;
-    }
-    :deep(.el-carousel__container) {
-      // width: 1200px;
-      width: 100%;
-      height: 789px;
-    }
-    :deep(.el-carousel) {
-      width: 100%;
-      // height: 789px;
-    }
-    @media screen and (max-width: 800px) {
-      padding-top: 40px;
-      padding-bottom: 40px;
-      padding-left: var(--container-padding-left);
-      padding-right: var(--container-padding-right);
-      height: auto;
-
-      .choose-content {
-        margin-top: 30px;
-        .arrow {
-          display: none;
-        }
-        :deep(.el-carousel__indicators) {
-          display: block;
-        }
-      }
-      :deep(.el-carousel__container) {
-        height: 980px;
-      }
-
-      .title {
-        margin: 0;
-        font-size: 26px;
-        font-style: normal;
+    .case-detail {
+      padding-top: 28px;
+      flex-grow: 1;
+      position: relative;
+      > h3 {
+        height: 29px;
+        font-size: 24px;
         font-weight: 700;
-        line-height: 40px;
-        // margin-bottom: 119px;
-        &::before,
-        &::after {
-          margin: 12px;
-          width: 7px;
-          height: 7px;
-        }
+        letter-spacing: 0px;
+        line-height: 28px;
+        color: rgba(255, 255, 255, 1);
+        margin-bottom: 24px;
+      }
+      > div {
+        margin-bottom: 24px;
+      }
+      span,
+      strong,
+      label {
+        width: 125px;
+        height: 29px;
+        font-size: 24px;
+        font-weight: 400;
+        letter-spacing: 0px;
+        line-height: 28.13px;
+        color: #ffffff;
+      }
+      label {
+        margin-right: 8px;
+      }
+      strong {
+        color: rgba(250, 101, 41, 1);
+      }
+      > button {
+        width: 180px;
+        height: 50px;
+        border-radius: 67px;
+        background: linear-gradient(90deg, rgba(251, 114, 47, 1) 0%, rgba(246, 37, 12, 1) 100%);
+        backdrop-filter: blur(10px);
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0px;
+        line-height: 28px;
+        color: #ffffff;
+        cursor: pointer;
+        border: none;
+        position: absolute;
+        right: 30px;
+        bottom: 16px;
       }
     }
   }
+
+  .monetize {
+    background: #01071e;
+    padding-top: 95px;
+    padding-bottom: 127px;
+    h2 {
+      margin-bottom: 25px;
+    }
+    h1 {
+      height: 73px;
+      font-size: 62px;
+      font-weight: 700;
+      letter-spacing: 0px;
+      line-height: 72px;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 74px;
+      margin-top: 0;
+    }
+    .monetize-action {
+      display: flex;
+      align-items: center;
+      gap: 178px;
+      width: 538px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  // .sat-box {
+  //   width: 100%;
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   background-color: #01071e;
+  //   padding-bottom: 140px;
+  //   > p {
+  //     margin-top: 28px;
+  //     margin-bottom: 102px;
+  //   }
+  //   .sat-content-box {
+  //     // min-width: 1400px;
+  //     display: flex;
+  //     flex-direction: row;
+  //     justify-content: space-between;
+  //     > div {
+  //       width: 50%;
+  //       padding: 0 25px;
+  //     }
+  //     .sat-item-box {
+  //       // width: 674px;
+  //       height: 606px;
+  //       border: solid 2px #2e3e5f;
+  //       border-radius: 42px;
+  //       padding: 60px 40px 85px;
+  //       box-sizing: border-box;
+  //       display: flex;
+  //       flex-direction: column;
+  //       align-items: center;
+  //       > h5 {
+  //         font-weight: 700;
+  //         font-size: 36px;
+  //         line-height: 36px;
+  //       }
+  //       > p {
+  //         font-size: 20px;
+  //         font-weight: 400;
+  //         line-height: 36px;
+  //       }
+  //       .devider {
+  //         width: 353px;
+  //         height: 1px;
+  //         background-color: #151d35;
+  //         margin-top: 40px;
+  //         margin-bottom: 60px;
+  //       }
+  //       > ul {
+  //         display: flex;
+  //         flex-direction: column;
+  //         align-items: center;
+  //         > li {
+  //           font-size: 16px;
+  //           line-height: 50px;
+  //           font-weight: 400;
+  //           color: #f1f1f1;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   @media screen and (max-width: 800px) {
+  //     padding-top: 50px;
+  //     padding-bottom: 50px;
+  //     padding-left: var(--container-padding-left);
+  //     padding-right: var(--container-padding-right);
+  //     width: 100%;
+
+  //     .title {
+  //       margin: 0;
+  //       font-size: 26px;
+  //       font-style: normal;
+  //       font-weight: 700;
+  //       line-height: 40px;
+  //       // margin-bottom: 119px;
+  //       &::before,
+  //       &::after {
+  //         margin: 12px;
+  //         width: 7px;
+  //         height: 7px;
+  //       }
+  //     }
+  //     > p {
+  //       margin-top: 10px;
+  //       padding-left: 45px;
+  //       padding-right: 45px;
+  //       font-size: 12px;
+  //       font-style: normal;
+  //       font-weight: 400;
+  //       line-height: 22px;
+  //       text-align: center;
+  //       margin-bottom: 35px;
+  //     }
+  //     .sat-content-box {
+  //       display: flex;
+  //       flex-direction: column;
+  //       width: 100%;
+  //       > div {
+  //         width: 100%;
+  //         padding: 15px 0;
+  //       }
+  //       .sat-item-box {
+  //         padding: 35px 16px;
+  //         height: auto;
+  //         h5 {
+  //           font-size: 22px;
+  //           font-style: normal;
+  //           font-weight: 700;
+  //           line-height: 25px;
+  //         }
+  //         p {
+  //           font-size: 13px;
+  //           font-style: normal;
+  //           font-weight: 400;
+  //           line-height: 25px;
+  //         }
+  //         .devider {
+  //           width: 100%;
+  //           margin: 20px 0;
+  //         }
+  //         ul {
+  //           display: block;
+  //           > li {
+  //             font-size: 13px;
+  //             font-style: normal;
+  //             font-weight: 400;
+  //             line-height: 25px;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
 </style>
