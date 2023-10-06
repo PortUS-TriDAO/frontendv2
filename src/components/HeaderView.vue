@@ -7,7 +7,58 @@
           <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
           <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
           <router-link to="/mine/projects" @click.stop="switchMenu(true)">Mine</router-link>
-          <button v-if="!account" @click.stop="connect">connect</button>
+          <button v-if="!account" @click.stop="connect">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="27.5"
+              height="24.000030517578125"
+              viewBox="0 0 27.5 24.000030517578125"
+              fill="none"
+            >
+              <g opacity="1" transform="translate(0 0)  rotate(0)">
+                <path
+                  id="路径 1"
+                  fill-rule="evenodd"
+                  style="fill: #cccccc"
+                  opacity="0"
+                  d="M23 7L1.12 8L2.2 2.96C2.55 1.33 4.16 0.29 5.79 0.66L23 4.5L23 7Z"
+                ></path>
+                <path
+                  id="路径 1"
+                  style="fill: #ffffff; opacity: 1"
+                  d="M23,7h-0.5v-2.5h0.5l-0.1089,0.488l-17.21178,-3.8404c-1.35327,-0.30719 -2.69913,0.56059 -2.99042,1.91716l-1.08,5.04l-0.4889,-0.10476l-0.02283,-0.49948l21.88003,-1zM23.0228,7.49948l-22.52752,1.02959l1.21582,-5.67383c0.40828,-1.90143 2.29327,-3.11329 4.18958,-2.68284l17.59932,3.92687v3.3784z"
+                ></path>
+                <path
+                  id="矩形 1"
+                  fill-rule="evenodd"
+                  style="fill: #ffffff"
+                  opacity="1"
+                  d="M4 24L23 24C25.21 24 27 22.21 27 20L27 7.75003C27 5.54003 25.21 3.75003 23 3.75003L4 3.75003C1.79 3.75003 0 5.54003 0 7.75003L0 20C0 22.21 1.79 24 4 24Z"
+                ></path>
+                <path
+                  id="矩形 2"
+                  fill-rule="evenodd"
+                  style="fill: #fa5c25"
+                  opacity="1"
+                  d="M19.87 16.5L27 16.5L27 11.25L19.87 11.25C18.42 11.25 17.25 12.42 17.25 13.87L17.25 13.87C17.25 15.32 18.42 16.5 19.87 16.5Z"
+                ></path>
+                <path
+                  id="矩形 2"
+                  style="fill: #ffffff; opacity: 1"
+                  d="M19.87,16h7.13v0.5h-0.5v-5.25h0.5v0.5h-7.13c-1.1708,0 -2.12,0.9492 -2.12,2.12c0,1.1709 0.9492,2.13 2.12,2.13zM19.87,17c-1.7231,0 -3.12,-1.4068 -3.12,-3.13c0,-1.7231 1.3969,-3.12 3.12,-3.12h7.63v6.25z"
+                ></path>
+                <path
+                  id="圆形 1"
+                  fill-rule="evenodd"
+                  style="fill: #ffffff"
+                  opacity="1"
+                  d="M19.88 12.75C19.25 12.75 18.75 13.25 18.75 13.88C18.75 14.5 19.25 15 19.88 15C20.5 15 21 14.5 21 13.88C21 13.25 20.5 12.75 19.88 12.75Z"
+                ></path>
+              </g>
+            </svg>
+            <span>Wallet</span>
+          </button>
           <button v-else @click.stop>{{ shortAddress }}</button>
         </div>
         <button class="btn-menus" @click.stop="switchMenu()">
@@ -66,7 +117,7 @@ function connect() {
 <style lang="less">
 .page-header {
   height: 66px;
-  background-color: #000425;
+  background-color: #000d2d;
   .header-container {
     width: var(--container-width);
     max-width: var(--container-max-width);
@@ -90,13 +141,21 @@ function connect() {
       align-items: center;
       color: #fff;
       > button {
-        width: 185px;
+        width: 140px;
         height: 40px;
+        font-size: 18px;
+        font-weight: 700;
         border: none;
         border-radius: 8px;
         color: #fff;
         cursor: pointer;
-        background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
+        background: linear-gradient(90deg, rgba(251, 114, 47, 1) 0%, rgba(246, 37, 12, 1) 100%);
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        > svg {
+          margin-right: 22px;
+        }
       }
       > a {
         color: #fff;
