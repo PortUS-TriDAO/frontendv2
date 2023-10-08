@@ -24,6 +24,7 @@ import HeaderView from './components/HeaderView.vue';
   .main {
     display: flex;
     flex: 1;
+    background: #f7f7f7;
   }
 }
 </style>

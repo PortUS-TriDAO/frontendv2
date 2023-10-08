@@ -23,13 +23,21 @@
           </el-form-item>
         </el-form>
       </div>
-      <p-button class="btn">submit</p-button>
+      <p-button class="btn" @click="handleSubmit">submit</p-button>
     </div>
   </main-content>
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+
 import MainContent from '@/components/MainContent.vue';
+
+const router = useRouter();
+
+function handleSubmit() {
+  router.push('/project/submitsuccess');
+}
 </script>
 
 <style lang="less" scoped>

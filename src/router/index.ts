@@ -53,9 +53,9 @@ const router = createRouter({
       component: () => import('../views/mine/CreateProjectStep2.vue'),
     },
     {
-      path: '/project/createsuccess',
-      name: 'CreateSuccess',
-      component: () => import('../views/projects/components/CreateSuccess.vue'),
+      path: '/project/submitsuccess',
+      name: 'SubmitSuccess',
+      component: () => import('../views/mine/SubmitSuccess.vue'),
     },
   ],
 });
