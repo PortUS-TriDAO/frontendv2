@@ -1,6 +1,6 @@
 <template>
   <main-content>
-    <div class="step2-form">
+    <div class="form-page">
       <div class="form-content">
         <el-form label-width="180px" label-position="top">
           <el-form-item label="Name">
@@ -40,17 +40,4 @@ function handleSubmit() {
 }
 </script>
 
-<style lang="less" scoped>
-.step2-form {
-  .form-content {
-    width: 658px;
-    :deep(.el-form-item__label) {
-      margin-top: 16px;
-      font-size: 20px;
-    }
-  }
-  .btn {
-    float: right;
-  }
-}
-</style>
+<style lang="less" scoped></style>

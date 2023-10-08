@@ -1,11 +1,10 @@
 <template>
   <main-content>
     <div class="success-box">
-      <div class="box-top">
-        <i class="icon-success"></i>
+      <success-card class="box-top">
         <p>Submit project success！</p>
         <p>Add NFT now</p>
-      </div>
+      </success-card>
       <div class="box-middle">
         <div class="box-left">
           <p>NFT Address</p>
@@ -21,7 +20,7 @@
       </div>
       <div class="box-bottom">
         <span>or You can add NFT later in Mine- project- commercial</span>
-        <p-button>Next</p-button>
+        <p-button @click="handleNext">Next</p-button>
       </div>
     </div>
   </main-content>
@@ -29,10 +28,23 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
 
-const nftType = ref('1');
+import SuccessCard from './components/SuccessCard.vue';
+
+const router = useRouter();
+const nftType = ref('2');
+
+function handleNext() {
+  // sku: 1 spu: 2
+  if (nftType.value === '1') {
+    router.push('/project/publish/sku');
+  } else {
+    router.push('/project/publish/spu');
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -42,16 +54,6 @@ const nftType = ref('1');
   align-items: center;
   padding: 88px 50px 50px 50px;
   .box-top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .icon-success {
-      display: block;
-      width: 167px;
-      height: 140px;
-      background: url('@/assets/images/icon-success.png') center center no-repeat;
-      background-size: contain;
-    }
     > p {
       font-size: 30px;
       font-weight: 700;

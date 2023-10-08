@@ -45,17 +45,32 @@ const router = createRouter({
     {
       path: '/project/create/step1',
       name: 'CreateProjectStep1',
-      component: () => import('../views/mine/CreateProjectStep1.vue'),
+      component: () => import('../views/projects/CreateProjectStep1.vue'),
     },
     {
       path: '/project/create/step2',
       name: 'CreateProjectStep2',
-      component: () => import('../views/mine/CreateProjectStep2.vue'),
+      component: () => import('../views/projects/CreateProjectStep2.vue'),
     },
     {
       path: '/project/submitsuccess',
       name: 'SubmitSuccess',
-      component: () => import('../views/mine/SubmitSuccess.vue'),
+      component: () => import('../views/projects/SubmitSuccess.vue'),
+    },
+    {
+      path: '/project/publish/sku',
+      name: 'PublishSku',
+      component: () => import('../views/projects/PublishSku.vue'),
+    },
+    {
+      path: '/project/publish/spu',
+      name: 'PublishSpu',
+      component: () => import('../views/projects/PublishSpu.vue'),
+    },
+    {
+      path: '/project/addnft/success',
+      name: 'AddNftSuccess',
+      component: () => import('../views/projects/AddNftSuccess.vue'),
     },
   ],
 });

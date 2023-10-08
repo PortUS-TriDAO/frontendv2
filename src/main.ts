@@ -3,6 +3,7 @@
 import 'element-plus/dist/index.css';
 import 'normalize.css';
 import './index.css';
+import './assets/global.less';
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import ElementPlus from 'element-plus';
