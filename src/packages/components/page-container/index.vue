@@ -1,11 +1,21 @@
 <template>
   <main class="page-container">
-    <div class="page-banner" v-if="$slots.banner"><slot name="banner" /></div>
+    <div class="page-banner" v-if="props.bannerImg">
+      <img :src="props.bannerImg" />
+    </div>
+    <!-- <div class="page-banner" v-else-if="$slots.banner"><slot name="banner" /></div> -->
     <article>
       <slot />
     </article>
   </main>
 </template>
+<script lang="ts" setup>
+import { defineProps } from 'vue';
+const props = defineProps({
+  bannerImg: String,
+});
+</script>
+
 <style lang="less">
 .page-container {
   display: flex;
@@ -20,6 +30,18 @@
     padding-left: var(--container-padding-left);
     padding-right: var(--container-padding-right);
     padding-bottom: 30px;
+  }
+  .page-banner {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-color: rgb(4, 1, 14);
+    display: flex;
+    justify-content: center;
+    > img {
+      width: 1200px;
+      // max-height: 100%;
+    }
   }
 }
 </style>
