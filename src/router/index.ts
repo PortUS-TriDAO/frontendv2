@@ -26,9 +26,19 @@ const router = createRouter({
       component: () => import('../views/mine/MineContainer.vue'),
       children: [
         {
-          path: '/project/create',
-          name: 'ProjectCreate',
-          component: () => import('../views/projects/ProjectCreate.vue'),
+          path: '/mine/submitted',
+          name: 'Submitted',
+          component: () => import('../views/mine/Submitted.vue'),
+        },
+        {
+          path: '/mine/participated',
+          name: 'Participated',
+          component: () => import('../views/mine/Participated.vue'),
+        },
+        {
+          path: '/mine/store',
+          name: 'Store',
+          component: () => import('../views/mine/Store.vue'),
         },
         {
           path: '/mine/projects',

@@ -17,13 +17,14 @@
           </el-form-item>
           <el-form-item>
             <div class="uploads">
-              <uploder @onSuccess="handleAvatar">
+              <uploader @onSuccess="handleAvatar">
                 <span>Avatar</span>
-              </uploder>
-              <uploder @onSuccess="handleCover">
+              </uploader>
+              <uploader @onSuccess="handleCover">
                 <span>Cover</span>
-              </uploder>
+              </uploader>
             </div>
+            <p>Recommended size: Avatar 200*200 Cover 1200*200</p>
           </el-form-item>
         </el-form>
       </div>
@@ -36,7 +37,7 @@
 import { useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
-import Uploder from '@/components/Uploder.vue';
+import Uploader from '@/components/Uploader.vue';
 
 const router = useRouter();
 async function handleNext() {
