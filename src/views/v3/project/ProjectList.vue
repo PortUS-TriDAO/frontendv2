@@ -67,7 +67,7 @@ onMounted(async () => {
 function handleSearch() {
   console.log('search, key=', searchKey.value);
 }
-function handleNewProject() {
+function handleDetail() {
   console.log('handleNewProject');
 }
 </script>
