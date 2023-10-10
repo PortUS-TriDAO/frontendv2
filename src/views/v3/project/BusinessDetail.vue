@@ -25,7 +25,7 @@
     <div class="detail-divider"></div>
     <div class="list">
       <div class="list-title">NFT contract list</div>
-      <div class="item" v-for="project in status.projectList" :key="project.name">
+      <div class="item">
         <img alt="avatar" :src="avatar" />
         <div class="item-detail">
           <div>0x121212</div>
@@ -40,39 +40,8 @@
   </page-container>
 </template>
 <script setup lang="ts">
-// import { Search } from '@element-plus/icons-vue';
-import { onMounted, reactive, ref } from 'vue';
-
-import { getProjects } from '@/api';
 import avatar from '@/assets/images/demo-avatar.png';
 
-import bannerImg from './assets/banner.png';
-
-const searchKey = ref('');
-
-const status = reactive({
-  projectList: [],
-  currentPage: 1,
-  totalPage: 20,
-});
-
-interface IResponse {
-  success: boolean;
-  data: {
-    currentPage: number;
-    totalPage: number;
-    rows: IProjectItemProps[];
-  };
-}
-
-onMounted(async () => {
-  const { success, data } = (await getProjects({})) as IResponse;
-  if (success) {
-    status.currentPage = data.currentPage;
-    status.totalPage = data.totalPage;
-    status.projectList = data.rows;
-  }
-});
 
 function handleMint() {
   console.log('handleMint...');

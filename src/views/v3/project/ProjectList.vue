@@ -7,7 +7,8 @@
       <p-button @click="handleSearch">Search</p-button>
     </div>
     <div class="list">
-      <div class="item" v-for="project in status.projectList" :key="project.name">
+      <!-- <div class="item" v-for="project in status.projectList" :key="project.name"> -->
+      <div class="item">
         <img alt="avatar" :src="avatar" />
         <div class="item-detail">
           <h3>Echo of Intensity</h3>
@@ -23,7 +24,7 @@
             </div>
           </div>
           <div class="item-action">
-            <p-button @click="handleDetail">Detail</p-button>
+            <p-button @click="handleDetail('ddddd')">Detail</p-button>
           </div>
         </div>
       </div>
@@ -32,43 +33,46 @@
 </template>
 <script setup lang="ts">
 // import { Search } from '@element-plus/icons-vue';
-import { onMounted, reactive, ref } from 'vue';
+// import { onMounted, reactive, ref } from 'vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router'
 
-import { getProjects } from '@/api';
+// import { getProjects } from '@/api';
 import avatar from '@/assets/images/demo-avatar.png';
-import ProjectItem, { type IProps as IProjectItemProps } from '@/components/ProjectItem.vue';
+// import ProjectItem, { type IProps as IProjectItemProps } from '@/components/ProjectItem.vue';
 
 const searchKey = ref('');
+const router = useRouter();
 
-const status = reactive({
-  projectList: [],
-  currentPage: 1,
-  totalPage: 20,
-});
+// const status = reactive({
+//   projectList: [],
+//   currentPage: 1,
+//   totalPage: 20,
+// });
 
-interface IResponse {
-  success: boolean;
-  data: {
-    currentPage: number;
-    totalPage: number;
-    rows: IProjectItemProps[];
-  };
-}
+// interface IResponse {
+//   success: boolean;
+//   data: {
+//     currentPage: number;
+//     totalPage: number;
+//     rows: IProjectItemProps[];
+//   };
+// }
 
-onMounted(async () => {
-  const { success, data } = (await getProjects({})) as IResponse;
-  if (success) {
-    status.currentPage = data.currentPage;
-    status.totalPage = data.totalPage;
-    status.projectList = data.rows;
-  }
-});
+// onMounted(async () => {
+//   const { success, data } = (await getProjects({})) as IResponse;
+//   if (success) {
+//     status.currentPage = data.currentPage;
+//     status.totalPage = data.totalPage;
+//     status.projectList = data.rows;
+//   }
+// });
 
 function handleSearch() {
   console.log('search, key=', searchKey.value);
 }
-function handleDetail() {
-  console.log('handleNewProject');
+function handleDetail(id: string) {
+  router.push(`/project/${id}`)
 }
 </script>
 <style lang="less" scoped>

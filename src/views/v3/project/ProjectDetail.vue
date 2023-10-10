@@ -15,7 +15,7 @@
     </div>
     <div class="detail-divider"></div>
     <div class="list">
-      <div class="item" v-for="project in status.projectList" :key="project.name">
+      <div class="item">
         <div class="item-detail">
           <h3>Echo of Intensity</h3>
           <p>Dreamed of moonshots but awoke to a capitulation.</p>
@@ -34,7 +34,7 @@
               <label><strong>Percent for KOL:</strong></label>
               <strong>10%</strong>
             </div>
-            <p-button @click="handleDetail">Detail</p-button>
+            <p-button @click="handleDetail('1231313123')">Detail</p-button>
           </div>
         </div>
       </div>
@@ -42,45 +42,18 @@
   </page-container>
 </template>
 <script setup lang="ts">
-// import { Search } from '@element-plus/icons-vue';
-import { onMounted, reactive, ref } from 'vue';
-
-import { getProjects } from '@/api';
+import { useRoute, useRouter } from 'vue-router'
 import avatar from '@/assets/images/demo-avatar.png';
 
 import bannerImg from './assets/banner.png';
 
-const searchKey = ref('');
+const route = useRoute();
+const router = useRouter();
 
-const status = reactive({
-  projectList: [],
-  currentPage: 1,
-  totalPage: 20,
-});
 
-interface IResponse {
-  success: boolean;
-  data: {
-    currentPage: number;
-    totalPage: number;
-    rows: IProjectItemProps[];
-  };
-}
-
-onMounted(async () => {
-  const { success, data } = (await getProjects({})) as IResponse;
-  if (success) {
-    status.currentPage = data.currentPage;
-    status.totalPage = data.totalPage;
-    status.projectList = data.rows;
-  }
-});
-
-function handleSearch() {
-  console.log('search, key=', searchKey.value);
-}
-function handleDetail() {
-  console.log('handleNewProject');
+function handleDetail(businessId: string) {
+  const { id } = route.params;
+  router.push(`/project/${id}/${businessId}`);
 }
 </script>
 <style lang="less" scoped>
