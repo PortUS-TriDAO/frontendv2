@@ -65,7 +65,7 @@ const router = createRouter({
     {
       path: '/project/submitsuccess',
       name: 'SubmitSuccess',
-      component: () => import('../views/projects/SubmitSuccess.vue'),
+      component: () => import('../components/SubmitSuccess.vue'),
     },
     {
       path: '/project/publish/sku',
@@ -80,7 +80,12 @@ const router = createRouter({
     {
       path: '/project/addnft/success',
       name: 'AddNftSuccess',
-      component: () => import('../views/projects/AddNftSuccess.vue'),
+      component: () => import('../components/AddNftSuccess.vue'),
+    },
+    {
+      path: '/project/mint/success',
+      name: 'MintSuccess',
+      component: () => import('../components/MintSuccess.vue'),
     },
   ],
 });

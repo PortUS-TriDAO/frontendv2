@@ -32,7 +32,7 @@ import { useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
 
-import SuccessCard from './components/SuccessCard.vue';
+import SuccessCard from '../views/projects/components/SuccessCard.vue';
 
 const router = useRouter();
 const nftType = ref('2');
@@ -53,6 +53,7 @@ function handleNext() {
   flex-direction: column;
   align-items: center;
   padding: 88px 50px 50px 50px;
+
   .box-top {
     > p {
       font-size: 30px;
@@ -61,6 +62,7 @@ function handleNext() {
       line-height: 50px;
     }
   }
+
   .box-middle {
     margin-top: 109px;
     display: flex;
@@ -68,15 +70,18 @@ function handleNext() {
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
+
     .box-left {
       .el-input {
         width: 450px;
       }
     }
+
     p {
       margin-bottom: 12px;
     }
   }
+
   .box-bottom {
     margin-top: 133px;
     width: 100%;
