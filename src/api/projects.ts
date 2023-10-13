@@ -1,22 +1,27 @@
 import type { IListResponse, IResponse } from '@/types/response';
 
 import axios from '../utils/axios';
-// 提交创建游戏
-export const createProject = (params: {
-  name: string;
-  icon: string;
+// 提交创建游戏step1
+export const createProjectStep1 = (params: {
+  projectName: string;
   briefIntro: string;
   website: string;
   description: string;
-  banner: string;
-  token: string;
-  symbol: string;
-  sharePercentage: string;
-  projectAddress: string;
+  avatar: string;
+  cover: string;
   creatorAddress: string;
-  screenShots: string[];
-  nftType: 1 | 2; // 1： 已经Mint的NFT  2： 还未mint的NFT
-}): Promise<IResponse> => axios.post('/project/create', params);
+}): Promise<IResponse> => axios.post('/project/create/step1', params);
+// 提交创建游戏step2
+export const createProjectStep2 = (params: {
+  projectId: string;
+  contractName: string;
+  sharePercentage: string;
+  briefIntro: string;
+  payToken: string;
+  description: string;
+  rightQuantity: string;
+  businessContractAddress: string;
+}): Promise<IResponse> => axios.post('/project/create/step2', params);
 // 请求游戏列表
 export const getProjects = (params: {}): Promise<IResponse> =>
   axios.get('/project/all', { params });

@@ -58,7 +58,7 @@ const router = createRouter({
       component: () => import('../views/projects/CreateProjectStep1.vue'),
     },
     {
-      path: '/project/create/step2',
+      path: '/project/create/step2/:projectId',
       name: 'CreateProjectStep2',
       component: () => import('../views/projects/CreateProjectStep2.vue'),
     },

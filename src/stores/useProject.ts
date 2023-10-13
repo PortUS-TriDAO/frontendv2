@@ -3,6 +3,8 @@ import { reactive } from 'vue';
 
 import * as projectApi from '@/api/projects';
 
+import { useProjectContract } from './useProjectContract';
+
 export const useProjectStore = defineStore('project', () => {
   const state = reactive({
     total: 1000,
