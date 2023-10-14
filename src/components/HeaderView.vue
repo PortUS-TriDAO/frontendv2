@@ -7,8 +7,9 @@
           <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
           <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
           <router-link to="/mine/submitted" @click.stop="switchMenu(true)">Mine</router-link>
-          <button v-if="!account" @click.stop="connect">connect</button>
-          <button v-else @click.stop>{{ shortAddress }}</button>
+          <!-- <button v-if="!account" @click.stop="connect">connect</button>
+          <button v-else @click.stop>{{ shortAddress }}</button> -->
+          <w3m-button>connect</w3m-button>
         </div>
         <button class="btn-menus" @click.stop="switchMenu()">
           <svg
