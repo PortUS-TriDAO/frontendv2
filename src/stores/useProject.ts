@@ -1,9 +1,20 @@
+import { type Address, waitForTransaction } from '@wagmi/core';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
 import * as projectApi from '@/api/projects';
+import { useRouterContract } from '@/stores/useRouterContract';
 
-import { useProjectContract } from './useProjectContract';
+interface ICreateProject {
+  projectId: string;
+  briefIntro: string;
+  description: string;
+  contractName: string;
+  symbol: string;
+  payToken: Address;
+  sharePercentage: string | number;
+  rightQuantity: number | string;
+}
 
 export const useProjectStore = defineStore('project', () => {
   const state = reactive({
@@ -14,6 +25,42 @@ export const useProjectStore = defineStore('project', () => {
     skuList: [],
     skuDetail: {},
   });
+
+  async function createProject(params: ICreateProject) {
+    console.log('createProject', params);
+    const {
+      projectId: number,
+      briefIntro,
+      description,
+      contractName,
+      symbol,
+      payToken,
+      sharePercentage,
+      rightQuantity,
+    } = params;
+    const routerContract = useRouterContract();
+    const tx = await routerContract.createProject(
+      contractName,
+      symbol,
+      payToken,
+      sharePercentage,
+      rightQuantity,
+    );
+    await waitForTransaction({ hash: tx.hash });
+
+    const contractAddress: Address = await routerContract.getProjectAddress();
+
+    return projectApi.createProjectStep2({
+      projectId: params.projectId,
+      contractName,
+      sharePercentage,
+      briefIntro,
+      payToken,
+      description,
+      rightQuantity,
+      businessContractAddress: contractAddress,
+    });
+  }
 
   // 查询项目列表
   async function getProjects() {
@@ -26,12 +73,6 @@ export const useProjectStore = defineStore('project', () => {
     } else {
       throw new Error(data);
     }
-  }
-
-  // 创建项目
-  async function createProject(params) {
-    const { success, data } = await projectApi.createProject(params);
-    if (!success) throw new Error(data);
   }
 
   async function getProjectDetail(params) {

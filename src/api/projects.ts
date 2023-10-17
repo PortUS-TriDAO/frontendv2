@@ -15,11 +15,11 @@ export const createProjectStep1 = (params: {
 export const createProjectStep2 = (params: {
   projectId: string;
   contractName: string;
-  sharePercentage: string;
+  sharePercentage: string | number;
   briefIntro: string;
   payToken: string;
   description: string;
-  rightQuantity: string;
+  rightQuantity: string | number;
   businessContractAddress: string;
 }): Promise<IResponse> => axios.post('/project/create/step2', params);
 // 请求游戏列表
