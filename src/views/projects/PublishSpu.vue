@@ -112,8 +112,7 @@ async function handleSave(formEl: FormInstance | undefined) {
 }
 
 async function publishSpu() {
-  if (!projectId || typeof projectId !== 'string') return;
-  {
+  if (!projectId || typeof projectId !== 'string') {
     ElMessage.error('Project ID is required');
     return;
   }
@@ -128,8 +127,8 @@ async function publishSpu() {
       projectId,
       BigInt(ruleForm.price),
       0,
-      Number(ruleForm.ddl),
-      businessContractAddress,
+      new Date(ruleForm.ddl).valueOf(),
+      businessContractAddress as Address,
     );
     if (!success) throw new Error(data);
 

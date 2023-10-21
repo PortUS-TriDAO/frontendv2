@@ -10,10 +10,18 @@
           label-position="top"
         >
           <el-form-item label="TokenID" prop="tokenId">
-            <el-input placeholder="tokenID" v-model="ruleForm.tokenId"></el-input>
+            <el-input
+              placeholder="tokenID"
+              oninput="value=value.replace(/[^0-9]/g, '')"
+              v-model="ruleForm.tokenId"
+            ></el-input>
           </el-form-item>
           <el-form-item label="Price" prop="price">
-            <el-input placeholder="Price" v-model="ruleForm.price"></el-input>
+            <el-input
+              placeholder="Price"
+              v-model="ruleForm.price"
+              oninput="value=value.replace(/[^0-9.]/g, '')"
+            ></el-input>
           </el-form-item>
           <el-form-item label="DDL" prop="ddl">
             <el-date-picker v-model="ruleForm.ddl" type="datetime" placeholder="DDL" />
@@ -76,8 +84,7 @@ async function handleSave(formEl: FormInstance | undefined) {
 }
 
 async function publishSku() {
-  if (!projectId || typeof projectId !== 'string') return;
-  {
+  if (!projectId || typeof projectId !== 'string') {
     ElMessage.error('Project ID is required');
     return;
   }
@@ -90,14 +97,15 @@ async function publishSku() {
 
     const { success, data } = await projectStore.publishSku(
       projectId,
-      BigInt(ruleForm.price),
+      BigInt(price.value),
       Number(ruleForm.tokenId),
-      Number(ruleForm.ddl),
-      bussinessContractAddress as Address,
+      new Date(ruleForm.ddl).valueOf(),
+      businessContractAddress as Address,
     );
     if (!success) throw new Error(data);
     ElMessage.success('Publish sku success');
   } catch (error) {
+    console.log('Publish sku failed', error);
     ElMessage.error('Publish sku failed');
   } finally {
     loading.value = false;

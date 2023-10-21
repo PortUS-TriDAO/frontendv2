@@ -131,6 +131,16 @@ export const useProjectStore = defineStore('project', () => {
       deadline,
       retailerAddress,
     );
+
+    return projectApi.publishSku({
+      projectId,
+      tokenId: nftTokenId,
+      price,
+      ddl: deadline,
+      seller: data.seller,
+      payToken,
+      signature,
+    });
   }
 
   async function publishSpu(

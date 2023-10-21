@@ -132,9 +132,6 @@ async function handleSubmit(formEl: FormInstance | undefined) {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('validate success');
-      const formData = toRaw(ruleForm);
-      console.log(formData);
       createProject();
     } else {
       console.log('error submit', fields);
@@ -143,42 +140,39 @@ async function handleSubmit(formEl: FormInstance | undefined) {
 }
 
 const createProject = async () => {
-  router.push(`/project/submitsuccess/${projectId}`);
-  // const {
-  //   contractName,
-  //   sharePercentage,
-  //   symbol,
-  //   payToken,
-  //   rightQuantity,
-  //   briefIntro,
-  //   description,
-  // } = toRaw(ruleForm);
-  // let percent = (sharePercentage * 1e18) / 100;
-  // const token = payToken as Address;
-  // try {
-  //   loading.value = true;
-  //
-  //   const { success, data,projectAddress } = await projectStore.createProject({
-  //     projectId,
-  //     briefIntro,
-  //     description,
-  //     contractName,
-  //     symbol,
-  //     payToken: token,
-  //     rightQuantity,
-  //     sharePercentage: percent,
-  //   });
-  //   if (success) {
-  //     ElMessage.success('create project success');
-  //     router.push(`/project/submitsuccess/${projectId}`);
-  //   } else {
-  //     ElMessage.error('create project fail');
-  //   }
-  // } catch (e) {
-  //   ElMessage.error(e.message);
-  // } finally {
-  //   loading.value = false;
-  // }
+  const {
+    contractName,
+    sharePercentage,
+    symbol,
+    payToken,
+    rightQuantity,
+    briefIntro,
+    description,
+  } = toRaw(ruleForm);
+  let percent = (sharePercentage * 1e18) / 100;
+  const token = payToken as Address;
+  try {
+    loading.value = true;
+
+    const { success, data } = await projectStore.createProject({
+      projectId,
+      briefIntro,
+      description,
+      contractName,
+      symbol,
+      payToken: token,
+      rightQuantity,
+      sharePercentage: percent,
+    });
+
+    if (!success) throw new Error(data);
+    ElMessage.success('create project success');
+    router.push(`/project/submitsuccess/${projectId}`);
+  } catch (e) {
+    ElMessage.error('create project fail');
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 

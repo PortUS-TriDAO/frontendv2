@@ -40,8 +40,8 @@ import SuccessCard from '../views/projects/components/SuccessCard.vue';
 // const deployerContract = useDeployerContractStore();
 const projectStore = useProjectStore();
 const router = useRouter();
-const nftType = ref('2');
-const nftAddress = ref('0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964');
+const nftType = ref('1');
+const nftAddress = ref('');
 const route = useRoute();
 const projectId = route.params.projectId;
 
@@ -55,12 +55,10 @@ function handleNext() {
   // sku: 1 spu: 2
   if (nftType.value === '1') {
     // minted NFT. 获取NFT的metadata
-    // deployMintedContract();
-    router.push(`/project/publish/sku`);
+    deployMintedContract();
   } else {
     // unmint NFT
-    // deployUnMintedContract();
-    router.push(`/project/publish/spu`);
+    deployUnMintedContract();
   }
 }
 
