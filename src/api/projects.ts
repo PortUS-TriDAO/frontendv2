@@ -26,8 +26,14 @@ export const createProjectStep2 = (params: {
 export const getProjects = (params: {}): Promise<IResponse> =>
   axios.get('/project/all', { params });
 // 获取游戏详情
-export const getProjectDetail = (params: { id: string }): Promise<IResponse> =>
+export const getProjectDetail = (params: { projectId: string }): Promise<IResponse> =>
   axios.get('/project/detail', { params });
+
+export const postDeployedContract = (params: {
+  nftAddress: string;
+  nftType: 1 | 2; // 1: minted nft 2: unminted nft
+  contractAddress: string;
+}) => axios.post('/project/contract/deploy', params);
 
 // 提交项目已经mint过
 export const postProjectMint = (params: {
@@ -46,8 +52,8 @@ export const getSkuDetail = (params: { tokenId: string }): Promise<IResponse> =>
 // 上架SKU
 export const publishSku = (params: {
   projectId: string;
-  tokenId: string;
-  price: string;
+  tokenId: number;
+  price: bigint;
   ddl: number;
   seller: string;
   payToken: string;

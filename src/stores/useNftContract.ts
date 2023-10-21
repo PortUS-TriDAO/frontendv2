@@ -13,5 +13,14 @@ export const useNftContract = defineStore('nftContract', () => {
     });
   }
 
-  return { mint };
+  async function approve(contractAddress: string, receiver: string, tokenId: number) {
+    return writeContract({
+      address: contractAddress,
+      abi: NFT_ABI,
+      functionName: 'approve',
+      args: [receiver, tokenId],
+    });
+  }
+
+  return { mint, approve };
 });

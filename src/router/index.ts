@@ -63,17 +63,17 @@ const router = createRouter({
       component: () => import('../views/projects/CreateProjectStep2.vue'),
     },
     {
-      path: '/project/submitsuccess',
+      path: '/project/submitsuccess/:projectId',
       name: 'SubmitSuccess',
       component: () => import('../components/SubmitSuccess.vue'),
     },
     {
-      path: '/project/publish/sku',
+      path: '/project/publish/sku/:projectId/:businessContractAddress',
       name: 'PublishSku',
       component: () => import('../views/projects/PublishSku.vue'),
     },
     {
-      path: '/project/publish/spu',
+      path: '/project/publish/spu/:projectId/:businessContractAddress',
       name: 'PublishSpu',
       component: () => import('../views/projects/PublishSpu.vue'),
     },

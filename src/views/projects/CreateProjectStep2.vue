@@ -143,7 +143,7 @@ async function handleSubmit(formEl: FormInstance | undefined) {
 }
 
 const createProject = async () => {
-  router.push('/project/submitsuccess');
+  router.push(`/project/submitsuccess/${projectId}`);
   // const {
   //   contractName,
   //   sharePercentage,
@@ -158,7 +158,7 @@ const createProject = async () => {
   // try {
   //   loading.value = true;
   //
-  //   const { success, data } = await projectStore.createProject({
+  //   const { success, data,projectAddress } = await projectStore.createProject({
   //     projectId,
   //     briefIntro,
   //     description,
@@ -170,7 +170,7 @@ const createProject = async () => {
   //   });
   //   if (success) {
   //     ElMessage.success('create project success');
-  //     router.push('/project/submitsuccess');
+  //     router.push(`/project/submitsuccess/${projectId}`);
   //   } else {
   //     ElMessage.error('create project fail');
   //   }

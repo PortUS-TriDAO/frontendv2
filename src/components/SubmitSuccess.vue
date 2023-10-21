@@ -8,7 +8,7 @@
       <div class="box-middle">
         <div class="box-left">
           <p>NFT Address</p>
-          <el-input placeholder="NFT Address"></el-input>
+          <el-input placeholder="NFT Address" v-model="nftAddress"></el-input>
         </div>
         <div class="box-right">
           <p>The type of the NFT</p>
@@ -20,29 +20,94 @@
       </div>
       <div class="box-bottom">
         <span>or You can add NFT later in Mine- project- commercial</span>
-        <p-button @click="handleNext">Next</p-button>
+        <w-button @click="handleNext" :loading="loading">Next</w-button>
       </div>
     </div>
   </main-content>
 </template>
 
 <script lang="ts" setup>
+import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
+import { useProjectStore } from '@/stores/useProject';
 
+// import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import SuccessCard from '../views/projects/components/SuccessCard.vue';
 
+// const deployerContract = useDeployerContractStore();
+const projectStore = useProjectStore();
 const router = useRouter();
 const nftType = ref('2');
+const nftAddress = ref('0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964');
+const route = useRoute();
+const projectId = route.params.projectId;
+
+const loading = ref(false);
 
 function handleNext() {
+  if (!nftAddress.value || nftAddress.value.length !== 42) {
+    ElMessage.error('Please input nft address');
+    return;
+  }
   // sku: 1 spu: 2
   if (nftType.value === '1') {
-    router.push('/project/publish/sku');
+    // minted NFT. 获取NFT的metadata
+    // deployMintedContract();
+    router.push(`/project/publish/sku`);
   } else {
-    router.push('/project/publish/spu');
+    // unmint NFT
+    // deployUnMintedContract();
+    router.push(`/project/publish/spu`);
+  }
+}
+
+async function deployMintedContract() {
+  console.log('deployMintedContract', {
+    nftAddress: nftAddress.value,
+    nftType: nftType.value,
+  });
+  if (!projectId || typeof projectId !== 'string') {
+    ElMessage.error('Project address not in rooter');
+    return;
+  }
+  loading.value = true;
+  try {
+    const { success, data, contractAddress } = await projectStore.deployMintedNftContract(
+      projectId,
+      nftAddress.value,
+    );
+    if (!success) throw new Error(data);
+    router.push(`/project/publish/sku/${projectId}/${contractAddress}`);
+  } catch (error) {
+    console.error('create minted failed', error);
+    ElMessage.error('create minted retailer failed');
+  } finally {
+    loading.value = false;
+  }
+}
+
+async function deployUnMintedContract() {
+  if (!projectId || typeof projectId !== 'string') {
+    ElMessage.error('Project address not in rooter');
+    return;
+  }
+
+  loading.value = true;
+  try {
+    const { success, data, contractAddress } = await projectStore.deployUnmintedNftContract(
+      projectId,
+      nftAddress.value,
+    );
+    if (!success) throw new Error(data);
+    router.push(`/project/publish/spu/${projectId}/${contractAddress}`);
+  } catch (error) {
+    console.error('create unminted', error);
+    ElMessage.error('create unminted retrieve failed');
+  } finally {
+    loading.value = false;
   }
 }
 </script>

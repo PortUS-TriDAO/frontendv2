@@ -44,6 +44,7 @@ const handlers: RestHandler[] = [
           rights: 1000,
           righted: 50,
           payToken: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+          projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
           minted: false,
           rows: [
             {

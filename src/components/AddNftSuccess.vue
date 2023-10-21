@@ -8,11 +8,11 @@
         You can continue to
         <router-link to="/project/publish/sku">add more NFTs</router-link>
         , or add them later in
-        <router-link to="/">Mine</router-link>
+        <router-link to="/mine/submitted">Mine</router-link>
       </p>
       <p v-else>
         You can manage them in
-        <router-link to="/">Mine</router-link>
+        <router-link to="/mine/submitted">Mine</router-link>
       </p>
     </div>
   </main-content>

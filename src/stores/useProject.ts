@@ -1,9 +1,11 @@
-import { type Address, waitForTransaction } from '@wagmi/core';
+import { type Address, getAccount, waitForTransaction } from '@wagmi/core';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
 import * as projectApi from '@/api/projects';
+import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useRouterContract } from '@/stores/useRouterContract';
+import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 
 interface ICreateProject {
   projectId: string;
@@ -26,7 +28,11 @@ export const useProjectStore = defineStore('project', () => {
     skuDetail: {},
   });
 
-  async function createProject(params: ICreateProject) {
+  async function createProject(params: ICreateProject): Promise<{
+    projectAddress: string;
+    success: boolean;
+    data: any;
+  }> {
     console.log('createProject', params);
     const {
       projectId: number,
@@ -50,7 +56,7 @@ export const useProjectStore = defineStore('project', () => {
 
     const contractAddress: Address = await routerContract.getProjectAddress();
 
-    return projectApi.createProjectStep2({
+    const { success, data } = await projectApi.createProjectStep2({
       projectId: params.projectId,
       contractName,
       sharePercentage,
@@ -60,38 +66,112 @@ export const useProjectStore = defineStore('project', () => {
       rightQuantity,
       businessContractAddress: contractAddress,
     });
+
+    return { projectAddress: contractAddress, success, data };
   }
 
-  // 查询项目列表
-  async function getProjects() {
-    const { success, data } = await projectApi.getProjects({});
-    if (success) {
-      const { total, currentPage, rows } = data;
-      state.total = total;
-      state.currentPage = currentPage;
-      state.projectList = rows;
-    } else {
-      throw new Error(data);
-    }
+  async function deployMintedNftContract(projectId: string, nftContract: string) {
+    const { success, data } = await projectApi.getProjectDetail({ projectId });
+    if (!success) throw new Error('fetch project details failed');
+
+    const { projectAddress } = data;
+    const deployerContract = useDeployerContractStore();
+    // bussinessContractAddress
+    const contractAddress = await deployerContract.createMintedRetailer(
+      projectAddress,
+      nftContract,
+    );
+
+    const result = await projectApi.postDeployedContract({
+      nftAddress: nftContract,
+      nftType: 1,
+      contractAddress,
+    });
+
+    return { ...result, contractAddress };
   }
 
-  async function getProjectDetail(params) {
-    const { success, data } = await projectApi.getProjectDetail(params);
+  async function deployUnmintedNftContract(projectId: string, nftContract: string) {
+    const { success, data } = await projectApi.getProjectDetail({ projectId });
+    if (!success) throw new Error('fetch project details failed');
+
+    const { projectAddress } = data;
+    const deployerContract = useDeployerContractStore();
+    // bussinessContractAddress
+    const contractAddress = await deployerContract.createUnmintedRetailer(
+      projectAddress,
+      nftContract,
+    );
+    const result = await projectApi.postDeployedContract({
+      nftAddress: nftContract,
+      nftType: 2,
+      contractAddress,
+    });
+
+    return { ...result, contractAddress };
+  }
+
+  async function publishSku(
+    projectId: string,
+    price: bigint,
+    nftTokenId: number,
+    deadline: number,
+    retailerAddress: Address,
+  ) {
+    const { success, data } = await projectApi.getProjectDetail({ projectId });
     if (!success) throw new Error(data);
-    state.projectDetail = data;
+
+    const { payToken } = data;
+
+    const signTypedDataStore = useSignTypedDataStore();
+    const signature = await signTypedDataStore.signMintedNftRetailer(
+      payToken,
+      price,
+      nftTokenId,
+      deadline,
+      retailerAddress,
+    );
   }
 
-  async function getSkuList(id: string) {
-    const { success, data } = await projectApi.getSkuList({ id });
-    if (!success) throw new Error('request failed');
-    state.skuList = data.rows;
-  }
-
-  async function getSkuDetail(tokenId: string) {
-    const { success, data } = await projectApi.getSkuDetail({ tokenId });
+  async function publishSpu(
+    projectId: string,
+    price: bigint,
+    nftTokenId: number,
+    deadline: number,
+    retailerAddress: Address,
+  ) {
+    const { success, data } = await projectApi.getProjectDetail({ projectId });
     if (!success) throw new Error(data);
-    state.skuDetail = data;
+
+    const { payToken } = data;
+
+    const signTypedDataStore = useSignTypedDataStore();
+    const signature = await signTypedDataStore.signUnmintedNftRetailer(
+      payToken,
+      price,
+      nftTokenId,
+      deadline,
+      retailerAddress,
+    );
+
+    const { address: seller } = await getAccount();
+    return projectApi.publishSku({
+      projectId,
+      tokenId: nftTokenId,
+      price,
+      ddl: deadline,
+      seller,
+      payToken,
+      signature,
+    });
   }
 
-  return { state, getProjects, createProject, getProjectDetail, getSkuDetail, getSkuList };
+  return {
+    state,
+    createProject,
+    deployMintedNftContract,
+    deployUnmintedNftContract,
+    publishSku,
+    publishSpu,
+  };
 });
