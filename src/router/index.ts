@@ -26,9 +26,19 @@ const router = createRouter({
       component: () => import('../views/mine/MineContainer.vue'),
       children: [
         {
-          path: '/project/create',
-          name: 'ProjectCreate',
-          component: () => import('../views/projects/ProjectCreate.vue'),
+          path: '/mine/submitted',
+          name: 'Submitted',
+          component: () => import('../views/mine/Submitted.vue'),
+        },
+        {
+          path: '/mine/participated',
+          name: 'Participated',
+          component: () => import('../views/mine/Participated.vue'),
+        },
+        {
+          path: '/mine/store',
+          name: 'Store',
+          component: () => import('../views/mine/Store.vue'),
         },
         {
           path: '/mine/projects',
@@ -45,17 +55,37 @@ const router = createRouter({
     {
       path: '/project/create/step1',
       name: 'CreateProjectStep1',
-      component: () => import('../views/mine/CreateProjectStep1.vue'),
+      component: () => import('../views/projects/CreateProjectStep1.vue'),
     },
     {
-      path: '/project/create/step2',
+      path: '/project/create/step2/:projectId',
       name: 'CreateProjectStep2',
-      component: () => import('../views/mine/CreateProjectStep2.vue'),
+      component: () => import('../views/projects/CreateProjectStep2.vue'),
     },
     {
-      path: '/project/createsuccess',
-      name: 'CreateSuccess',
-      component: () => import('../views/projects/components/CreateSuccess.vue'),
+      path: '/project/submitsuccess/:projectId',
+      name: 'SubmitSuccess',
+      component: () => import('../components/SubmitSuccess.vue'),
+    },
+    {
+      path: '/project/publish/sku/:projectId/:businessContractAddress',
+      name: 'PublishSku',
+      component: () => import('../views/projects/PublishSku.vue'),
+    },
+    {
+      path: '/project/publish/spu/:projectId/:businessContractAddress',
+      name: 'PublishSpu',
+      component: () => import('../views/projects/PublishSpu.vue'),
+    },
+    {
+      path: '/project/addnft/success',
+      name: 'AddNftSuccess',
+      component: () => import('../components/AddNftSuccess.vue'),
+    },
+    {
+      path: '/project/mint/success',
+      name: 'MintSuccess',
+      component: () => import('../components/MintSuccess.vue'),
     },
   ],
 });

@@ -6,9 +6,10 @@
         <div class="menus" ref="elMenu">
           <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
           <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
-          <router-link to="/mine/projects" @click.stop="switchMenu(true)">Mine</router-link>
-          <button v-if="!account" @click.stop="connect">connect</button>
-          <button v-else @click.stop>{{ shortAddress }}</button>
+          <router-link to="/mine/submitted" @click.stop="switchMenu(true)">Mine</router-link>
+          <!-- <button v-if="!account" @click.stop="connect">connect</button>
+          <button v-else @click.stop>{{ shortAddress }}</button> -->
+          <w3m-button>connect</w3m-button>
         </div>
         <button class="btn-menus" @click.stop="switchMenu()">
           <svg
@@ -34,9 +35,11 @@
 import { computed, onMounted, ref } from 'vue';
 
 import { useWalletStore } from '@/stores/useWallet';
+
 const walletStore = useWalletStore();
 
 const elMenu = ref(null);
+
 function switchMenu(hideForce?: boolean) {
   const el = elMenu.value;
   if (el.classList.contains('menus-show') || hideForce === true) {
@@ -58,6 +61,7 @@ const shortAddress = computed(
     walletStore.state.account &&
     `${walletStore.state.account.slice(0, 6)}...${walletStore.state.account.slice(-4)}`,
 );
+
 function connect() {
   switchMenu(true);
   walletStore.connect();
@@ -67,6 +71,7 @@ function connect() {
 .page-header {
   height: 66px;
   background-color: #000425;
+
   .header-container {
     width: var(--container-width);
     max-width: var(--container-max-width);
@@ -78,17 +83,20 @@ function connect() {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
     .logo {
       width: 105px;
       height: 32px;
       background: url('@/assets/logo.png') center center no-repeat;
       background-size: contain;
     }
+
     .menus {
       display: flex;
       flex-direction: row;
       align-items: center;
       color: #fff;
+
       > button {
         width: 185px;
         height: 40px;
@@ -98,6 +106,7 @@ function connect() {
         cursor: pointer;
         background: linear-gradient(90deg, #f6250c 4%, #fb722f 95%);
       }
+
       > a {
         color: #fff;
         opacity: 0.5;
@@ -105,18 +114,21 @@ function connect() {
         margin-right: 80px;
       }
     }
+
     .btn-menus {
       display: none;
       background-color: transparent;
       border-style: none;
       width: 20px;
       height: 20px;
+
       > svg {
         max-width: 100%;
         max-height: 100%;
       }
     }
   }
+
   @media screen and (max-width: 800px) {
     height: 60px;
     .header-section {
@@ -125,15 +137,18 @@ function connect() {
       z-index: 99;
       background-color: #000425;
     }
+
     .header-container {
       height: 60px;
       align-items: center;
       line-height: 60px;
       position: relative;
       z-index: 9;
+
       .btn-menus {
         display: block;
       }
+
       .menus {
         display: none;
         position: absolute;
@@ -143,11 +158,13 @@ function connect() {
         z-index: 9;
         padding: 0 20px;
         background-color: #000425;
+
         > a {
           display: block;
           margin-right: 0;
         }
       }
+
       .menus-show {
         display: block;
       }

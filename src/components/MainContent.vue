@@ -10,6 +10,7 @@
 .main-content {
   width: 960px;
   margin: 0 auto;
-  margin-bottom: 54px;
+  padding-bottom: 54px;
+  background: #fff;
 }
 </style>

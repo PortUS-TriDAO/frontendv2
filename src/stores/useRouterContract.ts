@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 
 import ROUTER_ABI from '@/abi/router.abi.json';
 import { ContractAddress } from '@/constant/contracts';
+
 export const useRouterContract = defineStore('routerContract', () => {
   function getRouterContract() {
     const network = getNetwork();
@@ -18,8 +19,8 @@ export const useRouterContract = defineStore('routerContract', () => {
     name: string,
     symbol: string,
     chargeERC20: Address,
-    sharePercentage: string,
-    maxRights: number,
+    sharePercentage: string | number,
+    maxRights: string | number,
   ): Promise<WriteContractResult> {
     const network = getNetwork();
     const { rights, funds } = ContractAddress[network.chain.id];
@@ -41,7 +42,7 @@ export const useRouterContract = defineStore('routerContract', () => {
     return count as bigint;
   }
 
-  async function getProjectAddress() {
+  async function getProjectAddress(): Promise<Address> {
     const { address } = getAccount();
     const routerContract = getRouterContract();
     const count = await getCountOfProjects(address);
@@ -52,7 +53,7 @@ export const useRouterContract = defineStore('routerContract', () => {
       functionName: 'projectsOfCreator',
       args: [address, length],
     });
-    return projectAddress;
+    return projectAddress as Address;
   }
 
   return { createProject, getProjectAddress };

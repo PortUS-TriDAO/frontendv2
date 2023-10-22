@@ -42,13 +42,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive, ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { getProjectDetail, postProjectMint } from '@/api';
 import { getAccount, waitForTransaction } from '@wagmi/core';
+import { ElMessage } from 'element-plus';
+import { computed, onMounted, reactive, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+import { getProjectDetail, postProjectMint } from '@/api';
 import { getProjectContractFunctions } from '@/stores/useContract';
 import { useWalletStore } from '@/stores/useWallet';
-import { ElMessage } from 'element-plus';
 import type { Address } from '@/types';
 const { referrerSign } = getProjectContractFunctions();
 const route = useRoute();

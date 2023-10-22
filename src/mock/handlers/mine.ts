@@ -1,116 +1,153 @@
 import { rest, RestHandler } from 'msw';
 
 const handlers: RestHandler[] = [
-  rest.get('/mine/distributions', (req, res, ctx) => {
-    const { kolAddress } = req.params;
+  // UP
+  rest.post('/mine/nft/up', (req, res, ctx) => {
+    const { tokenId, signature } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: 'up success',
+      }),
+    );
+  }),
+  // down
+  rest.post('/mine/nft/down', (req, res, ctx) => {
+    const { tokenId, signature } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: 'down success',
+      }),
+    );
+  }),
+  // 获取我提交的项目列表
+  rest.get('/mine/submitted/list', (req, res, ctx) => {
+    const { account, pageNumber, pageSize } = req.params;
     return res(
       ctx.json({
         success: true,
         data: {
-          totalPage: 100,
+          total: 1000,
           currentPage: 1,
           rows: [
             {
-              id: 238472394, // projectId
-              icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              projectId: 423423234234,
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              cover:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
               name: 'Farmers World',
-              website: 'http://34.238.85.169/',
-              amount: '237482394',
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              briefIntro: 'sklfjslfj',
+              businessContracts: [
+                '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+                '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              ],
             },
           ],
         },
       }),
     );
   }),
-  rest.get('/mine/games', (req, res, ctx) => {
-    const { creatorAddress } = req.params;
+  // 点击某个具体的Project，列出该project下所有商业合约
+  rest.get('/mine/project/bussiness/list', (req, res, ctx) => {
+    const { projectId } = req.params;
     return res(
       ctx.json({
         success: true,
         data: {
-          total: 100,
-          currentPage: 1,
           rows: [
             {
-              id: 238472394, // projectId
-              icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              name: 'Farmers World',
-              website: 'http://34.238.85.169/',
-              amount: '10000',
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              businessContractAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              contractName: 'lksadjflsdf',
+              briefIntro: 'kjsflsdfj',
+              sharePercentage: 10,
+              rights: 1000,
+              righted: 10,
+              balance: 203497823048,
             },
           ],
-        },
-      }),
-    );
-  }),
-  // Mine页面 两个收益统计
-  rest.get('/mine/profits', (req, res, ctx) => {
-    // 当前登录KOL的地址
-    const { address } = req.params;
-    return res(
-      ctx.json({
-        success: true,
-        data: {
-          publishedIncome: 4234234, // 创建项目总收益
-          participatedIncome: 255345345, // 参与项目总收益
         },
       }),
     );
   }),
 
-  // 获取我提交的商业合约列表
-  rest.get('/mine/submited', (req, res, ctx) => {
-    const { address } = req.params;
+  // 点击某个具体的商业合约，列出所有的NFT合约列表
+  rest.get('/mine/bussiness/nftcontract/list', (req, res, ctx) => {
+    const { businessContractAddress } = req.params;
     return res(
       ctx.json({
         success: true,
         data: {
           rows: [
             {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
+              nftAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              nftType: 1,
+              avatar: '', // NFT 图片地址
             },
             {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
+              nftAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              nftType: 2,
+              avatar: '',
             },
           ],
-          currentPage: 2,
-          total: 1000, // 总条目数
         },
       }),
     );
   }),
 
+  // 获取某个NFT下所有的token列表
+  rest.get('/mine/nftcontract/token/list', (req, res, ctx) => {
+    // 返回除了当前tokenId以外的其他NFT列表
+    const { nftAddress } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          rows: [
+            {
+              nftName: '',
+              nftIntro: '',
+              price: '',
+              tokenId: 938423,
+              nftAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              hasSold: false,
+            },
+          ],
+        },
+      }),
+    );
+  }),
+
+  // 获取NFT 详情
+  rest.get('/mine/nft/detail', (req, res, ctx) => {
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          nftAddress: 'slkdjflsdf',
+          briefIntro: 'sdjflsdkfjsdf',
+          price: 234234,
+          payToken: 'sldkjflsdfj',
+          description: 'sdkjflsdkfjl',
+        },
+      }),
+    );
+  }),
   // 获取我参与的商业合约列表
-  rest.get('/mine/participat', (req, res, ctx) => {
-    const { address } = req.params;
+  rest.get('/mine/participat/list', (req, res, ctx) => {
+    const { account, pageNumber, pageSize } = req.params;
     return res(
       ctx.json({
         success: true,
         data: {
           rows: [
             {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
-            },
-            {
-              tokenId: '23940234',
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              contractAddress: '0xkllksdhfjosdf',
-              createTime: '823904802349',
+              projectId: 2342324,
+              avatar:
+                'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
+              projectName: 'sklflsdfsdfsdkf',
+              briefIntro: 'skljdflsdkfjsdf',
             },
           ],
           currentPage: 2,
@@ -119,22 +156,42 @@ const handlers: RestHandler[] = [
       }),
     );
   }),
-
-  // 获取我参与的/创建的商业合约详情
-  rest.get('/mine/business/detial', (req, res, ctx) => {
-    const { address, tokenId } = req.params;
+  // 获取我参与的项目下的商业合约列表
+  rest.get('/mine/business/list', (req, res, ctx) => {
+    const { account, projectId } = req.params;
     return res(
       ctx.json({
         success: true,
         data: {
-          tokenId,
-          icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-          income: 2938482304,
-          rights: [
+          rows: [
             {
-              name: 'ItemName',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=384',
-              isSold: true,
+              contractName: 'sdfsdafasf',
+              briefIntro: 'sfdsdfsdfsdf',
+              balance: 23424234,
+            },
+          ],
+        },
+      }),
+    );
+  }),
+  // 获取某个商业合约详情
+  rest.get('/mine/business/detail', (req, res, ctx) => {
+    const { businessContractAddress } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          contractName: 'lksjdflksdjf',
+          briefIntro: 'sldfjsdlf',
+          rights: 1999,
+          righted: 50,
+          payToken: 'lksdjfljsadfl',
+          description: 'jskldfjlsdjfsdaf',
+          rows: [
+            {
+              avatar: 'skldjflsdfjlsdf',
+              nftAddress: 'lskjflsdfjsdklf',
+              tokenId: 2390482304,
             },
           ],
         },
@@ -144,3 +201,9 @@ const handlers: RestHandler[] = [
 ];
 
 export default handlers;
+
+// project {
+//   bussiness  -> V1 project {
+//       NFT (minted/unminted)
+//   }
+// }
