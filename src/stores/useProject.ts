@@ -1,7 +1,10 @@
-import { type Address, getAccount, waitForTransaction } from '@wagmi/core';
+import type { SignatureLike } from '@ethersproject/bytes';
+import { splitSignature } from '@ethersproject/bytes';
+import { type Address, getAccount, waitForTransaction, writeContract } from '@wagmi/core';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
+import RETAILER_ABI from '@/abi/retailer.abi.json';
 import * as projectApi from '@/api/projects';
 import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useRouterContract } from '@/stores/useRouterContract';
@@ -176,6 +179,34 @@ export const useProjectStore = defineStore('project', () => {
     });
   }
 
+  interface IBuyInfo {
+    seller: Address;
+    payToken: Address;
+    payPrice: bigint;
+    nftTokenId: number;
+    deadline: number;
+    signature: string;
+  }
+
+  async function buyMintedNft(
+    retailerContract: Address,
+    buyNftParams: IBuyInfo[],
+    kolTokenId: number,
+  ) {
+    const buyParams = buyNftParams.map((item) => {
+      const { r, s, v } = splitSignature(item.signature);
+      return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
+    });
+
+    await writeContract({
+      address: retailerContract,
+      abi: RETAILER_ABI,
+      functionName: 'buy',
+      // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
+      args: [buyParams, kolTokenId],
+    });
+  }
+
   return {
     state,
     createProject,
@@ -183,5 +214,6 @@ export const useProjectStore = defineStore('project', () => {
     deployUnmintedNftContract,
     publishSku,
     publishSpu,
+    buyMintedNft,
   };
 });

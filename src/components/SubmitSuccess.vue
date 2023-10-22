@@ -20,7 +20,7 @@
       </div>
       <div class="box-bottom">
         <span>or You can add NFT later in Mine- project- commercial</span>
-        <w-button @click="handleNext" :loading="loading">Next</w-button>
+        <p-wallet-button @click="handleNext" :loading="loading">Next</p-wallet-button>
       </div>
     </div>
   </main-content>

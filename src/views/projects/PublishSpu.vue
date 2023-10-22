@@ -16,11 +16,7 @@
             <el-date-picker v-model="ruleForm.ddl" type="datetime" placeholder="ddl" />
           </el-form-item>
           <el-form-item label="Price" prop="price">
-            <el-input
-              placeholder="Price"
-              oninput="value=value.replace(/[^0-9.]/g, '')"
-              v-model="ruleForm.price"
-            ></el-input>
+            <p-number-input placeholder="Price" v-model="ruleForm.price"></p-number-input>
           </el-form-item>
           <el-form-item label="Brief introduction" prop="briefIntro">
             <el-input
@@ -35,11 +31,11 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="Quantity" prop="quantity">
-            <el-input
+            <p-number-input
               placeholder="the number of SPU.0 represents infinitely many"
-              oninput="value=value.replace(/[^0-9]/g, '')"
+              value-type="uint"
               v-model="ruleForm.quantity"
-            ></el-input>
+            ></p-number-input>
           </el-form-item>
           <el-form-item label="Seller">
             <el-input disabled placeholder="wallet address" :value="ruleForm.seller"></el-input>
@@ -57,7 +53,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <p-button class="btn" @click="handleSave(ruleFormRef)">Save</p-button>
+      <p-wallet-button class="btn" @click="handleSave(ruleFormRef)">Save</p-wallet-button>
     </div>
   </main-content>
 </template>

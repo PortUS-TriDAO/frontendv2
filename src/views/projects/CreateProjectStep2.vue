@@ -56,7 +56,9 @@
           </el-form-item>
         </el-form>
       </div>
-      <w-button :loading="loading" class="btn" @click="handleSubmit(ruleFormRef)">submit</w-button>
+      <p-wallet-button :loading="loading" class="btn" @click="handleSubmit(ruleFormRef)"
+        >submit</p-wallet-button
+      >
     </div>
   </main-content>
 </template>
