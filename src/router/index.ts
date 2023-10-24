@@ -24,8 +24,18 @@ const router = createRouter({
     },
     {
       path: '/project/:id/:businessId',
-      name: 'ProjectDetail',
+      name: 'BusinessDetail',
       component: () => import('../views/v3/project/BusinessDetail.vue'),
+    },
+    {
+      path: '/sku/:skuId',
+      name: 'SkuList',
+      component: () => import('../views/v3/project/Sku.vue'),
+    },
+    {
+      path: '/spu/:skuId',
+      name: 'SpuList',
+      component: () => import('../views/v3/project/Spu.vue'),
     },
     {
       path: '/mine/container',
