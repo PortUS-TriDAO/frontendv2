@@ -13,7 +13,7 @@
         <div class="item-detail">
           <h3>Echo of Intensity</h3>
           <p>Dreamed of moonshots but awoke to a capitulation.</p>
-          <div class="item-row2">
+          <!-- <div class="item-row2">
             <div>
               <label>items:</label>
               <span>136</span>
@@ -21,8 +21,9 @@
             <div>
               <label>righted/rights:</label>
               <span>56/200</span>
-            </div>
-          </div>
+            </div> 
+          </div>-->
+          <div style="flex-grow: 1"></div>
           <div class="item-action">
             <p-button @click="handleDetail('ddddd')">Detail</p-button>
           </div>
@@ -35,7 +36,7 @@
 // import { Search } from '@element-plus/icons-vue';
 // import { onMounted, reactive, ref } from 'vue';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 
 // import { getProjects } from '@/api';
 import avatar from '@/assets/images/demo-avatar.png';
@@ -72,7 +73,7 @@ function handleSearch() {
   console.log('search, key=', searchKey.value);
 }
 function handleDetail(id: string) {
-  router.push(`/project/${id}`)
+  router.push(`/project/${id}`);
 }
 </script>
 <style lang="less" scoped>
@@ -120,25 +121,26 @@ function handleDetail(id: string) {
       letter-spacing: 0px;
       line-height: 29px;
       color: #000000;
-      padding-top: 14px;
-      padding-right: 10px;
+      padding: 14px 10px 10px 0;
       > h3 {
         font-weight: 700;
+        font-size: inherit;
       }
       > p {
+        font-size: inherit;
         font-weight: 400;
       }
-      .item-row2 {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        label {
-          margin-right: 4px;
-        }
-        div:first-child {
-          width: 245px;
-        }
-      }
+      // .item-row2 {
+      //   display: flex;
+      //   flex-direction: row;
+      //   align-items: center;
+      //   label {
+      //     margin-right: 4px;
+      //   }
+      //   div:first-child {
+      //     width: 245px;
+      //   }
+      // }
       .item-action {
         text-align: right;
       }
