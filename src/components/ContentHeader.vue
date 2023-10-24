@@ -8,11 +8,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Search } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { Search } from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 function createProject() {
-  router.push('/project/create')
+  router.push('/project/create/step1');
 }
 </script>
 <style lang="less">
@@ -26,14 +28,17 @@ function createProject() {
   margin-top: 35px;
   margin-bottom: 16px;
   width: 100%;
+
   > div {
     display: flex;
     flex-direction: row;
     align-items: center;
+
     .el-input {
       margin-right: 14px;
       width: 200px;
     }
+
     .el-button {
       width: 150px;
       height: 36px;

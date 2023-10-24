@@ -3,6 +3,7 @@ import { rest, RestHandler } from 'msw';
 const handlers: RestHandler[] = [
   // 获取商业合约列表
   rest.get('/project/all', (req, res, ctx) => {
+    const { keyword } = req.params;
     return res(
       ctx.json({
         success: true,
@@ -11,65 +12,12 @@ const handlers: RestHandler[] = [
           currentPage: 5,
           rows: [
             {
-              id: 24234523421,
-              icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              projectId: 24234523421,
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
               name: 'Farmers World',
               briefIntro:
                 'Farmers World is the first farming game to function on the NFTs platformRead more',
-              minted: false,
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
-            },
-            {
-              id: 24234523422,
-              icon: 'https://dashboard-assets.dappradar.com/document/3803/splinterlands-dapp-games-hive-logo-166x166_f0d0aff6d57ee5a24c2c49fd048ec2d2.png',
-              name: 'Splinterlands',
-              briefIntro: 'Splinterlands is a collectible trading card game',
-              minted: true,
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
-            },
-            {
-              id: 24234523423,
-              icon: 'https://dashboard-assets.dappradar.com/document/37718/untitledplatformer-dapp-games-37718-logo-166x166_c1126decd78b35a6a16c345c01904d47.png',
-              name: 'Untitled Platformer',
-              briefIntro: 'Untitled Platformer',
-              minted: false,
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
-            },
-            {
-              id: 24234523424,
-              icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              name: 'Farmers World',
-              briefIntro:
-                'Farmers World is the first farming game to function on the NFTs platformRead more',
-              minted: false,
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
-            },
-            {
-              id: 24234523425,
-              icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              name: 'Farmers World',
-              briefIntro:
-                'Farmers World is the first farming game to function on the NFTs platformRead more',
-              minted: false,
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
-            },
-            {
-              id: 24234523426,
-              icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              name: 'Farmers World',
-              briefIntro:
-                'Farmers World is the first farming game to function on the NFTs platformRead more',
-              minted: false,
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
-            },
-            {
-              id: 24234523427,
-              icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              name: 'Farmers World',
-              briefIntro:
-                'Farmers World is the first farming game to function on the NFTs platformRead more',
-              minted: false,
-              projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
             },
           ],
         },
@@ -79,33 +27,104 @@ const handlers: RestHandler[] = [
 
   // 获取项目详情
   rest.get('/project/detail', (req, res, ctx) => {
-    const { id } = req.params;
+    const { projectId } = req.params;
     return res(
       ctx.json({
         success: true,
         data: {
-          banner: 'https://dynamic-kvl-assets.dappradar.com/a831cd86241745cb81ce22a4b88b1095.png',
-          icon: 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-          name: 'Alen World',
+          cover: 'https://dynamic-kvl-assets.dappradar.com/a831cd86241745cb81ce22a4b88b1095.png',
+          avatar:
+            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+          projectName: 'Alen World',
           website: 'https://farmersworld.io/',
           briefIntro:
             'Farmers World is the first farming game to function on the NFTs platformRead more.',
           description:
             'Farmers World is the first farming game to function on the NFTs platform. Pick for yourself suitable tools, exploit various resourcesbuy land to build enormous farms, and enjoy the fascinating experiences of a farmer working in Farmers World’s Ecosystem.',
-          screenShots: [
-            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png',
-            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image2-500x315_ae97fa670d1af1c025ce23ad1fc12856.png',
-            'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-image2-500x315_dd3a0ade17b2cc54e0a783b6ee7fa2b4.png',
-            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png',
+          rights: 1000,
+          righted: 50,
+          payToken: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+          projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+          minted: false,
+          rows: [
+            {
+              // 商业合约列表数据
+              contractName: '',
+              sharePercentage: 20,
+              briefIntro: '',
+              quantity: 1000,
+              rights: 50000,
+              righted: 300,
+            },
+          ],
+        },
+      }),
+    );
+  }),
+  // 查询商业合约详情
+  rest.get('/project/business/detail', (req, res, ctx) => {
+    const { businessContractAddress, chainId } = req.params;
+
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          contractName: 'sjkflsjf',
+          briefIntro: 'skjdfklsjflsd',
+          rights: 5000,
+          righted: 30,
+          payToken: '0xkljsldfjlsdf',
+          description: 'sajflsdkjflsdjfl',
+          rows: [], // SKU/SPU 列表
+        },
+      }),
+    );
+  }),
+
+  // TODO: 添加分页  NFT合约详情页面
+  rest.get('/project/nft/list', (req, res, ctx) => {
+    const { businessContractAddress } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          rows: [
+            // SKU 挂单列表
+            {
+              tokenId: 239402,
+              name: 'kjlsfjsdf',
+              avatar: 'skldfjlsdkfj',
+            },
           ],
         },
       }),
     );
   }),
 
+  // SKU 详情
+  rest.get('/project/sku/detail', (req, res, ctx) => {
+    const { tokenId } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          nftName: 'klsjdfljsldf',
+          avatar: 'sdjfklsdfjsdlf',
+          price: 982347234,
+          payToken: 'slkdjflsdfjsdl',
+          isSalesEnd: false,
+          briefIntro: 'jsdklfjsdlfjs',
+          description: 'slkdfjlsdfjsdlfj',
+        },
+      }),
+    );
+  }),
+  // SPU详情  @Notice：这里正常返回SPU能拿到的数据，找不到和哪个页面对应了
+  rest.get('/project/spu/detail', (req, res, ctx) => {}),
+
   // mint成功以后像服务端上报数据
   rest.post('/project/mint', (req, res, ctx) => {
-    const { projectId, account } = req.params;
+    const { projectId, creatorAddress } = req.params;
     return res(
       ctx.json({
         success: true,
@@ -114,99 +133,67 @@ const handlers: RestHandler[] = [
     );
   }),
 
-  // 创建项目
-  rest.post('/project/create', (req, res, ctx) => {
+  // TODO： 添加签名
+  // 创建项目第一步，提交基础信息
+  rest.post('/project/create/step1', (req, res, ctx) => {
+    const { projectName, briefIntro, website, description, avatar, cover, creatorAddress } =
+      req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          projectId: 23487029384,
+        },
+      }),
+    );
+  }),
+
+  // 创建项目第二步，提交商业合约相关信息
+  rest.post('/project/create/step2', (req, res, ctx) => {
     const {
-      name,
-      icon,
-      briefIntro,
-      website,
-      description,
-      banner,
-      token,
-      symbol,
+      projectId,
+      contractName,
       sharePercentage,
-      projectAddress,
-      creatorAddress,
-      nftType, // 新增字段 1： 已经Mint的NFT  2： 还未mint的NFT
+      briefIntro,
+      payToken,
+      description,
+      rightQuantity,
+      businessContractAddress,
     } = req.params;
+
     return res(
       ctx.json({
         success: true,
-        data: 'project create success',
+        data: 'save project info success',
       }),
     );
   }),
+  // 对应NFT adderss NFT type 页面。创建NFT售卖合约成功以后通知后端合约地址
+  rest.post('/project/contract/deploy', (req, res, ctx) => {
+    const { nftAddress, nftType, contractAddress } = req.params;
 
-  // 这个接口的list里包含SKU和SPU
-  rest.get('/project/skulist', (req, res, ctx) => {
-    // project id
-    const { id } = req.params;
     return res(
       ctx.json({
         success: true,
-        data: {
-          rows: [
-            {
-              tokenId: 1,
-              type: 1, // 1 表示SKU  2 表示SPU
-              name: 'sphpp',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-            },
-            {
-              tokenId: 2,
-              type: 1,
-              name: 'sphpp',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-            },
-            {
-              tokenId: 3,
-              type: 1,
-              name: 'sphpp',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-            },
-            {
-              tokenId: 4,
-              type: 1,
-              name: 'sphpp',
-              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-            },
-          ],
-        },
-      }),
-    );
-  }),
-
-  // 点击某个具体的SKU / SPU
-  rest.get('/sku/detail', (req, res, ctx) => {
-    // SKU ID
-    const { tokenId } = req.params;
-    return res(
-      ctx.json({
-        success: true,
-        data: {
-          id: 1,
-          icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
-          name: 'SPHPP',
-          website: 'https://www.baidu.com',
-          serialNumber: 10001,
-          views: 200,
-          favorites: 300,
-          price: 0.23,
-          creatorAddress: '0xksjflsjflsdfjsd',
-          payToken: '0xkjslfjsdlfj', // USDT address
-          briefIntro: '简介',
-          description: 'SKU 介绍',
-          totalMinted: 56, // Mint该商业合约的KOL人数
-          totalPerfit: 28347239472394, // 该商业合约累计KOL收益
-        },
+        data: 'contract deploy success',
       }),
     );
   }),
 
   // 上架SKU
   rest.post('/sku/publish', (req, res, ctx) => {
-    const { projectId, tokenId, price, ddl, seller, payToken, signature } = req.params;
+    // nftType: 1: mined 2: unmint
+    const {
+      projectId,
+      nftAddress,
+      nftType,
+      tokenId,
+      price,
+      ddl,
+      seller, // 卖家账号
+      payToken,
+      signature,
+    } = req.params;
 
     return res(
       ctx.json({
@@ -218,12 +205,55 @@ const handlers: RestHandler[] = [
 
   // 上架SPU
   rest.post('/spu/publish', (req, res, ctx) => {
-    const { name, price, description, ddl, intro, seller, payToken, icon, banner, signature } =
-      req.params;
+    // nftType: 1: mined 2: unmint
+    const {
+      projectId,
+      nftName,
+      nftAddress,
+      nftType,
+      price,
+      ddl,
+      seller,
+      payToken,
+      briefIntro,
+      description,
+      nftQuantity,
+      avatar,
+      image,
+      cover,
+      signature,
+    } = req.params;
     return res(
       ctx.json({
         success: true,
         data: 'publish success',
+      }),
+    );
+  }),
+
+  // project详情页里请求的SKU/SPU列表，包含SKU和SPU
+  rest.get('/project/skulist', (req, res, ctx) => {
+    // 如果传了tokenId，把有tokenId的排除掉。没传则查询全部
+    const { projectId, tokenId } = req.params;
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          rows: [
+            {
+              tokenId: 1,
+              nftType: 1, // 1 表示SKU  2 表示SPU
+              name: 'sphpp',
+              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
+            },
+            {
+              tokenId: 2,
+              nftType: 1,
+              name: 'sphpp',
+              icon: 'https://i.seadn.io/gcs/files/3dcbe2fcdb0cb1d36700f4bf38fdbb47.jpg?auto=format&dpr=1&w=136&h=136&fr=1',
+            },
+          ],
+        },
       }),
     );
   }),

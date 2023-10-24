@@ -1,7 +1,10 @@
 import Button from './components/button';
-import PageContainer from './components/page-container/index.vue';
+import NumberInput from './components/number-input';
+import WalletButton from './components/wallet-button';
 
 export function initPackages(app: any) {
-  app.component('p-button', Button);
-  app.component('page-container', PageContainer);
+  app
+    .component('p-button', Button)
+    .component('p-wallet-button', WalletButton)
+    .component('p-number-input', NumberInput);
 }

@@ -1,28 +1,39 @@
 import type { IListResponse, IResponse } from '@/types/response';
 
 import axios from '../utils/axios';
-// 提交创建游戏
-export const createProject = (params: {
-  name: string;
-  icon: string;
+// 提交创建游戏step1
+export const createProjectStep1 = (params: {
+  projectName: string;
   briefIntro: string;
   website: string;
   description: string;
-  banner: string;
-  token: string;
-  symbol: string;
-  sharePercentage: string;
-  projectAddress: string;
+  avatar: string;
+  cover: string;
   creatorAddress: string;
-  screenShots: string[];
-  nftType: 1 | 2; // 1： 已经Mint的NFT  2： 还未mint的NFT
-}): Promise<IResponse> => axios.post('/project/create', params);
+}): Promise<IResponse> => axios.post('/project/create/step1', params);
+// 提交创建游戏step2
+export const createProjectStep2 = (params: {
+  projectId: string;
+  contractName: string;
+  sharePercentage: string | number;
+  briefIntro: string;
+  payToken: string;
+  description: string;
+  rightQuantity: string | number;
+  businessContractAddress: string;
+}): Promise<IResponse> => axios.post('/project/create/step2', params);
 // 请求游戏列表
 export const getProjects = (params: {}): Promise<IResponse> =>
   axios.get('/project/all', { params });
 // 获取游戏详情
-export const getProjectDetail = (params: { id: string }): Promise<IResponse> =>
+export const getProjectDetail = (params: { projectId: string }): Promise<IResponse> =>
   axios.get('/project/detail', { params });
+
+export const postDeployedContract = (params: {
+  nftAddress: string;
+  nftType: 1 | 2; // 1: minted nft 2: unminted nft
+  contractAddress: string;
+}) => axios.post('/project/contract/deploy', params);
 
 // 提交项目已经mint过
 export const postProjectMint = (params: {
@@ -41,8 +52,8 @@ export const getSkuDetail = (params: { tokenId: string }): Promise<IResponse> =>
 // 上架SKU
 export const publishSku = (params: {
   projectId: string;
-  tokenId: string;
-  price: string;
+  tokenId: number;
+  price: bigint;
   ddl: number;
   seller: string;
   payToken: string;

@@ -1,25 +1,24 @@
-import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import { watchAccount, watchNetwork } from '@wagmi/core';
+import { defineStore } from 'pinia';
+import { reactive } from 'vue';
 
-import { ethereumClient, web3modal } from '@/utils/wallet'
-
+import { web3modal } from '@/utils/wallet';
 export const useWalletStore = defineStore('wallet', () => {
   const state = reactive({
-    account: ''
-  })
+    account: '',
+  });
 
   function connect() {
-    web3modal.openModal()
+    web3modal.open();
   }
 
-  ethereumClient.watchNetwork((network) => {
-    console.log('newnetwork', network)
-  })
+  watchAccount((newAccount) => {
+    console.log({ newAccount });
+    state.account = newAccount.address;
+  });
 
-  ethereumClient.watchAccount((newAccount) => {
-    console.log({ newAccount })
-    state.account = newAccount.address
-  })
-
-  return { state, connect }
-})
+  watchNetwork((newnetwork) => {
+    console.log({ newnetwork });
+  });
+  return { state, connect };
+});
