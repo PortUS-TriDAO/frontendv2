@@ -7,12 +7,20 @@
     <div class="item-content">
       <h5>Echo of intensity</h5>
       <p>Dreamed of moonshots but awoke to a capitulation.</p>
-      <p-button>Edit</p-button>
+      <p-button @click="handleEdit">Edit</p-button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function handleEdit() {
+  router.push('/project/create/step1');
+}
+</script>
 
 <style lang="less" scoped>
 .p-list-item {
