@@ -22,6 +22,8 @@ const props = defineProps({
   flex-direction: column;
   align-items: center;
   background: #f7f7f7;
+  // justify-content: center;
+  // width: 100%;
   flex: 1;
   > article {
     background: #ffffff;
