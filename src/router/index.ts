@@ -43,7 +43,7 @@ const router = createRouter({
       component: () => import('../views/mine/MineContainer.vue'),
       children: [
         {
-          path: '/mine/submitted',
+          path: '/mine/submitted/:projectId?',
           name: 'Submitted',
           component: () => import('../views/mine/Submitted.vue'),
         },
@@ -66,6 +66,11 @@ const router = createRouter({
           path: '/mine/distribution',
           name: 'MyDistribution',
           component: () => import('../views/mine/MyDistribution.vue'),
+        },
+        {
+          path: '/mine/business/list',
+          name: 'MyBusinessContractList',
+          component: () => import('../views/mine/BusinessContractList.vue'),
         },
       ],
     },

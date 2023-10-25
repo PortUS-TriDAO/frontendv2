@@ -3,15 +3,25 @@
     <div class="left-menu">
       <ul>
         <li>
-          <router-link :class="['create-project-btn', 'selected']" to="/mine/submitted"
-          >Submitted
+          <router-link
+            :class="['create-project-btn', { selected: selected === 'submitted' }]"
+            to="/mine/submitted"
+            >Submitted
           </router-link>
         </li>
         <li>
-          <router-link to="/mine/participated">Participated</router-link>
+          <router-link
+            :class="['create-project-btn', { selected: selected === 'participated' }]"
+            to="/mine/participated"
+            >Participated
+          </router-link>
         </li>
         <li>
-          <router-link to="/mine/store">Store</router-link>
+          <router-link
+            :class="['create-project-btn', { selected: selected === 'store' }]"
+            to="/mine/store"
+            >Store
+          </router-link>
         </li>
       </ul>
     </div>
@@ -20,7 +30,14 @@
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const selected = computed(() => (route.name as string).toLowerCase());
+</script>
 <style lang="less">
 .mine-container {
   margin: 0 auto;
@@ -62,8 +79,9 @@
 
   .mine-content {
     flex: 1;
-    width: 976px;
+    //width: 976px;
     background-color: #fff;
+    padding: 20px 30px;
   }
 }
 </style>
