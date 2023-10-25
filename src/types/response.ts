@@ -1,12 +1,14 @@
-export interface IResponse {
-  success: boolean
-  data: any
+export interface IResponse<T = unknown> {
+  success: boolean;
+  data: T;
 }
 
-export interface IListResponse extends IResponse {
-  data: {
-    totalPage: number
-    currentPage: number
-    rows: any[]
-  }
+export interface PageData<T = unknown> {
+  total: number;
+  currentPage: number;
+  rows: T[];
+}
+
+export interface IListResponse<T = unknown> extends IResponse {
+  data: PageData<T>;
 }

@@ -1,3 +1,4 @@
+import type { ProjectData } from '@/types/project';
 import type { IListResponse, IResponse } from '@/types/response';
 
 import axios from '../utils/axios';
@@ -22,8 +23,9 @@ export const createProjectStep2 = (params: {
   rightQuantity: string | number;
   businessContractAddress: string;
 }): Promise<IResponse> => axios.post('/project/create/step2', params);
+
 // 请求游戏列表
-export const getProjects = (params: {}): Promise<IResponse> =>
+export const getProjects = (params: {}): Promise<IListResponse<ProjectData>> =>
   axios.get('/project/all', { params });
 // 获取游戏详情
 export const getProjectDetail = (params: { projectId: string }): Promise<IResponse> =>

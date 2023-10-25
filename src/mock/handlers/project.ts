@@ -19,6 +19,22 @@ const handlers: RestHandler[] = [
               briefIntro:
                 'Farmers World is the first farming game to function on the NFTs platformRead more',
             },
+            {
+              projectId: 24234523422,
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              name: 'Farmers World2',
+              briefIntro:
+                'Farmers World is the first farming game to function on the NFTs platformRead more',
+            },
+            {
+              projectId: 24234523423,
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              name: 'Farmers World3',
+              briefIntro:
+                'Farmers World is the first farming game to function on the NFTs platformRead more',
+            },
           ],
         },
       }),
