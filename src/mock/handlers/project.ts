@@ -65,9 +65,20 @@ const handlers: RestHandler[] = [
           rows: [
             {
               // 商业合约列表数据
-              contractName: '',
+              businessId: 12123131,
+              contractName: 'Echo of Intensity',
               sharePercentage: 20,
-              briefIntro: '',
+              briefIntro: 'Dreamed of moonshots but awoke to a capitulation. ',
+              quantity: 1000,
+              rights: 50000,
+              righted: 300,
+            },
+            {
+              // 商业合约列表数据
+              businessId: 121232981,
+              contractName: 'Echo of Intensity2',
+              sharePercentage: 20,
+              briefIntro: 'Dreamed of moonshots but awoke to a capitulation2. ',
               quantity: 1000,
               rights: 50000,
               righted: 300,
