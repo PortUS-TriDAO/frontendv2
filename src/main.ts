@@ -7,6 +7,7 @@ import './assets/global.less';
 import './utils/wallet';
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import ElementPlus from 'element-plus';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
@@ -29,5 +30,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(createPinia());
 app.use(router);
 app.use(ElementPlus);
+app.use(VueQueryPlugin);
 
 app.mount('#app');
