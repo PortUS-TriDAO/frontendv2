@@ -1,59 +1,53 @@
 <template>
-  <page-container class="pg-project-detail" :bannerImg="bannerImg">
+  <page-container class="pg-project-detail" :bannerImg="res?.data?.cover">
     <div class="project-detail">
       <div class="detail-row">
-        <img alt="avatar" :src="avatar" />
+        <img alt="avatar" :src="res?.data?.avatar" />
         <div>
-          <h3>Echo of Intensity</h3>
-          <a>website</a>
+          <h3>{{ res?.data?.projectName }}</h3>
+          <a :href="res?.data?.website" target="_blank">website</a>
         </div>
       </div>
-      <p>
-        Dreamed of moonshots but awoke to a capitulation... Welcome to the home of Echo of Intensity
-        by Per Kr...
-      </p>
+      <text-ellipsis>{{ res?.data?.briefIntro }}</text-ellipsis>
+      <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
     </div>
     <div class="detail-divider"></div>
-    <div class="list">
-      <div class="item">
-        <div class="item-detail">
-          <h3>Echo of Intensity</h3>
-          <p>Dreamed of moonshots but awoke to a capitulation.</p>
-          <div class="item-row2">
-            <div>
-              <label>items:</label>
-              <span>136</span>
-            </div>
-            <div>
-              <label>righted/rights:</label>
-              <span>56/200</span>
-            </div>
-          </div>
-          <div class="item-action">
-            <div>
-              <label><strong>Percent for KOL:</strong></label>
-              <strong>10%</strong>
-            </div>
-            <p-button @click="handleDetail('1231313123')">Detail</p-button>
-          </div>
-        </div>
-      </div>
+    <div v-if="res?.data">
+      <business-item
+        v-for="item in res.data.rows || []"
+        :avatar="res.data.avatar"
+        :key="item.businessId"
+        :item="item"
+        @onDetail="handleDetail"
+      />
     </div>
   </page-container>
 </template>
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import avatar from '@/assets/images/demo-avatar.png';
+import { useQuery } from '@tanstack/vue-query';
+import { useRoute, useRouter } from 'vue-router';
 
-import bannerImg from './assets/banner.png';
+import { getProjectDetail } from '@/api';
+import BusinessItem from '@/components/business-item/index.vue';
+import type { BusinessData } from '@/types';
+
+// import avatar from '@/assets/images/demo-avatar.png';
+// import bannerImg from './assets/banner.png';
 
 const route = useRoute();
 const router = useRouter();
+const { id: projectId } = route.params;
 
+const { data: res } = useQuery({
+  queryKey: ['getProjectDetail', projectId],
+  queryFn: () => {
+    return getProjectDetail({ projectId: projectId as string });
+  },
+});
+console.log('getProjects result=', res);
 
-function handleDetail(businessId: string) {
-  const { id } = route.params;
-  router.push(`/project/${id}/${businessId}`);
+function handleDetail(businessData: BusinessData) {
+  router.push(`/project/${projectId}/${businessData.businessId}`);
 }
 </script>
 <style lang="less" scoped>
@@ -93,54 +87,6 @@ function handleDetail(businessId: string) {
   .detail-divider {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-  }
-  .list {
-    .item {
-      display: flex;
-      flex-direction: row;
-      gap: 38px;
-      padding: 24px 30px;
-      background: #f7f7f7;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    .item-detail {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      font-size: 24px;
-      letter-spacing: 0px;
-      line-height: 29px;
-      color: #000000;
-
-      > h3 {
-        font-weight: 700;
-        font-size: 24px;
-      }
-      > p {
-        font-weight: 400;
-      }
-      .item-row2 {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        label {
-          margin-right: 4px;
-        }
-        div:first-child {
-          width: 245px;
-        }
-        strong {
-          font-weight: 700;
-        }
-      }
-      .item-action {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
   }
 }
 </style>

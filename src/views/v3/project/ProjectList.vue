@@ -2,11 +2,11 @@
   <page-container class="pg-project-list">
     <div class="searchbar">
       <el-input v-model="searchKey" placeholder="Search Name" class="search-input" />
-      <p-button @click="searchProjects">Search</p-button>
+      <p-button @click="refetch">Search</p-button>
     </div>
     <div>
       <project-item
-        v-for="item in pageData.rows"
+        v-for="item in res?.data?.rows || []"
         :key="item.projectId"
         :item="item"
         @onDetail="handleDetail"
@@ -16,31 +16,44 @@
   </page-container>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+import { useQuery } from '@tanstack/vue-query';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { getProjects } from '@/api';
 import ProjectItem from '@/components/project-item/index.vue';
-import type { PageData, ProjectData } from '@/types';
+import type { ProjectData } from '@/types';
 
 const searchKey = ref('');
 const router = useRouter();
-const pageData = reactive<PageData<ProjectData>>({
-  rows: [],
-  currentPage: 1,
-  total: 0,
-});
+// const pageData = reactive<PageData<ProjectData>>({
+//   rows: [],
+//   currentPage: 1,
+//   total: 0,
+// });
 
-const searchProjects = async () => {
-  const { success, data } = await getProjects({ key: searchKey });
-  console.log('data=', data);
-  if (success) {
-    pageData.currentPage = data.currentPage;
-    pageData.total = data.total;
-    pageData.rows = data.rows;
-  }
-};
-onMounted(searchProjects);
+const {
+  data: res,
+  refetch,
+  isPending,
+} = useQuery({
+  queryKey: ['getProjects'],
+  queryFn: () => {
+    return getProjects({ key: searchKey.value });
+  },
+});
+console.log('getProjects result=', isPending, res);
+
+// const searchProjects = async () => {
+//   const { success, data } = await getProjects({ key: searchKey });
+//   console.log('data=', data);
+//   if (success) {
+//     pageData.currentPage = data.currentPage;
+//     pageData.total = data.total;
+//     pageData.rows = data.rows;
+//   }
+// };
+// onMounted(searchProjects);
 
 function handleDetail(item: ProjectData) {
   router.push(`/project/${item.projectId}`);

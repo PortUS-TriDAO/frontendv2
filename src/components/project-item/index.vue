@@ -22,9 +22,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { ProjectData } from '@/types/project';
+import type { ProjectData } from '@/types';
 
-const props = defineProps<{ item: ProjectData; onDetail: (item: ProjectData) => void }>();
+const props = defineProps<{ item: ProjectData }>();
 const emit = defineEmits(['onDetail']);
 function handleDetail(item: ProjectData) {
   emit('onDetail', item);

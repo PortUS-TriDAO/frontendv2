@@ -1,5 +1,4 @@
-import type { ProjectData } from '@/types/project';
-import type { IListResponse, IResponse } from '@/types/response';
+import type { IListResponse, IResponse, ProjectData, ProjectDetailData } from '@/types';
 
 import axios from '../utils/axios';
 // 提交创建游戏step1
@@ -28,8 +27,9 @@ export const createProjectStep2 = (params: {
 export const getProjects = (params: {}): Promise<IListResponse<ProjectData>> =>
   axios.get('/project/all', { params });
 // 获取游戏详情
-export const getProjectDetail = (params: { projectId: string }): Promise<IResponse> =>
-  axios.get('/project/detail', { params });
+export const getProjectDetail = (params: {
+  projectId: string;
+}): Promise<IResponse<ProjectDetailData>> => axios.get('/project/detail', { params });
 
 export const postDeployedContract = (params: {
   nftAddress: string;
