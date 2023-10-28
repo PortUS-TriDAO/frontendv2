@@ -234,13 +234,18 @@ const handlers: RestHandler[] = [
       ctx.json({
         success: true,
         data: {
+          tokenId: 239402,
           nftName: 'klsjdfljsldf',
-          avatar: 'sdjfklsdfjsdlf',
+          avatar:
+            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
           price: 982347234,
           payToken: 'slkdjflsdfjsdl',
           isSalesEnd: false,
-          briefIntro: 'jsdklfjsdlfjs',
-          description: 'slkdfjlsdfjsdlfj',
+          briefIntro:
+            'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
+          description:
+            'Dreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.Dreamed',
+          deadline: 1698485171,
         },
       }),
     );

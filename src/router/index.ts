@@ -33,9 +33,9 @@ const router = createRouter({
       component: () => import('../views/v3/project/NftDetail.vue'),
     },
     {
-      path: '/sku/:skuId',
+      path: '/nft/:nftAddress/:tokenId',
       name: 'SkuList',
-      component: () => import('../views/v3/project/Sku.vue'),
+      component: () => import('../views/v3/project/SkuDetail.vue'),
     },
     {
       path: '/spu/:skuId',

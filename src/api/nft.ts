@@ -9,3 +9,6 @@ export const getNftList = (params: {
   page: number;
   pageSize: number;
 }): Promise<IListResponse<SkuData>> => axios.get('/project/nft/list', { params });
+
+export const getSkuDetail = (params: { tokenId: string }): Promise<IResponse<SkuData>> =>
+  axios.get('/project/sku/detail', { params });

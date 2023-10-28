@@ -2,7 +2,7 @@ import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
 
 import type { BusinessDetailData, NftContractData, PageData, SkuData } from '@/types';
 
-import { getBusinessDetail, getNftDetail, getNftList } from '../api';
+import { getBusinessDetail, getNftDetail, getNftList, getSkuDetail } from '../api';
 
 export function useBusinessDetail(
   businessId: string,
@@ -44,6 +44,21 @@ export function useNftList(
     queryFn: async () => {
       const res = await getNftList({ nftAddress, page, pageSize });
       console.log('res', res);
+      if (res.success) {
+        return res.data;
+      }
+      return null;
+    },
+  });
+  return result;
+}
+
+export function useSkuDetail(tokenId: string): UseQueryReturnType<SkuData, Error> {
+  const result = useQuery({
+    queryKey: ['getSkuDetail', tokenId],
+    queryFn: async () => {
+      const res = await getSkuDetail({ tokenId });
+      console.log('getSkuDetail:', res);
       if (res.success) {
         return res.data;
       }

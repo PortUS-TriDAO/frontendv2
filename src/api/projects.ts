@@ -57,9 +57,9 @@ export const postProjectMint = (params: {
 export const getSkuList = (params: { id: string }): Promise<IListResponse> =>
   axios.get('/project/skulist', { params });
 
-// 查询sku详情
-export const getSkuDetail = (params: { tokenId: string }): Promise<IResponse> =>
-  axios.get('/sku/detail', { params });
+// // 查询sku详情
+// export const getSkuDetail = (params: { tokenId: string }): Promise<IResponse> =>
+//   axios.get('/sku/detail', { params });
 
 // 上架SKU
 export const publishSku = (params: {

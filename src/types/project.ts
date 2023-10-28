@@ -75,4 +75,6 @@ export interface SkuData {
   isSalesEnd: boolean;
   briefIntro: string;
   description: string;
+  //
+  deadline: number;
 }
