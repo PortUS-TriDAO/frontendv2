@@ -6,9 +6,11 @@
       <div>
         {{ props.item.nftID }}
       </div>
-      <div class="flex-row-between">
+      <div class="flex-row-between" v-if="hideActions === true">
         <div></div>
-        <p-button @click="handleDetail(props.item)">Detail</p-button>
+        <slot name="actions">
+          <p-button @click="handleDetail(props.item)">Detail</p-button>
+        </slot>
       </div>
     </div>
   </div>
@@ -18,6 +20,7 @@ import type { NftContractData } from '@/types';
 
 const props = defineProps<{
   item: NftContractData;
+  hideActions?: boolean;
   // avatar: string;
 }>();
 const emit = defineEmits(['onDetail']);
