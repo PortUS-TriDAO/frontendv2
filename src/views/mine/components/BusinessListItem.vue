@@ -50,6 +50,10 @@ const noNft = ref(false);
     margin-top: 18px;
     margin-bottom: 18px;
     font-size: 24px;
+
+    button {
+      width: 160px;
+    }
   }
 
   .mask {

@@ -80,12 +80,12 @@ const router = createRouter({
       ],
     },
     {
-      path: '/project/create/step1',
+      path: '/project/create/step1/:projectId?',
       name: 'CreateProjectStep1',
       component: () => import('../views/projects/CreateProjectStep1.vue'),
     },
     {
-      path: '/project/create/step2/:projectId',
+      path: '/project/create/step2',
       name: 'CreateProjectStep2',
       component: () => import('../views/projects/CreateProjectStep2.vue'),
     },
