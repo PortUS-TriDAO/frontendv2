@@ -2,52 +2,57 @@
   <page-container class="pg-business-detail">
     <div class="business-detail">
       <div class="business-title">
-        <h2>Echo of Intensity</h2>
+        <h2>{{ data?.contractName }}</h2>
         <h2>
           <strong>Percent for KOL</strong>
-          <span>20%</span>
+          <span>{{ data?.sharePercentage }}%</span>
         </h2>
       </div>
       <p>Dreamed of moonshots but awoke to a capitulation.</p>
       <div class="business-mint">
         <label>righted/rights:</label>
-        <span>56/200</span>
+        <span>{{ data?.righted }}/{{ data?.rights }}</span>
         <p-button @click="handleMint">Mint</p-button>
       </div>
       <div>
         <span>1.2 USDT</span>
       </div>
-      <p>
-        Welcome to the home of Echo of Intensity by Per Kristian Stoveland on OpenSea. Discover the
-        best items in this collection.
-      </p>
+      <text-ellipsis>{{ data?.description }}</text-ellipsis>
     </div>
     <div class="detail-divider"></div>
     <div class="list">
       <div class="list-title">NFT contract list</div>
-      <div class="item">
-        <img alt="avatar" :src="avatar" />
-        <div class="item-detail">
-          <div>0x121212</div>
-          <div>989</div>
-          <div class="item-action">
-            <div></div>
-            <p-button @click="handleDetail">Detail</p-button>
-          </div>
-        </div>
+      <div v-if="data">
+        <nft-contract-item
+          v-for="item in data.rows || []"
+          :key="item.nftAddress"
+          :item="item"
+          @onDetail="handleDetail"
+        />
       </div>
     </div>
   </page-container>
 </template>
 <script setup lang="ts">
-import avatar from '@/assets/images/demo-avatar.png';
+import { useRoute, useRouter } from 'vue-router';
 
+import NftContractItem from '@/components/nft-contract-item/index.vue';
+import { useBusinessDetail } from '@/hooks';
+import type { NftContractData } from '@/types';
+
+const route = useRoute();
+const router = useRouter();
+const { businessId } = route.params;
+const { data } = useBusinessDetail(businessId as string);
+
+console.log('getBusinessDetail result=', data);
+
+function handleDetail(nftContractData: NftContractData) {
+  router.push(`/nft/${nftContractData.nftAddress}`);
+}
 
 function handleMint() {
   console.log('handleMint...');
-}
-function handleDetail() {
-  console.log('handleDetail...');
 }
 </script>
 <style lang="less" scoped>
@@ -58,6 +63,7 @@ function handleDetail() {
     gap: 14px;
     padding-top: 20px;
     padding: 20px 28px 0 28px;
+    font-size: 24px;
   }
 
   .business-title {
@@ -100,44 +106,13 @@ function handleDetail() {
     .list-title {
       height: 29px;
       font-size: 24px;
-      font-weight: 400;
+      font-weight: 700;
       line-height: 28px;
-      color: #000000;
+      color: #000;
       margin-bottom: 12px;
       padding-left: 28px;
-    }
-    .item {
-      display: flex;
-      flex-direction: row;
-      gap: 12px;
-      padding: 10px;
-      background: #f7f7f7;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      > img {
-        width: 150px;
-        height: 150px;
-        border-radius: 10px;
-        flex-shrink: 0;
-      }
-    }
-    .item-detail {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      font-size: 24px;
-      letter-spacing: 0px;
-      line-height: 29px;
-      color: #000000;
-      padding-top: 10px;
-
-      .item-action {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
     }
   }
 }
 </style>
+@/hooks
