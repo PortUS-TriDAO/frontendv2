@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import type { NftContractData } from '@/types';
 
+defineOptions({ name: 'NftContractItem' });
 defineProps<{
   item: NftContractData;
   hideActions?: boolean;

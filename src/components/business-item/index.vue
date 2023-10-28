@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import type { BusinessData } from '@/types';
 
+defineOptions({ name: 'BusinessItem' });
 defineProps<{
   item: BusinessData;
   avatar: string;

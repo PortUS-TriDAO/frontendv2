@@ -28,9 +28,8 @@ import dayjs from 'dayjs';
 
 import type { SkuData } from '@/types';
 
-defineProps<{
-  item: SkuData;
-}>();
+defineOptions({ name: 'SkuItem' });
+defineProps<{ item: SkuData }>();
 const emit = defineEmits(['buy']);
 function buy(item: SkuData) {
   emit('buy', item);

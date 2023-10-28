@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import type { ProjectData } from '@/types';
 
+defineOptions({ name: 'ProjectItem' });
 defineProps<{ item: ProjectData }>();
 const emit = defineEmits(['onDetail']);
 function handleDetail(item: ProjectData) {
