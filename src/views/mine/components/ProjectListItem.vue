@@ -16,9 +16,11 @@
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const props = defineProps(['projectId']);
 
 function handleEdit() {
-  router.push('/project/create/step1');
+  const projectId = 234234234;
+  router.push(`/project/create/step1/${projectId}`);
 }
 </script>
 
