@@ -127,6 +127,24 @@ const handlers: RestHandler[] = [
     );
   }),
 
+  // 查询nft合约详情
+  rest.get('/project/nft/detail', (req, res, ctx) => {
+    // const { businessId, businessContractAddress, chainId } = req.params;
+    const { nftAddress } = req.params;
+
+    return res(
+      ctx.json({
+        success: true,
+        data: {
+          nftAddress: '0x6d2e83a559c1fbe0cc677d10a22f28f0f8b1f325',
+          avatar:
+            'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+          nftID: 1235523,
+        },
+      }),
+    );
+  }),
+
   // TODO: 添加分页  NFT合约详情页面
   rest.get('/project/nft/list', (req, res, ctx) => {
     const { businessContractAddress } = req.params;
@@ -134,12 +152,74 @@ const handlers: RestHandler[] = [
       ctx.json({
         success: true,
         data: {
+          total: 2000,
+          currentPage: 5,
           rows: [
             // SKU 挂单列表
+            // {
+            //   tokenId: 239402,
+            //   name: 'kjlsfjsdf',
+            //   avatar: 'skldfjlsdkfj',
+            // },
             {
               tokenId: 239402,
-              name: 'kjlsfjsdf',
-              avatar: 'skldfjlsdkfj',
+              nftName: 'klsjdfljsldf',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              price: 982347234,
+              payToken: 'slkdjflsdfjsdl',
+              isSalesEnd: false,
+              briefIntro:
+                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
+              description: 'slkdfjlsdfjsdlfj',
+            },
+            {
+              tokenId: 239402,
+              nftName: 'klsjdfljsldf',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              price: 982347234,
+              payToken: 'slkdjflsdfjsdl',
+              isSalesEnd: false,
+              briefIntro:
+                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
+              description: 'slkdfjlsdfjsdlfj',
+            },
+            {
+              tokenId: 23912,
+              nftName: 'klsjdfljsldf',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              price: 982347234,
+              payToken: 'slkdjflsdfjsdl',
+              isSalesEnd: false,
+              briefIntro:
+                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
+              description: 'slkdfjlsdfjsdlfj',
+            },
+            {
+              tokenId: 239432,
+              nftName: 'klsjdfljsldf',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              price: 982347234,
+              payToken: 'slkdjflsdfjsdl',
+              isSalesEnd: false,
+              briefIntro:
+                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
+              description: 'slkdfjlsdfjsdlfj',
+            },
+            {
+              tokenId: 239439,
+              nftName: 'klsjdfljsldf',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              price: 982347234,
+              payToken: 'slkdjflsdfjsdl',
+              isSalesEnd: false,
+              briefIntro:
+                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
+              description: 'slkdfjlsdfjsdlfj',
             },
           ],
         },
