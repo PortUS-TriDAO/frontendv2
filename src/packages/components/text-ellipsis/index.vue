@@ -55,6 +55,7 @@ const ellipsis = ref(true);
     align-items: center;
     flex-direction: row;
     gap: 4px;
+    padding-left: 8px;
   }
   &.text-ellipsis--expand {
     display: block;
