@@ -4,12 +4,14 @@
       'text-ellipsis',
       {
         'text-ellipsis--expand': !ellipsis,
+        'text-ellipsis--line-clamp': props.line > 1,
       },
     ]"
   >
-    <!-- <el-text class="w-150px mb-2" :truncated="ellipsis"><slot /></el-text> -->
-    <span><slot /></span>
-    <a @click="ellipsis = !ellipsis">
+    <span :style="props.line > 1 ? `-webkit-line-clamp:${props.line}` : ''">
+      <slot></slot>
+    </span>
+    <a v-if="!hideAction" @click="ellipsis = !ellipsis">
       <span>{{ ellipsis ? 'See more' : 'See less' }}</span>
       <el-icon v-if="ellipsis"><ArrowDownBold /></el-icon>
       <el-icon v-else><ArrowUpBold /></el-icon>
@@ -17,7 +19,13 @@
   </p>
 </template>
 <script lang="ts" setup>
+// line-clamp
 import { ref } from 'vue';
+
+const props = defineProps<{
+  line?: number;
+  hideAction?: boolean;
+}>();
 const ellipsis = ref(true);
 </script>
 
@@ -53,6 +61,13 @@ const ellipsis = ref(true);
     > span {
       display: inline;
       white-space: wrap;
+    }
+  }
+  &.text-ellipsis--line-clamp {
+    > span {
+      display: -webkit-inline-box;
+      -webkit-box-orient: vertical;
+      white-space: normal;
     }
   }
 }
