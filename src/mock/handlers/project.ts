@@ -90,7 +90,8 @@ const handlers: RestHandler[] = [
   }),
   // 查询商业合约详情
   rest.get('/project/business/detail', (req, res, ctx) => {
-    const { businessContractAddress, chainId } = req.params;
+    // const { businessId, businessContractAddress, chainId } = req.params;
+    const { businessId } = req.params;
 
     return res(
       ctx.json({
@@ -98,11 +99,29 @@ const handlers: RestHandler[] = [
         data: {
           contractName: 'sjkflsjf',
           briefIntro: 'skjdfklsjflsd',
+          sharePercentage: 20,
           rights: 5000,
           righted: 30,
           payToken: '0xkljsldfjlsdf',
-          description: 'sajflsdkjflsdjfl',
-          rows: [], // SKU/SPU 列表
+          description:
+            'Welcome to the home of Echo of Intensity by Per Kristian Stoveland on OpenSea. Discover the best items in this collection.',
+          // rows: [], // SKU/SPU 列表
+          rows: [
+            {
+              nftAddress: '0x6d2e83a559c1fbe0cc677d10a22f28f0f8b1f325',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              nftID: 1235523,
+              nftName: 'Farmers World3',
+            },
+            {
+              nftAddress: '0x6d2e83a559c1fbe0cc677d10a22f28f0f8b1f242',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              nftID: 2323335,
+              nftName: 'Farmers World3',
+            },
+          ],
         },
       }),
     );

@@ -1,4 +1,10 @@
-import type { IListResponse, IResponse, ProjectData, ProjectDetailData } from '@/types';
+import type {
+  BusinessDetailData,
+  IListResponse,
+  IResponse,
+  ProjectData,
+  ProjectDetailData,
+} from '@/types';
 
 import axios from '../utils/axios';
 // 提交创建游戏step1
@@ -30,6 +36,10 @@ export const getProjects = (params: {}): Promise<IListResponse<ProjectData>> =>
 export const getProjectDetail = (params: {
   projectId: string;
 }): Promise<IResponse<ProjectDetailData>> => axios.get('/project/detail', { params });
+
+export const getBusinessDetail = (params: {
+  businessId: string;
+}): Promise<IResponse<BusinessDetailData>> => axios.get('/project/business/detail', { params });
 
 export const postDeployedContract = (params: {
   nftAddress: string;
