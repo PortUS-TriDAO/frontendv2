@@ -1,0 +1,107 @@
+<template>
+  <div class="sku-card">
+    <div class="detail-card">
+      <img alt="avatar" :src="item.avatar" />
+      <div class="card-desc">
+        <h3>{{ item.nftName }}</h3>
+        <div>#{{ item.tokenId }}</div>
+        <div>{{ item.price }} USDT</div>
+        <div>
+          {{ item.deadline ? dayjs(item.deadline * 1000).format('YYYY-MM-DD HH:mm') : '' }}
+        </div>
+      </div>
+      <div class="card-action">
+        <div v-if="item.isSalesEnd" class="sold-out">sold out</div>
+        <p-button @click="buy(item)">Buy</p-button>
+      </div>
+    </div>
+    <text-ellipsis>
+      {{ item.briefIntro }}
+    </text-ellipsis>
+    <text-ellipsis>
+      {{ item.description }}
+    </text-ellipsis>
+  </div>
+</template>
+<script setup lang="ts">
+import dayjs from 'dayjs';
+
+import type { SkuData } from '@/types';
+
+defineProps<{
+  item: SkuData;
+}>();
+const emit = defineEmits(['buy']);
+function buy(item: SkuData) {
+  emit('buy', item);
+}
+</script>
+<style lang="less">
+.sku-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #000;
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 400;
+
+  .detail-card {
+    display: flex;
+    gap: 26px;
+    background: #f7f7f7;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+
+    > img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .card-desc {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 10px;
+    }
+    h3 {
+      font-weight: 700;
+      color: #000000;
+      font-size: inherit;
+    }
+    div {
+      font-size: inherit;
+    }
+  }
+
+  p {
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  .card-action {
+    padding-right: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sold-out {
+    width: 130px;
+    height: 90px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #fff;
+  }
+}
+</style>
