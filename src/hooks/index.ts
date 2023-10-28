@@ -11,7 +11,7 @@ export function useBusinessDetail(
     queryKey: ['getBusinessDetail', businessId],
     queryFn: async () => {
       const res = await getBusinessDetail({ businessId });
-      if (!res.success) {
+      if (res.success) {
         return res.data;
       }
       return null;
