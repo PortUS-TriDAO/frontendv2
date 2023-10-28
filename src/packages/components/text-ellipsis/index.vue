@@ -32,11 +32,11 @@ const ellipsis = ref(true);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    font-size: 24px;
+    font-size: inherit;
+    line-height: 1.25;
     font-weight: 400;
     letter-spacing: 0px;
-    line-height: 28px;
-    color: #000;
+    color: inherit;
     text-align: left;
   }
   > a {
