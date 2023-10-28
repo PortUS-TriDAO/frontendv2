@@ -43,7 +43,6 @@ export function useNftList(
     queryKey: ['getNftList', nftAddress],
     queryFn: async () => {
       const res = await getNftList({ nftAddress, page, pageSize });
-      console.log('res', res);
       if (res.success) {
         return res.data;
       }

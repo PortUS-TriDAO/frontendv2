@@ -25,7 +25,7 @@ const props = defineProps<{
   padding: 10px;
   background: #f7f7f7;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   width: 170px;
   color: rgba(0, 0, 0, 1);
 
