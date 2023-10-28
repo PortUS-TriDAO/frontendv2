@@ -46,3 +46,32 @@ export interface BusinessData {
   rights: number;
   righted: number;
 }
+
+export interface BusinessDetailData {
+  contractName: string;
+  briefIntro: string;
+  sharePercentage: number;
+  rights: number;
+  righted: number;
+  payToken: Address;
+  description: string;
+  // nft contract list
+  rows: NftContractData[];
+}
+
+export interface NftContractData {
+  nftAddress: Address;
+  avatar: string;
+  nftID: string;
+  nftName: string;
+}
+
+export interface SkuData {
+  nftName: string;
+  avatar: string;
+  price: number;
+  payToken: Address;
+  isSalesEnd: boolean;
+  briefIntro: string;
+  description: string;
+}
