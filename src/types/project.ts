@@ -56,7 +56,7 @@ export interface BusinessDetailData {
   payToken: Address;
   description: string;
   // nft contract list
-  rows: NftContractData[];
+  rows: SkuData[];
 }
 
 export interface NftContractData {
@@ -67,6 +67,7 @@ export interface NftContractData {
 }
 
 export interface SkuData {
+  tokenId: number;
   nftName: string;
   avatar: string;
   price: number;
