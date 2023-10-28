@@ -1,19 +1,19 @@
 <template>
   <div class="sku-item">
-    <img alt="avatar" :src="props.item.avatar" />
-    <h3>{{ props.item.nftName }}</h3>
+    <img alt="avatar" :src="item.avatar" />
+    <h3>{{ item.nftName }}</h3>
     <div>
-      {{ props.item.price }}
+      {{ item.price }}
     </div>
     <text-ellipsis :line="3" hideAction>
-      {{ props.item.briefIntro }}
+      {{ item.briefIntro }}
     </text-ellipsis>
   </div>
 </template>
 <script setup lang="ts">
 import type { SkuData } from '@/types';
 
-const props = defineProps<{
+defineProps<{
   item: SkuData;
 }>();
 </script>

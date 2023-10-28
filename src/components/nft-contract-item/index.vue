@@ -1,15 +1,15 @@
 <template>
   <div class="business-item">
-    <img alt="avatar" :src="props.item.avatar" />
+    <img alt="avatar" :src="item.avatar" />
     <div class="business-item-detail">
-      <h3>{{ props.item.nftAddress }}</h3>
+      <h3>{{ item.nftAddress }}</h3>
       <div>
-        {{ props.item.nftID }}
+        {{ item.nftID }}
       </div>
-      <div class="flex-row-between" v-if="hideActions === true">
+      <div class="flex-row-between" v-if="hideActions !== true">
         <div></div>
         <slot name="actions">
-          <p-button @click="handleDetail(props.item)">Detail</p-button>
+          <p-button @click="handleDetail(item)">Detail</p-button>
         </slot>
       </div>
     </div>
@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import type { NftContractData } from '@/types';
 
-const props = defineProps<{
+defineProps<{
   item: NftContractData;
   hideActions?: boolean;
   // avatar: string;

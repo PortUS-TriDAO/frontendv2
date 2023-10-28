@@ -1,27 +1,27 @@
 <template>
   <div class="business-item">
-    <img alt="avatar" :src="props.avatar" />
+    <img alt="avatar" :src="avatar" />
     <div class="business-item-detail">
       <div class="flex-row-between">
-        <h3>{{ props.item.contractName }}</h3>
+        <h3>{{ item.contractName }}</h3>
         <div>
           <label><strong>Percent for KOL:</strong></label>
-          <strong>{{ props.item.sharePercentage }}%</strong>
+          <strong>{{ item.sharePercentage }}%</strong>
         </div>
       </div>
-      <p>{{ props.item.briefIntro }}.</p>
+      <p>{{ item.briefIntro }}.</p>
       <div class="item-row2">
         <div>
           <label>items:</label>
-          <span>{{ props.item.quantity }}</span>
+          <span>{{ item.quantity }}</span>
         </div>
       </div>
       <div class="flex-row-between">
         <div>
           <label>righted/rights:</label>
-          <span>{{ props.item.righted }}/{{ props.item.rights }}</span>
+          <span>{{ item.righted }}/{{ item.rights }}</span>
         </div>
-        <p-button @click="handleDetail(props.item)">Detail</p-button>
+        <p-button @click="handleDetail(item)">Detail</p-button>
       </div>
     </div>
   </div>
@@ -29,10 +29,9 @@
 <script setup lang="ts">
 import type { BusinessData } from '@/types';
 
-const props = defineProps<{
+defineProps<{
   item: BusinessData;
   avatar: string;
-  // onDetail: (item: BusinessData) => void;
 }>();
 const emit = defineEmits(['onDetail']);
 function handleDetail(item: BusinessData) {

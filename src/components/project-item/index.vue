@@ -1,9 +1,9 @@
 <template>
   <div class="project-item">
-    <img alt="avatar" :src="props.item.avatar" />
+    <img alt="avatar" :src="item.avatar" />
     <div class="project-item-detail">
-      <h3>{{ props.item.name }}</h3>
-      <p>{{ props.item.briefIntro }}</p>
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.briefIntro }}</p>
       <!-- <div class="item-row2">
             <div>
               <label>items:</label>
@@ -12,11 +12,11 @@
             <div>
               <label>righted/rights:</label>
               <span>56/200</span>
-            </div> 
+            </div>
           </div>-->
       <div style="flex-grow: 1"></div>
       <div class="item-action">
-        <p-button @click="handleDetail(props.item)">Detail</p-button>
+        <p-button @click="handleDetail(item)">Detail</p-button>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import type { ProjectData } from '@/types';
 
-const props = defineProps<{ item: ProjectData }>();
+defineProps<{ item: ProjectData }>();
 const emit = defineEmits(['onDetail']);
 function handleDetail(item: ProjectData) {
   emit('onDetail', item);
