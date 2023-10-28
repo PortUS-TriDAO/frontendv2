@@ -28,6 +28,11 @@ const router = createRouter({
       component: () => import('../views/v3/project/BusinessDetail.vue'),
     },
     {
+      path: '/nft/:nftAddress',
+      name: 'NftDetail',
+      component: () => import('../views/v3/project/NftDetail.vue'),
+    },
+    {
       path: '/sku/:skuId',
       name: 'SkuList',
       component: () => import('../views/v3/project/Sku.vue'),
