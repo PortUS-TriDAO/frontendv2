@@ -32,6 +32,7 @@ const props = defineProps({
     padding-left: var(--container-padding-left);
     padding-right: var(--container-padding-right);
     padding-bottom: 30px;
+    padding-top: 20px;
   }
   .page-banner {
     width: 100%;
