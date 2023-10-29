@@ -19,6 +19,7 @@
           <p-button @click="handleDetail(item)">Detail</p-button>
         </slot>
       </div>
+      <slot />
     </div>
   </div>
 </template>

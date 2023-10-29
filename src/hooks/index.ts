@@ -1,5 +1,6 @@
 import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
 
+// import { getAccount } from '@wagmi/core';
 import type {
   BusinessDetailData,
   NftContractData,
@@ -19,6 +20,7 @@ import {
 } from '../api';
 
 export function useProjects(key?: string): UseQueryReturnType<PageData<ProjectData>, Error> {
+  // const { address } = getAccount();
   const result = useQuery({
     queryKey: ['getProjects', key],
     queryFn: async () => {

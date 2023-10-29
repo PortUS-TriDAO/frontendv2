@@ -4,6 +4,7 @@
     :class="[styledClass, customClass]"
     v-bind="props"
     :type="props.type || 'primary'"
+    @click.stop="handleClick"
   >
     <slot />
   </el-button>
@@ -25,6 +26,11 @@ const styledClass = computed(() => {
     'is-disabled': props.disabled,
   };
 });
+const emit = defineEmits(['click']);
+
+function handleClick() {
+  emit('click');
+}
 </script>
 
 <style lang="less" scoped>
