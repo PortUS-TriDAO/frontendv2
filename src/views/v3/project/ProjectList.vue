@@ -10,6 +10,7 @@
         v-for="item in res?.data?.rows || []"
         :key="item.projectId"
         :item="item"
+        btnText="Detail"
         @btnClick="handleDetail"
       >
       </project-item>

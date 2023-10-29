@@ -54,7 +54,7 @@ const map = {
   },
   participated: {
     title: 'participated projects list',
-    btnText: false,
+    btnText: '',
     btnClick: handleDetail,
     bottomBtn: {
       text: 'Mint More',
