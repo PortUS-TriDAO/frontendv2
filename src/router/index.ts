@@ -4,7 +4,7 @@ import HomeView from '../views/home/HomeView.vue';
 
 const mimeProjectList = () => import('../views/mine/MineProjectList.vue');
 const MineProjectDetail = () => import('../views/mine/MineProjectDetail.vue');
-const MineBusinessDetail = () => import('../views/mine/BusinessDetail.vue');
+const MineBusinessDetail = () => import('../views/mine/MineBusinessDetail.vue');
 const mimeMineNftDetail = () => import('../views/mine/MineNftDetail.vue');
 const MineSkuDetail = () => import('../views/mine/MineSkuDetail.vue');
 

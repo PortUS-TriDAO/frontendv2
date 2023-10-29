@@ -5,16 +5,31 @@
         <h2>{{ data?.contractName }}</h2>
       </div>
       <div>
-        <label>Percent</label> <span>{{ data?.sharePercentage }}%</span>
+        <h2>
+          <strong>Percent for KOL</strong> <span class="light">{{ data?.sharePercentage }}%</span>
+        </h2>
+      </div>
+      <div>
+        <span>1.2 USDT</span>
+      </div>
+      <div class="flex-between">
+        <div>
+          <label>righted/rights:</label>
+          <span>{{ data?.righted }}/{{ data?.rights }}</span>
+        </div>
       </div>
       <text-ellipsis>Dreamed of moonshots but awoke to a capitulation.</text-ellipsis>
       <text-ellipsis>{{ data?.description }}</text-ellipsis>
-      <div class="balance">
-        <div class="flex-between">
-          <h4>balance</h4>
-          <p-button @click="handleWithdraw" round size="small">withdraw</p-button>
+      <div class="right-action">
+        <div v-if="scenes === 'submitted'" class="balance">
+          <div class="flex-between">
+            <h4>balance</h4>
+            <p-button @click="handleWithdraw" round size="small">withdraw</p-button>
+          </div>
+          <div>xx USDT</div>
         </div>
-        <div>xx USDT</div>
+        <p-button v-else-if="scenes === 'participated'" @click="handleMintMore">Mint More</p-button>
+        <p-button v-else @click="handleShare">share commercial contract</p-button>
       </div>
     </div>
     <div class="detail-divider"></div>
@@ -28,19 +43,23 @@
           size="small"
           @click="handleDetail(item)"
           class="pointer"
+          :hide-actions="scenes !== 'submitted'"
         >
           <template v-slot:actions>
-            <p-button round @click="handleAddNft(item)">Add NFT</p-button>
+            <p-button v-if="scenes === 'submitted'" round @click="handleAddNft(item)">
+              Add NFT
+            </p-button>
           </template>
         </nft-contract-item>
       </div>
     </div>
-    <div class="text-center">
+    <div v-if="scenes === 'submitted'" class="text-center">
       <p-button @click="handleSubmit">Submit NFT contract</p-button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
@@ -49,13 +68,20 @@ import type { NftContractData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
-const { businessId } = route.params;
-const { data } = useBusinessDetail(businessId as string);
+const scenes = computed(() => route.meta.scenes);
+const businessId = computed(() => route.params.businessId as string);
+const { data } = useBusinessDetail(businessId.value);
 
 console.log('getBusinessDetail result=', data);
 
 function handleDetail(nftContractData: NftContractData) {
-  router.push(`/mine/submitted/nft/${nftContractData.nftAddress}`);
+  router.push(`/mine/${scenes.value}/nft/${nftContractData.nftAddress}`);
+}
+function handleMintMore() {
+  // TODO: handleMintMore
+}
+function handleShare() {
+  // TODO: handleShare
 }
 function handleAddNft(nftContractData: NftContractData) {
   // TODO: handleAddNft
@@ -78,14 +104,14 @@ function handleSubmit() {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    padding-top: 20px;
-    // padding: 20px 28px 0 28px;
     font-size: 24px;
     position: relative;
-    .balance {
+    .right-action {
       position: absolute;
       right: 0;
       top: 0;
+    }
+    .balance {
       width: 300px;
       height: 100px;
       border-radius: 18px;
@@ -95,6 +121,9 @@ function handleSubmit() {
       flex-direction: column;
       gap: 18px;
     }
+  }
+  .light {
+    color: #fa6529;
   }
 
   .business-title {
@@ -125,7 +154,6 @@ function handleSubmit() {
       line-height: 28px;
       color: #000;
       margin-bottom: 12px;
-      padding-left: 28px;
     }
     // :deep(.nft-contract-item) > img {
     //   width: 100px;
