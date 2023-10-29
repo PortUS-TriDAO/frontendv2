@@ -26,7 +26,8 @@
           :key="item.nftAddress"
           :item="item"
           size="small"
-          @onDetail="handleDetail"
+          @click="handleDetail(item)"
+          class="pointer"
         >
           <template v-slot:actions>
             <p-button round @click="handleAddNft(item)">Add NFT</p-button>
@@ -54,7 +55,7 @@ const { data } = useBusinessDetail(businessId as string);
 console.log('getBusinessDetail result=', data);
 
 function handleDetail(nftContractData: NftContractData) {
-  router.push(`/nft/${nftContractData.nftAddress}`);
+  router.push(`/mine/submitted/nft/${nftContractData.nftAddress}`);
 }
 function handleAddNft(nftContractData: NftContractData) {
   // TODO: handleAddNft

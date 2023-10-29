@@ -60,6 +60,18 @@ const router = createRouter({
           component: () => import('../views/mine/ProjectDetail.vue'),
         },
         {
+          // Mine TokenDetail
+          path: '/mine/submitted/nft/:nftAddress/:tokenId',
+          name: 'MineTokenDetail',
+          component: () => import('../views/mine/MineSkuDetail.vue'),
+        },
+        {
+          // Mine NftDetail
+          path: '/mine/submitted/nft/:nftAddress',
+          name: 'MineNftDetail',
+          component: () => import('../views/mine/MineNftDetail.vue'),
+        },
+        {
           // ProjectList
           path: '/mine/submitted',
           name: 'Submitted',
