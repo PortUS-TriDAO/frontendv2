@@ -14,6 +14,7 @@
   </page-container>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import SkuCard from '@/components/sku-card/index.vue';
@@ -23,13 +24,14 @@ import type { SkuData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
-const { nftAddress, tokenId } = route.params;
+const nftAddress = computed(() => route.params.nftAddress as string);
+const tokenId = computed(() => route.params.tokenId as string);
 
-const { data } = useSkuDetail(tokenId as string);
-const { data: nftList } = useNftList(nftAddress as string);
+const { data } = useSkuDetail(tokenId);
+const { data: nftList } = useNftList(nftAddress.value);
 
 function handleDetail(tokenId: number) {
-  router.push(`/nft/${nftAddress}/${tokenId}`);
+  router.push(`/nft/${nftAddress.value}/${tokenId}`);
 }
 
 function handleBuy(skuData: SkuData) {

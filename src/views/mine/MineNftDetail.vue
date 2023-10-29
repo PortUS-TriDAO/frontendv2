@@ -59,7 +59,7 @@ const { data: nftList } = useNftList(nftAddress.value);
 console.log('nftList=', nftList);
 
 function handleDetail(tokenId: number) {
-  router.push(`/mine/submitted/nft/${nftAddress.value}/${tokenId}`);
+  router.push(`/mine/${scenes.value}/nft/${nftAddress.value}/${tokenId}`);
 }
 function handleWithdraw() {
   // TODO: handleWithdraw

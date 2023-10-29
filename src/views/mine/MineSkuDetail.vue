@@ -1,7 +1,7 @@
 <template>
   <div class="pg-mine-sku-detail">
     <sku-card v-if="data" :item="data" @buy="handleBuy">
-      <template v-slot:actions>
+      <template v-if="scenes === 'submitted'" v-slot:actions>
         <p-button round @click="handleDown">Down</p-button>
         <p-button round @click="handleUp">Up</p-button>
         <p-button round @click="handleEdit">Edit</p-button>
@@ -14,13 +14,14 @@
         v-for="item in nftList?.rows || []"
         :key="item.tokenId"
         :item="item"
-        style="cursor: default"
+        class="cursor"
+        @click="handleDetail(item.tokenId)"
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import SkuCard from '@/components/sku-card/index.vue';
@@ -30,18 +31,20 @@ import type { SkuData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
-const { nftAddress, tokenId } = route.params;
+const scenes = computed(() => route.meta.scenes);
+const nftAddress = computed(() => route.params.nftAddress as string);
+const tokenId = computed(() => route.params.tokenId as string);
 
-const { data, refetch } = useSkuDetail(tokenId as string);
-const { data: nftList } = useNftList(nftAddress as string);
+const { data } = useSkuDetail(tokenId);
+const { data: nftList } = useNftList(nftAddress.value);
 
-watch(
-  () => route.params.tokenId,
-  () => {
-    console.log('watch tokenId==', tokenId);
-    refetch();
-  },
-);
+// watch(
+//   () => tokenId.value,
+//   () => {
+//     console.log('watch tokenId==', tokenId.value);
+//     refetch();
+//   },
+// );
 
 function handleBuy(skuData: SkuData) {
   console.log('handleBuy skuData==', skuData);
@@ -57,6 +60,9 @@ function handleUp() {
 function handleEdit() {
   // TODO: handleEdit
   console.log('handleEdit skuData==');
+}
+function handleDetail(tokenId: number) {
+  router.push(`/mine/${scenes.value}/nft/${nftAddress.value}/${tokenId}`);
 }
 </script>
 <style lang="less" scoped>
