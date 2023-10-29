@@ -45,6 +45,10 @@ button {
       background: #fff;
       border: 1px solid #f6250c;
     }
+    &.el-button--small {
+      min-width: auto;
+      padding: 5px 15px;
+    }
   }
 }
 .is-disabled {
