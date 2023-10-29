@@ -1,6 +1,6 @@
 <template>
   <div class="business-item">
-    <img alt="avatar" :src="avatar" />
+    <img v-if="avatar" alt="avatar" :src="avatar" />
     <div class="business-item-detail">
       <div class="flex-row-between">
         <h3>{{ item.contractName }}</h3>
@@ -12,16 +12,18 @@
       <p>{{ item.briefIntro }}.</p>
       <div class="item-row2">
         <div>
-          <label>items:</label>
-          <span>{{ item.quantity }}</span>
+          <label>righted/rights:</label>
+          <span>{{ item.righted }}/{{ item.rights }}</span>
         </div>
       </div>
       <div class="flex-row-between">
         <div>
-          <label>righted/rights:</label>
-          <span>{{ item.righted }}/{{ item.rights }}</span>
+          <label>items:</label>
+          <span>{{ item.quantity }}</span>
         </div>
-        <p-button @click="handleDetail(item)">Detail</p-button>
+        <slot name="actions">
+          <p-button v-if="!hideDetail" @click="handleDetail(item)">Detail</p-button>
+        </slot>
       </div>
     </div>
   </div>
@@ -32,7 +34,8 @@ import type { BusinessData } from '@/types';
 defineOptions({ name: 'BusinessItem' });
 defineProps<{
   item: BusinessData;
-  avatar: string;
+  avatar?: string;
+  hideDetail?: boolean;
 }>();
 const emit = defineEmits(['onDetail']);
 function handleDetail(item: BusinessData) {
