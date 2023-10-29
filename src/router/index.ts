@@ -48,7 +48,12 @@ const router = createRouter({
       component: () => import('../views/mine/MineContainer.vue'),
       children: [
         {
-          path: '/mine/submitted/:projectId?',
+          path: '/mine/submitted/:projectId',
+          name: 'SubmittedProjectDetail',
+          component: () => import('../views/mine/ProjectDetail.vue'),
+        },
+        {
+          path: '/mine/submitted',
           name: 'Submitted',
           component: () => import('../views/mine/Submitted.vue'),
         },

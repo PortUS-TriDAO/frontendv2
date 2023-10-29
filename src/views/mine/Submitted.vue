@@ -8,10 +8,10 @@
       btnText="Edit"
       @btnClick="handleEdit"
       @click="handleDetail(item)"
-      style="cursor: pointer"
+      class="pointer"
     >
     </project-item>
-    <div class="action-center">
+    <div class="text-center">
       <p-button @click="handleCreate">Create Project</p-button>
     </div>
   </div>
@@ -42,12 +42,13 @@ const {
 console.log('getProjects result=', isPending, res);
 
 function handleEdit(item: ProjectData) {
+  console.log('handleEdit item', item);
   // TODO: edit
   router.push('/project/create/step1');
 }
 
 function handleDetail(item: ProjectData) {
-  router.push(`/mine/project/${item.projectId}`);
+  router.push(`/mine/submitted/${item.projectId}`);
 }
 
 function handleCreate() {
@@ -61,9 +62,6 @@ function handleCreate() {
     font-size: 34px;
     font-weight: 700;
     margin-bottom: 26px;
-  }
-  .action-center {
-    text-align: center;
   }
 }
 </style>

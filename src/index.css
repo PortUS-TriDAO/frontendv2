@@ -41,7 +41,12 @@ a {
   background: #ededed;
 }
 
-
+.text-center {
+  text-align: center;
+}
+.pointer {
+  cursor: pointer;
+}
 /* :root {
   --container-width: 1200px;
   --container-max-width: 1200px;
