@@ -48,11 +48,19 @@ const router = createRouter({
       component: () => import('../views/mine/MineContainer.vue'),
       children: [
         {
+          // BusinessDetail
+          path: '/mime/submitted/:projectId/:businessId',
+          name: 'SubmittedBusinessDetail',
+          component: () => import('../views/mine/BusinessDetail.vue'),
+        },
+        {
+          // ProjectDetail
           path: '/mine/submitted/:projectId',
           name: 'SubmittedProjectDetail',
           component: () => import('../views/mine/ProjectDetail.vue'),
         },
         {
+          // ProjectList
           path: '/mine/submitted',
           name: 'Submitted',
           component: () => import('../views/mine/Submitted.vue'),
