@@ -97,8 +97,9 @@ const handlers: RestHandler[] = [
       ctx.json({
         success: true,
         data: {
-          contractName: 'sjkflsjf',
-          briefIntro: 'skjdfklsjflsd',
+          contractName: 'commercial contract name',
+          briefIntro:
+            'Welcome to the home of Echo of Intensity by Per Kristian Stoveland on OpenSeaWelcome to the home of Echo of Intensity by Per Kristian Stoveland on OpenSea',
           sharePercentage: 20,
           rights: 5000,
           righted: 30,
