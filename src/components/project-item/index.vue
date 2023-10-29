@@ -14,9 +14,11 @@
               <span>56/200</span>
             </div>
           </div>-->
-      <div style="flex-grow: 1"></div>
+      <!-- <div style="flex-grow: 1"></div> -->
       <div class="item-action">
-        <p-button @click="handleClick(item)">{{ btnText || 'Detail' }}</p-button>
+        <p-button v-if="btnText !== false" @click="handleClick(item)">
+          {{ btnText || 'Detail' }}
+        </p-button>
       </div>
     </div>
   </div>
@@ -25,7 +27,7 @@
 import type { ProjectData } from '@/types';
 
 defineOptions({ name: 'ProjectItem' });
-defineProps<{ item: ProjectData; btnText?: string }>();
+defineProps<{ item: ProjectData; btnText?: string | boolean }>();
 const emit = defineEmits(['btnClick']);
 function handleClick(item: ProjectData) {
   emit('btnClick', item);
