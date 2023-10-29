@@ -1,0 +1,95 @@
+<template>
+  <div class="page-mine-submitted">
+    <h3 v-if="scenesData.title" class="mine-page-title">{{ scenesData.title }}</h3>
+    <project-item
+      v-for="item in data?.rows || []"
+      :key="item.projectId"
+      :item="item"
+      :btnText="scenesData.btnText"
+      @btnClick="scenesData.btnClick"
+      @click="handleDetail(item)"
+      class="pointer"
+    >
+    </project-item>
+    <div class="text-center" v-if="scenesData.bottomBtn">
+      <p-button @click="scenesData.bottomBtn.onClick">{{ scenesData.bottomBtn.text }}</p-button>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+import ProjectItem from '@/components/project-item/index.vue';
+import { useProjects } from '@/hooks';
+import type { ProjectData } from '@/types';
+
+defineOptions({ name: 'MimeProjectList' });
+const router = useRouter();
+const route = useRoute();
+const scenes = computed(() => route.meta.scenes);
+const { data, refetch, isPending } = useProjects();
+console.log('getProjects result=', isPending, data);
+
+function handleDetail(item: ProjectData) {
+  router.push(`/mine/${scenes.value}/${item.projectId}`);
+}
+
+const map = {
+  submitted: {
+    title: 'ProjectList',
+    btnText: 'Edit',
+    btnClick: (item: ProjectData) => {
+      console.log('handleEdit item', item);
+      // TODO: edit
+      router.push('/project/create/step1');
+    },
+    bottomBtn: {
+      text: 'Create Project',
+      onClick: () => {
+        router.push('/project/create/step1');
+      },
+    },
+  },
+  participated: {
+    title: 'participated projects list',
+    btnText: false,
+    btnClick: handleDetail,
+    bottomBtn: {
+      text: 'Mint More',
+      onClick: () => {
+        // TODO: Mint More
+      },
+    },
+  },
+  store: {
+    title: '',
+    btnText: 'Share Project',
+    btnClick: () => {
+      // TODO: edit
+      router.push('/project/create/step1');
+    },
+    bottomBtn: {
+      text: 'share My Store',
+      onClick: () => {
+        // TODO: share My Store
+      },
+    },
+  },
+};
+
+const scenesData = computed(() => {
+  return map[scenes.value || 'submitted'];
+});
+</script>
+
+<style lang="less">
+.page-mine-submitted {
+  .mine-page-title {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 26px;
+  }
+}
+</style>

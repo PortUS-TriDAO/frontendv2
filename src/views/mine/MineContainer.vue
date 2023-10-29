@@ -36,7 +36,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const selected = computed(() => (route.name as string).toLowerCase());
+const selected = computed(() => route.meta.scenes);
 </script>
 <style lang="less">
 .mine-container {
