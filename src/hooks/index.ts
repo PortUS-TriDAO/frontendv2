@@ -1,8 +1,50 @@
 import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
 
-import type { BusinessDetailData, NftContractData, PageData, SkuData } from '@/types';
+import type {
+  BusinessDetailData,
+  NftContractData,
+  PageData,
+  ProjectData,
+  ProjectDetailData,
+  SkuData,
+} from '@/types';
 
-import { getBusinessDetail, getNftDetail, getNftList, getSkuDetail } from '../api';
+import {
+  getBusinessDetail,
+  getNftDetail,
+  getNftList,
+  getProjectDetail,
+  getProjects,
+  getSkuDetail,
+} from '../api';
+
+export function useProjects(key?: string): UseQueryReturnType<PageData<ProjectData>, Error> {
+  const result = useQuery({
+    queryKey: ['getProjects', key],
+    queryFn: async () => {
+      const res = await getProjects(key);
+      if (res.success) {
+        return res.data;
+      }
+      return null;
+    },
+  });
+  return result;
+}
+
+export function useProjectDetail(projectId: string): UseQueryReturnType<ProjectDetailData, Error> {
+  const result = useQuery({
+    queryKey: ['getProjectDetail', projectId],
+    queryFn: async () => {
+      const res = await getProjectDetail({ projectId });
+      if (res.success) {
+        return res.data;
+      }
+      return null;
+    },
+  });
+  return result;
+}
 
 export function useBusinessDetail(
   businessId: string,
