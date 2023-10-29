@@ -43,7 +43,6 @@ const selected = computed(() => (route.name as string).toLowerCase());
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
   box-sizing: border-box;
 
   .left-menu {
