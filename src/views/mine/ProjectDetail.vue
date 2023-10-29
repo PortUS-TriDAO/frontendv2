@@ -12,7 +12,7 @@
         :key="item.businessId"
         :item="item"
         hideDetail
-        @click="handleDetail"
+        @click="handleDetail(item)"
         class="pointer"
       >
         <template v-slot:actions>
