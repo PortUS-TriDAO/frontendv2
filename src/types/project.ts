@@ -77,4 +77,7 @@ export interface SkuData {
   description: string;
   //
   deadline: number;
+  seller: Address;
+  signature: string;
+  retailerAddress: Address;
 }

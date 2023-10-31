@@ -12,7 +12,7 @@
       </div>
       <div class="card-action">
         <div v-if="item.isSalesEnd" class="sold-out">sold out</div>
-        <p-button @click="buy(item)">Buy</p-button>
+        <p-button :loading="loading" @click="buy(item)">Buy</p-button>
       </div>
     </div>
     <text-ellipsis>
@@ -29,7 +29,7 @@ import dayjs from 'dayjs';
 import type { SkuData } from '@/types';
 
 defineOptions({ name: 'SkuItem' });
-defineProps<{ item: SkuData }>();
+defineProps<{ item: SkuData; loading: boolean }>();
 const emit = defineEmits(['buy']);
 function buy(item: SkuData) {
   emit('buy', item);

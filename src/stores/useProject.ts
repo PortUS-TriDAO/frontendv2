@@ -10,6 +10,8 @@ import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 
+import { useProjectContract } from './useProjectContract';
+
 interface ICreateProject {
   projectId: string;
   briefIntro: string;
@@ -19,6 +21,15 @@ interface ICreateProject {
   payToken: Address;
   sharePercentage: string | number;
   rightQuantity: number | string;
+}
+
+interface IBuyInfo {
+  seller: Address;
+  payToken: Address;
+  payPrice: bigint;
+  nftTokenId: number;
+  deadline: number;
+  signature: string;
 }
 
 export const useProjectStore = defineStore('project', () => {
@@ -179,17 +190,9 @@ export const useProjectStore = defineStore('project', () => {
     });
   }
 
-  interface IBuyInfo {
-    seller: Address;
-    payToken: Address;
-    payPrice: bigint;
-    nftTokenId: number;
-    deadline: number;
-    signature: string;
-  }
-
+  // buy sku
   async function buyMintedNft(
-    retailerContract: Address,
+    retailerContract: Address, // business contract
     buyNftParams: IBuyInfo[],
     kolTokenId: number,
   ) {
@@ -207,6 +210,13 @@ export const useProjectStore = defineStore('project', () => {
     });
   }
 
+  async function mint(projectAddress: Address) {
+    console.log('mint ...', projectAddress);
+    const projectContract = useProjectContract();
+    const tx = await projectContract.referrerSign(projectAddress);
+    await waitForTransaction({ hash: tx.hash });
+  }
+
   return {
     state,
     createProject,
@@ -215,5 +225,6 @@ export const useProjectStore = defineStore('project', () => {
     publishSku,
     publishSpu,
     buyMintedNft,
+    mint,
   };
 });

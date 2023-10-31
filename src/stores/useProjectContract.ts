@@ -12,6 +12,7 @@ import PROJECT_ABI from '@/abi/project.abi.json';
 
 export const useProjectContract = defineStore('projectContract', () => {
   function referrerSign(projectAddress: Address): Promise<WriteContractResult> {
+    console.log('referrerSign====', projectAddress);
     return writeContract({
       address: projectAddress,
       abi: PROJECT_ABI,

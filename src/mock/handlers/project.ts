@@ -246,6 +246,9 @@ const handlers: RestHandler[] = [
           description:
             'Dreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.Dreamed',
           deadline: 1698485171,
+          seller: '0xkjsdlfksldf',
+          signature: '0xkjsdfljsflsdjflsdf',
+          retailerAddress: '0xjhsdkfhskfhsdfk',
         },
       }),
     );
