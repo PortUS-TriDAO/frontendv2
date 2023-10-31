@@ -38,8 +38,8 @@ export const getProjectDetail = (params: {
 }): Promise<IResponse<ProjectDetailData>> => axios.get('/project/detail', { params });
 
 export const getBusinessDetail = (params: {
-  businessId: string;
-}): Promise<IResponse<BusinessDetailData>> => axios.get('/project/business/detail', { params });
+  bizId: string;
+}): Promise<IResponse<BusinessDetailData>> => axios.get('/project/biz/detail', { params });
 
 export const postDeployedContract = (params: {
   nftAddress: string;

@@ -22,7 +22,7 @@ export function useBusinessDetail(
   const result = useQuery({
     queryKey: ['getBusinessDetail', businessId],
     queryFn: async () => {
-      const res = await getBusinessDetail({ businessId });
+      const res = await getBusinessDetail({ bizId: businessId });
       if (res.success) {
         return res.data;
       }

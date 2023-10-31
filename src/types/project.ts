@@ -38,7 +38,7 @@ export interface ProjectDetailData {
  * 商业合约列表数据
  */
 export interface BusinessData {
-  businessId: number;
+  bizId: number;
   contractName: string;
   sharePercentage: number;
   briefIntro: string;
@@ -63,7 +63,7 @@ export interface NftContractData {
   nftAddress: Address;
   avatar: string;
   nftID: string;
-  nftName: string;
+  name: string;
 }
 
 export interface SkuData {

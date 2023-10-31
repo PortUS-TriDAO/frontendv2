@@ -31,6 +31,7 @@ export const useProjectContract = defineStore('projectContract', () => {
     return readContract(params);
   }
 
+  // KOL领奖励
   function referrerWithdraw(projectAddress: Address, tokenId: number) {
     const params: ContractFunctionConfig = {
       address: projectAddress,
@@ -41,6 +42,7 @@ export const useProjectContract = defineStore('projectContract', () => {
     return writeContract(params);
   }
 
+  // 项目方领收益
   function operatorWithdraw(projectAddress: Address, account: Address) {
     const params: ContractFunctionConfig = {
       address: projectAddress,
