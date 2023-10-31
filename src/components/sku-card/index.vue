@@ -1,5 +1,12 @@
 <template>
-  <div class="sku-card">
+  <div
+    :class="[
+      'sku-card',
+      {
+        'sku-card--small': size === 'small',
+      },
+    ]"
+  >
     <div class="detail-card">
       <img alt="avatar" :src="item.avatar" />
       <div class="card-desc">
@@ -12,7 +19,8 @@
       </div>
       <div class="card-action">
         <div v-if="item.isSalesEnd" class="sold-out">sold out</div>
-        <p-button :loading="loading" @click="buy(item)">Buy</p-button>
+        <!-- <p-button @click="buy(item)">Buy</p-button> -->
+        <slot name="actions"></slot>
       </div>
     </div>
     <text-ellipsis>
@@ -29,7 +37,7 @@ import dayjs from 'dayjs';
 import type { SkuData } from '@/types';
 
 defineOptions({ name: 'SkuItem' });
-defineProps<{ item: SkuData; loading: boolean }>();
+defineProps<{ item: SkuData; size?: 'small' }>();
 const emit = defineEmits(['buy']);
 function buy(item: SkuData) {
   emit('buy', item);
@@ -86,8 +94,10 @@ function buy(item: SkuData) {
   .card-action {
     padding-right: 25px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
   }
 
   .sold-out {
@@ -101,6 +111,15 @@ function buy(item: SkuData) {
     font-weight: 700;
     line-height: 22px;
     color: #fff;
+  }
+  &.sku-card--small {
+    .detail-card > img {
+      width: 100px;
+      height: 100px;
+    }
+    .detail-card .card-desc {
+      gap: 10px;
+    }
   }
 }
 </style>

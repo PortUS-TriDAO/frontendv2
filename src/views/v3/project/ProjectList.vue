@@ -2,7 +2,7 @@
   <page-container class="pg-project-list">
     <div class="searchbar">
       <el-input v-model="searchKey" placeholder="Search Name" class="search-input" />
-      <p-button @click="searchProjects">Search</p-button>
+      <p-button @click="refetch">Search</p-button>
       <p-button @click="handleSubmit">SubmitProject</p-button>
     </div>
     <div>
@@ -10,7 +10,8 @@
         v-for="item in res?.data?.rows || []"
         :key="item.projectId"
         :item="item"
-        @onDetail="handleDetail"
+        btnText="Detail"
+        @btnClick="handleDetail"
       >
       </project-item>
     </div>

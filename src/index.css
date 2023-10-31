@@ -41,7 +41,17 @@ a {
   background: #ededed;
 }
 
-
+.text-center {
+  text-align: center;
+}
+.pointer {
+  cursor: pointer;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 /* :root {
   --container-width: 1200px;
   --container-max-width: 1200px;

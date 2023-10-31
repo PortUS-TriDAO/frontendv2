@@ -2,6 +2,69 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import HomeView from '../views/home/HomeView.vue';
 
+const mimeProjectList = () => import('../views/mine/MineProjectList.vue');
+const MineProjectDetail = () => import('../views/mine/MineProjectDetail.vue');
+const MineBusinessDetail = () => import('../views/mine/MineBusinessDetail.vue');
+const mimeMineNftDetail = () => import('../views/mine/MineNftDetail.vue');
+const MineSkuDetail = () => import('../views/mine/MineSkuDetail.vue');
+
+const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
+  const capitalizedName = scenes.charAt(0).toUpperCase() + scenes.slice(1);
+  return [
+    {
+      // MineTokenDetail
+      path: `/mine/${scenes}/nft/:nftAddress/:tokenId`,
+      name: `Mine${capitalizedName}TokenDetail`,
+      component: MineSkuDetail,
+      meta: {
+        scenes,
+      },
+    },
+    {
+      // MineNftDetail
+      path: `/mine/${scenes}/nft/:nftAddress`,
+      name: `Mine${capitalizedName}NftDetail`,
+      component: mimeMineNftDetail,
+      meta: {
+        scenes,
+      },
+    },
+    {
+      // MineBusinessDetail
+      path: `/mime/${scenes}/:projectId/:businessId`,
+      name: `Mine${capitalizedName}BusinessDetail`,
+      component: MineBusinessDetail,
+      meta: {
+        scenes,
+      },
+    },
+    {
+      // MineProjectDetail
+      path: `/mine/${scenes}/:projectId`,
+      name: `Mine${capitalizedName}ProjectDetail`,
+      component: MineProjectDetail,
+      meta: {
+        scenes,
+      },
+    },
+    {
+      // MineProjectList
+      path: `/mine/${scenes}`,
+      name: `Mine${capitalizedName}ProjectList`,
+      component: mimeProjectList,
+      meta: {
+        scenes,
+      },
+    },
+  ];
+};
+
+const mineChildren = [
+  ...getMinePath('submitted'),
+  ...getMinePath('participated'),
+  ...getMinePath('store'),
+];
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -46,38 +109,7 @@ const router = createRouter({
       path: '/mine/container',
       name: 'MineContainer',
       component: () => import('../views/mine/MineContainer.vue'),
-      children: [
-        {
-          path: '/mine/submitted/:projectId?',
-          name: 'Submitted',
-          component: () => import('../views/mine/Submitted.vue'),
-        },
-        {
-          path: '/mine/participated',
-          name: 'Participated',
-          component: () => import('../views/mine/Participated.vue'),
-        },
-        {
-          path: '/mine/store',
-          name: 'Store',
-          component: () => import('../views/mine/Store.vue'),
-        },
-        {
-          path: '/mine/projects',
-          name: 'MyProjects',
-          component: () => import('../views/mine/MyProjects.vue'),
-        },
-        {
-          path: '/mine/distribution',
-          name: 'MyDistribution',
-          component: () => import('../views/mine/MyDistribution.vue'),
-        },
-        {
-          path: '/mine/business/list',
-          name: 'MyBusinessContractList',
-          component: () => import('../views/mine/BusinessContractList.vue'),
-        },
-      ],
+      children: mineChildren,
     },
     {
       path: '/project/create/step1/:projectId?',

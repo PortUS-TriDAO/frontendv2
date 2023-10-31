@@ -3,7 +3,7 @@
     <img alt="avatar" :src="item.avatar" />
     <div class="project-item-detail">
       <h3>{{ item.name }}</h3>
-      <p>{{ item.briefIntro }}</p>
+      <text-ellipsis :line="2" hideAction>{{ item.briefIntro }}</text-ellipsis>
       <!-- <div class="item-row2">
             <div>
               <label>items:</label>
@@ -14,9 +14,11 @@
               <span>56/200</span>
             </div>
           </div>-->
-      <div style="flex-grow: 1"></div>
+      <!-- <div style="flex-grow: 1"></div> -->
       <div class="item-action">
-        <p-button @click="handleDetail(item)">Detail</p-button>
+        <p-button v-if="btnText" @click="handleClick(item)">
+          {{ btnText || 'Detail' }}
+        </p-button>
       </div>
     </div>
   </div>
@@ -25,10 +27,10 @@
 import type { ProjectData } from '@/types';
 
 defineOptions({ name: 'ProjectItem' });
-defineProps<{ item: ProjectData }>();
-const emit = defineEmits(['onDetail']);
-function handleDetail(item: ProjectData) {
-  emit('onDetail', item);
+defineProps<{ item: ProjectData; btnText?: string }>();
+const emit = defineEmits(['btnClick']);
+function handleClick(item: ProjectData) {
+  emit('btnClick', item);
 }
 </script>
 <style lang="less">

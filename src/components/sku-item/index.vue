@@ -8,6 +8,7 @@
     <text-ellipsis :line="3" hideAction>
       {{ item.briefIntro }}
     </text-ellipsis>
+    <slot name="actions" />
   </div>
 </template>
 <script setup lang="ts">

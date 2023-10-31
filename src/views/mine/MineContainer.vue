@@ -36,14 +36,13 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const selected = computed(() => (route.name as string).toLowerCase());
+const selected = computed(() => route.meta.scenes);
 </script>
 <style lang="less">
 .mine-container {
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
   box-sizing: border-box;
 
   .left-menu {
@@ -80,7 +79,7 @@ const selected = computed(() => (route.name as string).toLowerCase());
   .mine-content {
     flex: 1;
     //width: 976px;
-    max-width: 800px;
+    width: 800px;
     background-color: #fff;
     padding: 20px 30px;
   }

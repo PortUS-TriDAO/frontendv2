@@ -1,17 +1,25 @@
 <template>
-  <div class="business-item">
+  <div
+    :class="[
+      'nft-contract-item',
+      {
+        'nft-contract-item--small': size === 'small',
+      },
+    ]"
+  >
     <img alt="avatar" :src="item.avatar" />
-    <div class="business-item-detail">
+    <div class="nft-contract-item-detail">
       <h3>{{ item.nftAddress }}</h3>
       <div>
         {{ item.nftID }}
       </div>
-      <div class="flex-row-between" v-if="hideActions !== true">
+      <div class="flex-between" v-if="hideActions !== true">
         <div></div>
         <slot name="actions">
           <p-button @click="handleDetail(item)">Detail</p-button>
         </slot>
       </div>
+      <slot />
     </div>
   </div>
 </template>
@@ -22,6 +30,7 @@ defineOptions({ name: 'NftContractItem' });
 defineProps<{
   item: NftContractData;
   hideActions?: boolean;
+  size?: 'small';
   // avatar: string;
 }>();
 const emit = defineEmits(['onDetail']);
@@ -30,7 +39,7 @@ function handleDetail(item: NftContractData) {
 }
 </script>
 <style lang="less">
-.business-item {
+.nft-contract-item {
   display: flex;
   flex-direction: row;
   gap: 12px;
@@ -46,13 +55,7 @@ function handleDetail(item: NftContractData) {
     flex-shrink: 0;
   }
 
-  .flex-row-between {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .business-item-detail {
+  .nft-contract-item-detail {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -67,6 +70,15 @@ function handleDetail(item: NftContractData) {
     h3 {
       font-weight: inherit;
       font-size: inherit;
+    }
+  }
+  &.nft-contract-item--small {
+    > img {
+      width: 100px;
+      height: 100px;
+    }
+    .nft-contract-item-detail {
+      gap: 10px;
     }
   }
 }

@@ -1,5 +1,7 @@
 import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
+import { type ComputedRef, watch } from 'vue';
 
+// import { getAccount } from '@wagmi/core';
 import type {
   BusinessDetailData,
   NftContractData,
@@ -64,11 +66,11 @@ export function useNftList(
   return result;
 }
 
-export function useSkuDetail(tokenId: string): UseQueryReturnType<SkuData, Error> {
+export function useSkuDetail(tokenId: ComputedRef<string>): UseQueryReturnType<SkuData, Error> {
   const result = useQuery({
-    queryKey: ['getSkuDetail', tokenId],
+    queryKey: ['getSkuDetail', tokenId.value],
     queryFn: async () => {
-      const res = await getSkuDetail({ tokenId });
+      const res = await getSkuDetail({ tokenId: tokenId.value });
       console.log('getSkuDetail:', res);
       if (res.success) {
         return res.data;
@@ -76,6 +78,13 @@ export function useSkuDetail(tokenId: string): UseQueryReturnType<SkuData, Error
       return null;
     },
   });
+  watch(
+    () => tokenId.value,
+    () => {
+      result.refetch();
+    },
+  );
+
   return result;
 }
 
