@@ -47,7 +47,7 @@ const { data: res } = useQuery({
 console.log('getProjects result=', res);
 
 function handleDetail(businessData: BusinessData) {
-  router.push(`/project/${projectId}/${businessData.businessId}`);
+  router.push(`/project/${projectId}/${businessData.bizId}`);
 }
 </script>
 <style lang="less" scoped>

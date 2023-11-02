@@ -12,7 +12,7 @@
     <div v-if="res?.data">
       <business-item
         v-for="item in res.data.rows || []"
-        :key="item.businessId"
+        :key="item.bizId"
         :item="item"
         hideDetail
         @click="handleDetail(item)"
@@ -21,17 +21,14 @@
         <template v-slot:actions>
           <div>
             <p-button
-              v-for="(item, index) in scenesData.rowActions"
+              :loading="loading && action.text === 'Withdraw'"
+              v-for="(action, index) in scenesData.rowActions"
               :key="index"
               round
-              @click="item.onClick"
+              @click="action.onClick(item)"
             >
-              {{ item.text }}
+              {{ action.text }}
             </p-button>
-            <!-- <p-button round @click="handleWithdraw(item)">Withdraw</p-button>
-            <p-button round @click="handleSubmit(item)">
-              Submit NFT Contract
-            </p-button> -->
           </div>
         </template>
       </business-item>
@@ -45,20 +42,37 @@
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { computed } from 'vue';
+import { waitForTransaction } from '@wagmi/core';
+import { ElMessage } from 'element-plus';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
+import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
 const { projectId } = route.params;
 const scenes = computed(() => route.meta.scenes);
+const loading = ref(false);
+
+const projectStore = useProjectStore();
+
+const scenesData = computed(() => {
+  return map[scenes.value || 'submitted'];
+});
+
+const { data: res } = useQuery({
+  queryKey: ['getProjectDetail', projectId],
+  queryFn: () => {
+    return getProjectDetail({ projectId: projectId as string });
+  },
+});
 
 function handleDetail(businessData: BusinessData) {
-  router.push(`/mime/${scenes.value}/${projectId}/${businessData.businessId}`);
+  router.push(`/mime/${scenes.value}/${projectId}/${businessData.bizId}`);
 }
 
 const map = {
@@ -67,14 +81,26 @@ const map = {
       text: 'Edit project',
       onClick: () => {
         // TODO: edit project
+        console.log('mine/MineProjectDetail');
+        router.push(`/project/create/step1/${projectId}`);
       },
     },
     rowActions: [
       {
         text: 'Withdraw',
-        onClick: (item: BusinessData) => {
+        onClick: async (item: BusinessData) => {
           // TODO: Withdraw
+          // 处理项目方withdraw
           console.log('handleWithdraw item', item);
+          try {
+            loading.value = true;
+            const tx = await projectContract.operatorWithdraw(item.contractAddress);
+            await waitForTransaction({ hash: tx.hash });
+          } catch (error) {
+            ElMessage.error('withdraw failed');
+          } finally {
+            loading.value = false;
+          }
         },
       },
       {
@@ -82,6 +108,7 @@ const map = {
         onClick: (item: BusinessData) => {
           // TODO: Withdraw
           console.log('handleSubmit businessData', item);
+          router.push(`/project/submitsuccess/${projectId}`);
         },
       },
     ],
@@ -89,22 +116,31 @@ const map = {
       text: 'Submit Commercial Contract',
       onClick: () => {
         // TODO: edSubmit Commercial Contract
+        router.push('/project/create/step2');
       },
     },
   },
   participated: {
-    topBtn: {
-      text: 'Edit project',
-      onClick: () => {
-        // TODO: edit project
-      },
-    },
+    // topBtn: {
+    //   text: 'Edit project',
+    //   onClick: () => {
+    //     // TODO: edit project
+    //   },
+    // },
     rowActions: [
       {
         text: 'Withdraw',
-        onClick: (item: BusinessData) => {
-          // TODO: Withdraw
+        onClick: async (item: BusinessData) => {
+          // TODO: Withdraw KOL withdraw
           console.log('handleWithdraw item', item);
+          loading.value = true;
+          try {
+            await projectStore.kolWithdraw(item.contractAddress);
+          } catch (error) {
+            ElMessage.error('Withdraw failed');
+          } finally {
+            loading.value = false;
+          }
         },
       },
       {
@@ -114,18 +150,14 @@ const map = {
     ],
     buttonBtn: {
       text: 'Mint More',
-      onClick: () => {
+      onClick: (item) => {
+        console.log('mint more', item);
         // TODO: Mint More
+        router.push(`/project/${projectId}`);
       },
     },
   },
   store: {
-    topBtn: {
-      text: 'Edit project',
-      onClick: () => {
-        // TODO: edit project
-      },
-    },
     rowActions: [
       {
         text: 'share contract',
@@ -138,18 +170,6 @@ const map = {
     buttonBtn: null,
   },
 };
-const scenesData = computed(() => {
-  return map[scenes.value || 'submitted'];
-});
-console.log('projectId=', projectId);
-
-const { data: res } = useQuery({
-  queryKey: ['getProjectDetail', projectId],
-  queryFn: () => {
-    return getProjectDetail({ projectId: projectId as string });
-  },
-});
-console.log('getProjects result=', res);
 </script>
 <style lang="less" scoped>
 .pg-mime-project-detail {

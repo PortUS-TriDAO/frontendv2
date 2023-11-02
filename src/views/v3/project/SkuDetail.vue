@@ -1,6 +1,9 @@
 <template>
   <page-container class="pg-sku-detail">
-    <sku-card v-if="data" :item="data" @buy="handleBuy" />
+    <sku-card :loading="loading" v-if="data" :item="data">
+      <p-button @click="handleBuy(data)">Buy</p-button>
+    </sku-card>
+
     <div class="detail-divider"></div>
     <div class="list-title">Items</div>
     <div class="list">
@@ -14,18 +17,23 @@
   </page-container>
 </template>
 <script setup lang="ts">
+import { ElMessage } from 'element-plus';
+import { ref } from 'vue';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import SkuCard from '@/components/sku-card/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useNftList, useSkuDetail } from '@/hooks';
+import { useProjectStore } from '@/stores/useProject';
 import type { SkuData } from '@/types';
 
+const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
 const nftAddress = computed(() => route.params.nftAddress as string);
 const tokenId = computed(() => route.params.tokenId as string);
+const projectStore = useProjectStore();
 
 const { data } = useSkuDetail(tokenId);
 const { data: nftList } = useNftList(nftAddress.value);
@@ -35,7 +43,40 @@ function handleDetail(tokenId: number) {
 }
 
 function handleBuy(skuData: SkuData) {
-  console.log('handleBuy skuData==', skuData);
+  try {
+    loading.value = true;
+    console.log('handleBuy', {
+      retailerAddress: data.value.retailerAddress,
+      params: {
+        seller: data.value.seller,
+        payToken: data.value.payToken,
+        payPrice: data.value.price,
+        nftTokenId: data.value.tokenId,
+        deadline: data.value.deadline,
+        signature: data.value.signature,
+      },
+      tokenId,
+    });
+    console.log('handleBuy skuData==', skuData);
+    projectStore.buyMintedNft(
+      data.value.retailerAddress,
+      [
+        {
+          seller: data.value.seller,
+          payToken: data.value.payToken,
+          payPrice: BigInt(data.value.price),
+          nftTokenId: data.value.tokenId,
+          deadline: data.value.deadline,
+          signature: data.value.signature,
+        },
+      ],
+      Number(tokenId.value as string),
+    );
+  } catch (error) {
+    ElMessage.error('buy failed');
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -44,6 +85,7 @@ function handleBuy(skuData: SkuData) {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+
   .list-title {
     font-size: 24px;
     font-weight: 700;
@@ -51,11 +93,13 @@ function handleBuy(skuData: SkuData) {
     color: #000;
     margin: 0 0 14px 0;
   }
+
   .list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 12px;
+
     > div {
       cursor: pointer;
     }

@@ -20,7 +20,8 @@
       <div class="card-action">
         <div v-if="item.isSalesEnd" class="sold-out">sold out</div>
         <!-- <p-button @click="buy(item)">Buy</p-button> -->
-        <slot name="actions"></slot>
+        <slot></slot>
+        <!-- <slot name="actions"></slot> -->
       </div>
     </div>
     <text-ellipsis>

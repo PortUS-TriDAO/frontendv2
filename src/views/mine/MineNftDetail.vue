@@ -40,18 +40,32 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { waitForTransaction } from '@wagmi/core';
+import { ElMessage } from 'element-plus';
+import type { Address } from 'viem';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useNftDetail, useNftList } from '@/hooks';
+import { useProjectStore } from '@/stores/useProject';
 import type { SkuData } from '@/types';
 
+const loading = ref(false);
+const projectStore = useProjectStore();
 const route = useRoute();
 const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
 const nftAddress = computed(() => route.params.nftAddress as string);
+const projectId = computed(() => route.params.projectId as string);
+const businessContractAddress = computed(() => route.params.businessContractAddress as string);
+
+console.log('params', {
+  nftAddress: nftAddress.value,
+  projectId: projectId.value,
+  businessContractAddress: businessContractAddress.value,
+});
 
 const { data } = useNftDetail(nftAddress.value);
 const { data: nftList } = useNftList(nftAddress.value);
@@ -61,9 +75,19 @@ console.log('nftList=', nftList);
 function handleDetail(tokenId: number) {
   router.push(`/mine/${scenes.value}/nft/${nftAddress.value}/${tokenId}`);
 }
-function handleWithdraw() {
+async function handleWithdraw() {
   // TODO: handleWithdraw
-  console.log('handleUp, item');
+  console.log('handleUp, itemhhh');
+  // KOL withdraw TODO: 获取projectAddress
+  try {
+    loading.value = true;
+    const tx = await projectStore.kolWithdraw(businessContractAddress.value as Address);
+    await waitForTransaction({ hash: tx.hash });
+  } catch (error) {
+    ElMessage.error('Withdraw failed');
+  } finally {
+    loading.value = false;
+  }
 }
 function handleShareNFT() {
   // TODO: handleSharePage
@@ -84,6 +108,7 @@ function handleDown(item: SkuData) {
 function handleAddNft() {
   // TODO: handleAddNft
   console.log('handleAddNft...');
+  router.push(`/project/submitsuccess/${projectId.value}`);
 }
 </script>
 <style lang="less" scoped>

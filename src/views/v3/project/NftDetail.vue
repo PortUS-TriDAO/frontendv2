@@ -26,6 +26,7 @@ const router = useRouter();
 const { nftAddress } = route.params;
 
 const { data } = useNftDetail(nftAddress as string);
+// console.log({ useNftDetail: data.value.name });
 const { data: nftList } = useNftList(nftAddress as string);
 
 console.log('nftList=', nftList);

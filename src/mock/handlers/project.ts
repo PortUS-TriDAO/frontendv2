@@ -19,22 +19,6 @@ const handlers: RestHandler[] = [
               briefIntro:
                 'Farmers World is the first farming game to function on the NFTs platformRead more',
             },
-            {
-              projectId: 24234523422,
-              avatar:
-                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              name: 'Farmers World2',
-              briefIntro:
-                'Farmers World is the first farming game to function on the NFTs platformRead more',
-            },
-            {
-              projectId: 24234523423,
-              avatar:
-                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              name: 'Farmers World3',
-              briefIntro:
-                'Farmers World is the first farming game to function on the NFTs platformRead more',
-            },
           ],
         },
       }),
@@ -59,26 +43,16 @@ const handlers: RestHandler[] = [
             'Farmers World is the first farming game to function on the NFTs platform. Pick for yourself suitable tools, exploit various resourcesbuy land to build enormous farms, and enjoy the fascinating experiences of a farmer working in Farmers World’s Ecosystem.',
           rights: 1000,
           righted: 50,
-          payToken: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
-          projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
           minted: false,
           rows: [
             {
               // 商业合约列表数据
-              businessId: 12123131,
-              contractName: 'Echo of Intensity',
+              bizId: 948230480234,
+              payToken: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              contractAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+              contractName: '',
               sharePercentage: 20,
-              briefIntro: 'Dreamed of moonshots but awoke to a capitulation. ',
-              quantity: 1000,
-              rights: 50000,
-              righted: 300,
-            },
-            {
-              // 商业合约列表数据
-              businessId: 121232981,
-              contractName: 'Echo of Intensity2',
-              sharePercentage: 20,
-              briefIntro: 'Dreamed of moonshots but awoke to a capitulation2. ',
+              briefIntro: '',
               quantity: 1000,
               rights: 50000,
               righted: 300,
@@ -89,24 +63,20 @@ const handlers: RestHandler[] = [
     );
   }),
   // 查询商业合约详情
-  rest.get('/project/business/detail', (req, res, ctx) => {
-    // const { businessId, businessContractAddress, chainId } = req.params;
-    const { businessId } = req.params;
+  rest.get('/project/biz/detail', (req, res, ctx) => {
+    const { projectId, bizId } = req.params;
 
     return res(
       ctx.json({
         success: true,
         data: {
-          contractName: 'commercial contract name',
-          briefIntro:
-            'Welcome to the home of Echo of Intensity by Per Kristian Stoveland on OpenSeaWelcome to the home of Echo of Intensity by Per Kristian Stoveland on OpenSea',
-          sharePercentage: 20,
+          contractName: 'sjkflsjf',
+          briefIntro: 'skjdfklsjflsd',
           rights: 5000,
           righted: 30,
           payToken: '0xkljsldfjlsdf',
-          description:
-            'Welcome to the home of Echo of Intensity by Per Kristian Stoveland on OpenSea. Discover the best items in this collection.',
-          // rows: [], // SKU/SPU 列表
+          description: 'sajflsdkjflsdjfl',
+          contractAddress: '0x065093C2aB7B05288686D3d43ae3321cF5B13a20',
           rows: [
             {
               nftAddress: '0x6d2e83a559c1fbe0cc677d10a22f28f0f8b1f325',
@@ -122,7 +92,7 @@ const handlers: RestHandler[] = [
               nftID: 2323335,
               nftName: 'Farmers World3',
             },
-          ],
+          ], // SKU/SPU 列表
         },
       }),
     );
@@ -148,79 +118,29 @@ const handlers: RestHandler[] = [
 
   // TODO: 添加分页  NFT合约详情页面
   rest.get('/project/nft/list', (req, res, ctx) => {
-    const { businessContractAddress } = req.params;
+    const { projectId, bizId, retailId } = req.params;
     return res(
       ctx.json({
         success: true,
         data: {
-          total: 2000,
-          currentPage: 5,
           rows: [
+            {
+              tokenId: 239402,
+              name: 'klsjdfljsldf',
+              avatar:
+                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
+              price: 982347234,
+              briefIntro:
+                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
+            },
             // SKU 挂单列表
-            // {
-            //   tokenId: 239402,
-            //   name: 'kjlsfjsdf',
-            //   avatar: 'skldfjlsdkfj',
-            // },
             {
               tokenId: 239402,
-              nftName: 'klsjdfljsldf',
+              name: 'kjlsfjsdf',
               avatar:
                 'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
               price: 982347234,
-              payToken: 'slkdjflsdfjsdl',
-              isSalesEnd: false,
-              briefIntro:
-                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
-              description: 'slkdfjlsdfjsdlfj',
-            },
-            {
-              tokenId: 239402,
-              nftName: 'klsjdfljsldf',
-              avatar:
-                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              price: 982347234,
-              payToken: 'slkdjflsdfjsdl',
-              isSalesEnd: false,
-              briefIntro:
-                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
-              description: 'slkdfjlsdfjsdlfj',
-            },
-            {
-              tokenId: 23912,
-              nftName: 'klsjdfljsldf',
-              avatar:
-                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              price: 982347234,
-              payToken: 'slkdjflsdfjsdl',
-              isSalesEnd: false,
-              briefIntro:
-                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
-              description: 'slkdfjlsdfjsdlfj',
-            },
-            {
-              tokenId: 239432,
-              nftName: 'klsjdfljsldf',
-              avatar:
-                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              price: 982347234,
-              payToken: 'slkdjflsdfjsdl',
-              isSalesEnd: false,
-              briefIntro:
-                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
-              description: 'slkdfjlsdfjsdlfj',
-            },
-            {
-              tokenId: 239439,
-              nftName: 'klsjdfljsldf',
-              avatar:
-                'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
-              price: 982347234,
-              payToken: 'slkdjflsdfjsdl',
-              isSalesEnd: false,
-              briefIntro:
-                'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
-              description: 'slkdfjlsdfjsdlfj',
+              briefIntro: 'slkdfjlsdfjsdlfj',
             },
           ],
         },
@@ -235,18 +155,15 @@ const handlers: RestHandler[] = [
       ctx.json({
         success: true,
         data: {
-          tokenId: 239402,
+          tokenId: 2394234234,
           nftName: 'klsjdfljsldf',
           avatar:
             'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-logo-166x166_52d0d3b38e00b215ecd58e8a2c1eb4c0.png',
           price: 982347234,
           payToken: 'slkdjflsdfjsdl',
           isSalesEnd: false,
-          briefIntro:
-            'Dreamed of moonshots but awoke to a capitulation.Dreamed of moonshots but awoke to a capitulation',
-          description:
-            'Dreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.DreamedDreamed of moonshots but awoke to a capitulation.Dreamed',
-          deadline: 1698485171,
+          briefIntro: 'jsdklfjsdlfjs',
+          description: 'slkdfjlsdfjsdlfj',
         },
       }),
     );
@@ -255,8 +172,8 @@ const handlers: RestHandler[] = [
   rest.get('/project/spu/detail', (req, res, ctx) => {}),
 
   // mint成功以后像服务端上报数据
-  rest.post('/project/mint', (req, res, ctx) => {
-    const { projectId, creatorAddress } = req.params;
+  rest.post('/project/biz/mint', (req, res, ctx) => {
+    const { projectId, bizId, contractAddress } = req.params;
     return res(
       ctx.json({
         success: true,
@@ -267,7 +184,7 @@ const handlers: RestHandler[] = [
 
   // TODO： 添加签名
   // 创建项目第一步，提交基础信息
-  rest.post('/project/create/step1', (req, res, ctx) => {
+  rest.post('/project/create', (req, res, ctx) => {
     const { projectName, briefIntro, website, description, avatar, cover, creatorAddress } =
       req.params;
     return res(
@@ -281,7 +198,7 @@ const handlers: RestHandler[] = [
   }),
 
   // 创建项目第二步，提交商业合约相关信息
-  rest.post('/project/create/step2', (req, res, ctx) => {
+  rest.post('/project/biz/create', (req, res, ctx) => {
     const {
       projectId,
       contractName,
@@ -290,7 +207,7 @@ const handlers: RestHandler[] = [
       payToken,
       description,
       rightQuantity,
-      businessContractAddress,
+      contractAddress,
     } = req.params;
 
     return res(
@@ -301,8 +218,8 @@ const handlers: RestHandler[] = [
     );
   }),
   // 对应NFT adderss NFT type 页面。创建NFT售卖合约成功以后通知后端合约地址
-  rest.post('/project/contract/deploy', (req, res, ctx) => {
-    const { nftAddress, nftType, contractAddress } = req.params;
+  rest.post('/project/retail/create', (req, res, ctx) => {
+    const { projectId, bizId, retailAddress, nftAddress, nftType } = req.params;
 
     return res(
       ctx.json({
@@ -313,12 +230,12 @@ const handlers: RestHandler[] = [
   }),
 
   // 上架SKU
-  rest.post('/sku/publish', (req, res, ctx) => {
+  rest.post('/project/sku/publish', (req, res, ctx) => {
     // nftType: 1: mined 2: unmint
     const {
       projectId,
-      nftAddress,
-      nftType,
+      bizId,
+      retailId,
       tokenId,
       price,
       ddl,
@@ -340,9 +257,8 @@ const handlers: RestHandler[] = [
     // nftType: 1: mined 2: unmint
     const {
       projectId,
-      nftName,
-      nftAddress,
-      nftType,
+      bizId,
+      retailId,
       price,
       ddl,
       seller,
@@ -364,6 +280,8 @@ const handlers: RestHandler[] = [
   }),
 
   // project详情页里请求的SKU/SPU列表，包含SKU和SPU
+
+  // FIXME:  SKU里面没有icon信息
   rest.get('/project/skulist', (req, res, ctx) => {
     // 如果传了tokenId，把有tokenId的排除掉。没传则查询全部
     const { projectId, tokenId } = req.params;

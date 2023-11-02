@@ -20,30 +20,13 @@ import {
   getSkuDetail,
 } from '../api';
 
-export function useProjects(key?: string): UseQueryReturnType<PageData<ProjectData>, Error> {
-  // const { address } = getAccount();
+export function useProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
   const result = useQuery({
-    queryKey: ['getProjects', key],
+    queryKey: ['getProjects'],
     queryFn: async () => {
-      const res = await getProjects(key);
-      if (res.success) {
-        return res.data;
-      }
-      return null;
-    },
-  });
-  return result;
-}
-
-export function useProjectDetail(projectId: string): UseQueryReturnType<ProjectDetailData, Error> {
-  const result = useQuery({
-    queryKey: ['getProjectDetail', projectId],
-    queryFn: async () => {
-      const res = await getProjectDetail({ projectId });
-      if (res.success) {
-        return res.data;
-      }
-      return null;
+      const { success, data } = await getProjects({});
+      if (!success) return null;
+      return data;
     },
   });
   return result;
@@ -55,7 +38,7 @@ export function useBusinessDetail(
   const result = useQuery({
     queryKey: ['getBusinessDetail', businessId],
     queryFn: async () => {
-      const res = await getBusinessDetail({ businessId });
+      const res = await getBusinessDetail({ bizId: businessId });
       if (res.success) {
         return res.data;
       }
@@ -116,5 +99,19 @@ export function useSkuDetail(tokenId: ComputedRef<string>): UseQueryReturnType<S
     },
   );
 
+  return result;
+}
+
+export function useProjectDetail(projectId: string): UseQueryReturnType<ProjectDetailData, Error> {
+  const result = useQuery({
+    queryKey: ['getProjectDetail', projectId],
+    queryFn: async () => {
+      const { success, data } = await getProjectDetail({ projectId });
+      console.log({ success, data });
+      if (!success) throw new Error('query project detail failed');
+      return data;
+    },
+  });
+  console.log({ useProjectDetail: result });
   return result;
 }

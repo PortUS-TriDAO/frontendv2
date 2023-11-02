@@ -12,7 +12,7 @@
       <div class="business-mint">
         <label>righted/rights:</label>
         <span>{{ data?.righted }}/{{ data?.rights }}</span>
-        <p-button @click="handleMint">Mint</p-button>
+        <p-button :loading="loading" @click="handleMint">Mint</p-button>
       </div>
       <div>
         <span>1.2 USDT</span>
@@ -34,16 +34,24 @@
   </page-container>
 </template>
 <script setup lang="ts">
+import { ElMessage } from 'element-plus';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
-import { useBusinessDetail } from '@/hooks';
+import { useBusinessDetail, useProjectDetail } from '@/hooks';
+import { useProjectStore } from '@/stores/useProject';
 import type { NftContractData } from '@/types';
+
+const loading = ref(false);
 
 const route = useRoute();
 const router = useRouter();
-const { businessId } = route.params;
+const { businessId, id: projectId } = route.params;
 const { data } = useBusinessDetail(businessId as string);
+const projectStore = useProjectStore();
+
+const { data: projectDetail } = useProjectDetail(projectId as string);
 
 console.log('getBusinessDetail result=', data);
 
@@ -51,8 +59,18 @@ function handleDetail(nftContractData: NftContractData) {
   router.push(`/nft/${nftContractData.nftAddress}`);
 }
 
-function handleMint() {
-  console.log('handleMint...');
+async function handleMint() {
+  console.log('handleMint  tst...', projectDetail.value.projectAddress);
+  try {
+    loading.value = true;
+    await projectStore.mint(projectDetail.value.projectAddress, projectId as string);
+    ElMessage.success('mint success');
+  } catch (error) {
+    console.log('error', error);
+    ElMessage.error('mint failed');
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 <style lang="less" scoped>
