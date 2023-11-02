@@ -4,7 +4,7 @@ import type {
   ReadContractResult,
   WriteContractResult,
 } from '@wagmi/core';
-import { readContract, writeContract } from '@wagmi/core';
+import { getAccount, readContract, writeContract } from '@wagmi/core';
 import { defineStore } from 'pinia';
 import type { Abi, ContractFunctionConfig } from 'viem';
 
@@ -43,12 +43,13 @@ export const useProjectContract = defineStore('projectContract', () => {
   }
 
   // 项目方领收益
-  function operatorWithdraw(projectAddress: Address, account: Address) {
+  function operatorWithdraw(projectAddress: Address) {
+    const { address } = getAccount();
     const params: ContractFunctionConfig = {
       address: projectAddress,
       abi: PROJECT_ABI as Abi,
       functionName: 'operatorWithdraw',
-      args: [account],
+      args: [address],
     };
 
     return writeContract(params);

@@ -45,6 +45,7 @@ export interface BusinessData {
   quantity: number;
   rights: number;
   righted: number;
+  contractAddress: Address;
 }
 
 export interface BusinessDetailData {
@@ -55,6 +56,7 @@ export interface BusinessDetailData {
   righted: number;
   payToken: Address;
   description: string;
+  contractAddress: Address | undefined;
   // nft contract list
   rows: NftContractData[];
 }

@@ -31,6 +31,7 @@ const route = useRoute();
 const scenes = computed(() => route.meta.scenes);
 const { data, refetch, isPending } = useProjects();
 console.log('getProjects result=', isPending, data);
+import { shareToTwitter } from '@/utils/share';
 
 function handleDetail(item: ProjectData) {
   router.push(`/mine/${scenes.value}/${item.projectId}`);
@@ -43,7 +44,7 @@ const map = {
     btnClick: (item: ProjectData) => {
       console.log('handleEdit item', item);
       // TODO: edit
-      router.push('/project/create/step1');
+      router.push(`/project/create/step1/${item.projectId}`);
     },
     bottomBtn: {
       text: 'Create Project',
@@ -60,6 +61,7 @@ const map = {
       text: 'Mint More',
       onClick: () => {
         // TODO: Mint More
+        router.push('/project/list');
       },
     },
   },
@@ -68,7 +70,7 @@ const map = {
     btnText: 'Share Project',
     btnClick: () => {
       // TODO: edit
-      router.push('/project/create/step1');
+      shareToTwitter('jasjdfsjfsdf');
     },
     bottomBtn: {
       text: 'share My Store',

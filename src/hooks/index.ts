@@ -6,6 +6,7 @@ import type {
   BusinessDetailData,
   NftContractData,
   PageData,
+  ProjectData,
   ProjectDetailData,
   SkuData,
 } from '@/types';
@@ -15,8 +16,21 @@ import {
   getNftDetail,
   getNftList,
   getProjectDetail,
+  getProjects,
   getSkuDetail,
 } from '../api';
+
+export function useProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
+  const result = useQuery({
+    queryKey: ['getProjects'],
+    queryFn: async () => {
+      const { success, data } = await getProjects({});
+      if (!success) return null;
+      return data;
+    },
+  });
+  return result;
+}
 
 export function useBusinessDetail(
   businessId: string,

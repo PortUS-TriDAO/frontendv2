@@ -76,6 +76,7 @@ const handlers: RestHandler[] = [
           righted: 30,
           payToken: '0xkljsldfjlsdf',
           description: 'sajflsdkjflsdjfl',
+          contractAddress: '0x065093C2aB7B05288686D3d43ae3321cF5B13a20',
           rows: [
             {
               nftAddress: '0x6d2e83a559c1fbe0cc677d10a22f28f0f8b1f325',

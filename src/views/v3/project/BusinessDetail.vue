@@ -63,7 +63,7 @@ async function handleMint() {
   console.log('handleMint  tst...', projectDetail.value.projectAddress);
   try {
     loading.value = true;
-    await projectStore.mint(projectDetail.value.projectAddress);
+    await projectStore.mint(projectDetail.value.projectAddress, projectId as string);
     ElMessage.success('mint success');
   } catch (error) {
     console.log('error', error);

@@ -1,6 +1,9 @@
 <template>
   <page-container class="pg-sku-detail">
-    <sku-card :loading="loading" v-if="data" :item="data" @buy="handleBuy" />
+    <sku-card :loading="loading" v-if="data" :item="data">
+      <p-button @click="handleBuy(data)">Buy</p-button>
+    </sku-card>
+
     <div class="detail-divider"></div>
     <div class="list-title">Items</div>
     <div class="list">

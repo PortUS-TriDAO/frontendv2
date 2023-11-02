@@ -69,16 +69,22 @@ import type { NftContractData } from '@/types';
 const route = useRoute();
 const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
+const projectId = computed(() => route.params.projectId as string);
 const businessId = computed(() => route.params.businessId as string);
 const { data } = useBusinessDetail(businessId.value);
 
+console.log('projectId, bizId', projectId.value, businessId.value);
 console.log('getBusinessDetail result=', data);
 
 function handleDetail(nftContractData: NftContractData) {
-  router.push(`/mine/${scenes.value}/nft/${nftContractData.nftAddress}`);
+  router.push(
+    `/mine/${scenes.value}/nftdetail/${nftContractData.nftAddress}/${projectId.value}/${data.value.contractAddress}`,
+  );
 }
 function handleMintMore() {
   // TODO: handleMintMore
+  console.log('handleMintMore');
+  router.push(`/project/${projectId.value}/${businessId.value}`);
 }
 function handleShare() {
   // TODO: handleShare
@@ -87,15 +93,17 @@ function handleAddNft(nftContractData: NftContractData) {
   // TODO: handleAddNft
   // router.push(`/nft/${nftContractData.nftAddress}`);
   console.log('nftContractData=', nftContractData);
+  router.push(`/project/submitsuccess/${projectId.value}`);
 }
 
 function handleWithdraw() {
   // TODO: handleWithdraw
-  console.log('handleMint...');
+  console.log('handleWithdraw...hahah');
 }
 function handleSubmit() {
   // TODO: handleSubmit
-  console.log('handleMint...');
+  console.log('handleSubmit...');
+  router.push('/project/create/step2');
 }
 </script>
 <style lang="less" scoped>

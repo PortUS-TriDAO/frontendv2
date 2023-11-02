@@ -1,4 +1,3 @@
-import type { SignatureLike } from '@ethersproject/bytes';
 import { splitSignature } from '@ethersproject/bytes';
 import { type Address, getAccount, waitForTransaction, writeContract } from '@wagmi/core';
 import { defineStore } from 'pinia';
@@ -11,6 +10,7 @@ import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 
 import { useProjectContract } from './useProjectContract';
+import { useRightsContract } from './useRightsContract';
 
 interface ICreateProject {
   projectId: string;
@@ -210,11 +210,45 @@ export const useProjectStore = defineStore('project', () => {
     });
   }
 
-  async function mint(projectAddress: Address) {
+  async function mint(projectAddress: Address, projectId: string) {
     console.log('mint ...', projectAddress);
     const projectContract = useProjectContract();
     const tx = await projectContract.referrerSign(projectAddress);
     await waitForTransaction({ hash: tx.hash });
+    // 查询tokenId
+
+    // 查询tokenID
+    const { address } = await getAccount();
+    const rightsContract = useRightsContract();
+    const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
+    const tokenId = (await rightsContract.tokenOfOwnerByIndex(
+      rightsContractAddress,
+      address,
+    )) as number;
+    // 将mint信息保存到后端
+    await projectApi.postProjectMint({
+      projectId,
+      bizId: tokenId,
+      contractAddress: rightsContractAddress,
+    });
+  }
+
+  async function kolWithdraw(projectAddress: Address) {
+    const projectContract = useProjectContract();
+    const rightsContract = useRightsContract();
+    const { address } = getAccount();
+    // 查询tokenID
+    const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
+    const tokenId = (await rightsContract.tokenOfOwnerByIndex(
+      rightsContractAddress,
+      address,
+    )) as number;
+    return projectContract.referrerWithdraw(projectAddress, tokenId);
+  }
+
+  async function operatorWithdraw(projectAddress: Address) {
+    const projectContract = useProjectContract();
+    await projectContract.operatorWithdraw(projectAddress);
   }
 
   return {
@@ -226,5 +260,7 @@ export const useProjectStore = defineStore('project', () => {
     publishSpu,
     buyMintedNft,
     mint,
+    kolWithdraw,
+    operatorWithdraw,
   };
 });
