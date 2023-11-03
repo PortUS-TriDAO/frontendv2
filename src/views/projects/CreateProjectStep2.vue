@@ -131,6 +131,7 @@ const rules = reactive({
 });
 
 async function handleSubmit(formEl: FormInstance | undefined) {
+  console.log('handleSubmit===');
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
@@ -151,7 +152,7 @@ const createProject = async () => {
     briefIntro,
     description,
   } = toRaw(ruleForm);
-  let percent = (sharePercentage * 1e18) / 100;
+  let percent = BigInt(sharePercentage) * 10n ** 16n;
   const token = payToken as Address;
   try {
     loading.value = true;
@@ -164,7 +165,7 @@ const createProject = async () => {
       symbol,
       payToken: token,
       rightQuantity,
-      sharePercentage: percent,
+      sharePercentage,
     });
 
     if (!success) throw new Error(data);

@@ -26,7 +26,7 @@ export const createProjectStep2 = (params: {
   payToken: string;
   description: string;
   rightQuantity: string | number;
-  businessContractAddress: string;
+  contractAddress: string;
 }): Promise<IResponse> => axios.post('/project/biz/create', params);
 
 // 请求游戏列表

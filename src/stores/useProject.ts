@@ -78,7 +78,7 @@ export const useProjectStore = defineStore('project', () => {
       payToken,
       description,
       rightQuantity,
-      businessContractAddress: contractAddress,
+      contractAddress: contractAddress,
     });
 
     return { projectAddress: contractAddress, success, data };
@@ -88,7 +88,10 @@ export const useProjectStore = defineStore('project', () => {
     const { success, data } = await projectApi.getProjectDetail({ projectId });
     if (!success) throw new Error('fetch project details failed');
 
-    const { projectAddress } = data;
+    // 这里服务端返回的是列表，要通过projectId过滤出来
+    const details = data.rows.filter((v) => Number(v.id) === Number(projectId));
+    if (details.length === 0) throw new Error('deployMintedNftContract failed');
+    const { projectAddress } = details[0] as any;
     const deployerContract = useDeployerContractStore();
     // bussinessContractAddress
     const contractAddress = await deployerContract.createMintedRetailer(

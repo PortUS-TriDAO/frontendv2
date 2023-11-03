@@ -1,30 +1,34 @@
 <template>
   <div>
-      <p-button v-if="account" v-bind="props"><slot></slot></p-button>
-      <p-button v-else v-on:click.stop="connect">Connect Wallet</p-button>
+    <p-button v-if="account" v-on:click="handleClick" v-bind="props"><slot></slot></p-button>
+    <p-button v-else v-on:click="connect">Connect Wallet</p-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import {useWeb3Modal} from "@web3modal/wagmi/vue";
-import {useWalletStore} from "@/stores/useWallet";
-import {buttonProps} from "element-plus";
-import { computed } from "vue";
+import { useWeb3Modal } from '@web3modal/wagmi/vue';
+import { buttonProps } from 'element-plus';
+import { computed } from 'vue';
 
-const walletStore = useWalletStore()
-const web3Modal = useWeb3Modal()
+import { useWalletStore } from '@/stores/useWallet';
+
+const walletStore = useWalletStore();
+const web3Modal = useWeb3Modal();
+const emit = defineEmits(['click']);
 
 const props = defineProps({
-  ...buttonProps
-})
+  ...buttonProps,
+});
 
-const account = computed(()=>walletStore.state.account)
+const account = computed(() => walletStore.state.account);
 function connect(e) {
-  web3Modal.open()
-  e.preventDefault()
+  web3Modal.open();
+  e.preventDefault();
+}
+
+function handleClick() {
+  emit('click');
 }
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

@@ -41,7 +41,7 @@ const {
 } = useQuery({
   queryKey: ['getProjects'],
   queryFn: () => {
-    return getProjects({ key: searchKey.value });
+    return getProjects({});
   },
 });
 console.log('getProjects result=', isPending, res);

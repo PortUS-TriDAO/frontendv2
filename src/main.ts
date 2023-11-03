@@ -20,9 +20,9 @@ import router from './router';
 const app = createApp(App);
 initPackages(app);
 
-if (import.meta.env.MODE === 'development') {
-  worker.start();
-}
+// if (import.meta.env.MODE === 'development') {
+//   worker.start();
+// }
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
