@@ -247,7 +247,7 @@ export const useProjectStore = defineStore('project', () => {
 
   async function operatorWithdraw(projectAddress: Address) {
     const projectContract = useProjectContract();
-    await projectContract.operatorWithdraw(projectAddress);
+    return projectContract.operatorWithdraw(projectAddress);
   }
 
   return {

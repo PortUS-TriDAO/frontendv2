@@ -1,6 +1,6 @@
 <template>
   <main class="page-container">
-    <div class="page-banner" v-if="props.bannerImg">
+    <div class="page-banner" v-if="props.bannerImg || showBanner">
       <img :src="props.bannerImg" />
     </div>
     <!-- <div class="page-banner" v-else-if="$slots.banner"><slot name="banner" /></div> -->
@@ -13,6 +13,7 @@
 import { defineProps } from 'vue';
 const props = defineProps({
   bannerImg: String,
+  showBanner: Boolean,
 });
 </script>
 
