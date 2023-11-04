@@ -4,9 +4,12 @@
       <div class="header-container">
         <router-link class="logo" to="/"></router-link>
         <div class="menus" ref="elMenu">
-          <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
-          <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
-          <router-link to="/mine/submitted" @click.stop="switchMenu(true)">Mine</router-link>
+          <div v-if="isStore" style="height: 66px"></div>
+          <template v-else>
+            <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
+            <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
+            <router-link to="/mine/submitted" @click.stop="switchMenu(true)">Mine</router-link>
+          </template>
           <!-- <button v-if="!account" @click.stop="connect">connect</button>
           <button v-else @click.stop>{{ shortAddress }}</button> -->
           <w3m-button>connect</w3m-button>
@@ -33,8 +36,11 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { useWalletStore } from '@/stores/useWallet';
+const route = useRoute();
+const isStore = computed(() => route.path.indexOf('/store') === 0);
 
 const walletStore = useWalletStore();
 

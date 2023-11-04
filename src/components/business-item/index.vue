@@ -22,7 +22,9 @@
           <span>{{ item.quantity }}</span>
         </div>
         <slot name="actions">
-          <p-button v-if="!hideDetail" @click="handleDetail(item)">Detail</p-button>
+          <p-button v-if="!hideDetail" @click="handleDetail(item)">
+            {{ btnText || 'Detail' }}
+          </p-button>
         </slot>
       </div>
     </div>
@@ -36,6 +38,7 @@ defineProps<{
   item: BusinessData;
   avatar?: string;
   hideDetail?: boolean;
+  btnText?: string;
 }>();
 const emit = defineEmits(['onDetail']);
 function handleDetail(item: BusinessData) {
