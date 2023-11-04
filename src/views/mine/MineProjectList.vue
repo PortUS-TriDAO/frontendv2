@@ -22,13 +22,15 @@ import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import ProjectItem from '@/components/project-item/index.vue';
-import { useProjects } from '@/hooks';
+import { useParticipateProjects, useProjects, useSubmittedProjects } from '@/hooks';
 import type { ProjectData } from '@/types';
 
 defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
 const route = useRoute();
 const scenes = computed(() => route.meta.scenes);
+// const { data, refetch, isPending } =
+//   scenes.value === 'submitted' ? useSubmittedProjects() : useParticipateProjects();
 const { data, refetch, isPending } = useProjects();
 console.log('getProjects result=', isPending, data);
 import { shareToTwitter } from '@/utils/share';
