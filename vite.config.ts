@@ -14,5 +14,13 @@ export default defineConfig({
   },
   server: {
     host: true,
+    proxy: {
+      // with options
+      '/v2': {
+        target: 'http://8.217.91.191:8000',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
 });
