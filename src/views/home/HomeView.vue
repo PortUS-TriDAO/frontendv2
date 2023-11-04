@@ -140,6 +140,22 @@
     <!-- Latest News -->
     <section class="news">
       <h2>Latest News</h2>
+      <div class="news-content">
+        <div class="news-actions">
+          <button @click="newsIsFirst = true"><img src="./assets/icon-prev.png" /></button>
+          <button @click="newsIsFirst = false"><img src="./assets/icon-next.png" /></button>
+        </div>
+        <div class="news-wrapper" :style="newsIsFirst ? '' : 'transform: translateX(-660px);'">
+          <div class="news-card" v-for="(item, index) in news" :key="index">
+            <img :src="item.img" alt="img" />
+            <h3>{{ item.title }}</h3>
+            <div class="flex-between">
+              <span>{{ dayjs(item.date).fromNow() }}</span>
+              <a :href="item.url" target="_blank">Read Now ></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
     <!-- Satisfies Industry Needs -->
     <section class="case">
@@ -181,10 +197,20 @@
   </div>
 </template>
 <script setup lang="ts">
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { statistic } from '@/api';
+
+import news_1 from './assets/news_1.jpg';
+import news_2 from './assets/news_2.jpg';
+import news_3 from './assets/news_3.jpg';
+import news_4 from './assets/news_4.jpg';
+import news_5 from './assets/news_5.jpg';
+import news_6 from './assets/news_6.jpg';
+dayjs.extend(relativeTime);
 
 // import SwiperItem from './components/SwiperItem.vue';
 // import { swiperData } from './data';
@@ -202,13 +228,54 @@ onMounted(async () => {
 
   if (success) {
     const redirectURL =
-      data.redirectUrl.slice(0, 4) === 'http'
-        ? `${data.redirectUrl}?refer=${refer}`
-        : `http://${data.redirectUrl}?refer=${refer}`;
+      (data as any).redirectUrl.slice(0, 4) === 'http'
+        ? `${(data as any).redirectUrl}?refer=${refer}`
+        : `http://${(data as any).redirectUrl}?refer=${refer}`;
     console.log('redirectURL', redirectURL);
     window.location.href = redirectURL;
   }
 });
+
+const newsIsFirst = ref(true);
+const news = [
+  {
+    img: news_1,
+    title: 'Future Salon 6圆桌全文：如何把用户真正地带入Web3.0？',
+    url: 'https://medium.com/@Future3Campus/future-salon-6圆桌全文-如何把用户真正地带入web3-0-fa77bdb01c1b',
+    date: '2023-08-22T00:00:00.000Z',
+  },
+  {
+    img: news_2,
+    title:
+      'Future3 Camp1, the First Cohort of Future3 Campus Kicked off 22–23 July in Hong Kong, China',
+    url: 'https://medium.com/@Future3Campus/future3-camp1-the-first-cohort-of-future3-campus-kicks-off-today-in-hong-kong-china-743a2584998c',
+    date: '2023-07-23T16:00:00.000Z',
+  },
+  {
+    img: news_3,
+    title: 'PortUS专访：从去中心化流量分发到数据平权',
+    url: 'https://www.panewslab.com/zh/articledetails/8f009kr95onn.html',
+    date: '2023-09-14T10:08:00.000Z',
+  },
+  {
+    img: news_4,
+    title: 'PortUS 推出首个基于 NFT 技术的 Web3 流量分发模型',
+    url: 'https://www.chaincatcher.com/article/2093782',
+    date: '2023-05-25T07:11:00.000Z',
+  },
+  {
+    img: news_5,
+    title: 'Our ultimate vision of building PortUS. 我们建设PortUS的最终愿景',
+    url: 'https://mirror.xyz/0xac4Ad4cAB7862aA6fC25dC670c166B989e5045ba/ijyCJBClC-Ntdx8omKfto03vKPO_iFSLK7-LmaQ0W5M',
+    date: '2023-09-05T00:00:00.000Z',
+  },
+  {
+    img: news_6,
+    title: '游戏分发平台 PortUS 宣布采用 Web3 应用层三代币模型',
+    url: 'https://foresightnews.pro/tag?tagId=21664&tagName=PortUS',
+    date: '2023-04-16T01:48:00.000Z',
+  },
+];
 
 function goToCreate() {
   router.push('/project/create');
@@ -504,6 +571,91 @@ function goToDistribute() {
   .news {
     height: 380px;
     background: rgba(0, 13, 45, 1);
+
+    .news-content {
+      width: 960px;
+      overflow: hidden;
+      position: relative;
+      margin-top: -14px - 22px;
+
+      .news-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding-bottom: 14px;
+        gap: 12px;
+        > button {
+          background: transparent;
+          border-style: none;
+          padding: 0;
+          width: 22px;
+          height: 22px;
+          cursor: pointer;
+        }
+        img {
+          width: 22px;
+          height: 22px;
+        }
+      }
+    }
+
+    .news-wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 18px;
+      width: 2000px;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .news-card {
+      left: 120px;
+      top: 2121px;
+      width: 254.95px;
+      height: 162px;
+      opacity: 1;
+      border-radius: 17px;
+      border: 1px solid #2e3e5f;
+      background: #2e3e5f;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      > img {
+        width: 157px;
+        height: 91px;
+        border-radius: 10px;
+        background: #ffc300;
+        border: 1px solid #2e3e5f;
+      }
+      > h3 {
+        height: 16px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0px;
+        line-height: 15px;
+        color: #ffffff;
+        text-align: left;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      span {
+        font-size: 12px;
+        font-weight: 400;
+        color: #c9c9c9;
+        text-align: left;
+      }
+      a {
+        font-size: 12px;
+        font-weight: 400;
+        color: #2a82e4;
+        text-align: left;
+        cursor: pointer;
+      }
+    }
   }
   .case-content {
     left: 120px;
