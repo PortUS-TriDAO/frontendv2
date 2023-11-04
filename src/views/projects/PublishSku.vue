@@ -40,39 +40,37 @@
 </template>
 
 <script lang="ts" setup>
-import { Address } from '@wagmi/core';
-import { ElMessage, FormInstance } from 'element-plus';
-import { reactive, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { type Address, getAccount } from '@wagmi/core';
+import { ElMessage, type FormInstance } from 'element-plus';
+import { onMounted, reactive, ref, toRaw } from 'vue';
+import { useRoute } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
+import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 
-const router = useRouter();
+import { publishSkuRules as rules } from './rules';
+
 const route = useRoute();
 const ruleFormRef = ref<FormInstance>();
 const projectStore = useProjectStore();
 
-// const { projectId, businessContractAddress } = route.params;
-const projectId: string = route.params.projectId as string;
-const businessContractAddress: string = route.params.businessContractAddress as string;
+const projectId = route.params.projectId as string;
+const bizId = route.params.bizId as string;
+const nftAddress = route.params.nftAddress as Address;
+const { address: account } = getAccount();
 
 const ruleForm = reactive({
   tokenId: '',
   price: '',
   ddl: '',
-  seller: 'sdfsdafsdfgsdgsdfg',
-  payToken: ';lgk;dfkg;dfgk;',
+  seller: account,
+  payToken: '',
 });
 const loading = ref(false);
 
-const rules = {
-  tokenId: [{ required: true, message: 'TokenId is required', trigger: 'blur' }],
-  price: [{ required: true, message: 'Price is required', trigger: 'blur' }],
-  ddl: [{ required: true, message: 'DDL is required', trigger: 'blur' }],
-  seller: [{ required: true, message: 'Seller is required', trigger: 'blur' }],
-  payToken: [{ required: true, message: 'PayToken is required', trigger: 'blur' }],
-};
+const { data: bizDetail } = useBusinessDetail(bizId);
+ruleForm.payToken = bizDetail.value.payToken;
 
 async function handleSave(formEl: FormInstance | undefined) {
   if (!formEl) return;
@@ -88,21 +86,18 @@ async function publishSku() {
     ElMessage.error('Project ID is required');
     return;
   }
-  if (!businessContractAddress || typeof businessContractAddress !== 'string') {
-    ElMessage.error('Business Contract Address is required');
-    return;
-  }
   try {
     loading.value = true;
 
     const { success, data } = await projectStore.publishSku(
       projectId,
-      BigInt(price.value),
+      BigInt(ruleForm.price),
       Number(ruleForm.tokenId),
       new Date(ruleForm.ddl).valueOf(),
-      businessContractAddress as Address,
+      bizDetail.value.contractAddress as Address,
+      nftAddress,
     );
-    if (!success) throw new Error(data);
+    if (!success) throw new Error(data as string);
     ElMessage.success('Publish sku success');
   } catch (error) {
     console.log('Publish sku failed', error);

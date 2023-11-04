@@ -122,12 +122,12 @@ const router = createRouter({
       component: () => import('../views/projects/CreateProjectStep2.vue'),
     },
     {
-      path: '/project/submitsuccess/:projectId',
+      path: '/project/submitsuccess/:projectId/:bizId',
       name: 'SubmitSuccess',
       component: () => import('../components/SubmitSuccess.vue'),
     },
     {
-      path: '/project/publish/sku/:projectId/:businessContractAddress',
+      path: '/project/publish/sku/:projectId/:bizId/:nftAddress',
       name: 'PublishSku',
       component: () => import('../views/projects/PublishSku.vue'),
     },

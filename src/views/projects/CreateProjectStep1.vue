@@ -56,10 +56,10 @@ const route = useRoute();
 const router = useRouter();
 
 const form = reactive({
-  projectName: '',
-  briefIntro: '',
-  website: '',
-  description: '',
+  projectName: 'FamersWorld',
+  briefIntro: 'sdfdsfsdfsd',
+  website: 'https://www.baidu.com',
+  description: 'lksdjfkldsjflsdfj',
   avatar: '',
   cover: '',
 });

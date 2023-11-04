@@ -170,7 +170,7 @@ const createProject = async () => {
 
     if (!success) throw new Error(data);
     ElMessage.success('create project success');
-    router.push(`/project/submitsuccess/${projectId}`);
+    router.push(`/project/submitsuccess/${projectId}/${data.bizId}`);
   } catch (e) {
     ElMessage.error('create project fail');
   } finally {

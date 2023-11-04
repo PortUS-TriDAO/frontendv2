@@ -32,20 +32,22 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
+import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 
-// import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import SuccessCard from '../views/projects/components/SuccessCard.vue';
 
-// const deployerContract = useDeployerContractStore();
 const projectStore = useProjectStore();
 const router = useRouter();
 const nftType = ref('1');
 const nftAddress = ref('0x4a85039847E98D0F87e087eCd71c9AFDD94caDFe');
 const route = useRoute();
 const projectId = route.params.projectId;
+const bizId = route.params.bizId as string;
 
 const loading = ref(false);
+
+const { data: bizDetail } = useBusinessDetail(bizId);
 
 function handleNext() {
   if (!nftAddress.value || nftAddress.value.length !== 42) {
@@ -63,27 +65,18 @@ function handleNext() {
 }
 
 async function deployMintedContract() {
-  console.log('deployMintedContract', {
-    nftAddress: nftAddress.value,
-    nftType: nftType.value,
-  });
   if (!projectId || typeof projectId !== 'string') {
     ElMessage.error('Project address not in rooter');
     return;
   }
   loading.value = true;
   try {
-    console.log({
-      projectId,
-      nftAddress: nftAddress.value,
-    });
     const { success, data, contractAddress } = await projectStore.deployMintedNftContract(
-      projectId,
       nftAddress.value,
+      bizDetail.value.contractAddress!,
     );
-    console.log({ success, data, contractAddress });
     if (!success) throw new Error(data);
-    router.push(`/project/publish/sku/${projectId}/${contractAddress}`);
+    router.push(`/project/publish/sku/${projectId}/${bizId}/${nftAddress.value}`);
   } catch (error) {
     console.error('create minted failed', error);
     ElMessage.error('create minted retailer failed');
@@ -101,11 +94,11 @@ async function deployUnMintedContract() {
   loading.value = true;
   try {
     const { success, data, contractAddress } = await projectStore.deployUnmintedNftContract(
-      projectId,
       nftAddress.value,
+      bizDetail.value.contractAddress,
     );
     if (!success) throw new Error(data);
-    router.push(`/project/publish/spu/${projectId}/${contractAddress}`);
+    router.push(`/project/publish/spu/${projectId}/${contractAddress}/${nftAddress.value}`);
   } catch (error) {
     console.error('create unminted', error);
     ElMessage.error('create unminted retrieve failed');

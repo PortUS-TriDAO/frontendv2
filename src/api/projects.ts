@@ -45,7 +45,7 @@ export const postDeployedContract = (params: {
   nftAddress: string;
   nftType: 1 | 2; // 1: minted nft 2: unminted nft
   contractAddress: string;
-}) => axios.post('/project/contract/deploy', params);
+}): Promise<IResponse> => axios.post('/project/contract/deploy', params);
 
 // 提交项目已经mint过
 export const postProjectMint = (params: {

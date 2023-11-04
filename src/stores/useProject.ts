@@ -9,6 +9,7 @@ import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 
+import { useNftContract } from './useNftContract';
 import { useProjectContract } from './useProjectContract';
 import { useRightsContract } from './useRightsContract';
 
@@ -84,48 +85,38 @@ export const useProjectStore = defineStore('project', () => {
     return { projectAddress: contractAddress, success, data };
   }
 
-  async function deployMintedNftContract(projectId: string, nftContract: string) {
-    const { success, data } = await projectApi.getProjectDetail({ projectId });
-    if (!success) throw new Error('fetch project details failed');
-
-    // 这里服务端返回的是列表，要通过projectId过滤出来
-    const details = data.rows.filter((v) => Number(v.id) === Number(projectId));
-    if (details.length === 0) throw new Error('deployMintedNftContract failed');
-    const { projectAddress } = details[0] as any;
+  async function deployMintedNftContract(nftContract: string, bizContract: string) {
     const deployerContract = useDeployerContractStore();
     // bussinessContractAddress
-    const contractAddress = await deployerContract.createMintedRetailer(
-      projectAddress,
-      nftContract,
-    );
+    const contractAddress = await deployerContract.createMintedRetailer(bizContract, nftContract);
 
-    const result = await projectApi.postDeployedContract({
+    const { success, data } = await projectApi.postDeployedContract({
       nftAddress: nftContract,
       nftType: 1,
       contractAddress,
     });
 
-    return { ...result, contractAddress };
+    return { success, data, contractAddress };
   }
 
   async function deployUnmintedNftContract(projectId: string, nftContract: string) {
-    const { success, data } = await projectApi.getProjectDetail({ projectId });
-    if (!success) throw new Error('fetch project details failed');
+    const result = await projectApi.getProjectDetail({ projectId });
+    if (!result.success) throw new Error('fetch project details failed');
 
-    const { projectAddress } = data;
+    const { projectAddress } = result.data;
     const deployerContract = useDeployerContractStore();
     // bussinessContractAddress
     const contractAddress = await deployerContract.createUnmintedRetailer(
       projectAddress,
       nftContract,
     );
-    const result = await projectApi.postDeployedContract({
+    const { success, data } = await projectApi.postDeployedContract({
       nftAddress: nftContract,
       nftType: 2,
       contractAddress,
     });
 
-    return { ...result, contractAddress };
+    return { success, data, contractAddress };
   }
 
   async function publishSku(
@@ -134,12 +125,17 @@ export const useProjectStore = defineStore('project', () => {
     nftTokenId: number,
     deadline: number,
     retailerAddress: Address,
+    nftAddress: Address,
   ) {
     const { success, data } = await projectApi.getProjectDetail({ projectId });
     if (!success) throw new Error(data);
 
-    const { payToken } = data;
+    // approve NFT
+    const nftContract = useNftContract();
+    const approveTx = nftContract.approve(nftAddress, retailerAddress, nftTokenId);
+    await waitForTransaction({ hash: approveTx.hash });
 
+    const { payToken } = data;
     const signTypedDataStore = useSignTypedDataStore();
     const signature = await signTypedDataStore.signMintedNftRetailer(
       payToken,
