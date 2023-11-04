@@ -16,7 +16,7 @@
       <business-item
         v-for="item in res.data.rows || []"
         :avatar="res.data.avatar"
-        :key="item.businessId"
+        :key="item.bizId"
         :item="item"
         @onDetail="handleDetail"
       />
