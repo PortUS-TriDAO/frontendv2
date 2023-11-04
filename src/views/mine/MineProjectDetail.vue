@@ -89,12 +89,11 @@ const map = {
       {
         text: 'Withdraw',
         onClick: async (item: BusinessData) => {
-          // TODO: Withdraw
           // 处理项目方withdraw
           console.log('handleWithdraw item', item);
           try {
             loading.value = true;
-            const tx = await projectContract.operatorWithdraw(item.contractAddress);
+            const tx = await projectStore.operatorWithdraw(item.contractAddress);
             await waitForTransaction({ hash: tx.hash });
           } catch (error) {
             ElMessage.error('withdraw failed');
@@ -106,7 +105,6 @@ const map = {
       {
         text: 'Submit NFT Contract',
         onClick: (item: BusinessData) => {
-          // TODO: Withdraw
           console.log('handleSubmit businessData', item);
           router.push(`/project/submitsuccess/${projectId}`);
         },
@@ -121,12 +119,7 @@ const map = {
     },
   },
   participated: {
-    // topBtn: {
-    //   text: 'Edit project',
-    //   onClick: () => {
-    //     // TODO: edit project
-    //   },
-    // },
+    topBtn: null,
     rowActions: [
       {
         text: 'Withdraw',
@@ -158,6 +151,7 @@ const map = {
     },
   },
   store: {
+    topBtn: null,
     rowActions: [
       {
         text: 'share contract',
