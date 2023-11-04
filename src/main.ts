@@ -13,7 +13,7 @@ import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 
 import App from './App.vue';
-import { worker } from './mock';
+// import { worker } from './mock';
 import { initPackages } from './packages';
 import router from './router';
 
@@ -21,7 +21,7 @@ const app = createApp(App);
 initPackages(app);
 
 // if (import.meta.env.MODE === 'development') {
-//   worker.start();
+// worker.start();
 // }
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
