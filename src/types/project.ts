@@ -59,7 +59,8 @@ export interface BusinessDetailData {
   description: string;
   contractAddress: Address | undefined;
   // nft contract list
-  rows: NftContractData[];
+  // rows: NftContractData[];
+  retailContracts: NftContractData[];
 }
 
 export interface NftContractData {

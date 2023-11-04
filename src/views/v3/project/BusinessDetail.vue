@@ -24,7 +24,7 @@
       <div class="list-title">NFT contract list</div>
       <div v-if="data">
         <nft-contract-item
-          v-for="item in data.rows || []"
+          v-for="item in data.retailContracts || []"
           :key="item.nftAddress"
           :item="item"
           @onDetail="handleDetail"
