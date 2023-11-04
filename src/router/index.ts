@@ -146,6 +146,37 @@ const router = createRouter({
       name: 'MintSuccess',
       component: () => import('../components/MintSuccess.vue'),
     },
+    // store
+    {
+      path: '/store/:storeId/projects',
+      name: 'StoreProjectList',
+      component: () => import('../views/store/ProjectList.vue'),
+    },
+    {
+      path: '/store/:storeId/project/:projectId',
+      name: 'StoreProjectDetail',
+      component: () => import('../views/store/ProjectDetail.vue'),
+    },
+    {
+      path: '/store/:storeId/project/:projectId/:businessId',
+      name: 'StoreBusinessDetail',
+      component: () => import('../views/store/BusinessDetail.vue'),
+    },
+    {
+      path: '/store/:storeId/nft/:nftAddress',
+      name: 'StoreNftDetail',
+      component: () => import('../views/store/NftDetail.vue'),
+    },
+    {
+      path: '/store/:storeId/nft/:nftAddress/:tokenId',
+      name: 'StoreSkuList',
+      component: () => import('../views/store/SkuDetail.vue'),
+    },
+    // {
+    //   path: '/spu/:skuId',
+    //   name: 'StoreSpuList',
+    //   component: () => import('../views/store/Spu.vue'),
+    // },
   ],
 });
 
