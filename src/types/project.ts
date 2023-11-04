@@ -38,7 +38,8 @@ export interface ProjectDetailData {
  * 商业合约列表数据
  */
 export interface BusinessData {
-  bizId: number;
+  id: number;
+  // bizId: number;
   contractName: string;
   sharePercentage: number;
   briefIntro: string;

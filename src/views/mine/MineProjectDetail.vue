@@ -12,7 +12,7 @@
     <div v-if="res?.data">
       <business-item
         v-for="item in res.data.rows || []"
-        :key="item.bizId"
+        :key="item.id"
         :item="item"
         hideDetail
         @click="handleDetail(item)"
@@ -72,7 +72,7 @@ const { data: res } = useQuery({
 });
 
 function handleDetail(businessData: BusinessData) {
-  router.push(`/mime/${scenes.value}/${projectId}/${businessData.bizId}`);
+  router.push(`/mime/${scenes.value}/${projectId}/${businessData.id}`);
 }
 
 const map = {

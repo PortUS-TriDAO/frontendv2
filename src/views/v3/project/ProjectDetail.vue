@@ -16,7 +16,7 @@
       <business-item
         v-for="item in res.data.rows || []"
         :avatar="res.data.avatar"
-        :key="item.bizId"
+        :key="item.id"
         :item="item"
         @onDetail="handleDetail"
       />
@@ -47,7 +47,7 @@ const { data: res } = useQuery({
 console.log('getProjects result=', res);
 
 function handleDetail(businessData: BusinessData) {
-  router.push(`/project/${projectId}/${businessData.bizId}`);
+  router.push(`/project/${projectId}/${businessData.id}`);
 }
 </script>
 <style lang="less" scoped>
