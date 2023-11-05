@@ -54,10 +54,10 @@ import dayjs from 'dayjs';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import avatar from '@/assets/images/demo-avatar.png';
+// import avatar from '@/assets/images/demo-avatar.png';
 import { useSpuDetail, useSpuList } from '@/hooks';
 
-import bannerImg from './assets/banner.png';
+// import bannerImg from './assets/banner.png';
 
 const route = useRoute();
 // const router = useRouter();

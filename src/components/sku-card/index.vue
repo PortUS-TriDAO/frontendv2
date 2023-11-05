@@ -10,7 +10,7 @@
     <div class="detail-card">
       <img alt="avatar" :src="item.avatar" />
       <div class="card-desc">
-        <h3>{{ item.nftName }}</h3>
+        <!--TODO: name <h3>{{ item.nftName }}</h3> -->
         <div>#{{ item.tokenId }}</div>
         <div>{{ item.price }} USDT</div>
         <div>
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="card-action">
-        <div v-if="item.isSalesEnd" class="sold-out">sold out</div>
+        <!--TODO: sold out <div v-if="item.isSalesEnd" class="sold-out">sold out</div> -->
         <!-- <p-button @click="buy(item)">Buy</p-button> -->
         <slot></slot>
         <!-- <slot name="actions"></slot> -->

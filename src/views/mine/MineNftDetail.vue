@@ -49,8 +49,7 @@ import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
-import { type Address, type NftContractData, NftType, type SkuData } from '@/types';
-import { shareNft } from '@/utils/share';
+import { type Address, type NftContractData, NftType, type SkuData, type SpuData } from '@/types';
 
 const loading = ref(false);
 const projectStore = useProjectStore();
@@ -122,13 +121,11 @@ function handleShareToken(item: SkuData) {
   // TODO: handleShareToken
   console.log('handleShareToken, item', item);
 }
-
-function handleUp(item: SkuData) {
+function handleUp(item: SkuData | SpuData) {
   // TODO: handleUp
   console.log('handleUp, item', item);
 }
-
-function handleDown(item: SkuData) {
+function handleDown(item: SkuData | SpuData) {
   // TODO: handleDown
   console.log('handleDown, item', item);
 }
