@@ -118,7 +118,7 @@ async function handleWithdraw() {
   loading.value = true;
 
   try {
-    const tx = await projectStore.operatorWithdraw(data.contractAddress);
+    const tx = await projectStore.operatorWithdraw(data.value?.contractAddress);
     await waitForTransaction({ hash: tx.hash });
   } catch (error) {
     console.error(error);

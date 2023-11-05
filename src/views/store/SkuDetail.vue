@@ -55,27 +55,27 @@ function handleBuy(skuData: SkuData) {
   try {
     loading.value = true;
     console.log('handleBuy', {
-      retailerAddress: data.value.retailerAddress,
+      retailerAddress: data.value.retailAddress,
       params: {
         seller: data.value.seller,
         payToken: data.value.payToken,
         payPrice: data.value.price,
         nftTokenId: data.value.tokenId,
-        deadline: data.value.deadline,
+        deadline: data.value.ddl,
         signature: data.value.signature,
       },
       tokenId,
     });
     console.log('handleBuy skuData==', skuData);
     projectStore.buyMintedNft(
-      data.value.retailerAddress,
+      data.value.retailAddress,
       [
         {
           seller: data.value.seller,
           payToken: data.value.payToken,
           payPrice: BigInt(data.value.price),
           nftTokenId: data.value.tokenId,
-          deadline: data.value.deadline,
+          deadline: data.value.ddl,
           signature: data.value.signature,
         },
       ],

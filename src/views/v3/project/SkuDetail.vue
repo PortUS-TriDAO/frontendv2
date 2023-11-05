@@ -78,7 +78,7 @@ function handleBuy(skuData: SkuData) {
           signature: info.signature,
         },
       ],
-      Number(skuId.value as string),
+      Number(skuId.value),
     );
   } catch (error) {
     console.error(error);
