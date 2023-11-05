@@ -172,7 +172,7 @@ export function useSpuList(
   return result;
 }
 
-export function useSpuDetail(spuId: ComputedRef<number>): UseQueryReturnType<SpuData[], Error> {
+export function useSpuDetail(spuId: ComputedRef<number>): UseQueryReturnType<SpuData, Error> {
   const result = useQuery({
     queryKey: ['getSpuDetail', spuId.value],
     queryFn: async () => {
