@@ -102,7 +102,7 @@ const router = createRouter({
       component: () => import('../views/v3/project/BusinessDetail.vue'),
     },
     {
-      path: '/nft/:nftAddress',
+      path: '/nft/:retailId/:nftType',
       name: 'NftDetail',
       component: () => import('../views/v3/project/NftDetail.vue'),
     },

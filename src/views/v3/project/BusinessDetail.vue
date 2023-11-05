@@ -55,7 +55,7 @@ const { data } = useBusinessDetail(`${bizId}`);
 const projectStore = useProjectStore();
 
 function handleDetail(nftContractData: NftContractData) {
-  router.push(`/nft/${nftContractData.nftAddress}`);
+  router.push(`/nft/${nftContractData.id}/${nftContractData.nftType}`);
 }
 
 async function handleMint() {

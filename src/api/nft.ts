@@ -26,3 +26,9 @@ export const getSkuDetail = (params: { skuId: number }): Promise<IResponse> =>
 // 查询SPU详情
 export const getSpuDetail = (params: { spuId: number }): Promise<IResponse> =>
   axios.get('/project/spu/detail', { params });
+
+export const getSkuList = (params: { retailId: number }) =>
+  axios.get('/project/sku/list', { params });
+
+export const getSpuList = (params: { retailId: number }) =>
+  axios.get('/project/spu/list', { params });

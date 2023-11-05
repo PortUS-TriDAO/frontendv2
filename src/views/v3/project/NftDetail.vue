@@ -14,24 +14,38 @@
   </page-container>
 </template>
 <script setup lang="ts">
+import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import avatar from '@/assets/images/demo-avatar.png';
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useNftDetail, useNftList } from '@/hooks';
+import {
+  useNftDetail,
+  useNftList,
+  useSkuDetail,
+  useSkuList,
+  useSpuDetail,
+  useSpuList,
+} from '@/hooks';
 
 const route = useRoute();
 const router = useRouter();
-const { nftAddress } = route.params;
+const state = reactive({
+  nftList: [],
+});
 
-const { data } = useNftDetail(nftAddress as string);
-// console.log({ useNftDetail: data.value.name });
-const { data: nftList } = useNftList(nftAddress as string);
+const retailId = route.params.retailId as number;
+const nftType = route.params.nftType as number;
+const { data } = useNftDetail(retailId, nftType);
 
-console.log('nftList=', nftList);
+const { data: skuList } = useSkuList(retailId);
+const { data: spuList } = useSpuList(retailId);
 
-// import bannerImg from './assets/banner.png';
+if (nftType === 1) {
+  state.nftList = skuList.value;
+} else {
+  state.nftList = spuList.value;
+}
 
 function handleDetail(tokenId: number) {
   router.push(`/nft/${nftAddress}/${tokenId}`);
@@ -43,6 +57,7 @@ function handleDetail(tokenId: number) {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+
   .list-title {
     font-size: 24px;
     font-weight: 700;
@@ -50,10 +65,12 @@ function handleDetail(tokenId: number) {
     color: #000;
     margin: 0 0 14px 0;
   }
+
   .list {
     display: flex;
     flex-direction: row;
     gap: 12px;
+
     > div {
       cursor: pointer;
     }
