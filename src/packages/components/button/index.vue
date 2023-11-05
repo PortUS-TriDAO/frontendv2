@@ -12,7 +12,8 @@
 
 <script lang="ts" setup>
 import { buttonProps } from 'element-plus';
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
+
 const props = defineProps({
   class: [String, Object],
   ...buttonProps,

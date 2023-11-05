@@ -1,7 +1,7 @@
 <template>
   <main class="page-container">
-    <div class="page-banner" v-if="props.bannerImg || showBanner">
-      <img :src="props.bannerImg" />
+    <div class="page-banner" v-if="bannerImg || showBanner">
+      <img :src="bannerImg" />
     </div>
     <!-- <div class="page-banner" v-else-if="$slots.banner"><slot name="banner" /></div> -->
     <article>
@@ -10,8 +10,10 @@
   </main>
 </template>
 <script lang="ts" setup>
-import { defineProps } from 'vue';
-const props = defineProps({
+defineOptions({
+  name: 'PageContainer',
+});
+defineProps({
   bannerImg: String,
   showBanner: Boolean,
 });
