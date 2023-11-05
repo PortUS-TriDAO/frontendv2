@@ -69,7 +69,7 @@ import { useRoute, useRouter } from 'vue-router';
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
-import type { NftContractData } from '@/types';
+import { type NftContractData, NftType } from '@/types';
 
 const loading = ref(false);
 const projectStore = useProjectStore();
@@ -88,10 +88,17 @@ function handleDetail(nftContractData: NftContractData) {
     retailAddress: nftContractData.retailAddress,
     avatar: nftContractData.avatar,
   };
-  router.push({
-    path: `/mine/${scenes.value}/nftdetail/${nftContractData.id}`,
-    query,
-  });
+  if (nftContractData.nftType === NftType.SKU) {
+    router.push({
+      path: `/mine/${scenes.value}/nftdetail/${nftContractData.id}`,
+      query,
+    });
+  } else {
+    router.push({
+      path: `/mine/${scenes.value}/spu/${nftContractData.id}`,
+      query,
+    });
+  }
 }
 
 function handleMintMore() {

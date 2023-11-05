@@ -18,6 +18,9 @@ export const getNftList = (params: {
 export const getSkuDetail = (params: { tokenId: string }): Promise<IResponse<SkuData>> =>
   axios.get('/project/sku/detail', { params });
 
+export const getSpuDetail = (params: { spuId: number }): Promise<IResponse<SkuData>> =>
+  axios.get('/project/spu/detail', { params });
+
 // /v2/mine/retailcontracts
 export const getRetailContracts = (params: { bizId: string }): Promise<IResponse<SkuData>> =>
   axios.get('/mine/retailcontracts', { params });

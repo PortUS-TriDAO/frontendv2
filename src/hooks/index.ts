@@ -20,6 +20,7 @@ import {
   getProjectDetail,
   getProjects,
   getSkuDetail,
+  getSpuDetail,
   getSubmittedProjects,
 } from '../api';
 
@@ -126,6 +127,28 @@ export function useSkuDetail(skuId: ComputedRef<string>): UseQueryReturnType<Sku
   });
   watch(
     () => skuId.value,
+    () => {
+      result.refetch();
+    },
+  );
+
+  return result;
+}
+
+export function useSpuDetail(spuId: ComputedRef<number>): UseQueryReturnType<SkuData, Error> {
+  const result = useQuery({
+    queryKey: ['getSpuDetail', spuId.value],
+    queryFn: async () => {
+      const res = await getSpuDetail({ spuId: spuId.value });
+      console.log('getSpuDetail:', res);
+      if (res.success) {
+        return res.data;
+      }
+      return null;
+    },
+  });
+  watch(
+    () => spuId.value,
     () => {
       result.refetch();
     },
