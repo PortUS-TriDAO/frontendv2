@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 
+import type { Address, ProjectData } from '@/types';
 import type { IListResponse, IResponse } from '@/types/response';
 
 import axios from '../utils/axios';
@@ -26,3 +27,17 @@ export const getMyParticipatList = (params: { address: string }): Promise<IRespo
 // 获取我参与的或者创建的商业合约详情
 export const getMyBussiness = (params: { address: string; tokenId: string }): Promise<IResponse> =>
   axios.get('/mine/business/detial', { params });
+
+//
+// v2
+//
+export const getSubmittedProjects = (params: {
+  creatorAddress: Address;
+}): Promise<IListResponse<ProjectData>> => axios.get('/mine/submitted', { params });
+
+export const getParticipateProjects = (params: {
+  kolAddress: Address;
+}): Promise<IListResponse<ProjectData>> => axios.get('/mine/participat', { params });
+
+// export const getParticipatProjects = (params: {}): Promise<IListResponse<ProjectData>> =>
+//   axios.get('/mine/participat', { params });

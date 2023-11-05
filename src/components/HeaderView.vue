@@ -77,6 +77,7 @@ function connect() {
 .page-header {
   height: 66px;
   background-color: #000425;
+  z-index: 999;
 
   .header-container {
     width: var(--container-width);

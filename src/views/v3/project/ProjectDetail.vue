@@ -1,5 +1,5 @@
 <template>
-  <page-container class="pg-project-detail" :bannerImg="res?.data?.cover">
+  <page-container class="pg-project-detail" :bannerImg="res?.data?.cover" showBanner>
     <div class="project-detail">
       <div class="detail-row">
         <img alt="avatar" :src="res?.data?.avatar" />

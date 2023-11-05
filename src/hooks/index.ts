@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
+import { getAccount } from '@wagmi/core';
 import { type ComputedRef, watch } from 'vue';
 
-// import { getAccount } from '@wagmi/core';
 import type {
   BusinessDetailData,
   NftContractData,
@@ -15,9 +15,11 @@ import {
   getBusinessDetail,
   getNftDetail,
   getNftList,
+  getParticipateProjects,
   getProjectDetail,
   getProjects,
   getSkuDetail,
+  getSubmittedProjects,
 } from '../api';
 
 export function useProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
@@ -25,6 +27,32 @@ export function useProjects(): UseQueryReturnType<PageData<ProjectData>, Error> 
     queryKey: ['getProjects'],
     queryFn: async () => {
       const { success, data } = await getProjects({});
+      if (!success) return null;
+      return data;
+    },
+  });
+  return result;
+}
+
+export function useParticipateProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
+  const { address } = getAccount();
+  const result = useQuery({
+    queryKey: ['getParticipateProjects', address],
+    queryFn: async () => {
+      const { success, data } = await getParticipateProjects({ kolAddress: address });
+      if (!success) return null;
+      return data;
+    },
+  });
+  return result;
+}
+
+export function useSubmittedProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
+  const { address } = getAccount();
+  const result = useQuery({
+    queryKey: ['getSubmittedProjects', address],
+    queryFn: async () => {
+      const { success, data } = await getSubmittedProjects({ creatorAddress: address });
       if (!success) return null;
       return data;
     },

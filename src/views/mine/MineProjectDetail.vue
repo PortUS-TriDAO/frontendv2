@@ -12,7 +12,7 @@
     <div v-if="res?.data">
       <business-item
         v-for="item in res.data.rows || []"
-        :key="item.bizId"
+        :key="item.id"
         :item="item"
         hideDetail
         @click="handleDetail(item)"
@@ -72,7 +72,7 @@ const { data: res } = useQuery({
 });
 
 function handleDetail(businessData: BusinessData) {
-  router.push(`/mime/${scenes.value}/${projectId}/${businessData.bizId}`);
+  router.push(`/mime/${scenes.value}/${projectId}/${businessData.id}`);
 }
 
 const map = {
@@ -89,7 +89,6 @@ const map = {
       {
         text: 'Withdraw',
         onClick: async (item: BusinessData) => {
-          // TODO: Withdraw
           // 处理项目方withdraw
           console.log('handleWithdraw item', item);
           try {
@@ -107,7 +106,6 @@ const map = {
       {
         text: 'Submit NFT Contract',
         onClick: (item: BusinessData) => {
-          // TODO: Withdraw
           console.log('handleSubmit businessData', item);
           router.push(`/project/submitsuccess/${projectId}`);
         },
@@ -122,12 +120,7 @@ const map = {
     },
   },
   participated: {
-    // topBtn: {
-    //   text: 'Edit project',
-    //   onClick: () => {
-    //     // TODO: edit project
-    //   },
-    // },
+    topBtn: null,
     rowActions: [
       {
         text: 'Withdraw',
@@ -159,6 +152,7 @@ const map = {
     },
   },
   store: {
+    topBtn: null,
     rowActions: [
       {
         text: 'share contract',

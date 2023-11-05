@@ -38,7 +38,8 @@ export interface ProjectDetailData {
  * 商业合约列表数据
  */
 export interface BusinessData {
-  bizId: number;
+  id: number;
+  // bizId: number;
   contractName: string;
   sharePercentage: number;
   briefIntro: string;
@@ -58,7 +59,8 @@ export interface BusinessDetailData {
   description: string;
   contractAddress: Address | undefined;
   // nft contract list
-  rows: NftContractData[];
+  // rows: NftContractData[];
+  retailContracts: NftContractData[];
 }
 
 export interface NftContractData {
