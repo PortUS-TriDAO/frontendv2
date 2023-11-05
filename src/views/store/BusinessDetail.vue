@@ -33,29 +33,40 @@
   </page-container>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+// import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import { useBusinessDetail, useProjectDetail } from '@/hooks';
-import { useProjectStore } from '@/stores/useProject';
-import type { NftContractData } from '@/types';
+// import { useProjectStore } from '@/stores/useProject';
+import type { Address, NftContractData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
-const storeId = computed(() => route.params.storeId);
-const projectId = computed(() => route.params.projectId);
-const businessId = computed(() => route.params.businessId);
+const kolAddress = route.params.kolAddress as Address;
 
-const { data } = useBusinessDetail(businessId.value as string);
-const projectStore = useProjectStore();
+// const projectId = Number(route.params.projectId);
+const bizId = Number(route.params.bizId);
 
-const { data: projectDetail } = useProjectDetail(projectId.value as string);
+const { data } = useBusinessDetail(bizId.toString());
+// const projectStore = useProjectStore();
+
+// const { data: projectDetail } = useProjectDetail(projectId.value as string);
 
 console.log('getBusinessDetail result=', data);
 
 function handleDetail(nftContractData: NftContractData) {
-  router.push(`/store/${storeId.value}/nft/${nftContractData.nftAddress}`);
+  const query = {
+    // bizAddress: data.value.contractAddress,
+    nftAddress: nftContractData.nftAddress,
+    retailAddress: nftContractData.retailAddress,
+    avatar: nftContractData.avatar,
+  };
+
+  router.push({
+    path: `/store/${kolAddress}/nft/${nftContractData.id}/${nftContractData.nftType}`,
+    query,
+  });
 }
 </script>
 <style lang="less" scoped>

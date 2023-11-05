@@ -6,15 +6,13 @@
     <div class="list">
       <SkuItem
         v-for="item in nftList?.rows || []"
-        :key="item.tokenId"
+        :key="item.id"
         :item="item"
-        @click="handleDetail(item.tokenId)"
+        @click="handleDetail(item.id)"
       >
         <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
-            <p-button size="small" round v-on:click.stop="handleBuy(item.tokenId)">
-              Buy Now
-            </p-button>
+            <p-button size="small" round v-on:click="handleBuy(item)"> Buy Now </p-button>
           </div>
         </template>
       </SkuItem>
@@ -27,25 +25,45 @@ import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useNftDetail, useNftList } from '@/hooks';
+import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
+import { type Address, type NftContractData, NftType, type SkuData, type SpuData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
-const storeId = computed(() => route.params.storeId);
+const kolAddress = route.params.kolAddress as Address;
+const retailId = Number(route.params.retailId);
+const nftType = Number(route.params.nftType);
 // const projectId = computed(() => route.params.projectId);
-const nftAddress = computed(() => route.params.nftAddress);
 
-const { data } = useNftDetail(nftAddress.value as string);
-// console.log({ useNftDetail: data.value.name });
-const { data: nftList } = useNftList(nftAddress.value as string);
+// const { data } = useNftDetail(nftAddress.value as string);
+const data: NftContractData = {
+  nftAddress: route.query.nftAddress as Address,
+  avatar: route.query.avatar as string,
+  nftID: '',
+  name: '',
+  nftType,
+  // 随意填写一个
+  bizId: 1111,
+  retailAddress: route.query.retailAddress as Address,
+  id: retailId,
+};
+const { data: nftList } =
+  nftType === NftType.SKU ? useSkuList(retailId, 1, 25) : useSpuList(retailId);
 
 console.log('nftList=', nftList);
 
-function handleDetail(tokenId: number) {
-  router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
+function handleDetail(id: number) {
+  if (nftType === NftType.SKU) {
+    router.push(`/store/${kolAddress}/sku/${retailId}/${id}`);
+  } else {
+    router.push(`/store/${kolAddress}/spu/${retailId}/${id}`);
+  }
+  // router.push(`/store/${kolAddress}/sku/${nftAddress.value}/${tokenId}`);
 }
 
-function handleBuy(tokenId: number) {
+function handleBuy(item: SkuData | SpuData) {
+  // TODO: buy
+  console.log('handleBuy item:', item);
   // router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
 }
 </script>

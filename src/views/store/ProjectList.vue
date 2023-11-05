@@ -14,33 +14,29 @@
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { getProjects } from '@/api';
+import { getParticipateProjects, getProjects } from '@/api';
 import ProjectItem from '@/components/project-item/index.vue';
-import type { ProjectData } from '@/types';
+import type { Address, ProjectData } from '@/types';
 
 const router = useRouter();
 const route = useRoute();
 
-const storeId = computed(() => route.params.storeId);
+const kolAddress = route.params.kolAddress as Address;
 
-const {
-  data: res,
-  refetch,
-  isPending,
-} = useQuery({
+const { data: res, isPending } = useQuery({
   queryKey: ['getProjects'],
   queryFn: () => {
     // storeId
-    return getProjects({ key: '' });
+    return getParticipateProjects({ kolAddress });
+    // return getProjects({});
   },
 });
 console.log('getProjects result=', isPending, res);
 
 function handleDetail(item: ProjectData) {
-  router.push(`/store/${storeId.value}/project/${item.projectId}`);
+  router.push(`/store/${kolAddress}/project/${item.projectId}`);
 }
 </script>
 <style lang="less" scoped>

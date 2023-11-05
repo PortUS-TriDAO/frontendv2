@@ -1,11 +1,11 @@
 <template>
-  <page-container class="pg-store-project-detail" :bannerImg="res?.data?.cover">
+  <page-container class="pg-store-project-detail" :bannerImg="res?.data?.cover" showBanner>
     <div class="project-detail">
       <div class="detail-row">
         <img alt="avatar" :src="res?.data?.avatar" />
         <div>
           <h3>{{ res?.data?.projectName }}</h3>
-          <a :href="res?.data?.website" target="_blank">website</a>
+          <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a>
         </div>
       </div>
       <text-ellipsis>{{ res?.data?.briefIntro }}</text-ellipsis>
@@ -26,28 +26,27 @@
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
-import type { BusinessData } from '@/types';
+import type { Address, BusinessData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
-const storeId = computed(() => route.params.storeId);
-const projectId = computed(() => route.params.projectId);
+const kolAddress = route.params.kolAddress as Address;
+const projectId = Number(route.params.projectId);
 
 const { data: res } = useQuery({
   queryKey: ['getProjectDetail', projectId],
   queryFn: () => {
-    return getProjectDetail({ projectId: projectId.value as string });
+    return getProjectDetail({ projectId: projectId.toString() });
   },
 });
 console.log('getProjects result=', res);
 
 function handleDetail(businessData: BusinessData) {
-  router.push(`/store/${storeId.value}/project/${projectId.value}/${businessData.id}`);
+  router.push(`/store/${kolAddress}/project/${projectId}/${businessData.id}`);
 }
 </script>
 <style lang="less" scoped>

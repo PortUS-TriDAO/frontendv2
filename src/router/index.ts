@@ -102,19 +102,19 @@ const router = createRouter({
       component: () => import('../views/v3/project/BusinessDetail.vue'),
     },
     {
-      path: '/nft/:retailId/:nftType',
-      name: 'NftDetail',
-      component: () => import('../views/v3/project/NftDetail.vue'),
-    },
-    {
       path: '/nft/sku/:retailId/:skuId',
       name: 'SkuDetail',
       component: () => import('../views/v3/project/SkuDetail.vue'),
     },
     {
-      path: '/spu/:skuId',
-      name: 'SpuList',
+      path: '/nft/spu/:retailId/:skuId',
+      name: 'SpuDetail',
       component: () => import('../views/v3/project/Spu.vue'),
+    },
+    {
+      path: '/nft/:retailId/:nftType',
+      name: 'NftDetail',
+      component: () => import('../views/v3/project/NftDetail.vue'),
     },
     {
       path: '/mine/container',
@@ -159,35 +159,35 @@ const router = createRouter({
     },
     // store
     {
-      path: '/store/:storeId/projects',
+      path: '/store/:kolAddress/projects',
       name: 'StoreProjectList',
       component: () => import('../views/store/ProjectList.vue'),
     },
     {
-      path: '/store/:storeId/project/:projectId',
+      path: '/store/:kolAddress/project/:projectId',
       name: 'StoreProjectDetail',
       component: () => import('../views/store/ProjectDetail.vue'),
     },
     {
-      path: '/store/:storeId/project/:projectId/:businessId',
+      path: '/store/:kolAddress/project/:projectId/:bizId',
       name: 'StoreBusinessDetail',
       component: () => import('../views/store/BusinessDetail.vue'),
     },
     {
-      path: '/store/:storeId/nft/:nftAddress',
+      path: '/store/:kolAddress/nft/:retailId/:nftType',
       name: 'StoreNftDetail',
       component: () => import('../views/store/NftDetail.vue'),
     },
     {
-      path: '/store/:storeId/nft/:nftAddress/:tokenId',
+      path: '/store/:kolAddress/sku/:retailId/:skuId',
       name: 'StoreSkuList',
       component: () => import('../views/store/SkuDetail.vue'),
     },
-    // {
-    //   path: '/spu/:skuId',
-    //   name: 'StoreSpuList',
-    //   component: () => import('../views/store/Spu.vue'),
-    // },
+    {
+      path: '/store/:kolAddress/spu/:retailId/:spuId',
+      name: 'StoreSpuList',
+      component: () => import('../views/store/SpuDetail.vue'),
+    },
   ],
 });
 

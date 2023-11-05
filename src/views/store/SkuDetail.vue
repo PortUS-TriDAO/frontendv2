@@ -9,9 +9,9 @@
     <div class="list">
       <sku-item
         v-for="item in nftList?.rows || []"
-        :key="item.tokenId"
+        :key="item.id"
         :item="item"
-        @click="handleDetail(item.tokenId)"
+        @click="handleDetail(item.id)"
       >
         <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
@@ -29,23 +29,26 @@ import { useRoute, useRouter } from 'vue-router';
 
 import SkuCard from '@/components/sku-card/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useNftList, useSkuDetail } from '@/hooks';
+import { useSkuDetail, useSkuList } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import type { SkuData } from '@/types';
 
 const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
-const storeId = computed(() => route.params.storeId);
-const nftAddress = computed(() => route.params.nftAddress as string);
+const kolAddress = route.params.kolAddress as string;
+const retailId = Number(route.params.retailId);
+const skuId = computed(() => Number(route.params.skuId));
+
+// const nftAddress = computed(() => route.params.nftAddress as string);
 const tokenId = computed(() => route.params.tokenId as string);
 const projectStore = useProjectStore();
 
-const { data } = useSkuDetail(tokenId);
-const { data: nftList } = useNftList(nftAddress.value);
+const { data } = useSkuDetail(skuId);
+const { data: nftList } = useSkuList(retailId);
 
-function handleDetail(tokenId: number) {
-  router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
+function handleDetail(id: number) {
+  router.push(`/store/${kolAddress}/sku/${retailId}/${id}`);
 }
 
 function handleBuy(skuData: SkuData) {
