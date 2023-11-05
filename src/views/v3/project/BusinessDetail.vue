@@ -48,14 +48,23 @@ const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
 
-const projectId = route.params.projectId as number;
-const bizId = route.params.bizId as number;
+const projectId = Number(route.params.projectId);
+const bizId = Number(route.params.bizId);
 
 const { data } = useBusinessDetail(`${bizId}`);
 const projectStore = useProjectStore();
 
 function handleDetail(nftContractData: NftContractData) {
-  router.push(`/nft/${nftContractData.id}/${nftContractData.nftType}`);
+  const query = {
+    nftAddress: nftContractData.nftAddress,
+    retailAddress: nftContractData.retailAddress,
+    avatar: nftContractData.avatar,
+  };
+
+  router.push({
+    path: `/nft/${nftContractData.id}/${nftContractData.nftType}`,
+    query,
+  });
 }
 
 async function handleMint() {

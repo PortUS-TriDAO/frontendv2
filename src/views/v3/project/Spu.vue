@@ -1,20 +1,27 @@
 <template>
-  <page-container class="pg-project-detail" :bannerImg="bannerImg">
-    <div class="project-detail">
+  <page-container class="pg-spu-detail" :bannerImg="data?.cover" showBanner>
+    <div class="sku-detail">
       <div class="detail-row">
-        <img alt="avatar" :src="avatar" />
+        <img alt="avatar" :src="data?.avatar" />
         <div>
           <h3>Echo of Intensity</h3>
-          <a>website</a>
+          <div class="flex-between">
+            <div style="width: 50%">{{ data?.price }} USDT</div>
+            <div style="width: 50%">{{ dayjs(data?.ddl * 1000).format('YYYY-MM-DD HH:mm') }}</div>
+          </div>
         </div>
       </div>
-      <p>
-        Dreamed of moonshots but awoke to a capitulation... Welcome to the home of Echo of Intensity
-        by Per Kr...
-      </p>
+      <div class="description">
+        <div>
+          {{ data?.briefIntro }}
+        </div>
+        <text-ellipsis>
+          {{ data?.description }}
+        </text-ellipsis>
+      </div>
     </div>
-    <div class="detail-divider"></div>
-    <div class="list">
+    <!-- <div class="detail-divider"></div> -->
+    <!-- <div class="list">
       <div class="item">
         <div class="item-detail">
           <h3>Echo of Intensity</h3>
@@ -38,18 +45,25 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </page-container>
 </template>
 <script setup lang="ts">
+import dayjs from 'dayjs';
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import avatar from '@/assets/images/demo-avatar.png';
+import { useSpuDetail } from '@/hooks';
 
 import bannerImg from './assets/banner.png';
 
 const route = useRoute();
 const router = useRouter();
+
+const spuId = computed(() => Number(route.params.spuId));
+
+const { data } = useSpuDetail(spuId);
 
 function handleDetail(businessId: string) {
   const { id } = route.params;
@@ -57,8 +71,8 @@ function handleDetail(businessId: string) {
 }
 </script>
 <style lang="less" scoped>
-.pg-project-detail {
-  .project-detail {
+.pg-spu-detail {
+  .sku-detail {
     padding: 15px 30px 0;
     font-size: 24px;
     letter-spacing: 0px;
@@ -75,6 +89,9 @@ function handleDetail(businessId: string) {
         height: 200px;
         margin-top: -100px;
       }
+      > div {
+        flex: 1;
+      }
       h3 {
         font-weight: 700;
         color: #000000;
@@ -89,6 +106,17 @@ function handleDetail(businessId: string) {
         font-size: inherit;
       }
     }
+  }
+  .description {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #000000;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 20px;
   }
   .detail-divider {
     margin: 20px 0;

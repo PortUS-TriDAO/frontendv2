@@ -1,7 +1,7 @@
 <template>
   <page-container class="pg-sku-detail">
-    <sku-card :loading="loading" v-if="state.detail" :item="state.detail">
-      <p-button v-if="state.detail" @click="handleBuy(state.detail)">Buy</p-button>
+    <sku-card :loading="loading" v-if="data" :item="data">
+      <p-button v-if="data" @click="handleBuy(data)">Buy</p-button>
     </sku-card>
 
     <div class="detail-divider"></div>
@@ -9,9 +9,9 @@
     <div class="list">
       <sku-item
         v-for="item in nftList?.rows || []"
-        :key="item.tokenId"
+        :key="item.id"
         :item="item"
-        @click="handleDetail(item.tokenId)"
+        @click="handleDetail(item.id)"
       />
     </div>
   </page-container>
@@ -33,28 +33,28 @@ const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
 
-const state = reactive({
-  detail: {},
-});
+// const state = reactive({
+//   detail: {},
+// });
 
-const retailId = computed(() => route.params.retailId as number);
-const skuId = computed(() => route.params.skuId as string);
+const retailId = computed(() => Number(route.params.retailId));
+const skuId = computed(() => Number(route.params.skuId));
 
 const projectStore = useProjectStore();
 
 const { data } = useSkuDetail(skuId);
 const { data: nftList } = useSkuList(retailId.value);
 
-watch(data, () => {
-  console.log('watch data', data);
-  if (data && data.value.length > 0) {
-    state.detail = data.value[0];
-    console.log('state.detail', data.value[0]);
-  }
-});
+// watch(data, () => {
+//   console.log('watch data', data);
+//   if (data && data.value.length > 0) {
+//     state.detail = data.value[0];
+//     console.log('state.detail', data.value[0]);
+//   }
+// });
 
-function handleDetail(tokenId: number) {
-  router.push(`/nft/${nftAddress.value}/${tokenId}`);
+function handleDetail(id: number) {
+  router.push(`/nft/sku/${retailId.value}/${id}`);
 }
 
 function handleBuy(skuData: SkuData) {

@@ -19,21 +19,27 @@ import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import {
-  useNftDetail,
-  useNftList,
-  useSkuDetail,
-  useSkuList,
-  useSpuDetail,
-  useSpuList,
-} from '@/hooks';
+import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
+import type { Address, NftContractData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
 
 const retailId = Number(route.params.retailId);
 const nftType = Number(route.params.nftType);
-const { data } = useNftDetail(retailId, nftType);
+// const { data } = useNftDetail(retailId, nftType);
+
+const data: NftContractData = {
+  nftAddress: route.query.nftAddress as Address,
+  avatar: route.query.avatar as string,
+  nftID: '',
+  name: '',
+  nftType,
+  // 随意填写一个
+  bizId: 1111,
+  retailAddress: route.query.retailAddress as Address,
+  id: retailId,
+};
 
 const { data: nftList } = nftType === 1 ? useSkuList(retailId) : useSpuList(retailId);
 

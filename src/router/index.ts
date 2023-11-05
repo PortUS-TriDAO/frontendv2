@@ -107,7 +107,7 @@ const router = createRouter({
       component: () => import('../views/v3/project/SkuDetail.vue'),
     },
     {
-      path: '/nft/spu/:retailId/:skuId',
+      path: '/nft/spu/:retailId/:spuId',
       name: 'SpuDetail',
       component: () => import('../views/v3/project/Spu.vue'),
     },
