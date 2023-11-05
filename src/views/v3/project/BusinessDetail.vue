@@ -39,7 +39,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
-import { useBusinessDetail, useProjectDetail } from '@/hooks';
+import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import type { NftContractData } from '@/types';
 
@@ -47,21 +47,21 @@ const loading = ref(false);
 
 const route = useRoute();
 const router = useRouter();
-const { bizId, projectId } = route.params;
-const { data } = useBusinessDetail(bizId as string);
+
+const projectId = route.params.projectId as number;
+const bizId = route.params.bizId as number;
+
+const { data } = useBusinessDetail(`${bizId}`);
 const projectStore = useProjectStore();
 
-const { data: projectDetail } = useProjectDetail(projectId as string);
-
 function handleDetail(nftContractData: NftContractData) {
-  router.push(`/nft/${nftContractData.nftAddress}`);
+  router.push(`/nft/${nftContractData.id}/${nftContractData.nftType}`);
 }
 
 async function handleMint() {
-  console.log('handleMint  tst...', projectDetail.value.projectAddress);
   try {
     loading.value = true;
-    await projectStore.mint(projectDetail.value.projectAddress, projectId as string);
+    await projectStore.mint(data.value.contractAddress, projectId, bizId);
     ElMessage.success('mint success');
   } catch (error) {
     console.log('error', error);

@@ -20,7 +20,9 @@ import {
   getProjectDetail,
   getProjects,
   getSkuDetail,
+  getSkuList,
   getSpuDetail,
+  getSpuList,
   getSubmittedProjects,
 } from '../api';
 
@@ -117,7 +119,7 @@ export function useSkuDetail(skuId: ComputedRef<string>): UseQueryReturnType<Sku
   const result = useQuery({
     queryKey: ['getSkuDetail', skuId.value],
     queryFn: async () => {
-      const res = await getSkuDetail({ tokenId: skuId.value });
+      const res = await getSkuDetail({ skuId: skuId.value });
       console.log('getSkuDetail:', res);
       if (res.success) {
         return res.data;
@@ -135,16 +137,39 @@ export function useSkuDetail(skuId: ComputedRef<string>): UseQueryReturnType<Sku
   return result;
 }
 
-export function useSpuDetail(spuId: ComputedRef<number>): UseQueryReturnType<SkuData, Error> {
+export function useSkuList(retailId: number): UseQueryReturnType<PageData<SkuData>, Error> {
+  const result = useQuery({
+    queryKey: ['getSkuList', retailId],
+    queryFn: async () => {
+      const res = await getSkuList({ retailId: retailId });
+      if (!res.success) return null;
+      return res.data;
+    },
+  });
+
+  return result;
+}
+
+export function useSpuList(retailId: number): UseQueryReturnType<PageData<SkuData>, Error> {
+  const result = useQuery({
+    queryKey: ['getSpuList', retailId],
+    queryFn: async () => {
+      const res = await getSpuList({ retailId: retailId });
+      if (!res.success) return null;
+      return res.data;
+    },
+  });
+
+  return result;
+}
+
+export function useSpuDetail(spuId: ComputedRef<string>): UseQueryReturnType<SkuData, Error> {
   const result = useQuery({
     queryKey: ['getSpuDetail', spuId.value],
     queryFn: async () => {
       const res = await getSpuDetail({ spuId: spuId.value });
-      console.log('getSpuDetail:', res);
-      if (res.success) {
-        return res.data;
-      }
-      return null;
+      if (!res.success) return null;
+      return res.data;
     },
   });
   watch(

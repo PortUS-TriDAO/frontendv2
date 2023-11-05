@@ -15,12 +15,20 @@ export const getNftList = (params: {
   limit: number;
 }): Promise<IListResponse<SkuData>> => axios.get('/project/nft/list', { params });
 
-export const getSkuDetail = (params: { tokenId: string }): Promise<IResponse<SkuData>> =>
-  axios.get('/project/sku/detail', { params });
-
-export const getSpuDetail = (params: { spuId: number }): Promise<IResponse<SkuData>> =>
-  axios.get('/project/spu/detail', { params });
-
 // /v2/mine/retailcontracts
 export const getRetailContracts = (params: { bizId: string }): Promise<IResponse<SkuData>> =>
   axios.get('/mine/retailcontracts', { params });
+
+// 查询sku详情
+export const getSkuDetail = (params: { skuId: number }): Promise<IResponse> =>
+  axios.get('/project/spu/detail', { params });
+
+// 查询SPU详情
+export const getSpuDetail = (params: { spuId: number }): Promise<IResponse> =>
+  axios.get('/project/spu/detail', { params });
+
+export const getSkuList = (params: { retailId: number }) =>
+  axios.get('/project/sku/list', { params });
+
+export const getSpuList = (params: { retailId: number }) =>
+  axios.get('/project/spu/list', { params });
