@@ -4,6 +4,7 @@ import type {
   IResponse,
   ProjectData,
   ProjectDetailData,
+  RightData,
 } from '@/types';
 
 import axios from '../utils/axios';
@@ -90,5 +91,7 @@ export const kolMint = (params: {
   rightId: number;
 }): Promise<IResponse> => axios.post('/project/kol/mint', params);
 
-export const getkolRightId = (params: { bizId: number; kolAddress: string }) =>
-  axios.get('/project/kol/rightid', { params });
+export const getkolRightId = (params: {
+  bizId: number;
+  kolAddress: string;
+}): Promise<IResponse<RightData>> => axios.get('/project/kol/rightid', { params });

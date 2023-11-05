@@ -112,22 +112,23 @@ async function createProjectStep1() {
   //   return
   // }
 
-  const { success, data } = await api.createProjectStep1(formData);
+  // TODO: formData as any
+  const { success, data } = await api.createProjectStep1(formData as any);
   if (!success) {
     ElMessage.error('create project failed');
   } else {
-    const { projectId } = data;
+    const { projectId } = data as any;
     ElMessage.success('create project success');
     router.push(`/project/create/step2/${projectId}`);
   }
 }
 
-const handleAvatar = (url: String) => {
+const handleAvatar = (url: string) => {
   console.log('handleAvatar', url);
   form.avatar = url;
 };
 
-async function handleCover(url: String) {
+async function handleCover(url: string) {
   console.log('handleCover', url);
   form.cover = url;
 }
