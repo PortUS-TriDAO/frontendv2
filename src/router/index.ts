@@ -22,7 +22,8 @@ const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
     },
     {
       // MineNftDetail
-      path: `/mine/${scenes}/nftdetail/:nftAddress/:projectId/:businessContractAddress?`,
+      path: `/mine/${scenes}/nftdetail/:id`,
+      // path: `/mine/${scenes}/nftdetail/:nftAddress/:projectId/:businessContractAddress?`,
       name: `Mine${capitalizedName}NftDetail`,
       component: mimeMineNftDetail,
       meta: {

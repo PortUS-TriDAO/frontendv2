@@ -5,6 +5,7 @@ import { type ComputedRef, watch } from 'vue';
 import type {
   BusinessDetailData,
   NftContractData,
+  NftType,
   PageData,
   ProjectData,
   ProjectDetailData,
@@ -76,11 +77,14 @@ export function useBusinessDetail(
   return result;
 }
 
-export function useNftDetail(nftAddress: string): UseQueryReturnType<NftContractData, Error> {
+export function useNftDetail(
+  id: number,
+  nftType: NftType,
+): UseQueryReturnType<NftContractData, Error> {
   const result = useQuery({
-    queryKey: ['getNftDetail', nftAddress],
+    queryKey: ['getNftDetail', id, nftType],
     queryFn: async () => {
-      const res = await getNftDetail({ nftAddress });
+      const res = await getNftDetail({ id, nftType });
       if (res.success) {
         return res.data;
       }
@@ -91,14 +95,14 @@ export function useNftDetail(nftAddress: string): UseQueryReturnType<NftContract
 }
 
 export function useNftList(
-  nftAddress: string,
+  retailId: number,
   page?: number,
-  pageSize?: number,
+  limit?: number,
 ): UseQueryReturnType<PageData<SkuData>, Error> {
   const result = useQuery({
-    queryKey: ['getNftList', nftAddress],
+    queryKey: ['getNftList', retailId],
     queryFn: async () => {
-      const res = await getNftList({ nftAddress, page, pageSize });
+      const res = await getNftList({ retailId, page, limit });
       if (res.success) {
         return res.data;
       }
@@ -108,11 +112,11 @@ export function useNftList(
   return result;
 }
 
-export function useSkuDetail(tokenId: ComputedRef<string>): UseQueryReturnType<SkuData, Error> {
+export function useSkuDetail(skuId: ComputedRef<string>): UseQueryReturnType<SkuData, Error> {
   const result = useQuery({
-    queryKey: ['getSkuDetail', tokenId.value],
+    queryKey: ['getSkuDetail', skuId.value],
     queryFn: async () => {
-      const res = await getSkuDetail({ tokenId: tokenId.value });
+      const res = await getSkuDetail({ tokenId: skuId.value });
       console.log('getSkuDetail:', res);
       if (res.success) {
         return res.data;
@@ -121,7 +125,7 @@ export function useSkuDetail(tokenId: ComputedRef<string>): UseQueryReturnType<S
     },
   });
   watch(
-    () => tokenId.value,
+    () => skuId.value,
     () => {
       result.refetch();
     },

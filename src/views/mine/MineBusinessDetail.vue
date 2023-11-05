@@ -81,9 +81,17 @@ const businessId = computed(() => route.params.businessId as string);
 const { data } = useBusinessDetail(businessId.value);
 
 function handleDetail(nftContractData: NftContractData) {
-  router.push(
-    `/mine/${scenes.value}/nftdetail/${nftContractData.nftAddress}/${projectId.value}/${data.value.contractAddress}`,
-  );
+  const query = {
+    projectId: projectId.value,
+    bizAddress: data.value.contractAddress,
+    nftAddress: nftContractData.nftAddress,
+    retailAddress: nftContractData.retailAddress,
+    avatar: nftContractData.avatar,
+  };
+  router.push({
+    path: `/mine/${scenes.value}/nftdetail/${nftContractData.id}`,
+    query,
+  });
 }
 
 function handleMintMore() {

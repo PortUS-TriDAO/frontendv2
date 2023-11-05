@@ -42,7 +42,6 @@
 <script setup lang="ts">
 import { waitForTransaction } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
-import type { Address } from 'viem';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -50,25 +49,39 @@ import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useNftDetail, useNftList } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
-import type { SkuData } from '@/types';
+import { type Address, type NftContractData, NftType, type SkuData } from '@/types';
 
 const loading = ref(false);
 const projectStore = useProjectStore();
 const route = useRoute();
 const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
-const nftAddress = computed(() => route.params.nftAddress as string);
-const projectId = computed(() => route.params.projectId as string);
-const businessContractAddress = computed(() => route.params.businessContractAddress as string);
 
-console.log('params', {
+const nftId = computed(() => Number(route.params.id));
+const nftAddress = computed(() => route.query.nftAddress as string);
+const projectId = computed(() => route.query.projectId as string);
+const businessContractAddress = computed(() => route.query.bizAddress as string);
+
+console.log('query', {
   nftAddress: nftAddress.value,
   projectId: projectId.value,
   businessContractAddress: businessContractAddress.value,
 });
 
-const { data } = useNftDetail(nftAddress.value);
-const { data: nftList } = useNftList(nftAddress.value);
+const data: NftContractData = {
+  nftAddress: nftAddress.value as Address,
+  avatar: route.query.avatar as string,
+  nftID: '',
+  name: '',
+  nftType: 1,
+  // 随意填写一个
+  bizId: 1111,
+  retailAddress: route.params.retailAddress as Address,
+  id: nftId.value,
+};
+
+// const { data } = useNftDetail(nftId.value, NftType.SKU);
+const { data: nftList } = useNftList(nftId.value, 1, 25);
 
 console.log('nftList=', nftList);
 

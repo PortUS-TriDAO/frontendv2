@@ -63,11 +63,20 @@ export interface BusinessDetailData {
   retailContracts: NftContractData[];
 }
 
+export enum NftType {
+  SKU = 1,
+  SPU = 2,
+}
+
 export interface NftContractData {
   nftAddress: Address;
   avatar: string;
   nftID: string;
   name: string;
+  nftType: NftType;
+  bizId: number;
+  retailAddress: Address;
+  id: number;
 }
 
 export interface SkuData {
