@@ -38,7 +38,7 @@
             ></p-number-input>
           </el-form-item>
           <el-form-item label="Seller">
-            <el-input disabled placeholder="wallet address" :value="ruleForm.seller"></el-input>
+            <el-input disabled placeholder="wallet address" :value="seller"></el-input>
           </el-form-item>
           <el-form-item label="PayToken">
             <el-input disabled placeholder="PayToken" :value="ruleForm.payToken"></el-input>
@@ -59,9 +59,9 @@
 </template>
 
 <script lang="ts" setup>
-import { Address } from '@wagmi/core';
+import { Address, getAccount } from '@wagmi/core';
 import { ElMessage, FormInstance } from 'element-plus';
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
@@ -79,6 +79,7 @@ const bizId = route.params.bizId as number;
 const nftAddress = route.params.nftAddress as Address;
 const retailAddress = route.params.retailAddress as Address;
 const retailId = route.params.retailId as number;
+const { address: seller } = getAccount();
 
 const { data: bizDetail } = useBusinessDetail(`${bizId}`);
 
@@ -95,6 +96,11 @@ const ruleForm = reactive({
   avatar: '',
   image: '',
   cover: '',
+});
+
+watch(bizDetail, () => {
+  console.log({ bizDetail });
+  ruleForm.payToken = bizDetail.value.payToken;
 });
 
 const rules = reactive({

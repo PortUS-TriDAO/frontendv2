@@ -1,7 +1,7 @@
 <template>
   <page-container class="pg-sku-detail">
-    <sku-card :loading="loading" v-if="data" :item="data">
-      <p-button @click="handleBuy(data)">Buy</p-button>
+    <sku-card :loading="loading" v-if="state.detail" :item="state.detail">
+      <p-button v-if="state.detail" @click="handleBuy(state.detail)">Buy</p-button>
     </sku-card>
 
     <div class="detail-divider"></div>
@@ -18,25 +18,40 @@
 </template>
 <script setup lang="ts">
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { reactive, ref, toRaw, watch } from 'vue';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import SkuCard from '@/components/sku-card/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useNftList, useSkuDetail } from '@/hooks';
+import { useNftList, useSkuDetail, useSkuList } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import type { SkuData } from '@/types';
+import { toBN } from '@/utils/bn';
 
 const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
-const nftAddress = computed(() => route.params.nftAddress as string);
-const tokenId = computed(() => route.params.tokenId as string);
+
+const state = reactive({
+  detail: {},
+});
+
+const retailId = computed(() => route.params.retailId as number);
+const skuId = computed(() => route.params.skuId as string);
+
 const projectStore = useProjectStore();
 
-const { data } = useSkuDetail(tokenId);
-const { data: nftList } = useNftList(nftAddress.value);
+const { data } = useSkuDetail(skuId);
+const { data: nftList } = useSkuList(retailId.value);
+
+watch(data, () => {
+  console.log('watch data', data);
+  if (data && data.value.length > 0) {
+    state.detail = data.value[0];
+    console.log('state.detail', data.value[0]);
+  }
+});
 
 function handleDetail(tokenId: number) {
   router.push(`/nft/${nftAddress.value}/${tokenId}`);
@@ -45,34 +60,28 @@ function handleDetail(tokenId: number) {
 function handleBuy(skuData: SkuData) {
   try {
     loading.value = true;
-    console.log('handleBuy', {
-      retailerAddress: data.value.retailerAddress,
-      params: {
-        seller: data.value.seller,
-        payToken: data.value.payToken,
-        payPrice: data.value.price,
-        nftTokenId: data.value.tokenId,
-        deadline: data.value.deadline,
-        signature: data.value.signature,
-      },
-      tokenId,
-    });
     console.log('handleBuy skuData==', skuData);
+    console.log('retaal', toRaw(skuData));
+
+    const info = toRaw(skuData);
+    console.log('info', info);
+    console.log('teklsdfjds', info.retailAddress);
     projectStore.buyMintedNft(
-      data.value.retailerAddress,
+      info.retailAddress,
       [
         {
-          seller: data.value.seller,
-          payToken: data.value.payToken,
-          payPrice: BigInt(data.value.price),
-          nftTokenId: data.value.tokenId,
-          deadline: data.value.deadline,
-          signature: data.value.signature,
+          seller: info.seller,
+          payToken: info.payToken,
+          payPrice: toBN(info.price).multipliedBy(1e18).toString(10),
+          nftTokenId: info.tokenId,
+          deadline: info.ddl,
+          signature: info.signature,
         },
       ],
-      Number(tokenId.value as string),
+      Number(skuId.value as string),
     );
   } catch (error) {
+    console.error(error);
     ElMessage.error('buy failed');
   } finally {
     loading.value = false;

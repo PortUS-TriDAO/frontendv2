@@ -50,10 +50,6 @@ export const postRetailCreate = (params: {
   avatar: string;
 }): Promise<IResponse> => axios.post('project/retail/create', params);
 
-// 查询SKU和SPU 列表
-// export const getSkuList = (params: { id: string }): Promise<IListResponse> =>
-//   axios.get('/project/skulist', { params });
-
 // 上架SKU
 export const publishSku = (params: {
   projectId: string;

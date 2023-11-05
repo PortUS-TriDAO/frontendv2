@@ -8,13 +8,13 @@
         v-for="item in nftList?.rows || []"
         :key="item.tokenId"
         :item="item"
-        @click="handleDetail(item.tokenId)"
+        @click="handleDetail(item.id)"
       />
     </div>
   </page-container>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, toRaw, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
@@ -30,25 +30,19 @@ import {
 
 const route = useRoute();
 const router = useRouter();
-const state = reactive({
-  nftList: [],
-});
 
 const retailId = route.params.retailId as number;
-const nftType = route.params.nftType as number;
+const nftType = Number(route.params.nftType);
 const { data } = useNftDetail(retailId, nftType);
 
-const { data: skuList } = useSkuList(retailId);
-const { data: spuList } = useSpuList(retailId);
+const { data: nftList } = nftType === 1 ? useSkuList(retailId) : useSpuList(retailId);
 
-if (nftType === 1) {
-  state.nftList = skuList.value;
-} else {
-  state.nftList = spuList.value;
-}
-
-function handleDetail(tokenId: number) {
-  router.push(`/nft/${nftAddress}/${tokenId}`);
+function handleDetail(id: number) {
+  if (Number(nftType) === 1) {
+    router.push(`/nft/sku/${retailId}/${id}`);
+  } else {
+    router.push(`/nft/spu/${retailId}/${id}`);
+  }
 }
 </script>
 <style lang="less" scoped>
