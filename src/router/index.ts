@@ -6,6 +6,7 @@ const mimeProjectList = () => import('../views/mine/MineProjectList.vue');
 const MineProjectDetail = () => import('../views/mine/MineProjectDetail.vue');
 const MineBusinessDetail = () => import('../views/mine/MineBusinessDetail.vue');
 const mimeMineNftDetail = () => import('../views/mine/MineNftDetail.vue');
+const mimeMineSpuDetail = () => import('../views/mine/MineSpu.vue');
 const MineSkuDetail = () => import('../views/mine/MineSkuDetail.vue');
 
 const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
@@ -26,6 +27,15 @@ const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
       // path: `/mine/${scenes}/nftdetail/:nftAddress/:projectId/:businessContractAddress?`,
       name: `Mine${capitalizedName}NftDetail`,
       component: mimeMineNftDetail,
+      meta: {
+        scenes,
+      },
+    },
+    {
+      // MineSpuDetail
+      path: `/mine/${scenes}/spu/:id`,
+      name: `Mine${capitalizedName}SpuDetail`,
+      component: mimeMineSpuDetail,
       meta: {
         scenes,
       },
