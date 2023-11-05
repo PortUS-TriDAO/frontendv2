@@ -29,7 +29,7 @@ interface ICreateProject {
 interface IBuyInfo {
   seller: Address;
   payToken: Address;
-  payPrice: string;
+  payPrice: string | BigInt;
   nftTokenId: number;
   deadline: number;
   signature: string;
@@ -167,7 +167,7 @@ export const useProjectStore = defineStore('project', () => {
     const { address: seller } = getAccount();
 
     return projectApi.publishSku({
-      projectId,
+      projectId: projectId.toString(),
       bizId,
       retailId,
       tokenId: nftTokenId,

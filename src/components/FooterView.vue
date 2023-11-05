@@ -2,7 +2,7 @@
   <div class="page-footer">
     <div class="footer-container">
       <div class="logo"></div>
-      <div>
+      <div class="footer-right">
         <!-- <span>List of services that we’re using to calculate data:</span> -->
         <span> © 2023 PortUS </span>
         <span class="icons">
@@ -41,13 +41,18 @@
       opacity: 0.8;
       margin-left: 24px;
     }
+    .footer-right {
+      display: inline-flex;
+      align-items: center;
+    }
     .icons {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
       > a {
         display: inline-block;
         width: 25px;
         line-height: 25px;
-        margin-right: 10px;
       }
       .icon-discord {
         background: url('@/assets/images/icon-discord.png') center center no-repeat;
