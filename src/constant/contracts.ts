@@ -1,3 +1,5 @@
+import type { Address } from '@/types';
+
 export const ContractAddress = {
   1: {
     router: 'mainnet router',
@@ -19,3 +21,13 @@ export const SelectTokenList = [
     value: '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964',
   },
 ];
+
+export const PayTokenMap: Record<Address, { symbol: string }> = SelectTokenList.reduce(
+  (prev, item) => {
+    prev[item.value] = {
+      symbol: item.label,
+    };
+    return prev;
+  },
+  {},
+);
