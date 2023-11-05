@@ -20,6 +20,7 @@ import {
   getProjectDetail,
   getProjects,
   getSkuDetail,
+  // getSkuDetails,
   getSubmittedProjects,
 } from '../api';
 

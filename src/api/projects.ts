@@ -41,19 +41,6 @@ export const getBusinessDetail = (params: {
   bizId: string;
 }): Promise<IResponse<BusinessDetailData>> => axios.get('/project/biz/detail', { params });
 
-export const postDeployedContract = (params: {
-  nftAddress: string;
-  nftType: 1 | 2; // 1: minted nft 2: unminted nft
-  contractAddress: string;
-}): Promise<IResponse> => axios.post('/project/contract/deploy', params);
-
-// 提交项目已经mint过
-export const postProjectMint = (params: {
-  projectId: string;
-  bizId: number;
-  contractAddress: string;
-}): Promise<IResponse> => axios.post('/project/biz/mint', params);
-
 export const postRetailCreate = (params: {
   projectId: string;
   bizId: number;
@@ -98,3 +85,11 @@ export const publishSpu = (params: {
   cover: string;
   signature: string;
 }): Promise<IResponse> => axios.post('/project/spu/publish', params);
+
+// KOL mint 完以后通知服务端
+export const kolMint = (params: {
+  projectId: number;
+  bizId: number;
+  kolAddress: string;
+  rightId: number;
+}): Promise<IResponse> => axios.post('/project/kol/mint', params);

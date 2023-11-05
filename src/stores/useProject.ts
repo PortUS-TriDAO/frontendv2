@@ -5,7 +5,6 @@ import { reactive } from 'vue';
 
 import RETAILER_ABI from '@/abi/retailer.abi.json';
 import * as projectApi from '@/api/projects';
-import { postRetailCreate } from '@/api/projects';
 import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
@@ -122,7 +121,7 @@ export const useProjectStore = defineStore('project', () => {
       bizId: Number(bizId),
       retailAddress: contractAddress,
       nftAddress,
-      nftType: 1,
+      nftType: 2,
       avatar: '',
     });
 
@@ -261,26 +260,26 @@ export const useProjectStore = defineStore('project', () => {
     });
   }
 
-  async function mint(projectAddress: Address, projectId: string) {
-    console.log('mint ...', projectAddress);
+  async function mint(projectAddress: Address, projectId: number, bizId: number) {
     const projectContract = useProjectContract();
     const tx = await projectContract.referrerSign(projectAddress);
     await waitForTransaction({ hash: tx.hash });
-    // 查询tokenId
 
     // 查询tokenID
-    const { address } = await getAccount();
+    const { address: kolAddress } = await getAccount();
     const rightsContract = useRightsContract();
     const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
     const tokenId = (await rightsContract.tokenOfOwnerByIndex(
       rightsContractAddress,
-      address,
+      kolAddress,
     )) as number;
+
     // 将mint信息保存到后端
-    await projectApi.postProjectMint({
+    await projectApi.kolMint({
       projectId,
-      bizId: tokenId,
-      contractAddress: rightsContractAddress,
+      bizId,
+      kolAddress,
+      rightId: tokenId.toString(),
     });
   }
 
