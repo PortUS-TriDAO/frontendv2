@@ -261,7 +261,7 @@ export const useProjectStore = defineStore('project', () => {
 
     console.log({
       buyParams,
-      nftTokenId,
+      kolTokenId,
     });
 
     await writeContract({
@@ -269,7 +269,7 @@ export const useProjectStore = defineStore('project', () => {
       abi: RETAILER_ABI,
       functionName: 'buy',
       // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
-      args: [buyParams, nftTokenId],
+      args: [buyParams, kolTokenId],
     });
   }
 

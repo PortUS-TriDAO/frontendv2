@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { getAccount } from '@wagmi/core';
-import { computed } from 'vue';
+import { computed, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import ProjectItem from '@/components/project-item/index.vue';
@@ -70,9 +70,10 @@ const map = {
   store: {
     title: '',
     btnText: 'Share Project',
-    btnClick: () => {
+    btnClick: (item: ProjectItem) => {
       // TODO: edit
-      shareProject(account);
+      const projectInfo = toRaw(item);
+      shareProject(account, projectInfo.projectId);
     },
     bottomBtn: {
       text: 'share My Store',

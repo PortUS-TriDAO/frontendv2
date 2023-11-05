@@ -61,6 +61,7 @@ function handleDetail(nftContractData: NftContractData) {
     nftAddress: nftContractData.nftAddress,
     retailAddress: nftContractData.retailAddress,
     avatar: nftContractData.avatar,
+    bizId: bizId,
   };
 
   router.push({
@@ -84,6 +85,7 @@ function handleDetail(nftContractData: NftContractData) {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     > h2 {
       height: 40px;
       font-size: 34px;
@@ -93,18 +95,22 @@ function handleDetail(nftContractData: NftContractData) {
       color: #000000;
       text-align: center;
       vertical-align: top;
+
       > strong {
         font-weight: 900;
         margin-right: 19px;
       }
+
       > span {
         font-weight: 900;
         color: rgba(250, 101, 41, 1);
       }
     }
   }
+
   .business-mint {
     position: relative;
+
     > button {
       position: absolute;
       right: 0;
@@ -116,6 +122,7 @@ function handleDetail(nftContractData: NftContractData) {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+
   .list {
     .list-title {
       height: 29px;
