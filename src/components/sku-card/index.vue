@@ -14,7 +14,7 @@
         <div>#{{ item.tokenId }}</div>
         <div>{{ item.price }} USDT</div>
         <div>
-          {{ item.deadline ? dayjs(item.deadline * 1000).format('YYYY-MM-DD HH:mm') : '' }}
+          {{ item.ddl ? dayjs(item.ddl * 1000).format('YYYY-MM-DD HH:mm') : '' }}
         </div>
       </div>
       <div class="card-action">
@@ -40,6 +40,7 @@ import type { SkuData } from '@/types';
 defineOptions({ name: 'SkuItem' });
 defineProps<{ item: SkuData; size?: 'small' }>();
 const emit = defineEmits(['buy']);
+
 function buy(item: SkuData) {
   emit('buy', item);
 }
@@ -70,6 +71,7 @@ function buy(item: SkuData) {
       border-radius: 10px;
       flex-shrink: 0;
     }
+
     .card-desc {
       flex-grow: 1;
       display: flex;
@@ -77,11 +79,13 @@ function buy(item: SkuData) {
       gap: 20px;
       padding-top: 10px;
     }
+
     h3 {
       font-weight: 700;
       color: #000000;
       font-size: inherit;
     }
+
     div {
       font-size: inherit;
     }
@@ -113,11 +117,13 @@ function buy(item: SkuData) {
     line-height: 22px;
     color: #fff;
   }
+
   &.sku-card--small {
     .detail-card > img {
       width: 100px;
       height: 100px;
     }
+
     .detail-card .card-desc {
       gap: 10px;
     }

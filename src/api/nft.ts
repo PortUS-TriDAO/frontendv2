@@ -20,8 +20,8 @@ export const getRetailContracts = (params: { bizId: string }): Promise<IResponse
   axios.get('/mine/retailcontracts', { params });
 
 // 查询sku详情
-export const getSkuDetail = (params: { skuId: number }): Promise<IResponse<SpuData>> =>
-  axios.get('/project/spu/detail', { params });
+export const getSkuDetail = (params: { skuId: number }): Promise<IResponse<SkuData>> =>
+  axios.get('/project/sku/detail', { params });
 
 // 查询SPU详情
 export const getSpuDetail = (params: { spuId: number }): Promise<IResponse<SpuData[]>> =>

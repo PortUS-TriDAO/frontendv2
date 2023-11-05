@@ -6,6 +6,7 @@ import { reactive } from 'vue';
 import RETAILER_ABI from '@/abi/retailer.abi.json';
 import * as projectApi from '@/api/projects';
 import { useDeployerContractStore } from '@/stores/useDeployerContract';
+import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 import { toBN } from '@/utils/bn';
@@ -28,7 +29,7 @@ interface ICreateProject {
 interface IBuyInfo {
   seller: Address;
   payToken: Address;
-  payPrice: bigint;
+  payPrice: string;
   nftTokenId: number;
   deadline: number;
   signature: string;
@@ -151,7 +152,7 @@ export const useProjectStore = defineStore('project', () => {
   }) {
     // approve NFT
     const nftContract = useNftContract();
-    const approveTx = nftContract.approve(nftAddress, retailerAddress, nftTokenId);
+    const approveTx = await nftContract.approve(nftAddress, retailerAddress, nftTokenId);
     await waitForTransaction({ hash: approveTx.hash });
 
     // const { payToken } = data;
@@ -246,6 +247,13 @@ export const useProjectStore = defineStore('project', () => {
     buyNftParams: IBuyInfo[],
     kolTokenId: number,
   ) {
+    if (buyNftParams.length === 0) throw new Error('Invalid params');
+    // approve erc20
+    const { payToken, payPrice } = buyNftParams[0];
+    const erc20Contract = useERC20Contract();
+    const approveTx = await erc20Contract.approve(payToken, retailerContract, payPrice);
+    await waitForTransaction(approveTx);
+
     const buyParams = buyNftParams.map((item) => {
       const { r, s, v } = splitSignature(item.signature);
       return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
