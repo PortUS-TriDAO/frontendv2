@@ -1,26 +1,29 @@
 <template>
-  <div class="pg-mime-spu-detail" :bannerImg="bannerImg">
+  <div class="pg-mime-spu-detail">
     <div class="banner">
-      <img alt="cover" class="bg" :src="bannerImg" />
-      <img alt="avatar" class="avatar" :src="avatar" />
+      <img alt="cover" class="bg" :src="data?.[0]?.cover" />
+      <img alt="avatar" class="avatar" :src="data?.[0]?.avatar" />
       <template v-if="scenes === 'submitted'">
-        <p-button @click="handleEdit">Edit Project</p-button>
+        <p-button @click="handleDown">Down</p-button>
       </template>
     </div>
-    <div class="project-detail">
-      <div class="detail-row">
-        <div>
-          <h3>Echo of Intensity</h3>
-          <a>website</a>
-        </div>
+    <div class="detail">
+      <h3>Echo of Intensity</h3>
+      <div>{{ data?.[0]?.retailAddress }}</div>
+      <div>{{ data?.[0]?.price }} USDT</div>
+      <div>minted NFT</div>
+      <div>{{ dayjs(data?.[0]?.ddl * 1000).format('YYYY-MM-DD HH:mm') }}</div>
+    </div>
+    <div class="description">
+      <div>
+        {{ data?.[0]?.briefIntro }}
       </div>
-      <p>
-        Dreamed of moonshots but awoke to a capitulation... Welcome to the home of Echo of Intensity
-        by Per Kr...
-      </p>
+      <text-ellipsis>
+        {{ data?.[0]?.description }}
+      </text-ellipsis>
     </div>
     <div class="detail-divider"></div>
-    <div class="list">
+    <!-- <div class="list">
       <div class="item">
         <div class="item-detail">
           <h3>Echo of Intensity</h3>
@@ -44,34 +47,36 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts">
+import dayjs from 'dayjs';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import avatar from '@/assets/images/demo-avatar.png';
-import { useSpuDetail } from '@/hooks';
+import { useSpuDetail, useSpuList } from '@/hooks';
 
 import bannerImg from './assets/banner.png';
 
 const route = useRoute();
-const router = useRouter();
+// const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
-const spuId = computed(() => Number(route.params.id));
+const spuId = computed(() => Number(route.params.spuId));
+// const retailId = computed(() => Number(route.params.retailId));
 
 const { data } = useSpuDetail(spuId);
-console.log('data==', data);
+// const { data: spuList } = useSpuList(retailId.value);
 // spuId
 
-function handleDetail(businessId: string) {
-  const { id } = route.params;
-  router.push(`/project/${id}/${businessId}`);
-}
+// function handleDetail(businessId: string) {
+//   const { id } = route.params;
+//   router.push(`/project/${id}/${businessId}`);
+// }
 
-function handleEdit() {
-  console.log('handleEdit...');
+function handleDown() {
+  console.log('handleDown...');
   // const { id } = route.params;
   // router.push(`/project/${id}/${businessId}`);
 }
@@ -110,37 +115,44 @@ function handleEdit() {
       z-index: 2;
     }
   }
-  .project-detail {
-    padding: 15px 30px 0;
+  .detail {
+    padding: 15px 30px 15px;
     font-size: 24px;
     letter-spacing: 0px;
     line-height: 28px;
     font-weight: 400;
+    // height: 280px;
+    background: #f7f7f7;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
-    .detail-row {
-      display: flex;
-      gap: 26px;
-      margin-bottom: 16px;
-
-      > img {
-        width: 200px;
-        height: 200px;
-        margin-top: -100px;
-      }
-      h3 {
-        font-weight: 700;
-        color: #000000;
-        margin-bottom: 16px;
-        font-size: inherit;
-      }
-      p {
-        font-size: inherit;
-      }
-      a {
-        font-weight: 400;
-        font-size: inherit;
-      }
+    > img {
+      width: 200px;
+      height: 200px;
+      margin-top: -100px;
     }
+    h3 {
+      font-weight: 700;
+      color: #000000;
+      margin-bottom: 16px;
+      font-size: inherit;
+    }
+    p {
+      font-size: inherit;
+    }
+  }
+  .description {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #000000;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 20px;
   }
   .detail-divider {
     margin: 20px 0;

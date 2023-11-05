@@ -87,18 +87,12 @@ function handleDetail(nftContractData: NftContractData) {
     nftAddress: nftContractData.nftAddress,
     retailAddress: nftContractData.retailAddress,
     avatar: nftContractData.avatar,
+    nftType: nftContractData.nftType,
   };
-  if (nftContractData.nftType === NftType.SKU) {
-    router.push({
-      path: `/mine/${scenes.value}/nftdetail/${nftContractData.id}`,
-      query,
-    });
-  } else {
-    router.push({
-      path: `/mine/${scenes.value}/spu/${nftContractData.id}`,
-      query,
-    });
-  }
+  router.push({
+    path: `/mine/${scenes.value}/nftdetail/${nftContractData.id}`,
+    query,
+  });
 }
 
 function handleMintMore() {

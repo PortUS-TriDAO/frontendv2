@@ -80,6 +80,7 @@ export interface NftContractData {
 }
 
 export interface SkuData {
+  id: number;
   tokenId: number;
   nftName: string;
   avatar: string;
@@ -93,4 +94,21 @@ export interface SkuData {
   seller: Address;
   signature: string;
   retailerAddress: Address;
+}
+
+export interface SpuData {
+  id: number;
+  avatar: string;
+  briefIntro: string;
+  cover: string;
+  ddl: number;
+  description: string;
+  image: string;
+  isHide: number;
+  nftQuantity: number;
+  payToken: Address;
+  price: number;
+  retailAddress: Address;
+  seller: Address;
+  signature: string;
 }

@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
 import { getAccount } from '@wagmi/core';
-import { type ComputedRef, watch } from 'vue';
+import { type ComputedRef, type Ref, watch } from 'vue';
 
 import type {
   BusinessDetailData,
@@ -10,12 +10,13 @@ import type {
   ProjectData,
   ProjectDetailData,
   SkuData,
+  SpuData,
 } from '@/types';
 
 import {
   getBusinessDetail,
   getNftDetail,
-  getNftList,
+  // getNftList,
   getParticipateProjects,
   getProjectDetail,
   getProjects,
@@ -103,9 +104,9 @@ export function useNftList(
   limit?: number,
 ): UseQueryReturnType<PageData<SkuData>, Error> {
   const result = useQuery({
-    queryKey: ['getNftList', retailId],
+    queryKey: ['getSkuList', retailId, page, limit],
     queryFn: async () => {
-      const res = await getNftList({ retailId, page, limit });
+      const res = await getSkuList({ retailId, page, limit });
       if (res.success) {
         return res.data;
       }
@@ -115,7 +116,7 @@ export function useNftList(
   return result;
 }
 
-export function useSkuDetail(skuId: ComputedRef<string>): UseQueryReturnType<SkuData, Error> {
+export function useSkuDetail(skuId: ComputedRef<number>): UseQueryReturnType<SkuData, Error> {
   const result = useQuery({
     queryKey: ['getSkuDetail', skuId.value],
     queryFn: async () => {
@@ -137,11 +138,15 @@ export function useSkuDetail(skuId: ComputedRef<string>): UseQueryReturnType<Sku
   return result;
 }
 
-export function useSkuList(retailId: number): UseQueryReturnType<PageData<SkuData>, Error> {
+export function useSkuList(
+  retailId: number,
+  page?: number,
+  limit?: number,
+): UseQueryReturnType<PageData<SkuData>, Error> {
   const result = useQuery({
-    queryKey: ['getSkuList', retailId],
+    queryKey: ['getSkuList', retailId, page, limit],
     queryFn: async () => {
-      const res = await getSkuList({ retailId: retailId });
+      const res = await getSkuList({ retailId: retailId, page, limit });
       if (!res.success) return null;
       return res.data;
     },
@@ -150,11 +155,15 @@ export function useSkuList(retailId: number): UseQueryReturnType<PageData<SkuDat
   return result;
 }
 
-export function useSpuList(retailId: number): UseQueryReturnType<PageData<SkuData>, Error> {
+export function useSpuList(
+  retailId: number,
+  page?: number,
+  limit?: number,
+): UseQueryReturnType<PageData<SpuData>, Error> {
   const result = useQuery({
-    queryKey: ['getSpuList', retailId],
+    queryKey: ['getSpuList', retailId, page, limit],
     queryFn: async () => {
-      const res = await getSpuList({ retailId: retailId });
+      const res = await getSpuList({ retailId: retailId, page, limit });
       if (!res.success) return null;
       return res.data;
     },
@@ -163,7 +172,7 @@ export function useSpuList(retailId: number): UseQueryReturnType<PageData<SkuDat
   return result;
 }
 
-export function useSpuDetail(spuId: ComputedRef<string>): UseQueryReturnType<SkuData, Error> {
+export function useSpuDetail(spuId: ComputedRef<number>): UseQueryReturnType<SpuData[], Error> {
   const result = useQuery({
     queryKey: ['getSpuDetail', spuId.value],
     queryFn: async () => {

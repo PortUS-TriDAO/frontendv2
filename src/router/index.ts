@@ -14,9 +14,18 @@ const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
   return [
     {
       // MineTokenDetail
-      path: `/mine/${scenes}/nft/:nftAddress/:tokenId`,
-      name: `Mine${capitalizedName}TokenDetail`,
+      path: `/mine/${scenes}/sku/:retailId/:skuId`,
+      name: `Mine${capitalizedName}SkuDetail`,
       component: MineSkuDetail,
+      meta: {
+        scenes,
+      },
+    },
+    {
+      // MineSpuDetail
+      path: `/mine/${scenes}/spu/:retailId/:spuId`,
+      name: `Mine${capitalizedName}SpuDetail`,
+      component: mimeMineSpuDetail,
       meta: {
         scenes,
       },
@@ -27,15 +36,6 @@ const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
       // path: `/mine/${scenes}/nftdetail/:nftAddress/:projectId/:businessContractAddress?`,
       name: `Mine${capitalizedName}NftDetail`,
       component: mimeMineNftDetail,
-      meta: {
-        scenes,
-      },
-    },
-    {
-      // MineSpuDetail
-      path: `/mine/${scenes}/spu/:id`,
-      name: `Mine${capitalizedName}SpuDetail`,
-      component: mimeMineSpuDetail,
       meta: {
         scenes,
       },

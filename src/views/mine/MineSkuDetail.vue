@@ -12,10 +12,10 @@
     <div class="list">
       <sku-item
         v-for="item in nftList?.rows || []"
-        :key="item.tokenId"
+        :key="item.id"
         :item="item"
         class="cursor"
-        @click="handleDetail(item.tokenId)"
+        @click="handleDetail(item.id)"
       />
     </div>
   </div>
@@ -26,17 +26,17 @@ import { useRoute, useRouter } from 'vue-router';
 
 import SkuCard from '@/components/sku-card/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useNftList, useSkuDetail } from '@/hooks';
+import { useSkuDetail, useSkuList } from '@/hooks';
 import type { SkuData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
-const nftAddress = computed(() => route.params.nftAddress as string);
-const tokenId = computed(() => route.params.tokenId as string);
+const retailId = computed(() => Number(route.params.retailId));
+const skuId = computed(() => Number(route.params.skuId));
 
-const { data } = useSkuDetail(tokenId);
-const { data: nftList } = useNftList(nftAddress.value);
+const { data } = useSkuDetail(skuId);
+const { data: nftList } = useSkuList(retailId.value);
 
 // watch(
 //   () => tokenId.value,
@@ -61,8 +61,8 @@ function handleEdit() {
   // TODO: handleEdit
   console.log('handleEdit skuData==');
 }
-function handleDetail(tokenId: number) {
-  router.push(`/mine/${scenes.value}/nft/${nftAddress.value}/${tokenId}`);
+function handleDetail(skuId: number) {
+  router.push(`/mine/${scenes.value}/sku/${retailId.value}/${skuId}`);
 }
 </script>
 <style lang="less" scoped>

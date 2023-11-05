@@ -18,9 +18,9 @@
     <div class="list">
       <SkuItem
         v-for="(item, index) in nftList?.rows || []"
-        :key="item.tokenId"
+        :key="item.id"
         :item="item"
-        @click="handleDetail(item.tokenId)"
+        @click="handleDetail(item.id)"
       >
         <template v-if="scenes === 'submitted'" v-slot:actions>
           <!-- 需要添加状态判断 -->
@@ -47,7 +47,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useNftDetail, useNftList } from '@/hooks';
+import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import { type Address, type NftContractData, NftType, type SkuData } from '@/types';
 
@@ -58,6 +58,7 @@ const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
 
 const nftId = computed(() => Number(route.params.id));
+const nftType = computed(() => Number(route.query.nftType));
 const nftAddress = computed(() => route.query.nftAddress as string);
 const projectId = computed(() => route.query.projectId as string);
 const businessContractAddress = computed(() => route.query.bizAddress as string);
@@ -73,7 +74,7 @@ const data: NftContractData = {
   avatar: route.query.avatar as string,
   nftID: '',
   name: '',
-  nftType: 1,
+  nftType: nftType.value,
   // 随意填写一个
   bizId: 1111,
   retailAddress: route.params.retailAddress as Address,
@@ -81,12 +82,17 @@ const data: NftContractData = {
 };
 
 // const { data } = useNftDetail(nftId.value, NftType.SKU);
-const { data: nftList } = useNftList(nftId.value, 1, 25);
+const { data: nftList } =
+  nftType.value === NftType.SKU ? useSkuList(nftId.value, 1, 25) : useSpuList(nftId.value);
 
 console.log('nftList=', nftList);
 
-function handleDetail(tokenId: number) {
-  router.push(`/mine/${scenes.value}/nft/${nftAddress.value}/${tokenId}`);
+function handleDetail(id: number) {
+  if (nftType.value === NftType.SKU) {
+    router.push(`/mine/${scenes.value}/sku/${nftId.value}/${id}`);
+  } else {
+    router.push(`/mine/${scenes.value}/spu/${nftId.value}/${id}`);
+  }
 }
 async function handleWithdraw() {
   // TODO: handleWithdraw
@@ -141,7 +147,7 @@ function handleAddNft() {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    // justify-content: space-between;
     gap: 12px;
     > div {
       cursor: pointer;

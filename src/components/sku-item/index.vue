@@ -1,10 +1,8 @@
 <template>
   <div class="sku-item">
     <img alt="avatar" :src="item.avatar" />
-    <h3>{{ item.nftName }}</h3>
-    <div>
-      {{ item.price }}
-    </div>
+    <!-- <h3>{{ item?.nftName }}</h3> -->
+    <div>{{ item.price }} {{ PayTokenMap[item.payToken]?.symbol }}</div>
     <text-ellipsis :line="3" hideAction>
       {{ item.briefIntro }}
     </text-ellipsis>
@@ -12,10 +10,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { SkuData } from '@/types';
+import { PayTokenMap } from '@/constant/contracts';
+import type { SkuData, SpuData } from '@/types';
 
 defineProps<{
-  item: SkuData;
+  item: SkuData | SpuData;
 }>();
 </script>
 <style lang="less">
