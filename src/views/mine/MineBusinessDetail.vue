@@ -25,8 +25,8 @@
           <div class="flex-between">
             <h4>balance</h4>
             <p-button :loading="loading" @click="handleWithdraw" round size="small"
-              >withdraw</p-button
-            >
+              >withdraw
+            </p-button>
           </div>
           <div>xx USDT</div>
         </div>
@@ -61,7 +61,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { waitForTransaction } from '@wagmi/core';
+import { getAccount, waitForTransaction } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -70,6 +70,7 @@ import NftContractItem from '@/components/nft-contract-item/index.vue';
 import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import { type NftContractData, NftType } from '@/types';
+import { shareContract } from '@/utils/share';
 
 const loading = ref(false);
 const projectStore = useProjectStore();
@@ -79,6 +80,7 @@ const scenes = computed(() => route.meta.scenes);
 const projectId = computed(() => route.params.projectId as string);
 const businessId = computed(() => route.params.businessId as string);
 const { data } = useBusinessDetail(businessId.value);
+const { address: account } = getAccount();
 
 function handleDetail(nftContractData: NftContractData) {
   const query = {
@@ -103,6 +105,8 @@ function handleMintMore() {
 
 function handleShare() {
   // TODO: handleShare
+  console.log('handleShare:', projectId.value);
+  shareContract(account, Number(projectId.value), Number(businessId.value));
 }
 
 function handleAddNft(nftContractData: NftContractData) {

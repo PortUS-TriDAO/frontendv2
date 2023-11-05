@@ -12,7 +12,9 @@
       >
         <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
-            <p-button size="small" round v-on:click="handleBuy(item)"> Buy Now </p-button>
+            <p-button :loading="loading" size="small" round v-on:click="handleBuy(item)">
+              Buy Now
+            </p-button>
           </div>
         </template>
       </SkuItem>
@@ -20,22 +22,32 @@
   </page-container>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
+import { useKolRightId, useNftDetail, useSkuList, useSpuList } from '@/hooks';
+import { useProjectStore } from '@/stores/useProject';
 import { type Address, type NftContractData, NftType, type SkuData, type SpuData } from '@/types';
+import { extendsDecimals } from '@/utils/bn';
 
+const projectStore = useProjectStore();
 const route = useRoute();
 const router = useRouter();
 const kolAddress = route.params.kolAddress as Address;
 const retailId = Number(route.params.retailId);
 const nftType = Number(route.params.nftType);
-// const projectId = computed(() => route.params.projectId);
+const retailerAddress = route.query.retailAddress as Address;
+const bizId = Number(route.query.bizId);
 
-// const { data } = useNftDetail(nftAddress.value as string);
+console.log('retailerAddress', {
+  retailerAddress,
+  bizId,
+  kolAddress,
+  nftType,
+});
+const loading = ref(false);
 const data: NftContractData = {
   nftAddress: route.query.nftAddress as Address,
   avatar: route.query.avatar as string,
@@ -49,8 +61,8 @@ const data: NftContractData = {
 };
 const { data: nftList } =
   nftType === NftType.SKU ? useSkuList(retailId, 1, 25) : useSpuList(retailId);
-
-console.log('nftList=', nftList);
+const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
+console.log('kolRightInfo', kolRightInfo);
 
 function handleDetail(id: number) {
   if (nftType === NftType.SKU) {
@@ -61,9 +73,32 @@ function handleDetail(id: number) {
   // router.push(`/store/${kolAddress}/sku/${nftAddress.value}/${tokenId}`);
 }
 
-function handleBuy(item: SkuData | SpuData) {
+async function handleBuy(item: SkuData | SpuData) {
   // TODO: buy
-  console.log('handleBuy item:', item);
+  console.log('handleBuyahah item:', item);
+  const itemInfo = toRaw(item);
+  loading.value = true;
+  try {
+    const buyParams = {
+      seller: itemInfo.seller,
+      payToken: itemInfo.payToken,
+      payPrice: extendsDecimals(itemInfo.price).toString(10),
+      nftTokenId: itemInfo.tokenId,
+      deadline: itemInfo.ddl,
+      signature: itemInfo.signature,
+    };
+    console.log('params', {
+      retailerAddress,
+      buyNftParams: [buyParams],
+      kolTokenId: kolRightInfo.value.rightId,
+    });
+    console.log('buy params', buyParams);
+    await projectStore.buyMintedNft(retailerAddress, [buyParams], kolRightInfo.value.rightId);
+  } catch (e) {
+    console.error(e);
+  } finally {
+    loading.value = false;
+  }
   // router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
 }
 </script>
@@ -73,6 +108,7 @@ function handleBuy(item: SkuData | SpuData) {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+
   .list-title {
     font-size: 24px;
     font-weight: 700;
@@ -80,10 +116,12 @@ function handleBuy(item: SkuData | SpuData) {
     color: #000;
     margin: 0 0 14px 0;
   }
+
   .list {
     display: flex;
     flex-direction: row;
     gap: 12px;
+
     > div {
       cursor: pointer;
     }

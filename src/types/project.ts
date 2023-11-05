@@ -116,3 +116,11 @@ export interface SpuData {
   seller: Address;
   signature: string;
 }
+
+export interface RightData {
+  id: number;
+  projectId: number;
+  bizId: number;
+  kolAddress: string;
+  rightId: number;
+}

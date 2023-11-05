@@ -89,3 +89,6 @@ export const kolMint = (params: {
   kolAddress: string;
   rightId: number;
 }): Promise<IResponse> => axios.post('/project/kol/mint', params);
+
+export const getkolRightId = (params: { bizId: number; kolAddress: string }) =>
+  axios.get('/project/kol/rightid', { params });

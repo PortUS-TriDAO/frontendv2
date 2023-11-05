@@ -6,11 +6,11 @@
           <label>balance:</label>
           <span>xxx USDT</span>
         </div>
-        <p-button @click="handleWithdraw"> Withdraw </p-button>
+        <p-button @click="handleWithdraw"> Withdraw</p-button>
       </div>
       <div v-else-if="scenes === 'store'" class="flex-between">
         <div></div>
-        <p-button @click="handleShareNFT"> Share NFT </p-button>
+        <!--        <p-button @click="handleShareNFT"> Share NFT</p-button>-->
       </div>
     </nft-contract-item>
     <div class="detail-divider"></div>
@@ -27,10 +27,10 @@
           <p-button v-if="index % 2 === 0" round size="small" @click="handleUp(item)">
             Up
           </p-button>
-          <p-button v-else round size="small" @click="handleDown(item)"> Down </p-button>
+          <p-button v-else round size="small" @click="handleDown(item)"> Down</p-button>
         </template>
         <template v-else-if="scenes === 'store'" v-slot:actions>
-          <p-button round size="small" @click="handleShareToken(item)"> Share </p-button>
+          <p-button round size="small" @click="handleShareToken(item)"> Share</p-button>
         </template>
       </SkuItem>
     </div>
@@ -40,7 +40,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { waitForTransaction } from '@wagmi/core';
+import { getAccount, waitForTransaction } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -56,6 +56,7 @@ const projectStore = useProjectStore();
 const route = useRoute();
 const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
+const { address: account } = getAccount();
 
 const nftId = computed(() => Number(route.params.id));
 const nftType = computed(() => Number(route.query.nftType));
@@ -94,6 +95,7 @@ function handleDetail(id: number) {
     router.push(`/mine/${scenes.value}/spu/${nftId.value}/${id}`);
   }
 }
+
 async function handleWithdraw() {
   // TODO: handleWithdraw
   console.log('handleUp, itemhhh');
@@ -108,10 +110,13 @@ async function handleWithdraw() {
     loading.value = false;
   }
 }
+
 function handleShareNFT() {
   // TODO: handleSharePage
   console.log('handleShareNFT');
+  // shareNft(account, projectId);
 }
+
 function handleShareToken(item: SkuData) {
   // TODO: handleShareToken
   console.log('handleShareToken, item', item);
@@ -124,6 +129,7 @@ function handleDown(item: SkuData | SpuData) {
   // TODO: handleDown
   console.log('handleDown, item', item);
 }
+
 function handleAddNft() {
   // TODO: handleAddNft
   console.log('handleAddNft...');
@@ -136,6 +142,7 @@ function handleAddNft() {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+
   .list-title {
     font-size: 24px;
     font-weight: 700;
@@ -143,12 +150,14 @@ function handleAddNft() {
     color: #000;
     margin: 0 0 14px 0;
   }
+
   .list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     // justify-content: space-between;
     gap: 12px;
+
     > div {
       cursor: pointer;
     }

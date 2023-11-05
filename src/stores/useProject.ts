@@ -249,7 +249,7 @@ export const useProjectStore = defineStore('project', () => {
   ) {
     if (buyNftParams.length === 0) throw new Error('Invalid params');
     // approve erc20
-    const { payToken, payPrice } = buyNftParams[0];
+    const { payToken, payPrice, nftTokenId } = buyNftParams[0];
     const erc20Contract = useERC20Contract();
     const approveTx = await erc20Contract.approve(payToken, retailerContract, payPrice);
     await waitForTransaction(approveTx);
@@ -257,6 +257,11 @@ export const useProjectStore = defineStore('project', () => {
     const buyParams = buyNftParams.map((item) => {
       const { r, s, v } = splitSignature(item.signature);
       return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
+    });
+
+    console.log({
+      buyParams,
+      kolTokenId,
     });
 
     await writeContract({

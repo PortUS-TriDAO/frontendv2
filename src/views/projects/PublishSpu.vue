@@ -53,7 +53,9 @@
           </el-form-item>
         </el-form>
       </div>
-      <p-wallet-button class="btn" @click="handleSave(ruleFormRef)">Save</p-wallet-button>
+      <p-wallet-button :loading="loading" class="btn" @click="handleSave(ruleFormRef)"
+        >Save</p-wallet-button
+      >
     </div>
   </main-content>
 </template>
@@ -144,8 +146,8 @@ async function publishSpu() {
       cover: ruleForm.cover,
     });
     if (!success) throw new Error(data);
-
     ElMessage.success('Publish spu success');
+    router.push('/project/addnft/success');
   } catch (error) {
     ElMessage.error('publish spu failed');
   } finally {

@@ -9,12 +9,14 @@ import type {
   PageData,
   ProjectData,
   ProjectDetailData,
+  RightData,
   SkuData,
   SpuData,
 } from '@/types';
 
 import {
   getBusinessDetail,
+  getkolRightId,
   getNftDetail,
   // getNftList,
   getParticipateProjects,
@@ -202,5 +204,20 @@ export function useProjectDetail(projectId: string): UseQueryReturnType<ProjectD
     },
   });
   console.log({ useProjectDetail: result });
+  return result;
+}
+
+export function useKolRightId(
+  bizId: number,
+  kolAddress: string,
+): UseQueryReturnType<RightData, Error> {
+  const result = useQuery({
+    queryKey: ['getkolRightId', bizId, kolAddress],
+    queryFn: async () => {
+      const { success, data } = await getkolRightId({ bizId, kolAddress });
+      if (!success) throw new Error('query kol rightId failed');
+      return data;
+    },
+  });
   return result;
 }

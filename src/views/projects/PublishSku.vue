@@ -49,6 +49,7 @@ import { useRoute } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
 import { useBusinessDetail } from '@/hooks';
+import router from '@/router';
 import { useProjectStore } from '@/stores/useProject';
 import { toBN } from '@/utils/bn';
 
@@ -106,6 +107,7 @@ async function publishSku() {
     });
     if (!success) throw new Error(data as string);
     ElMessage.success('Publish sku success');
+    router.push('/project/addnft/success');
   } catch (error) {
     console.log('Publish sku failed', error);
     ElMessage.error('Publish sku failed');
