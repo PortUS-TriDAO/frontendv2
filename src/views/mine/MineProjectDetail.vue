@@ -42,7 +42,7 @@
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { waitForTransaction } from '@wagmi/core';
+import { getAccount, waitForTransaction } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -51,10 +51,13 @@ import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
+import { shareContract } from '@/utils/share';
 
 const route = useRoute();
 const router = useRouter();
-const { projectId } = route.params;
+const { address: account } = getAccount();
+
+const projectId = route.params.projectId as number;
 const scenes = computed(() => route.meta.scenes);
 const loading = ref(false);
 
@@ -107,7 +110,7 @@ const map = {
         text: 'Submit NFT Contract',
         onClick: (item: BusinessData) => {
           console.log('handleSubmit businessData', item);
-          router.push(`/project/submitsuccess/${projectId}`);
+          router.push(`/project/submitsuccess/${projectId}/${item.id}`);
         },
       },
     ],
@@ -159,6 +162,7 @@ const map = {
         onClick: (item: BusinessData) => {
           // TODO: share contract
           console.log('share contract', item);
+          shareContract(account, projectId, item.id);
         },
       },
     ],

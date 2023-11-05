@@ -18,22 +18,22 @@
 </template>
 
 <script lang="ts" setup>
+import { getAccount } from '@wagmi/core';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import ProjectItem from '@/components/project-item/index.vue';
 import { useParticipateProjects, useProjects, useSubmittedProjects } from '@/hooks';
 import type { ProjectData } from '@/types';
+import { shareProject, shareStore } from '@/utils/share';
 
 defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
 const route = useRoute();
 const scenes = computed(() => route.meta.scenes);
-// const { data, refetch, isPending } =
-//   scenes.value === 'submitted' ? useSubmittedProjects() : useParticipateProjects();
 const { data, refetch, isPending } = useProjects();
-console.log('getProjects result=', isPending, data);
-import { shareToTwitter } from '@/utils/share';
+
+const { address: account } = getAccount();
 
 function handleDetail(item: ProjectData) {
   router.push(`/mine/${scenes.value}/${item.projectId}`);
@@ -72,12 +72,13 @@ const map = {
     btnText: 'Share Project',
     btnClick: () => {
       // TODO: edit
-      shareToTwitter('jasjdfsjfsdf');
+      shareProject(account);
     },
     bottomBtn: {
       text: 'share My Store',
       onClick: () => {
         // TODO: share My Store
+        shareStore(account);
       },
     },
   },

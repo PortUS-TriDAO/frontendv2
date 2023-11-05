@@ -25,8 +25,8 @@
           <div class="flex-between">
             <h4>balance</h4>
             <p-button :loading="loading" @click="handleWithdraw" round size="small"
-              >withdraw</p-button
-            >
+              >withdraw
+            </p-button>
           </div>
           <div>xx USDT</div>
         </div>
@@ -103,6 +103,7 @@ function handleMintMore() {
 
 function handleShare() {
   // TODO: handleShare
+  console.log('handleShare:', projectId.value);
 }
 
 function handleAddNft(nftContractData: NftContractData) {

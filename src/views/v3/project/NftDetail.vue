@@ -14,7 +14,6 @@
   </page-container>
 </template>
 <script setup lang="ts">
-import { reactive, toRaw, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
