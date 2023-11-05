@@ -5,7 +5,7 @@
         <img alt="avatar" :src="res?.data?.avatar" />
         <div>
           <h3>{{ res?.data?.projectName }}</h3>
-          <a :href="res?.data?.website" target="_blank">website</a>
+          <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a>
         </div>
       </div>
       <text-ellipsis>{{ res?.data?.briefIntro }}</text-ellipsis>
@@ -29,7 +29,6 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
-import type { BusinessData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
@@ -42,7 +41,7 @@ const { data: res } = useQuery({
   },
 });
 
-function handleDetail(bizId: string) {
+function handleDetail(bizId: number) {
   router.push(`/project/${projectId}/${bizId}`);
 }
 </script>

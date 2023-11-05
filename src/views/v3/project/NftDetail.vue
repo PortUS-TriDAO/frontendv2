@@ -6,7 +6,7 @@
     <div class="list">
       <SkuItem
         v-for="item in nftList?.rows || []"
-        :key="item.tokenId"
+        :key="item.id"
         :item="item"
         @click="handleDetail(item.id)"
       />
@@ -31,7 +31,7 @@ import {
 const route = useRoute();
 const router = useRouter();
 
-const retailId = route.params.retailId as number;
+const retailId = Number(route.params.retailId);
 const nftType = Number(route.params.nftType);
 const { data } = useNftDetail(retailId, nftType);
 
