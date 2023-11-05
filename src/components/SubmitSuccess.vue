@@ -71,12 +71,21 @@ async function deployMintedContract() {
   }
   loading.value = true;
   try {
-    const { success, data, contractAddress } = await projectStore.deployMintedNftContract(
+    const {
+      success,
+      data,
+      contractAddress: retailAddress,
+    } = await projectStore.deployMintedNftContract(
+      projectId,
       nftAddress.value,
       bizDetail.value.contractAddress!,
+      bizId,
     );
     if (!success) throw new Error(data);
-    router.push(`/project/publish/sku/${projectId}/${bizId}/${nftAddress.value}`);
+    const retailId = data.retailId;
+    router.push(
+      `/project/publish/sku/${projectId}/${bizId}/${nftAddress.value}/${retailAddress}/${data.retailId}`,
+    );
   } catch (error) {
     console.error('create minted failed', error);
     ElMessage.error('create minted retailer failed');
@@ -93,12 +102,20 @@ async function deployUnMintedContract() {
 
   loading.value = true;
   try {
-    const { success, data, contractAddress } = await projectStore.deployUnmintedNftContract(
+    const {
+      success,
+      data,
+      contractAddress: retailAddress,
+    } = await projectStore.deployUnmintedNftContract(
+      projectId,
       nftAddress.value,
       bizDetail.value.contractAddress,
+      bizId,
     );
     if (!success) throw new Error(data);
-    router.push(`/project/publish/spu/${projectId}/${contractAddress}/${nftAddress.value}`);
+    router.push(
+      `/project/publish/spu/${projectId}/${bizId}/${nftAddress.value}/${retailAddress}/${data.retailId}`,
+    );
   } catch (error) {
     console.error('create unminted', error);
     ElMessage.error('create unminted retrieve failed');

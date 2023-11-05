@@ -16,9 +16,9 @@
       <business-item
         v-for="item in res.data.rows || []"
         :avatar="res.data.avatar"
-        :key="item.businessId"
+        :key="item.id"
         :item="item"
-        @onDetail="handleDetail"
+        @onDetail="handleDetail(item.id)"
       />
     </div>
   </page-container>
@@ -31,9 +31,6 @@ import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
 import type { BusinessData } from '@/types';
 
-// import avatar from '@/assets/images/demo-avatar.png';
-// import bannerImg from './assets/banner.png';
-
 const route = useRoute();
 const router = useRouter();
 const { id: projectId } = route.params;
@@ -44,10 +41,9 @@ const { data: res } = useQuery({
     return getProjectDetail({ projectId: projectId as string });
   },
 });
-console.log('getProjects result=', res);
 
-function handleDetail(businessData: BusinessData) {
-  router.push(`/project/${projectId}/${businessData.bizId}`);
+function handleDetail(bizId: string) {
+  router.push(`/project/${projectId}/${bizId}`);
 }
 </script>
 <style lang="less" scoped>
@@ -69,21 +65,25 @@ function handleDetail(businessData: BusinessData) {
         height: 200px;
         margin-top: -100px;
       }
+
       h3 {
         font-weight: 700;
         color: #000000;
         margin-bottom: 16px;
         font-size: inherit;
       }
+
       p {
         font-size: inherit;
       }
+
       a {
         font-weight: 400;
         font-size: inherit;
       }
     }
   }
+
   .detail-divider {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);

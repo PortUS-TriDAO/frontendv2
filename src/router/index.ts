@@ -86,7 +86,7 @@ const router = createRouter({
       component: () => import('../views/v3/project/ProjectDetail.vue'),
     },
     {
-      path: '/project/:id/:businessId',
+      path: '/project/:projectId/:bizId',
       name: 'BusinessDetail',
       component: () => import('../views/v3/project/BusinessDetail.vue'),
     },
@@ -127,12 +127,12 @@ const router = createRouter({
       component: () => import('../components/SubmitSuccess.vue'),
     },
     {
-      path: '/project/publish/sku/:projectId/:bizId/:nftAddress',
+      path: '/project/publish/sku/:projectId/:bizId/:nftAddress/:retailAddress/:retailId',
       name: 'PublishSku',
       component: () => import('../views/projects/PublishSku.vue'),
     },
     {
-      path: '/project/publish/spu/:projectId/:businessContractAddress',
+      path: '/project/publish/spu/:projectId/:bizId/:nftAddress/:retailAddress/:retailId',
       name: 'PublishSpu',
       component: () => import('../views/projects/PublishSpu.vue'),
     },

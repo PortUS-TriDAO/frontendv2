@@ -24,7 +24,9 @@
         <div v-if="scenes === 'submitted'" class="balance">
           <div class="flex-between">
             <h4>balance</h4>
-            <p-button @click="handleWithdraw" round size="small">withdraw</p-button>
+            <p-button :loading="loading" @click="handleWithdraw" round size="small"
+              >withdraw</p-button
+            >
           </div>
           <div>xx USDT</div>
         </div>
@@ -59,13 +61,18 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { waitForTransaction } from '@wagmi/core';
+import { ElMessage } from 'element-plus';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import { useBusinessDetail } from '@/hooks';
+import { useProjectStore } from '@/stores/useProject';
 import type { NftContractData } from '@/types';
 
+const loading = ref(false);
+const projectStore = useProjectStore();
 const route = useRoute();
 const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
@@ -73,22 +80,22 @@ const projectId = computed(() => route.params.projectId as string);
 const businessId = computed(() => route.params.businessId as string);
 const { data } = useBusinessDetail(businessId.value);
 
-console.log('projectId, bizId', projectId.value, businessId.value);
-console.log('getBusinessDetail result=', data);
-
 function handleDetail(nftContractData: NftContractData) {
   router.push(
     `/mine/${scenes.value}/nftdetail/${nftContractData.nftAddress}/${projectId.value}/${data.value.contractAddress}`,
   );
 }
+
 function handleMintMore() {
   // TODO: handleMintMore
   console.log('handleMintMore');
   router.push(`/project/${projectId.value}/${businessId.value}`);
 }
+
 function handleShare() {
   // TODO: handleShare
 }
+
 function handleAddNft(nftContractData: NftContractData) {
   // TODO: handleAddNft
   // router.push(`/nft/${nftContractData.nftAddress}`);
@@ -96,10 +103,22 @@ function handleAddNft(nftContractData: NftContractData) {
   router.push(`/project/submitsuccess/${projectId.value}`);
 }
 
-function handleWithdraw() {
+async function handleWithdraw() {
   // TODO: handleWithdraw
   console.log('handleWithdraw...hahah');
+  loading.value = true;
+
+  try {
+    const tx = await projectStore.operatorWithdraw(data.contractAddress);
+    await waitForTransaction({ hash: tx.hash });
+  } catch (error) {
+    console.error(error);
+    ElMessage.error('withdraw failed');
+  } finally {
+    loading.value = false;
+  }
 }
+
 function handleSubmit() {
   // TODO: handleSubmit
   console.log('handleSubmit...');
@@ -114,11 +133,13 @@ function handleSubmit() {
     gap: 14px;
     font-size: 24px;
     position: relative;
+
     .right-action {
       position: absolute;
       right: 0;
       top: 0;
     }
+
     .balance {
       width: 300px;
       height: 100px;
@@ -130,6 +151,7 @@ function handleSubmit() {
       gap: 18px;
     }
   }
+
   .light {
     color: #fa6529;
   }
@@ -138,6 +160,7 @@ function handleSubmit() {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     > h2 {
       height: 40px;
       font-size: 34px;
@@ -154,6 +177,7 @@ function handleSubmit() {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+
   .list {
     .list-title {
       height: 29px;
@@ -163,6 +187,7 @@ function handleSubmit() {
       color: #000;
       margin-bottom: 12px;
     }
+
     // :deep(.nft-contract-item) > img {
     //   width: 100px;
     //   height: 100px;

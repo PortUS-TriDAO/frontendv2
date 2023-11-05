@@ -34,7 +34,9 @@
           </el-form-item>
         </el-form>
       </div>
-      <p-wallet-button class="btn" @click="handleSave(ruleFormRef)">Save</p-wallet-button>
+      <p-wallet-button :loading="loading" class="btn" @click="handleSave(ruleFormRef)"
+        >Save
+      </p-wallet-button>
     </div>
   </main-content>
 </template>
@@ -48,6 +50,7 @@ import { useRoute } from 'vue-router';
 import MainContent from '@/components/MainContent.vue';
 import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
+import { toBN } from '@/utils/bn';
 
 import { publishSkuRules as rules } from './rules';
 
@@ -55,14 +58,16 @@ const route = useRoute();
 const ruleFormRef = ref<FormInstance>();
 const projectStore = useProjectStore();
 
-const projectId = route.params.projectId as string;
-const bizId = route.params.bizId as string;
+const projectId = route.params.projectId as number;
+const bizId = route.params.bizId as number;
 const nftAddress = route.params.nftAddress as Address;
+const retailAddress = route.params.retailAddress as Address;
+const retailId = route.params.retailId as number;
 const { address: account } = getAccount();
 
 const ruleForm = reactive({
-  tokenId: '',
-  price: '',
+  tokenId: '1',
+  price: '1000',
   ddl: '',
   seller: account,
   payToken: '',
@@ -70,7 +75,7 @@ const ruleForm = reactive({
 const loading = ref(false);
 
 const { data: bizDetail } = useBusinessDetail(bizId);
-ruleForm.payToken = bizDetail.value.payToken;
+ruleForm.payToken = bizDetail.value?.payToken;
 
 async function handleSave(formEl: FormInstance | undefined) {
   if (!formEl) return;
@@ -88,15 +93,17 @@ async function publishSku() {
   }
   try {
     loading.value = true;
-
-    const { success, data } = await projectStore.publishSku(
+    const { success, data } = await projectStore.publishSku({
       projectId,
-      BigInt(ruleForm.price),
-      Number(ruleForm.tokenId),
-      new Date(ruleForm.ddl).valueOf(),
-      bizDetail.value.contractAddress as Address,
-      nftAddress,
-    );
+      price: ruleForm.price,
+      nftTokenId: Number(ruleForm.tokenId),
+      deadline: new Date(ruleForm.ddl).valueOf() / 1000,
+      retailerAddress: retailAddress,
+      nftAddress: nftAddress,
+      payToken: bizDetail.value.payToken,
+      bizId: bizId,
+      retailId: retailId,
+    });
     if (!success) throw new Error(data as string);
     ElMessage.success('Publish sku success');
   } catch (error) {

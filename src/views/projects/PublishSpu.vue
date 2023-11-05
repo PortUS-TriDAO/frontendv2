@@ -66,6 +66,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
 import Uploader from '@/components/Uploader.vue';
+import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 
 const router = useRouter();
@@ -73,8 +74,13 @@ const route = useRoute();
 const loading = ref(false);
 const projectStore = useProjectStore();
 
-const projectId = route.params.projectId as string;
-const businessContractAddress = route.params.businessContractAddress as string;
+const projectId = route.params.projectId as number;
+const bizId = route.params.bizId as number;
+const nftAddress = route.params.nftAddress as Address;
+const retailAddress = route.params.retailAddress as Address;
+const retailId = route.params.retailId as number;
+
+const { data: bizDetail } = useBusinessDetail(`${bizId}`);
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
@@ -83,9 +89,12 @@ const ruleForm = reactive({
   price: '',
   briefIntro: '',
   description: '',
-  quantity: '',
+  quantity: 0,
   seller: '',
   payToken: '',
+  avatar: '',
+  image: '',
+  cover: '',
 });
 
 const rules = reactive({
@@ -108,24 +117,26 @@ async function handleSave(formEl: FormInstance | undefined) {
 }
 
 async function publishSpu() {
-  if (!projectId || typeof projectId !== 'string') {
-    ElMessage.error('Project ID is required');
-    return;
-  }
-  if (!businessContractAddress || typeof businessContractAddress !== 'string') {
-    ElMessage.error('Business Contract Address is required');
-    return;
-  }
   try {
     loading.value = true;
     // 这里tokenId默认先填0
-    const { success, data } = await projectStore.publishSpu(
+    const { success, data } = await projectStore.publishSpu({
+      retailerAddress: retailAddress,
+      nftAddress: nftAddress,
       projectId,
-      BigInt(ruleForm.price),
-      0,
-      new Date(ruleForm.ddl).valueOf(),
-      businessContractAddress as Address,
-    );
+      bizId,
+      retailId,
+      tokenId: 0, // 这里tokenId默认填0
+      price: BigInt(ruleForm.price), // TODO 这里改用BigNumber
+      ddl: ruleForm.ddl.valueOf() / 1000,
+      payToken: bizDetail.value?.payToken as Address,
+      briefIntro: ruleForm.briefIntro,
+      description: ruleForm.description,
+      nftQuantity: Number(ruleForm.quantity),
+      avatar: ruleForm.avatar,
+      image: ruleForm.image,
+      cover: ruleForm.cover,
+    });
     if (!success) throw new Error(data);
 
     ElMessage.success('Publish spu success');

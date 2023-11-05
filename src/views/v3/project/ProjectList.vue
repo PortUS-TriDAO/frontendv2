@@ -28,11 +28,6 @@ import type { ProjectData } from '@/types';
 
 const searchKey = ref('');
 const router = useRouter();
-// const pageData = reactive<PageData<ProjectData>>({
-//   rows: [],
-//   currentPage: 1,
-//   total: 0,
-// });
 
 const {
   data: res,
@@ -44,18 +39,6 @@ const {
     return getProjects({});
   },
 });
-console.log('getProjects result=', isPending, res);
-
-// const searchProjects = async () => {
-//   const { success, data } = await getProjects({ key: searchKey });
-//   console.log('data=', data);
-//   if (success) {
-//     pageData.currentPage = data.currentPage;
-//     pageData.total = data.total;
-//     pageData.rows = data.rows;
-//   }
-// };
-// onMounted(searchProjects);
 
 function handleDetail(item: ProjectData) {
   router.push(`/project/${item.projectId}`);

@@ -5,9 +5,11 @@ import { reactive } from 'vue';
 
 import RETAILER_ABI from '@/abi/retailer.abi.json';
 import * as projectApi from '@/api/projects';
+import { postRetailCreate } from '@/api/projects';
 import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
+import { toBN } from '@/utils/bn';
 
 import { useNftContract } from './useNftContract';
 import { useProjectContract } from './useProjectContract';
@@ -85,106 +87,156 @@ export const useProjectStore = defineStore('project', () => {
     return { projectAddress: contractAddress, success, data };
   }
 
-  async function deployMintedNftContract(nftContract: string, bizContract: string) {
-    const deployerContract = useDeployerContractStore();
-    // bussinessContractAddress
-    const contractAddress = await deployerContract.createMintedRetailer(bizContract, nftContract);
-
-    const { success, data } = await projectApi.postDeployedContract({
-      nftAddress: nftContract,
-      nftType: 1,
-      contractAddress,
-    });
-
-    return { success, data, contractAddress };
-  }
-
-  async function deployUnmintedNftContract(projectId: string, nftContract: string) {
-    const result = await projectApi.getProjectDetail({ projectId });
-    if (!result.success) throw new Error('fetch project details failed');
-
-    const { projectAddress } = result.data;
-    const deployerContract = useDeployerContractStore();
-    // bussinessContractAddress
-    const contractAddress = await deployerContract.createUnmintedRetailer(
-      projectAddress,
-      nftContract,
-    );
-    const { success, data } = await projectApi.postDeployedContract({
-      nftAddress: nftContract,
-      nftType: 2,
-      contractAddress,
-    });
-
-    return { success, data, contractAddress };
-  }
-
-  async function publishSku(
+  async function deployMintedNftContract(
     projectId: string,
-    price: bigint,
-    nftTokenId: number,
-    deadline: number,
-    retailerAddress: Address,
-    nftAddress: Address,
+    nftAddress: string,
+    bizContract: string,
+    bizId: string,
   ) {
-    const { success, data } = await projectApi.getProjectDetail({ projectId });
-    if (!success) throw new Error(data);
+    const deployerContract = useDeployerContractStore();
+    // bussinessContractAddress
+    const contractAddress = await deployerContract.createMintedRetailer(bizContract, nftAddress);
+    const { success, data } = await projectApi.postRetailCreate({
+      projectId,
+      bizId: Number(bizId),
+      retailAddress: contractAddress,
+      nftAddress,
+      nftType: 1,
+      avatar: '',
+    });
 
+    return { success, data, contractAddress };
+  }
+
+  async function deployUnmintedNftContract(
+    projectId: string,
+    nftAddress: string,
+    bizContract: string,
+    bizId: string,
+  ) {
+    const deployerContract = useDeployerContractStore();
+    // bussinessContractAddress
+    const contractAddress = await deployerContract.createUnmintedRetailer(bizContract, nftAddress);
+    const { success, data } = await projectApi.postRetailCreate({
+      projectId,
+      bizId: Number(bizId),
+      retailAddress: contractAddress,
+      nftAddress,
+      nftType: 1,
+      avatar: '',
+    });
+
+    return { success, data, contractAddress };
+  }
+
+  async function publishSku({
+    projectId,
+    price,
+    nftTokenId,
+    deadline,
+    retailerAddress,
+    nftAddress,
+    payToken,
+    bizId,
+    retailId,
+  }: {
+    projectId: number;
+    price: string;
+    nftTokenId: number;
+    deadline: number;
+    retailerAddress: Address;
+    nftAddress: Address;
+    payToken: Address;
+    bizId: number;
+    retailId: number;
+  }) {
     // approve NFT
     const nftContract = useNftContract();
     const approveTx = nftContract.approve(nftAddress, retailerAddress, nftTokenId);
     await waitForTransaction({ hash: approveTx.hash });
 
-    const { payToken } = data;
+    // const { payToken } = data;
     const signTypedDataStore = useSignTypedDataStore();
     const signature = await signTypedDataStore.signMintedNftRetailer(
       payToken,
-      price,
+      toBN(price).multipliedBy(1e18).toString(10),
       nftTokenId,
       deadline,
       retailerAddress,
     );
+    const { address: seller } = getAccount();
 
     return projectApi.publishSku({
       projectId,
+      bizId,
+      retailId,
       tokenId: nftTokenId,
-      price,
+      price: price,
       ddl: deadline,
-      seller: data.seller,
+      seller: seller,
       payToken,
       signature,
     });
   }
 
-  async function publishSpu(
-    projectId: string,
-    price: bigint,
-    nftTokenId: number,
-    deadline: number,
-    retailerAddress: Address,
-  ) {
-    const { success, data } = await projectApi.getProjectDetail({ projectId });
-    if (!success) throw new Error(data);
-
-    const { payToken } = data;
-
+  async function publishSpu({
+    retailerAddress,
+    nftAddress,
+    projectId,
+    bizId,
+    retailId,
+    tokenId,
+    price,
+    ddl,
+    payToken,
+    briefIntro,
+    description,
+    nftQuantity,
+    avatar,
+    image,
+    cover,
+  }: {
+    retailerAddress: Address;
+    nftAddress: Address;
+    projectId: number;
+    bizId: number;
+    retailId: number;
+    tokenId: number;
+    price: bigint;
+    ddl: number;
+    payToken: Address;
+    briefIntro: string;
+    description: string;
+    nftQuantity: number;
+    avatar: string;
+    image: string;
+    cover: string;
+  }) {
     const signTypedDataStore = useSignTypedDataStore();
     const signature = await signTypedDataStore.signUnmintedNftRetailer(
       payToken,
       price,
-      nftTokenId,
-      deadline,
+      tokenId,
+      ddl,
       retailerAddress,
     );
 
     const { address: seller } = await getAccount();
-    return projectApi.publishSku({
+    return projectApi.publishSpu({
       projectId,
-      tokenId: nftTokenId,
-      price,
-      ddl: deadline,
+      bizId,
+      retailId,
+      tokenId,
+      price: price.toString(),
+      ddl,
       seller,
       payToken,
+      briefIntro,
+      description,
+      nftQuantity,
+      avatar,
+      image,
+      cover,
       signature,
     });
   }
@@ -247,7 +299,7 @@ export const useProjectStore = defineStore('project', () => {
 
   async function operatorWithdraw(projectAddress: Address) {
     const projectContract = useProjectContract();
-    await projectContract.operatorWithdraw(projectAddress);
+    return projectContract.operatorWithdraw(projectAddress);
   }
 
   return {

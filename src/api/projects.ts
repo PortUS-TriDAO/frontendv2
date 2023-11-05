@@ -54,6 +54,15 @@ export const postProjectMint = (params: {
   contractAddress: string;
 }): Promise<IResponse> => axios.post('/project/biz/mint', params);
 
+export const postRetailCreate = (params: {
+  projectId: string;
+  bizId: number;
+  retailAddress: string;
+  nftAddress: string;
+  nftType: 1 | 2;
+  avatar: string;
+}): Promise<IResponse> => axios.post('project/retail/create', params);
+
 // 查询SKU和SPU 列表
 export const getSkuList = (params: { id: string }): Promise<IListResponse> =>
   axios.get('/project/skulist', { params });
@@ -61,24 +70,31 @@ export const getSkuList = (params: { id: string }): Promise<IListResponse> =>
 // 上架SKU
 export const publishSku = (params: {
   projectId: string;
+  bizId: number;
+  retailId: number;
   tokenId: number;
-  price: bigint;
+  price: string;
   ddl: number;
   seller: string;
   payToken: string;
   signature: string;
-}): Promise<IResponse> => axios.post('/sku/publish', params);
+}): Promise<IResponse> => axios.post('/project/sku/publish', params);
 
 // 上架SPU
 export const publishSpu = (params: {
-  name: string;
+  projectId: number;
+  bizId: number;
+  retailId: number;
+  tokenId: number;
   price: string;
-  description: string;
   ddl: number;
-  intro: string;
   seller: string;
   payToken: string;
-  icon: string;
-  banner: string;
+  briefIntro: string;
+  description: string;
+  nftQuantity: number;
+  avatar: string;
+  image: string;
+  cover: string;
   signature: string;
-}): Promise<IResponse> => axios.post('/spu/publish', params);
+}): Promise<IResponse> => axios.post('/project/spu/publish', params);

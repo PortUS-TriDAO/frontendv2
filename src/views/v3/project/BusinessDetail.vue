@@ -47,13 +47,11 @@ const loading = ref(false);
 
 const route = useRoute();
 const router = useRouter();
-const { businessId, id: projectId } = route.params;
-const { data } = useBusinessDetail(businessId as string);
+const { bizId, projectId } = route.params;
+const { data } = useBusinessDetail(bizId as string);
 const projectStore = useProjectStore();
 
 const { data: projectDetail } = useProjectDetail(projectId as string);
-
-console.log('getBusinessDetail result=', data);
 
 function handleDetail(nftContractData: NftContractData) {
   router.push(`/nft/${nftContractData.nftAddress}`);
@@ -88,6 +86,7 @@ async function handleMint() {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     > h2 {
       height: 40px;
       font-size: 34px;
@@ -97,18 +96,22 @@ async function handleMint() {
       color: #000000;
       text-align: center;
       vertical-align: top;
+
       > strong {
         font-weight: 900;
         margin-right: 19px;
       }
+
       > span {
         font-weight: 900;
         color: rgba(250, 101, 41, 1);
       }
     }
   }
+
   .business-mint {
     position: relative;
+
     > button {
       position: absolute;
       right: 0;
@@ -120,6 +123,7 @@ async function handleMint() {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+
   .list {
     .list-title {
       height: 29px;
@@ -133,4 +137,3 @@ async function handleMint() {
   }
 }
 </style>
-@/hooks

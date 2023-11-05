@@ -94,9 +94,10 @@ const map = {
           console.log('handleWithdraw item', item);
           try {
             loading.value = true;
-            const tx = await projectContract.operatorWithdraw(item.contractAddress);
+            const tx = await projectStore.operatorWithdraw(item.contractAddress);
             await waitForTransaction({ hash: tx.hash });
           } catch (error) {
+            console.log(error);
             ElMessage.error('withdraw failed');
           } finally {
             loading.value = false;
@@ -188,6 +189,7 @@ const map = {
       width: 100%;
       height: 200px;
     }
+
     .avatar {
       position: absolute;
       width: 150px;
@@ -196,6 +198,7 @@ const map = {
       left: 30px;
       z-index: 2;
     }
+
     > button {
       position: absolute;
       right: 30px;
@@ -203,6 +206,7 @@ const map = {
       z-index: 2;
     }
   }
+
   .title {
     font-size: 34px;
     font-weight: 700;
@@ -210,6 +214,7 @@ const map = {
     color: #000;
     margin: 14px 0;
   }
+
   .business-item-detail {
     gap: 18px;
   }

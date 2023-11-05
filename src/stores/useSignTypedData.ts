@@ -37,7 +37,7 @@ export const useSignTypedDataStore = defineStore('signTypedData', () => {
   // 买家签名
   async function signMintedNftRetailer(
     payToken: Address,
-    payPrice: BigInt,
+    payPrice: string,
     nftTokenId: number,
     deadline: number,
     retailerAddress: Address,
