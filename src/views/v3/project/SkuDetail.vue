@@ -1,6 +1,7 @@
 <template>
   <page-container class="pg-sku-detail">
-    <div class="detail-divider"></div>
+    <sku-card v-if="data" :item="data" @buy="handleBuy"> </sku-card>
+    <!-- <div class="detail-divider"></div>
     <div class="list-title">Items</div>
     <div class="list">
       <sku-item
@@ -9,24 +10,31 @@
         :item="item"
         @click="handleDetail(item.id)"
       />
-    </div>
+    </div> -->
   </page-container>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import SkuItem from '@/components/sku-item/index.vue';
-import { useSkuList } from '@/hooks';
+import SkuCard from '@/components/sku-card/index.vue';
+// import SkuItem from '@/components/sku-item/index.vue';
+import { useSkuDetail, useSkuList } from '@/hooks';
 
 const route = useRoute();
 const router = useRouter();
 
 const retailId = computed(() => Number(route.params.retailId));
+const skuId = computed(() => Number(route.params.skuId));
 
-const { data: nftList } = useSkuList(retailId.value);
+const { data } = useSkuDetail(skuId);
 
-function handleDetail(id: number) {
+// const { data: nftList } = useSkuList(retailId.value);
+
+// function handleDetail(id: number) {
+//   router.push(`/nft/sku/${retailId.value}/${id}`);
+// }
+function handleBuy(id: number) {
   router.push(`/nft/sku/${retailId.value}/${id}`);
 }
 </script>
