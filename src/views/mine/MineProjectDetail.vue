@@ -97,7 +97,7 @@ const map = {
           try {
             loading.value = true;
             const tx = await projectStore.operatorWithdraw(item.contractAddress);
-            await waitForTransaction({ hash: tx.hash });
+            await waitForTransaction(tx);
           } catch (error) {
             console.log(error);
             ElMessage.error('withdraw failed');
@@ -132,7 +132,9 @@ const map = {
           console.log('handleWithdraw item', item);
           loading.value = true;
           try {
-            await projectStore.kolWithdraw(item.contractAddress);
+            const tx = await projectStore.kolWithdraw(item.contractAddress);
+            await waitForTransaction(tx);
+            ElMessage.success('Withdraw success');
           } catch (error) {
             ElMessage.error('Withdraw failed');
           } finally {

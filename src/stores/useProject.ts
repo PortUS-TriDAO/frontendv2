@@ -9,7 +9,7 @@ import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
-import { toBN } from '@/utils/bn';
+import { extendsDecimals, toBN } from '@/utils/bn';
 
 import { useNftContract } from './useNftContract';
 import { useProjectContract } from './useProjectContract';
@@ -66,7 +66,7 @@ export const useProjectStore = defineStore('project', () => {
       contractName,
       symbol,
       payToken,
-      sharePercentage,
+      extendsDecimals(sharePercentage).toString(),
       rightQuantity,
     );
     await waitForTransaction({ hash: tx.hash });
@@ -165,6 +165,13 @@ export const useProjectStore = defineStore('project', () => {
       retailerAddress,
     );
     const { address: seller } = getAccount();
+
+    // TODO: get nft metadata
+    let metadata = {};
+    try {
+      const tokenURI = await nftContract.tokenURI(nftAddress, nftTokenId);
+      metadata = await fetch(tokenURI).then((r) => r.json());
+    } catch (err) {}
 
     return projectApi.publishSku({
       projectId: projectId.toString(),
@@ -276,7 +283,7 @@ export const useProjectStore = defineStore('project', () => {
   async function mint(projectAddress: Address, projectId: number, bizId: number) {
     const projectContract = useProjectContract();
     const tx = await projectContract.referrerSign(projectAddress);
-    await waitForTransaction({ hash: tx.hash });
+    await waitForTransaction(tx);
 
     // 查询tokenID
     const { address: kolAddress } = await getAccount();

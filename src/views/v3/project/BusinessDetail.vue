@@ -72,6 +72,7 @@ async function handleMint() {
     loading.value = true;
     await projectStore.mint(data.value.contractAddress, projectId, bizId);
     ElMessage.success('mint success');
+    router.push('/project/mint/success');
   } catch (error) {
     console.log('error', error);
     ElMessage.error('mint failed');
