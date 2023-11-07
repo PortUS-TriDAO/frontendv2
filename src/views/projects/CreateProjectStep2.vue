@@ -57,8 +57,8 @@
         </el-form>
       </div>
       <p-wallet-button :loading="loading" class="btn" @click="handleSubmit(ruleFormRef)"
-        >submit</p-wallet-button
-      >
+        >submit
+      </p-wallet-button>
     </div>
   </main-content>
 </template>
@@ -152,11 +152,11 @@ const createProject = async () => {
     briefIntro,
     description,
   } = toRaw(ruleForm);
-  let percent = BigInt(sharePercentage) * 10n ** 16n;
   const token = payToken as Address;
   try {
     loading.value = true;
 
+    // TODO: percentage
     const { success, data } = await projectStore.createProject({
       projectId,
       briefIntro,
