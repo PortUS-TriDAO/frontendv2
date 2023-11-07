@@ -1,25 +1,25 @@
 <template>
   <div class="pg-mime-spu-detail">
     <div class="banner">
-      <img alt="cover" class="bg" :src="data?.[0]?.cover" />
-      <img alt="avatar" class="avatar" :src="data?.[0]?.avatar" />
+      <img alt="cover" class="bg" :src="data?.cover" />
+      <img alt="avatar" class="avatar" :src="data?.avatar" />
       <template v-if="scenes === 'submitted'">
         <p-button @click="handleDown">Down</p-button>
       </template>
     </div>
     <div class="detail">
       <h3>Echo of Intensity</h3>
-      <div>{{ data?.[0]?.retailAddress }}</div>
-      <div>{{ data?.[0]?.price }} USDT</div>
-      <div>minted NFT</div>
-      <div>{{ dayjs(data?.[0]?.ddl * 1000).format('YYYY-MM-DD HH:mm') }}</div>
+      <div>{{ data?.retailAddress }}</div>
+      <div>{{ data?.price }} USDT</div>
+      <div>unminted NFT</div>
+      <div>{{ dayjs(data?.ddl * 1000).format('YYYY-MM-DD HH:mm') }}</div>
     </div>
     <div class="description">
-      <div>
-        {{ data?.[0]?.briefIntro }}
+      <div v-if="data?.briefIntro">
+        {{ data?.briefIntro }}
       </div>
-      <text-ellipsis>
-        {{ data?.[0]?.description }}
+      <text-ellipsis v-if="data?.description">
+        {{ data?.description }}
       </text-ellipsis>
     </div>
     <div class="detail-divider"></div>

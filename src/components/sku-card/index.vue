@@ -24,10 +24,10 @@
         <!-- <slot name="actions"></slot> -->
       </div>
     </div>
-    <text-ellipsis>
+    <text-ellipsis v-if="item.briefIntro">
       {{ item.briefIntro }}
     </text-ellipsis>
-    <text-ellipsis>
+    <text-ellipsis v-if="item.description">
       {{ item.description }}
     </text-ellipsis>
   </div>
