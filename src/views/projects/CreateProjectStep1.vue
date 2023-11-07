@@ -136,6 +136,8 @@ async function handleCover(url: string) {
 
 <style lang="less" scoped>
 .step1-form {
+  padding-left: 30px;
+  padding-right: 30px;
   .form-content {
     width: 658px;
     margin-top: 20px;
