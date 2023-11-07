@@ -44,8 +44,8 @@ export interface BusinessData {
   sharePercentage: number;
   briefIntro: string;
   quantity: number;
-  rights: number;
-  righted: number;
+  rightQuantity: number;
+  rightMinted: number;
   contractAddress: Address;
 }
 
@@ -53,8 +53,8 @@ export interface BusinessDetailData {
   contractName: string;
   briefIntro: string;
   sharePercentage: number;
-  rights: number;
-  righted: number;
+  rightQuantity: number;
+  rightMinted: number;
   payToken: Address;
   description: string;
   contractAddress: Address | undefined;
@@ -81,7 +81,7 @@ export interface NftContractData {
 
 export interface SkuData {
   id: number;
-  // nftName: string;
+  name: string;
   avatar: string;
   // isSalesEnd: boolean;
   briefIntro: string;
@@ -102,6 +102,7 @@ export interface SkuData {
 
 export interface SpuData {
   id: number;
+  name: string;
   avatar: string;
   briefIntro: string;
   cover: string;

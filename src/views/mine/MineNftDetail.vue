@@ -3,8 +3,8 @@
     <nft-contract-item v-if="data" :item="data" hideActions size="small">
       <div v-if="scenes === 'participated'" class="flex-between">
         <div>
-          <label>balance:</label>
-          <span>xxx USDT</span>
+          <!-- <label>balance:</label>
+          <span>xxx USDT</span> -->
         </div>
         <p-button @click="handleWithdraw"> Withdraw</p-button>
       </div>

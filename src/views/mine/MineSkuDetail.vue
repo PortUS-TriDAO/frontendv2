@@ -7,7 +7,7 @@
         <p-button round @click="handleEdit">Edit</p-button>
       </template>
     </sku-card>
-    <div class="detail-divider"></div>
+    <!-- <div class="detail-divider"></div>
     <div class="list-title">Items</div>
     <div class="list">
       <sku-item
@@ -17,7 +17,7 @@
         class="cursor"
         @click="handleDetail(item.id)"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts">

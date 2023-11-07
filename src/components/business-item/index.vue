@@ -13,13 +13,13 @@
       <div class="item-row2">
         <div>
           <label>righted/rights:</label>
-          <span>{{ item.righted }}/{{ item.rights }}</span>
+          <span>{{ item.rightMinted }}/{{ item.rightQuantity }}</span>
         </div>
       </div>
       <div class="flex-row-between">
         <div>
-          <label>items:</label>
-          <span>{{ item.quantity }}</span>
+          <!-- <label>items:</label>
+          <span>{{ item.quantity }}</span> -->
         </div>
         <slot name="actions">
           <p-button v-if="!hideDetail" @click="handleDetail(item)">

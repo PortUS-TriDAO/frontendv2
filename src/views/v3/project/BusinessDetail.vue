@@ -11,12 +11,12 @@
       <p>Dreamed of moonshots but awoke to a capitulation.</p>
       <div class="business-mint">
         <label>righted/rights:</label>
-        <span>{{ data?.righted }}/{{ data?.rights }}</span>
+        <span>{{ data?.rightMinted }}/{{ data?.rightQuantity }}</span>
         <p-button :loading="loading" @click="handleMint">Mint</p-button>
       </div>
-      <div>
+      <!-- <div>
         <span>1.2 USDT</span>
-      </div>
+      </div> -->
       <text-ellipsis>{{ data?.description }}</text-ellipsis>
     </div>
     <div class="detail-divider"></div>

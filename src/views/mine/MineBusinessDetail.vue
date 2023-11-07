@@ -9,13 +9,13 @@
           <strong>Percent for KOL</strong> <span class="light">{{ data?.sharePercentage }}%</span>
         </h2>
       </div>
-      <div>
+      <!-- <div>
         <span>1.2 USDT</span>
-      </div>
+      </div> -->
       <div class="flex-between">
         <div>
           <label>righted/rights:</label>
-          <span>{{ data?.righted }}/{{ data?.rights }}</span>
+          <span>{{ data?.rightMinted }}/{{ data?.rightQuantity }}</span>
         </div>
       </div>
       <text-ellipsis>Dreamed of moonshots but awoke to a capitulation.</text-ellipsis>

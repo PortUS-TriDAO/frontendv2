@@ -10,9 +10,9 @@
     <img alt="avatar" :src="item.avatar" />
     <div class="nft-contract-item-detail">
       <h3>{{ item.nftAddress }}</h3>
-      <div>
+      <!-- <div>
         {{ item.nftID }}
-      </div>
+      </div> -->
       <div class="flex-between" v-if="hideActions !== true">
         <div></div>
         <slot name="actions">
