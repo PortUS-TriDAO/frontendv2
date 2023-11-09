@@ -31,7 +31,8 @@ defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
 const route = useRoute();
 const scenes = computed(() => route.meta.scenes);
-const { data, refetch, isPending } = useProjects();
+const { data, refetch, isPending } =
+  scenes.value === 'submitted' ? useSubmittedProjects() : useParticipateProjects();
 
 const { address: account } = getAccount();
 
