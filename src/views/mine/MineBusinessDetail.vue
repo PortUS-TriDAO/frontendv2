@@ -113,7 +113,7 @@ function handleAddNft(nftContractData: NftContractData) {
   // TODO: handleAddNft
   // router.push(`/nft/${nftContractData.nftAddress}`);
   console.log('nftContractData=', nftContractData);
-  router.push(`/project/submitsuccess/${projectId.value}`);
+  router.push(`/project/submitsuccess/${projectId.value}/${nftContractData.bizId}`);
 }
 
 async function handleWithdraw() {
