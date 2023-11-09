@@ -224,7 +224,7 @@ export function useKolRightId(
   return result;
 }
 
-export function usePrimaryProjectInfo(): UseQueryReturnType<PrimaryProjectInfo | null, Error> {
+export function usePrimaryProjectInfo(): UseQueryReturnType<Arrray<PrimaryProjectInfo>, Error> {
   const result = useQuery({
     queryKey: ['getPrimaryProjectInfo'],
     queryFn: async () => {

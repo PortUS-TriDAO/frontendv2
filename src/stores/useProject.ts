@@ -283,23 +283,20 @@ export const useProjectStore = defineStore('project', () => {
   async function mint(projectAddress: Address, projectId: number, bizId: number) {
     const projectContract = useProjectContract();
     const tx = await projectContract.referrerSign(projectAddress);
-    await waitForTransaction(tx);
+    await waitForTransaction({ hash: tx.hash });
 
     // 查询tokenID
     const { address: kolAddress } = await getAccount();
     const rightsContract = useRightsContract();
     const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
-    const tokenId = (await rightsContract.tokenOfOwnerByIndex(
-      rightsContractAddress,
-      kolAddress,
-    )) as number;
+    const tokenId = await rightsContract.tokenOfOwnerByIndex(rightsContractAddress, kolAddress);
 
     // 将mint信息保存到后端
     await projectApi.kolMint({
       projectId,
       bizId,
       kolAddress,
-      rightId: tokenId,
+      rightId: Number(tokenId),
     });
   }
 

@@ -97,5 +97,5 @@ export const getkolRightId = (params: {
   kolAddress: string;
 }): Promise<IResponse<RightData>> => axios.get('/project/kol/rightid', { params });
 
-export const getPrimaryProjectInfo = (): Promise<IResponse<PrimaryProjectInfo>> =>
+export const getPrimaryProjectInfo = (): Promise<IResponse<Array<PrimaryProjectInfo>>> =>
   axios.get('/project/primary');

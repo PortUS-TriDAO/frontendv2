@@ -310,16 +310,18 @@ const handlers: RestHandler[] = [
 
   rest.get('/project/primary', (req, res, ctx) => {
     return res(
-      ctx.json({
-        chain: 'Ethereum',
-        briefIntro: 'sdlkfjlsd;fk',
-        name: 'klsjflsdjf',
-        items: 123234, // 这里还不清楚是指什么的数量
-        sharePercentage: 20,
-        projectAddress: 'sdklfjlsfjsldf',
-        projectId: 1,
-        bizId: 1,
-      }),
+      ctx.json([
+        {
+          chain: 'Ethereum',
+          briefIntro: 'sdlkfjlsd;fk',
+          name: 'klsjflsdjf',
+          items: 123234, // 这里还不清楚是指什么的数量
+          sharePercentage: 20,
+          projectAddress: 'sdklfjlsfjsldf',
+          projectId: 1,
+          bizId: 1,
+        },
+      ]),
     );
   }),
 ];

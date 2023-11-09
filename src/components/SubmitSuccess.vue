@@ -71,7 +71,11 @@ async function deployMintedContract() {
   }
   loading.value = true;
   try {
-    const { success, contractAddress: retailAddress } = await projectStore.deployMintedNftContract(
+    const {
+      success,
+      data,
+      contractAddress: retailAddress,
+    } = await projectStore.deployMintedNftContract(
       projectId,
       nftAddress.value,
       bizDetail.value.contractAddress!,
@@ -79,7 +83,7 @@ async function deployMintedContract() {
     );
     if (!success) throw new Error('deploy minted contract failed');
     router.push(
-      `/project/publish/sku/${projectId}/${bizId}/${nftAddress.value}/${retailAddress}/${bizDetail.value.retailId}`,
+      `/project/publish/sku/${projectId}/${bizId}/${nftAddress.value}/${retailAddress}/${data.retailId}`,
     );
   } catch (error) {
     console.error('create minted failed', error);

@@ -163,20 +163,22 @@
       <div class="section-content">
         <div class="case-content">
           <div>
-            <img src="./assets/case.png" />
-            <div style="text-align: center; padding-top: 8px">Brief introduction</div>
+            <img :src="state.primaryProjectInfo.avatar" />
+            <div style="text-align: center; padding-top: 8px">
+              {{ state.primaryProjectInfo.briefIntro }}
+            </div>
           </div>
           <div class="case-detail">
-            <h3>RAINBOX SIX OCACA</h3>
-            <div>
-              <label>Items</label>
-              <span style="margin-right: 116px">1,259</span>
-              <label>Chain</label>
-              <strong>Ethereum</strong>
-            </div>
+            <h3>{{ state.primaryProjectInfo.name }}</h3>
+            <!--            <div>-->
+            <!--              <label>Items</label>-->
+            <!--              <span style="margin-right: 116px">1,259</span>-->
+            <!--              <label>Chain</label>-->
+            <!--              <strong>Ethereum</strong>-->
+            <!--            </div>-->
             <div>
               <label>Share precentage:</label>
-              <span>xx%</span>
+              <span>{{ state.primaryProjectInfo.sharePercentage }}%</span>
             </div>
             <!-- <button @click="handleMint">Mint</button> -->
             <p-button :loading="loading" @click="handleMint">Mint</p-button>
@@ -202,8 +204,7 @@ import type { Address } from '@wagmi/core';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { ElMessage } from 'element-plus';
-import { watch } from 'fs';
-import { onMounted, ref, toRaw } from 'vue';
+import { onMounted, reactive, ref, toRaw, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { statistic } from '@/api';
@@ -216,6 +217,7 @@ import news_3 from './assets/news_3.jpg';
 import news_4 from './assets/news_4.jpg';
 import news_5 from './assets/news_5.jpg';
 import news_6 from './assets/news_6.jpg';
+
 dayjs.extend(relativeTime);
 
 // import SwiperItem from './components/SwiperItem.vue';
@@ -226,6 +228,9 @@ const router = useRouter();
 const carousel = ref(null);
 const projectStore = useProjectStore();
 const loading = ref(false);
+const state = reactive({
+  primaryProjectInfo: {},
+});
 
 onMounted(async () => {
   const refer = route.query.refer;
@@ -288,17 +293,24 @@ const news = [
 function goToCreate() {
   router.push('/project/create');
 }
+
 function goToDistribute() {
   router.push('/mine/distribution');
 }
 
-const { data: primaryProjectInfo } = usePrimaryProjectInfo();
+const { data: projectInfo } = usePrimaryProjectInfo();
+watch(projectInfo, () => {
+  if (projectInfo.value && projectInfo.value.length > 0) {
+    state.primaryProjectInfo = projectInfo.value[0];
+  }
+});
 
 async function handleMint() {
   loading.value = true;
   try {
-    const { projectAddress, projectId, bizId } = toRaw(primaryProjectInfo.value);
+    const { projectAddress, projectId, bizId } = toRaw(state.primaryProjectInfo);
     await projectStore.mint(projectAddress as Address, projectId, bizId);
+    ElMessage.success('mint success');
   } catch (error) {
     console.error('mint failed：', error);
     ElMessage.error('mint failed');
@@ -349,6 +361,7 @@ async function handleMint() {
     padding-right: var(--container-padding-right);
     padding-top: 114px;
     padding-bottom: 113px;
+
     > h2 {
       height: 57px;
       font-size: 48px;
@@ -359,6 +372,7 @@ async function handleMint() {
       text-align: center;
       margin-bottom: 56px;
     }
+
     .h-content {
       max-width: var(--container-max-width);
       margin-left: auto;
@@ -366,8 +380,10 @@ async function handleMint() {
       display: flex;
       justify-content: center;
       flex-direction: row;
+
       .h-box {
         color: #fff;
+
         > h3 {
           font-size: 36px;
           font-weight: 500;
@@ -375,6 +391,7 @@ async function handleMint() {
           line-height: 42px;
           margin-bottom: 20px;
         }
+
         p {
           height: 40px;
           line-height: 40px;
@@ -382,21 +399,26 @@ async function handleMint() {
           font-weight: 400;
         }
       }
+
       .h-divider {
         width: 164px;
       }
+
       .left-box {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+
         p {
           text-align: right;
         }
       }
+
       .btn {
         margin-top: 28px;
       }
     }
+
     @media screen and (max-width: 960px) {
       .h-content {
         .h-divider {
@@ -413,18 +435,22 @@ async function handleMint() {
       > h2 {
         font-size: 26px;
       }
+
       .h-content {
         flex-direction: column;
         display: flex;
         align-items: center;
+
         > .h-box {
           display: flex;
           flex-direction: column;
           align-items: center;
+
           p {
             text-align: center;
           }
         }
+
         .h-divider {
           height: 60px;
         }
@@ -438,6 +464,7 @@ async function handleMint() {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     > h2 {
       font-size: 48px;
       font-weight: 700;
@@ -446,6 +473,7 @@ async function handleMint() {
       text-align: center;
       color: #fff;
       margin-bottom: 32px;
+
       &::before,
       &::after {
         content: '';
@@ -468,6 +496,7 @@ async function handleMint() {
     height: 360px;
     width: 960px;
     padding-top: 88px;
+
     .op-box-content {
       display: flex;
       flex-direction: row;
@@ -491,6 +520,7 @@ async function handleMint() {
         color: #ffffff;
         margin-bottom: 20px;
       }
+
       p {
         font-size: 16px;
         font-weight: 400;
@@ -510,17 +540,21 @@ async function handleMint() {
       height: 300px;
       background: url('@/assets/images/decps.png') center center no-repeat;
       background-size: contain;
+
       &.across-mutiple {
         background-image: url('@/assets/images/across-mutiple.png');
       }
+
       &.permissionless {
         background-image: url('@/assets/images/permissionless.png');
       }
+
       &.gamification {
         background-image: url('@/assets/images/gamification.png');
       }
     }
   }
+
   :deep(.el-carousel__container) {
     width: 100%;
     height: 360px;
@@ -528,6 +562,7 @@ async function handleMint() {
 
   .satisfies {
     background-color: #01071e;
+
     > p {
       max-width: 557px;
       font-size: 17px;
@@ -538,9 +573,11 @@ async function handleMint() {
       text-align: center;
       margin-bottom: 32px;
     }
+
     .satisfies-content {
       display: flex;
       gap: 60px;
+
       > div {
         width: 450px;
         height: 400px;
@@ -552,6 +589,7 @@ async function handleMint() {
         flex-direction: column;
         align-items: center;
       }
+
       .satisfies-devier {
         margin: 27px 0 20px;
         height: 2px;
@@ -559,6 +597,7 @@ async function handleMint() {
         background-color: #151d35;
         flex-shrink: 0;
       }
+
       h3 {
         font-size: 30px;
         font-weight: 700;
@@ -567,6 +606,7 @@ async function handleMint() {
         color: #ffffff;
         margin-bottom: 16px;
       }
+
       p {
         font-size: 14px;
         font-weight: 400;
@@ -575,6 +615,7 @@ async function handleMint() {
         color: #c9c9c9;
         text-align: center;
       }
+
       ul {
         display: flex;
         flex-direction: column;
@@ -607,6 +648,7 @@ async function handleMint() {
         justify-content: flex-end;
         padding-bottom: 14px;
         gap: 12px;
+
         > button {
           background: transparent;
           border-style: none;
@@ -615,6 +657,7 @@ async function handleMint() {
           height: 22px;
           cursor: pointer;
         }
+
         img {
           width: 22px;
           height: 22px;
@@ -653,6 +696,7 @@ async function handleMint() {
         background: #ffc300;
         border: 1px solid #2e3e5f;
       }
+
       > h3 {
         height: 16px;
         font-size: 13px;
@@ -665,12 +709,14 @@ async function handleMint() {
         overflow: hidden;
         white-space: nowrap;
       }
+
       span {
         font-size: 12px;
         font-weight: 400;
         color: #c9c9c9;
         text-align: left;
       }
+
       a {
         font-size: 12px;
         font-weight: 400;
@@ -680,6 +726,7 @@ async function handleMint() {
       }
     }
   }
+
   .case-content {
     left: 120px;
     top: 2501px;
@@ -691,15 +738,18 @@ async function handleMint() {
     padding: 16px;
     display: flex;
     gap: 32px;
+
     img {
       width: 200px;
       height: 200px;
       border-radius: 10px;
     }
+
     .case-detail {
       padding-top: 28px;
       flex-grow: 1;
       position: relative;
+
       > h3 {
         height: 29px;
         font-size: 24px;
@@ -709,9 +759,11 @@ async function handleMint() {
         color: rgba(255, 255, 255, 1);
         margin-bottom: 24px;
       }
+
       > div {
         margin-bottom: 24px;
       }
+
       span,
       strong,
       label {
@@ -723,12 +775,15 @@ async function handleMint() {
         line-height: 28.13px;
         color: #ffffff;
       }
+
       label {
         margin-right: 8px;
       }
+
       strong {
         color: rgba(250, 101, 41, 1);
       }
+
       > button {
         width: 180px;
         height: 50px;
@@ -753,9 +808,11 @@ async function handleMint() {
     background: #01071e;
     padding-top: 95px;
     padding-bottom: 127px;
+
     h2 {
       margin-bottom: 25px;
     }
+
     h1 {
       height: 73px;
       font-size: 62px;
@@ -767,6 +824,7 @@ async function handleMint() {
       margin-bottom: 74px;
       margin-top: 0;
     }
+
     .monetize-action {
       display: flex;
       align-items: center;

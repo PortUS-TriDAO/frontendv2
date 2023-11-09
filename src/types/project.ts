@@ -128,6 +128,7 @@ export interface RightData {
 }
 
 export interface PrimaryProjectInfo {
+  avatar: string;
   chain: string;
   briefIntro: string;
   name: string;
