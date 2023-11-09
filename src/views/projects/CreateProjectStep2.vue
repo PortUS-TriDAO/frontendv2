@@ -82,14 +82,13 @@ const loading = ref(false);
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
-  contractName: 'FarmersWorld',
-  symbol: 'FWD',
-  sharePercentage: '10',
-  briefIntro: 'Farmers World is the first farming game to function on the NFTs platform',
-  payToken: '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964',
-  description:
-    'Farmers World is the first farming game to function on the NFTs platform. Pick for yourself suitable tools, exploit various resources, buy land to build enormous farms, and enjoy the fascinating experiences of a farmer working in Farmers World’s Ecosystem',
-  rightQuantity: '10000',
+  contractName: '',
+  symbol: '',
+  sharePercentage: '',
+  briefIntro: '',
+  payToken: '',
+  description: '',
+  rightQuantity: '',
 });
 
 const rules = reactive({

@@ -20,10 +20,10 @@ const NFT_RETAILER_TYPES = {
   ],
 } as const;
 export const useSignTypedDataStore = defineStore('signTypedData', () => {
-  async function getNftRetailerDomain(
+  function getNftRetailerDomain(
     name: 'MintedNftRetailer' | 'UnmintedNftRetailer',
-    retailerContractAddress: Address,
-  ): Promise<TypedDataDomain> {
+    retailerContractAddress: string,
+  ): TypedDataDomain {
     const network = getNetwork();
     const chainId = network.chain.id!;
     return {
@@ -50,9 +50,9 @@ export const useSignTypedDataStore = defineStore('signTypedData', () => {
       nftTokenId,
       deadline,
     };
-    const domain = await getNftRetailerDomain('MintedNftRetailer', retailerAddress);
+    const domain = getNftRetailerDomain('MintedNftRetailer', retailerAddress);
     return signTypedData({
-      domain,
+      domain: domain as any,
       message,
       primaryType: 'NftRetailer',
       types: NFT_RETAILER_TYPES,

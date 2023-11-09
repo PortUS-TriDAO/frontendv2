@@ -1,4 +1,5 @@
-import { readContract, ReadContractResult, writeContract } from '@wagmi/core';
+import type { Address, ReadContractResult } from '@wagmi/core';
+import { readContract, writeContract } from '@wagmi/core';
 import { defineStore } from 'pinia';
 
 import NFT_ABI from '@/abi/nft.abi.json';
@@ -40,5 +41,5 @@ export const useNftContract = defineStore('nftContract', () => {
     });
   }
 
-  return { mint, approve, setSeller };
+  return { mint, approve, setSeller, tokenURI };
 });

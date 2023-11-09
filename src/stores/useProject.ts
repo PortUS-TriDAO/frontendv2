@@ -29,7 +29,7 @@ interface ICreateProject {
 interface IBuyInfo {
   seller: Address;
   payToken: Address;
-  payPrice: string | BigInt;
+  payPrice: string;
   nftTokenId: number;
   deadline: number;
   signature: string;
@@ -52,7 +52,7 @@ export const useProjectStore = defineStore('project', () => {
   }> {
     console.log('createProject', params);
     const {
-      projectId: number,
+      projectId,
       briefIntro,
       description,
       contractName,
@@ -299,7 +299,7 @@ export const useProjectStore = defineStore('project', () => {
       projectId,
       bizId,
       kolAddress,
-      rightId: tokenId.toString(),
+      rightId: tokenId,
     });
   }
 

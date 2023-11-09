@@ -40,7 +40,7 @@ import SuccessCard from '../views/projects/components/SuccessCard.vue';
 const projectStore = useProjectStore();
 const router = useRouter();
 const nftType = ref('1');
-const nftAddress = ref('0x4a85039847E98D0F87e087eCd71c9AFDD94caDFe');
+const nftAddress = ref('');
 const route = useRoute();
 const projectId = route.params.projectId;
 const bizId = route.params.bizId as string;
@@ -71,20 +71,15 @@ async function deployMintedContract() {
   }
   loading.value = true;
   try {
-    const {
-      success,
-      data,
-      contractAddress: retailAddress,
-    } = await projectStore.deployMintedNftContract(
+    const { success, contractAddress: retailAddress } = await projectStore.deployMintedNftContract(
       projectId,
       nftAddress.value,
       bizDetail.value.contractAddress!,
       bizId,
     );
-    if (!success) throw new Error(data);
-    const retailId = data.retailId;
+    if (!success) throw new Error('deploy minted contract failed');
     router.push(
-      `/project/publish/sku/${projectId}/${bizId}/${nftAddress.value}/${retailAddress}/${data.retailId}`,
+      `/project/publish/sku/${projectId}/${bizId}/${nftAddress.value}/${retailAddress}/${bizDetail.value.retailId}`,
     );
   } catch (error) {
     console.error('create minted failed', error);

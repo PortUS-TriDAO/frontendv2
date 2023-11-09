@@ -50,6 +50,7 @@ export interface BusinessData {
 }
 
 export interface BusinessDetailData {
+  retailId: number;
   contractName: string;
   briefIntro: string;
   sharePercentage: number;
