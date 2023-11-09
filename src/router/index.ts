@@ -179,14 +179,19 @@ const router = createRouter({
       component: () => import('../views/store/NftDetail.vue'),
     },
     {
-      path: '/store/:kolAddress/sku/:retailId/:skuId',
+      path: '/store/:kolAddress/sku/:retailId/:skuId/:bizId',
       name: 'StoreSkuList',
       component: () => import('../views/store/SkuDetail.vue'),
     },
     {
-      path: '/store/:kolAddress/spu/:retailId/:spuId',
+      path: '/store/:kolAddress/spu/:retailId/:spuId/:bizId',
       name: 'StoreSpuList',
       component: () => import('../views/store/SpuDetail.vue'),
+    },
+    {
+      path: '/faucet',
+      name: 'Faucet',
+      component: () => import('../views/faucet/faucet.vue'),
     },
   ],
 });

@@ -70,12 +70,12 @@ const map = {
   },
   store: {
     title: '',
-    btnText: 'Share Project',
-    btnClick: (item: ProjectItem) => {
-      // TODO: edit
-      const projectInfo = toRaw(item);
-      shareProject(account, projectInfo.projectId);
-    },
+    // btnText: 'Share Project',
+    // btnClick: (item: ProjectItem) => {
+    //   // TODO: edit
+    //   const projectInfo = toRaw(item);
+    //   shareProject(account, projectInfo.projectId);
+    // },
     bottomBtn: {
       text: 'share My Store',
       onClick: () => {

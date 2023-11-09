@@ -9,6 +9,7 @@
             <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
             <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
             <router-link to="/mine/submitted" @click.stop="switchMenu(true)">Mine</router-link>
+            <router-link to="/faucet" @click.stop="switchMenu(true)">Faucet</router-link>
           </template>
           <!-- <button v-if="!account" @click.stop="connect">connect</button>
           <button v-else @click.stop>{{ shortAddress }}</button> -->
@@ -39,6 +40,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useWalletStore } from '@/stores/useWallet';
+
 const route = useRoute();
 const isStore = computed(() => route.path.indexOf('/store') === 0);
 
@@ -117,6 +119,7 @@ function connect() {
         padding: 0 10px;
         display: flex;
         align-items: center;
+
         > svg {
           margin-right: 22px;
         }
@@ -126,7 +129,8 @@ function connect() {
         color: #fff;
         opacity: 0.5;
         display: inline-block;
-        margin-right: 80px;
+        //margin-right: 80px;
+        margin-right: 50px;
       }
     }
 

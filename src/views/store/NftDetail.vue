@@ -8,7 +8,7 @@
         v-for="item in nftList?.rows || []"
         :key="item.id"
         :item="item"
-        @click="handleDetail(item.id)"
+        @click="handleDetail(item)"
       >
         <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
@@ -22,17 +22,22 @@
   </page-container>
 </template>
 <script setup lang="ts">
+import { waitForTransaction } from '@wagmi/core';
+import { ElLoading, ElMessage } from 'element-plus';
 import { ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { state } from 'vue-tsc/out/shared';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useKolRightId, useNftDetail, useSkuList, useSpuList } from '@/hooks';
+import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
 import { type Address, type NftContractData, NftType, type SkuData, type SpuData } from '@/types';
 import { extendsDecimals } from '@/utils/bn';
 
 const projectStore = useProjectStore();
+const erc20Contract = useERC20Contract();
 const route = useRoute();
 const router = useRouter();
 const kolAddress = route.params.kolAddress as Address;
@@ -41,13 +46,8 @@ const nftType = Number(route.params.nftType);
 const retailerAddress = route.query.retailAddress as Address;
 const bizId = Number(route.query.bizId);
 
-console.log('retailerAddress', {
-  retailerAddress,
-  bizId,
-  kolAddress,
-  nftType,
-});
 const loading = ref(false);
+const status = ref('Approve');
 const data: NftContractData = {
   nftAddress: route.query.nftAddress as Address,
   avatar: route.query.avatar as string,
@@ -64,20 +64,24 @@ const { data: nftList } =
 const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
 console.log('kolRightInfo', kolRightInfo);
 
-function handleDetail(id: number) {
+function handleDetail(item: any) {
   if (nftType === NftType.SKU) {
-    router.push(`/store/${kolAddress}/sku/${retailId}/${id}`);
+    router.push(`/store/${kolAddress}/sku/${retailId}/${item.id}/${bizId}`);
   } else {
-    router.push(`/store/${kolAddress}/spu/${retailId}/${id}`);
+    router.push(`/store/${kolAddress}/spu/${retailId}/${item.id}/${bizId}`);
   }
   // router.push(`/store/${kolAddress}/sku/${nftAddress.value}/${tokenId}`);
 }
 
 async function handleBuy(item: SkuData | SpuData) {
-  // TODO: buy
-  console.log('handleBuyahah item:', item);
   const itemInfo = toRaw(item);
   loading.value = true;
+
+  const fullScreenLoading = ElLoading.service({
+    lock: true,
+    text: 'Approve',
+    background: 'rgba(0, 0, 0, 0.7)',
+  });
   try {
     const buyParams = {
       seller: itemInfo.seller,
@@ -87,17 +91,30 @@ async function handleBuy(item: SkuData | SpuData) {
       deadline: itemInfo.ddl,
       signature: itemInfo.signature,
     };
-    console.log('params', {
+
+    // approve ERC20
+    const approveTx = await erc20Contract.approve(
+      buyParams.payToken,
       retailerAddress,
-      buyNftParams: [buyParams],
-      kolTokenId: kolRightInfo.value.rightId,
-    });
-    console.log('buy params', buyParams);
-    await projectStore.buyMintedNft(retailerAddress, [buyParams], kolRightInfo.value.rightId);
+      buyParams.payPrice,
+    );
+    await waitForTransaction({ hash: approveTx.hash });
+
+    fullScreenLoading.text.value = 'Buy';
+    const tx = await projectStore.handleBuyMintedNft(
+      retailerAddress,
+      [buyParams],
+      kolRightInfo.value.rightId,
+    );
+    await waitForTransaction({ hash: tx.hash });
+    ElMessage.success('buy success');
   } catch (e) {
     console.error(e);
+    ElMessage.error('buy failed');
   } finally {
     loading.value = false;
+    fullScreenLoading.close();
+    state.value = 'approve';
   }
   // router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
 }
