@@ -126,3 +126,14 @@ export interface RightData {
   kolAddress: string;
   rightId: number;
 }
+
+export interface PrimaryProjectInfo {
+  chain: string;
+  briefIntro: string;
+  name: string;
+  items: number; // 这里还不清楚是指什么的数量
+  sharePercentage: number;
+  projectAddress: string;
+  projectId: number;
+  bizId: number;
+}

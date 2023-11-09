@@ -178,7 +178,8 @@
               <label>Share precentage:</label>
               <span>xx%</span>
             </div>
-            <button>Mint</button>
+            <!-- <button @click="handleMint">Mint</button> -->
+            <p-button :loading="loading" @click="handleMint">Mint</p-button>
           </div>
         </div>
       </div>
@@ -197,12 +198,17 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { Address } from '@wagmi/core';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { onMounted, ref } from 'vue';
+import { ElMessage } from 'element-plus';
+import { watch } from 'fs';
+import { onMounted, ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { statistic } from '@/api';
+import { usePrimaryProjectInfo } from '@/hooks';
+import { useProjectStore } from '@/stores/useProject';
 
 import news_1 from './assets/news_1.jpg';
 import news_2 from './assets/news_2.jpg';
@@ -218,6 +224,8 @@ dayjs.extend(relativeTime);
 const route = useRoute();
 const router = useRouter();
 const carousel = ref(null);
+const projectStore = useProjectStore();
+const loading = ref(false);
 
 onMounted(async () => {
   const refer = route.query.refer;
@@ -282,6 +290,21 @@ function goToCreate() {
 }
 function goToDistribute() {
   router.push('/mine/distribution');
+}
+
+const { data: primaryProjectInfo } = usePrimaryProjectInfo();
+
+async function handleMint() {
+  loading.value = true;
+  try {
+    const { projectAddress, projectId, bizId } = toRaw(primaryProjectInfo.value);
+    await projectStore.mint(projectAddress as Address, projectId, bizId);
+  } catch (error) {
+    console.error('mint failed：', error);
+    ElMessage.error('mint failed');
+  } finally {
+    loading.value = false;
+  }
 }
 
 // function changeSwiper(direction) {

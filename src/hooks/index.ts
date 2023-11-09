@@ -7,6 +7,7 @@ import type {
   NftContractData,
   NftType,
   PageData,
+  PrimaryProjectInfo,
   ProjectData,
   ProjectDetailData,
   RightData,
@@ -20,6 +21,7 @@ import {
   getNftDetail,
   // getNftList,
   getParticipateProjects,
+  getPrimaryProjectInfo,
   getProjectDetail,
   getProjects,
   getSkuDetail,
@@ -216,6 +218,18 @@ export function useKolRightId(
     queryFn: async () => {
       const { success, data } = await getkolRightId({ bizId, kolAddress });
       if (!success) throw new Error('query kol rightId failed');
+      return data;
+    },
+  });
+  return result;
+}
+
+export function usePrimaryProjectInfo(): UseQueryReturnType<PrimaryProjectInfo | null, Error> {
+  const result = useQuery({
+    queryKey: ['getPrimaryProjectInfo'],
+    queryFn: async () => {
+      const { success, data } = await getPrimaryProjectInfo();
+      if (!success) return null;
       return data;
     },
   });

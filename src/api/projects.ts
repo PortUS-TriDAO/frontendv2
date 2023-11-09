@@ -2,6 +2,7 @@ import type {
   BusinessDetailData,
   IListResponse,
   IResponse,
+  PrimaryProjectInfo,
   ProjectData,
   ProjectDetailData,
   RightData,
@@ -95,3 +96,6 @@ export const getkolRightId = (params: {
   bizId: number;
   kolAddress: string;
 }): Promise<IResponse<RightData>> => axios.get('/project/kol/rightid', { params });
+
+export const getPrimaryProjectInfo = (): Promise<IResponse<PrimaryProjectInfo>> =>
+  axios.get('/project/primary');
