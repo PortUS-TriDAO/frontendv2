@@ -66,7 +66,7 @@ export const useProjectStore = defineStore('project', () => {
       contractName,
       symbol,
       payToken,
-      extendsDecimals(sharePercentage).toString(),
+      extendsDecimals(sharePercentage).div(100).toString(),
       rightQuantity,
     );
     await waitForTransaction({ hash: tx.hash });
