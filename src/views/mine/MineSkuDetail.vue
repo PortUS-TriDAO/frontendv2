@@ -2,8 +2,8 @@
   <div class="pg-mine-sku-detail">
     <sku-card v-if="data" :item="data" @buy="handleBuy">
       <template v-if="scenes === 'submitted'" v-slot:actions>
-        <p-button round @click="handleDown">Down</p-button>
-        <p-button round @click="handleUp">Up</p-button>
+        <p-button v-if="data.isHide" round @click="handleUp">Up</p-button>
+        <p-button v-else round @click="handleDown">Down</p-button>
         <p-button round @click="handleEdit">Edit</p-button>
       </template>
     </sku-card>

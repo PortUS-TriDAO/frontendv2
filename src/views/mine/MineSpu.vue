@@ -4,7 +4,8 @@
       <img alt="cover" class="bg" :src="data?.cover" />
       <img alt="avatar" class="avatar" :src="data?.avatar" />
       <template v-if="scenes === 'submitted'">
-        <p-button @click="handleDown">Down</p-button>
+        <p-button v-if="data?.isHide" @click="handleUp">Up</p-button>
+        <p-button v-else @click="handleDown">Down</p-button>
       </template>
     </div>
     <div class="detail">
@@ -76,6 +77,11 @@ const { data } = useSpuDetail(spuId);
 // }
 
 function handleDown() {
+  console.log('handleDown...');
+  // const { id } = route.params;
+  // router.push(`/project/${id}/${businessId}`);
+}
+function handleUp() {
   console.log('handleDown...');
   // const { id } = route.params;
   // router.push(`/project/${id}/${businessId}`);
