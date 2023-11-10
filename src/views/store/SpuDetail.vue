@@ -4,7 +4,11 @@
       <img alt="cover" class="bg" :src="data?.cover" />
       <img alt="avatar" class="avatar" :src="data?.avatar" />
 
-      <p-button @click="handleBuy">Buy Now</p-button>
+      <div class="info">
+        <div v-if="data.isSold" class="sold-out">sold out</div>
+        <div v-else-if="data.isHide" class="sold-out">Down</div>
+        <p-button v-else @click="handleBuy">Buy Now</p-button>
+      </div>
     </div>
     <div class="detail">
       <h3>Echo of Intensity</h3>
@@ -115,6 +119,28 @@ function handleBuy() {
       z-index: 2;
     }
   }
+
+  .info {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 30px;
+  }
+
+  .sold-out {
+    width: 130px;
+    height: 90px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #fff;
+  }
+
   .detail {
     padding: 15px 30px 15px;
     font-size: 24px;
