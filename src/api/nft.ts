@@ -38,3 +38,11 @@ export const getSpuList = (params: {
   page?: number;
   limit?: number;
 }): Promise<IListResponse<SpuData>> => axios.get('/project/spu/list', { params });
+
+// 购买完或者添加SKU的时候给服务端上报数据
+export const postSkuUpdate = (params: {
+  skuId: number;
+  imgUrl?: string;
+  nftName?: string;
+  isSold?: boolean;
+}) => axios.post('/project/sku/update', params);

@@ -28,6 +28,7 @@ import { ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { state } from 'vue-tsc/out/shared';
 
+import { postSkuUpdate } from '@/api/nft';
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useKolRightId, useNftDetail, useSkuList, useSpuList } from '@/hooks';
@@ -62,7 +63,6 @@ const data: NftContractData = {
 const { data: nftList } =
   nftType === NftType.SKU ? useSkuList(retailId, 1, 25) : useSpuList(retailId);
 const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
-console.log('kolRightInfo', kolRightInfo);
 
 function handleDetail(item: any) {
   if (nftType === NftType.SKU) {
@@ -91,6 +91,7 @@ async function handleBuy(item: SkuData | SpuData) {
       deadline: itemInfo.ddl,
       signature: itemInfo.signature,
     };
+    console.log('buy params', buyParams);
 
     // approve ERC20
     const approveTx = await erc20Contract.approve(
@@ -107,6 +108,7 @@ async function handleBuy(item: SkuData | SpuData) {
       kolRightInfo.value.rightId,
     );
     await waitForTransaction({ hash: tx.hash });
+    await postSkuUpdate({ skuId: item.id, isSold: true });
     ElMessage.success('buy success');
   } catch (e) {
     console.error(e);

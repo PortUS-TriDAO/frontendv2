@@ -2,29 +2,29 @@ import type { Address, ReadContractResult } from '@wagmi/core';
 import { readContract } from '@wagmi/core';
 import { defineStore } from 'pinia';
 
-import FOUNDS_ABI from '@/abi/founds.abi.json';
+import FUNDS_ABI from '@/abi/funds.abi.json';
 
-export const useFoundsContract = defineStore('foundsContract', () => {
+export const useFundsContract = defineStore('fundsContract', () => {
   function operatorPendingRewards(
-    foundsAddress: Address,
+    fundsAddress: Address,
     token: Address,
   ): Promise<ReadContractResult> {
     return readContract({
-      address: foundsAddress,
-      abi: FOUNDS_ABI,
-      functionName: 'founds',
+      address: fundsAddress,
+      abi: FUNDS_ABI,
+      functionName: 'operatorPendingRewards',
       args: [token],
     });
   }
 
   function referrerPendingReward(
-    foundsAddress: Address,
+    fundsAddress: Address,
     token: Address,
     referrer: Address,
   ): Promise<ReadContractResult> {
     return readContract({
-      address: foundsAddress,
-      abi: FOUNDS_ABI,
+      address: fundsAddress,
+      abi: FUNDS_ABI,
       functionName: 'pendingRewards',
       args: [token, referrer],
     });

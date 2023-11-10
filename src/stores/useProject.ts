@@ -11,7 +11,7 @@ import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 import { extendsDecimals, toBN } from '@/utils/bn';
 
-import { useFoundsContract } from './useFoundsContract';
+import { useFundsContract } from './useFundsContract';
 import { useNftContract } from './useNftContract';
 import { useProjectContract } from './useProjectContract';
 import { useRightsContract } from './useRightsContract';
@@ -286,7 +286,7 @@ export const useProjectStore = defineStore('project', () => {
       return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
     });
 
-    await writeContract({
+    return writeContract({
       address: retailerContract,
       abi: RETAILER_ABI,
       functionName: 'buy',
@@ -335,23 +335,19 @@ export const useProjectStore = defineStore('project', () => {
 
   async function operatorPendingRewards(projectAddress: Address, token: Address): Promise<bigint> {
     const projectContract = useProjectContract();
-    const foundContractAddress = await projectContract.founds(projectAddress);
-    const foundsContract = useFoundsContract();
-    const rewards = await foundsContract.operatorPendingRewards(foundContractAddress, token);
+    const fundContractAddress = await projectContract.funds(projectAddress);
+    const fundsContract = useFundsContract();
+    const rewards = await fundsContract.operatorPendingRewards(fundContractAddress, token);
     return rewards as bigint;
   }
 
   async function referrerPendingReward(projectAddress: Address, token: Address): Promise<bigint> {
     const projectContract = useProjectContract();
-    const foundContractAddress = await projectContract.founds(projectAddress);
-    const foundsContract = useFoundsContract();
+    const fundContractAddress = await projectContract.funds(projectAddress);
+    const fundsContract = useFundsContract();
 
     const { address: account } = getAccount();
-    const rewards = await foundsContract.referrerPendingReward(
-      foundContractAddress,
-      token,
-      account,
-    );
+    const rewards = await fundsContract.referrerPendingReward(fundContractAddress, token, account);
     return rewards as bigint;
   }
 
