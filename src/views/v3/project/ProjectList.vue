@@ -34,9 +34,9 @@ const {
   refetch,
   isPending,
 } = useQuery({
-  queryKey: ['getProjects'],
+  queryKey: ['getProjects', searchKey.value],
   queryFn: () => {
-    return getProjects({});
+    return getProjects({ key: searchKey.value });
   },
 });
 

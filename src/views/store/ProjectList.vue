@@ -16,7 +16,7 @@
 import { useQuery } from '@tanstack/vue-query';
 import { useRoute, useRouter } from 'vue-router';
 
-import { getParticipateProjects, getProjects } from '@/api';
+import { getParticipateProjects } from '@/api';
 import ProjectItem from '@/components/project-item/index.vue';
 import type { Address, ProjectData } from '@/types';
 
@@ -26,7 +26,7 @@ const route = useRoute();
 const kolAddress = route.params.kolAddress as Address;
 
 const { data: res, isPending } = useQuery({
-  queryKey: ['getProjects'],
+  queryKey: ['getParticipateProjects', kolAddress],
   queryFn: () => {
     // storeId
     return getParticipateProjects({ kolAddress });

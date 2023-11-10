@@ -31,11 +31,11 @@ import {
   getSubmittedProjects,
 } from '../api';
 
-export function useProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
+export function useProjects(key?: string): UseQueryReturnType<PageData<ProjectData>, Error> {
   const result = useQuery({
     queryKey: ['getProjects'],
     queryFn: async () => {
-      const { success, data } = await getProjects({});
+      const { success, data } = await getProjects({ key });
       if (!success) return null;
       return data;
     },
