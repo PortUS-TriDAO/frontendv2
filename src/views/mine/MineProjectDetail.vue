@@ -159,14 +159,14 @@ const map = {
   store: {
     topBtn: null,
     rowActions: [
-      {
-        text: 'share contract',
-        onClick: (item: BusinessData) => {
-          // TODO: share contract
-          console.log('share contract', item);
-          shareContract(account, projectId, item.id);
-        },
-      },
+      // {
+      //   text: 'share contract',
+      //   onClick: (item: BusinessData) => {
+      //     // TODO: share contract
+      //     console.log('share contract', item);
+      //     shareContract(account, projectId, item.id);
+      //   },
+      // },
     ],
     buttonBtn: null,
   },

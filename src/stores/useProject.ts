@@ -11,6 +11,7 @@ import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 import { extendsDecimals, toBN } from '@/utils/bn';
 
+import { useFoundsContract } from './useFoundsContract';
 import { useNftContract } from './useNftContract';
 import { useProjectContract } from './useProjectContract';
 import { useRightsContract } from './useRightsContract';
@@ -266,9 +267,23 @@ export const useProjectStore = defineStore('project', () => {
       return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
     });
 
-    console.log({
-      buyParams,
-      kolTokenId,
+    await writeContract({
+      address: retailerContract,
+      abi: RETAILER_ABI,
+      functionName: 'buy',
+      // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
+      args: [buyParams, kolTokenId],
+    });
+  }
+
+  async function handleBuyMintedNft(
+    retailerContract: Address, // business contract
+    buyNftParams: IBuyInfo[],
+    kolTokenId: number,
+  ) {
+    const buyParams = buyNftParams.map((item) => {
+      const { r, s, v } = splitSignature(item.signature);
+      return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
     });
 
     await writeContract({
@@ -318,6 +333,28 @@ export const useProjectStore = defineStore('project', () => {
     return projectContract.operatorWithdraw(projectAddress);
   }
 
+  async function operatorPendingRewards(projectAddress: Address, token: Address): Promise<bigint> {
+    const projectContract = useProjectContract();
+    const foundContractAddress = await projectContract.founds(projectAddress);
+    const foundsContract = useFoundsContract();
+    const rewards = await foundsContract.operatorPendingRewards(foundContractAddress, token);
+    return rewards as bigint;
+  }
+
+  async function referrerPendingReward(projectAddress: Address, token: Address): Promise<bigint> {
+    const projectContract = useProjectContract();
+    const foundContractAddress = await projectContract.founds(projectAddress);
+    const foundsContract = useFoundsContract();
+
+    const { address: account } = getAccount();
+    const rewards = await foundsContract.referrerPendingReward(
+      foundContractAddress,
+      token,
+      account,
+    );
+    return rewards as bigint;
+  }
+
   return {
     state,
     createProject,
@@ -326,8 +363,11 @@ export const useProjectStore = defineStore('project', () => {
     publishSku,
     publishSpu,
     buyMintedNft,
+    handleBuyMintedNft,
     mint,
     kolWithdraw,
     operatorWithdraw,
+    operatorPendingRewards,
+    referrerPendingReward,
   };
 });

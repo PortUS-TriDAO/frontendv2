@@ -23,5 +23,14 @@ export const useERC20Contract = defineStore('erc20Contract', () => {
     });
   }
 
-  return { approve, allowance };
+  async function mint(contractAddress: Address, to: string, amount: string) {
+    return writeContract({
+      address: contractAddress,
+      abi: ERC20_ABI,
+      functionName: 'mint',
+      args: [to, amount],
+    });
+  }
+
+  return { approve, allowance, mint };
 });

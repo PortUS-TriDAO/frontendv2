@@ -31,7 +31,7 @@
           <div>xx USDT</div>
         </div>
         <p-button v-else-if="scenes === 'participated'" @click="handleMintMore">Mint More</p-button>
-        <p-button v-else @click="handleShare">share commercial contract</p-button>
+        <!--        <p-button v-else @click="handleShare">share commercial contract</p-button>-->
       </div>
     </div>
     <div class="detail-divider"></div>

@@ -26,7 +26,7 @@ import SuccessCard from '@/views/projects/components/SuccessCard.vue';
 const router = useRouter();
 
 function toMintMore() {
-  router.push('/');
+  router.push('/project/list');
 }
 
 function toMine() {
