@@ -25,8 +25,8 @@
               round
               v-on:click.stop="handleBuy(item)"
             >
-              Buy Now</p-button
-            >
+              Buy Now
+            </p-button>
           </div>
         </template>
       </sku-item>
@@ -81,7 +81,7 @@ async function handleBuy(skuData: SkuData) {
     const buyParams = {
       seller: data.value.seller as Address,
       payToken: data.value.payToken as Address,
-      payPrice: extendsDecimals(data.value.price).toString(),
+      payPrice: extendsDecimals(data.value.price).toString(10),
       nftTokenId: Number(data.value.tokenId),
       deadline: Number(data.value.ddl),
       signature: data.value.signature,
@@ -124,6 +124,7 @@ async function handleBuy(skuData: SkuData) {
   .info {
     height: 100%;
   }
+
   .sold-out {
     width: 130px;
     height: 90px;
@@ -136,6 +137,7 @@ async function handleBuy(skuData: SkuData) {
     line-height: 22px;
     color: #fff;
   }
+
   .detail-divider {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
