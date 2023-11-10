@@ -12,7 +12,13 @@
       >
         <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
-            <p-button :loading="loading" size="small" round v-on:click="handleBuy(item)">
+            <p-button
+              v-if="!(item.isSold || item.isHide)"
+              :loading="loading"
+              size="small"
+              round
+              v-on:click="handleBuy(item)"
+            >
               Buy Now
             </p-button>
           </div>

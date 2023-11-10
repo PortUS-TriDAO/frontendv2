@@ -1,21 +1,32 @@
 <template>
   <page-container class="pg-sku-detail">
     <sku-card :loading="loading" v-if="data" :item="data">
-      <p-button @click="handleBuy(data)">Buy Now</p-button>
+      <div class="info">
+        <div v-if="data.isSold" class="sold-out">sold out</div>
+        <div v-else-if="data.isHide" class="sold-out">Down</div>
+        <p-button v-else @click="handleBuy(data)">Buy Now</p-button>
+      </div>
     </sku-card>
 
     <div class="detail-divider"></div>
     <div class="list-title">Items</div>
     <div class="list">
       <sku-item
-        v-for="item in nftList?.rows || []"
+        v-for="item in (nftList?.rows || []).filter((item) => item.id !== skuId)"
         :key="item.id"
         :item="item"
         @click="handleDetail(item.id)"
       >
         <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
-            <p-button size="small" round v-on:click.stop="handleBuy(item)"> Buy Now</p-button>
+            <p-button
+              v-if="!(data.isSold || data.isHide)"
+              size="small"
+              round
+              v-on:click.stop="handleBuy(item)"
+            >
+              Buy Now</p-button
+            >
           </div>
         </template>
       </sku-item>
@@ -110,6 +121,21 @@ async function handleBuy(skuData: SkuData) {
 </script>
 <style lang="less" scoped>
 .pg-sku-detail {
+  .info {
+    height: 100%;
+  }
+  .sold-out {
+    width: 130px;
+    height: 90px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #fff;
+  }
   .detail-divider {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
