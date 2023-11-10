@@ -96,6 +96,7 @@ export interface SkuData {
   //
   ddl: number;
   isHide: number;
+  isSold: number;
   payToken: Address;
   price: number;
   retailAddress: Address;
@@ -111,6 +112,7 @@ export interface SpuData {
   briefIntro: string;
   cover: string;
   ddl: number;
+  isSold: number;
   description: string;
   image: string;
   isHide: number;
