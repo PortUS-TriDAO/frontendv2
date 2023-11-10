@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts" setup>
+import { getAccount } from '@wagmi/core';
 import type { FormInstance } from 'element-plus';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref, toRaw } from 'vue';
@@ -111,9 +112,9 @@ async function createProjectStep1() {
   //   ElMessage.error("Please upload cover")
   //   return
   // }
-
+  const { address } = getAccount();
   // TODO: formData as any
-  const { success, data } = await api.createProjectStep1(formData as any);
+  const { success, data } = await api.createProjectStep1({ creatorAddress: address, ...formData });
   if (!success) {
     ElMessage.error('create project failed');
   } else {
