@@ -1,7 +1,7 @@
 <template>
   <div class="sku-item">
-    <img alt="avatar" :src="item.avatar" />
-    <h3>{{ item?.name }}</h3>
+    <img alt="avatar" :src="item.avatar || item.imgUrl" />
+    <h3>{{ item?.name || item?.nftName }}</h3>
     <div>{{ item.price }} {{ PayTokenMap[item.payToken]?.symbol }}</div>
     <text-ellipsis :line="3" hideAction>
       {{ item.briefIntro }}

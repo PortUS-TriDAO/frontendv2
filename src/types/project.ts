@@ -86,7 +86,9 @@ export interface NftContractData {
 export interface SkuData {
   id: number;
   name: string;
+  nftName: string;
   avatar: string;
+  imgUrl: string;
   // isSalesEnd: boolean;
   briefIntro: string;
   description: string;
@@ -108,7 +110,9 @@ export interface SkuData {
 export interface SpuData {
   id: number;
   name: string;
+  nftName: string;
   avatar: string;
+  imgUrl: string;
   briefIntro: string;
   cover: string;
   ddl: number;

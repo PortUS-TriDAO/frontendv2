@@ -2,14 +2,14 @@
   <div class="pg-mime-spu-detail">
     <div class="banner">
       <img alt="cover" class="bg" :src="data?.cover" />
-      <img alt="avatar" class="avatar" :src="data?.avatar" />
+      <img alt="avatar" class="avatar" :src="data?.avatar || data?.imgUrl" />
       <template v-if="scenes === 'submitted'">
         <p-button v-if="data?.isHide" @click="handleUp">Up</p-button>
         <p-button v-else @click="handleDown">Down</p-button>
       </template>
     </div>
     <div class="detail">
-      <h3>Echo of Intensity</h3>
+      <h3>{{ data?.name || data?.nftName }}</h3>
       <div>{{ data?.retailAddress }}</div>
       <div>{{ data?.price }} USDT</div>
       <div>unminted NFT</div>

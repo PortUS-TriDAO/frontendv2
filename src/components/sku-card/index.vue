@@ -8,9 +8,9 @@
     ]"
   >
     <div class="detail-card">
-      <img alt="avatar" :src="item.avatar" />
+      <img alt="avatar" :src="item.avatar || item.imgUrl" />
       <div class="card-desc">
-        <!--TODO: name <h3>{{ item.nftName }}</h3> -->
+        <h3>{{ item?.name || item.nftName }}</h3>
         <div>#{{ item.tokenId }}</div>
         <div>{{ item.price }} USDT</div>
         <div>
