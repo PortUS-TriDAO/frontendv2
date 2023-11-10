@@ -103,15 +103,15 @@ async function handleNext(formEl: FormInstance | undefined) {
 
 async function createProjectStep1() {
   const formData = toRaw(form);
-  // if (!formData.avatar) {
-  //   ElMessage.error("Please upload avatar")
-  //   return
-  // }
-  //
-  // if (!formData.cover) {
-  //   ElMessage.error("Please upload cover")
-  //   return
-  // }
+  if (!formData.avatar) {
+    ElMessage.error('Please upload avatar');
+    return;
+  }
+
+  if (!formData.cover) {
+    ElMessage.error('Please upload cover');
+    return;
+  }
   const { address } = getAccount();
   // TODO: formData as any
   const { success, data } = await api.createProjectStep1({ creatorAddress: address, ...formData });
@@ -139,6 +139,7 @@ async function handleCover(url: string) {
 .step1-form {
   padding-left: 30px;
   padding-right: 30px;
+
   .form-content {
     width: 658px;
     margin-top: 20px;

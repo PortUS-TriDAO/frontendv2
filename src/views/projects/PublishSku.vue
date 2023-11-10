@@ -47,6 +47,7 @@ import { ElMessage, type FormInstance } from 'element-plus';
 import { onMounted, reactive, ref, toRaw } from 'vue';
 import { useRoute } from 'vue-router';
 
+import { postSkuUpdate } from '@/api/nft';
 import MainContent from '@/components/MainContent.vue';
 import { useBusinessDetail } from '@/hooks';
 import router from '@/router';
@@ -106,6 +107,11 @@ async function publishSku() {
       retailId: retailId,
     });
     if (!success) throw new Error(data as string);
+    await postSkuUpdate({
+      skuId: data.skuId,
+      imgUrl: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp',
+      nftName: 'FarmersWorld',
+    });
     ElMessage.success('Publish sku success');
     router.push('/project/addnft/success');
   } catch (error) {

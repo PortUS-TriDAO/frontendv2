@@ -48,7 +48,6 @@ const retailerAddress = route.query.retailAddress as Address;
 const bizId = Number(route.query.bizId);
 
 const loading = ref(false);
-const status = ref('Approve');
 const data: NftContractData = {
   nftAddress: route.query.nftAddress as Address,
   avatar: route.query.avatar as string,
@@ -75,7 +74,7 @@ function handleDetail(item: any) {
 
 async function handleBuy(item: SkuData | SpuData) {
   const itemInfo = toRaw(item);
-  loading.value = true;
+  // loading.value = true;
 
   const fullScreenLoading = ElLoading.service({
     lock: true,
@@ -116,7 +115,6 @@ async function handleBuy(item: SkuData | SpuData) {
   } finally {
     loading.value = false;
     fullScreenLoading.close();
-    state.value = 'approve';
   }
   // router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
 }
