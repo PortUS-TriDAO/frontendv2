@@ -3,7 +3,7 @@
     <h3 v-if="scenesData.title" class="mine-page-title">{{ scenesData.title }}</h3>
     <project-item
       v-for="item in data?.rows || []"
-      :key="item.projectId"
+      :key="item.id || item.projectId"
       :item="item"
       :btnText="scenesData.btnText"
       @btnClick="scenesData.btnClick"
@@ -36,7 +36,7 @@ const { data } = useScenesProjects(scenes);
 const { address: account } = getAccount();
 
 function handleDetail(item: ProjectData) {
-  router.push(`/mine/${scenes.value}/${item.projectId}`);
+  router.push(`/mine/${scenes.value}/${item.id || item.projectId}`);
 }
 
 const map = {
@@ -46,7 +46,7 @@ const map = {
     btnClick: (item: ProjectData) => {
       console.log('handleEdit item', item);
       // TODO: edit
-      router.push(`/project/create/step1/${item.projectId}`);
+      router.push(`/project/create/step1/${item.id || item.projectId}`);
     },
     bottomBtn: {
       text: 'Create Project',
@@ -69,6 +69,8 @@ const map = {
   },
   store: {
     title: '',
+    btnText: '',
+    btnClick: () => {},
     // btnText: 'Share Project',
     // btnClick: (item: ProjectItem) => {
     //   // TODO: edit

@@ -2,7 +2,7 @@
   <div class="project-item">
     <img alt="avatar" :src="item.avatar" />
     <div class="project-item-detail">
-      <h3>{{ item.name }}</h3>
+      <h3>{{ item.name || item.projectName }}</h3>
       <text-ellipsis :line="2" hideAction>{{ item.briefIntro }}</text-ellipsis>
       <!-- <div class="item-row2">
             <div>

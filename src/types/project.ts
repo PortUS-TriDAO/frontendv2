@@ -5,8 +5,10 @@ import type { Address } from './base';
  */
 export interface ProjectData {
   projectId: number;
+  id: number;
   avatar: string;
   name: string;
+  projectName: string;
   briefIntro: string;
 }
 
