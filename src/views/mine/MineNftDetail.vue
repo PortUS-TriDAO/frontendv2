@@ -133,7 +133,7 @@ function handleDown(item: SkuData | SpuData) {
 function handleAddNft() {
   // TODO: handleAddNft
   console.log('handleAddNft...');
-  router.push(`/project/submitsuccess/${projectId.value}`);
+  router.push(`/project/submitsuccess/${projectId.value}/${data.bizId}`);
 }
 </script>
 <style lang="less" scoped>

@@ -23,7 +23,7 @@ import { computed, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import ProjectItem from '@/components/project-item/index.vue';
-import { useParticipateProjects, useProjects, useSubmittedProjects } from '@/hooks';
+import { useScenesProjects } from '@/hooks';
 import type { ProjectData } from '@/types';
 import { shareProject, shareStore } from '@/utils/share';
 
@@ -31,9 +31,8 @@ defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
 const route = useRoute();
 const scenes = computed(() => route.meta.scenes);
-const { data, refetch, isPending } =
-  scenes.value === 'submitted' ? useSubmittedProjects() : useParticipateProjects();
 
+const { data } = useScenesProjects(scenes);
 const { address: account } = getAccount();
 
 function handleDetail(item: ProjectData) {

@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
 import { getAccount } from '@wagmi/core';
-import { type ComputedRef, type Ref, watch } from 'vue';
+import { type ComputedRef, watch } from 'vue';
 
 import type {
   BusinessDetailData,
@@ -41,6 +41,33 @@ export function useProjects(): UseQueryReturnType<PageData<ProjectData>, Error> 
     },
   });
   return result;
+}
+
+export function useScenesProjects(
+  scenes: ComputedRef<'submitted' | 'participated' | 'store'>,
+): UseQueryReturnType<PageData<ProjectData>, Error> {
+  const { address } = getAccount();
+  const submittedResult = useQuery({
+    queryKey: ['useScenesProjects', address],
+    queryFn: async () => {
+      const { success, data } =
+        scenes.value === 'submitted'
+          ? await getSubmittedProjects({ creatorAddress: address })
+          : await getParticipateProjects({ kolAddress: address });
+      if (!success) return null;
+      return data;
+    },
+  });
+
+  watch(
+    () => scenes.value,
+    () => {
+      submittedResult.refetch();
+    },
+  );
+
+  console.log('scenes result===', submittedResult);
+  return submittedResult;
 }
 
 export function useParticipateProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
