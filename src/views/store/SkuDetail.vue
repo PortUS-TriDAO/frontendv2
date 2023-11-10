@@ -2,35 +2,35 @@
   <page-container class="pg-sku-detail">
     <sku-card :loading="loading" v-if="data" :item="data">
       <div class="info">
-        <div v-if="data.isSold" class="sold-out">sold out</div>
+        <div v-if="data?.isSold" class="sold-out">sold out</div>
         <div v-else-if="data.isHide" class="sold-out">Down</div>
         <p-button v-else @click="handleBuy(data)">Buy Now</p-button>
       </div>
     </sku-card>
 
     <div class="detail-divider"></div>
-    <div class="list-title">Items</div>
-    <div class="list">
-      <sku-item
-        v-for="item in (nftList?.rows || []).filter((item) => item.id !== skuId)"
-        :key="item.id"
-        :item="item"
-        @click="handleDetail(item.id)"
-      >
-        <template v-slot:actions>
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
-            <p-button
-              v-if="!(data.isSold || data.isHide)"
-              size="small"
-              round
-              v-on:click.stop="handleBuy(item)"
-            >
-              Buy Now
-            </p-button>
-          </div>
-        </template>
-      </sku-item>
-    </div>
+    <!--    <div class="list-title">Items</div>-->
+    <!--    <div class="list">-->
+    <!--      <sku-item-->
+    <!--        v-for="item in (nftList?.rows || []).filter((item) => item.id !== skuId)"-->
+    <!--        :key="item.id"-->
+    <!--        :item="item"-->
+    <!--        @click="handleDetail(item.id)"-->
+    <!--      >-->
+    <!--        <template v-slot:actions>-->
+    <!--          <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">-->
+    <!--            <p-button-->
+    <!--              v-if="!(item.isSold || item.isHide)"-->
+    <!--              size="small"-->
+    <!--              round-->
+    <!--              v-on:click.stop="handleBuy(item)"-->
+    <!--            >-->
+    <!--              Buy Now-->
+    <!--            </p-button>-->
+    <!--          </div>-->
+    <!--        </template>-->
+    <!--      </sku-item>-->
+    <!--    </div>-->
   </page-container>
 </template>
 <script setup lang="ts">
