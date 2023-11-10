@@ -291,11 +291,11 @@ const news = [
 ];
 
 function goToCreate() {
-  router.push('/project/create');
+  router.push('/project/create/step1');
 }
 
 function goToDistribute() {
-  router.push('/mine/distribution');
+  router.push('/mine/participated');
 }
 
 const { data: projectInfo } = usePrimaryProjectInfo();
