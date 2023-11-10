@@ -1,4 +1,5 @@
-import { Address, readContract, ReadContractResult, writeContract } from '@wagmi/core';
+import type { Address, ReadContractResult } from '@wagmi/core';
+import { readContract } from '@wagmi/core';
 import { defineStore } from 'pinia';
 
 import FOUNDS_ABI from '@/abi/founds.abi.json';
@@ -16,7 +17,7 @@ export const useFoundsContract = defineStore('foundsContract', () => {
     });
   }
 
-  function pendingRewards(
+  function referrerPendingReward(
     foundsAddress: Address,
     token: Address,
     referrer: Address,
@@ -29,5 +30,5 @@ export const useFoundsContract = defineStore('foundsContract', () => {
     });
   }
 
-  return { operatorPendingRewards, pendingRewards };
+  return { operatorPendingRewards, referrerPendingReward };
 });

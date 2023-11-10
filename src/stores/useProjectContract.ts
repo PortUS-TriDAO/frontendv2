@@ -55,13 +55,14 @@ export const useProjectContract = defineStore('projectContract', () => {
     return writeContract(params);
   }
 
-  function founds(projectAddress: Address): Promise<ReadContractResult> {
-    return readContract({
+  async function founds(projectAddress: Address): Promise<Address> {
+    const foundsAddress = await readContract({
       address: projectAddress,
       abi: PROJECT_ABI as Abi,
       functionName: 'founds',
       args: [],
     });
+    return foundsAddress as Address;
   }
 
   return { referrerSign, rights, referrerWithdraw, operatorWithdraw, founds };
