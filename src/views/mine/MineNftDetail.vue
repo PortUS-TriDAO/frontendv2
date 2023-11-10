@@ -24,9 +24,7 @@
       >
         <template v-if="scenes === 'submitted'" v-slot:actions>
           <!-- 需要添加状态判断 -->
-          <p-button v-if="index % 2 === 0" round size="small" @click="handleUp(item)">
-            Up
-          </p-button>
+          <p-button v-if="item.isHide" round size="small" @click="handleUp(item)"> Up </p-button>
           <p-button v-else round size="small" @click="handleDown(item)"> Down</p-button>
         </template>
         <template v-else-if="scenes === 'store'" v-slot:actions>
