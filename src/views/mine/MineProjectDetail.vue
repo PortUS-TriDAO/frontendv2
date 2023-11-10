@@ -11,6 +11,7 @@
     <div class="title">commercial contract list</div>
     <div v-if="res?.data">
       <business-item
+        :scenes="scenes"
         v-for="item in res.data.rows || []"
         :key="item.id"
         :item="item"
@@ -118,7 +119,7 @@ const map = {
       text: 'Submit Commercial Contract',
       onClick: () => {
         // TODO: edSubmit Commercial Contract
-        router.push('/project/create/step2');
+        router.push(`/project/create/step2/${projectId}`);
       },
     },
   },

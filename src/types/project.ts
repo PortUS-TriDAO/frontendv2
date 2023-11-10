@@ -49,6 +49,7 @@ export interface BusinessData {
   rightQuantity: number;
   rightMinted: number;
   contractAddress: Address;
+  payToken: Address;
 }
 
 export interface BusinessDetailData {

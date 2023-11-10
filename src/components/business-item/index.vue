@@ -10,10 +10,16 @@
         </div>
       </div>
       <p>{{ item.briefIntro }}.</p>
-      <div class="item-row2">
+      <div>
         <div>
           <label>righted/rights:</label>
           <span>{{ item.rightMinted }}/{{ item.rightQuantity }}</span>
+        </div>
+      </div>
+      <div v-if="scenes === 'submitted' || scenes === 'participated'">
+        <div>
+          <label>Withdraw Balance:</label>
+          <span>{{ state.pendingReward }} USDT</span>
         </div>
       </div>
       <div class="flex-row-between">
@@ -31,16 +37,45 @@
   </div>
 </template>
 <script setup lang="ts">
+import { onMounted, reactive } from 'vue';
+
+import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
+import { toBN } from '@/utils/bn';
 
 defineOptions({ name: 'BusinessItem' });
-defineProps<{
+const props = defineProps<{
+  scenes: string;
   item: BusinessData;
   avatar?: string;
   hideDetail?: boolean;
   btnText?: string;
 }>();
 const emit = defineEmits(['onDetail']);
+
+const state = reactive({
+  pendingReward: '0',
+});
+
+const projectStore = useProjectStore();
+
+onMounted(async () => {
+  let pendingReward = BigInt(0);
+  if (props.scenes === 'submitted') {
+    pendingReward = await projectStore.operatorPendingRewards(
+      props.item.contractAddress,
+      props.item.payToken,
+    );
+  } else if (props.scenes === 'participated') {
+    pendingReward = await projectStore.referrerPendingReward(
+      props.item.contractAddress,
+      props.item.payToken,
+    );
+  }
+
+  state.pendingReward = toBN(pendingReward.toString()).div(1e18).toString(10);
+});
+
 function handleDetail(item: BusinessData) {
   emit('onDetail', item);
 }
@@ -83,19 +118,24 @@ function handleDetail(item: BusinessData) {
       font-weight: 700;
       font-size: 24px;
     }
+
     > p {
       font-weight: 400;
     }
+
     .item-row2 {
       display: flex;
       flex-direction: row;
       align-items: center;
+
       label {
         margin-right: 4px;
       }
+
       div:first-child {
         width: 245px;
       }
+
       strong {
         font-weight: 700;
       }
