@@ -29,6 +29,7 @@ import { ElLoading, ElMessage } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+import { postSkuUpdate } from '@/api/nft';
 import SkuCard from '@/components/sku-card/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useKolRightId, useSkuDetail, useSkuList } from '@/hooks';
@@ -96,6 +97,7 @@ async function handleBuy(skuData: SkuData) {
     await waitForTransaction({
       hash: tx.has,
     });
+    await postSkuUpdate({ skuId: Number(skuId.value), isSold: true });
     ElMessage.success('buy success');
   } catch (error) {
     console.error(error);

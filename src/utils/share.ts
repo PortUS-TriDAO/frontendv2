@@ -27,7 +27,14 @@ export function shareContract(kolAddress: string, projectId: number, bizId: numb
   shareToTwitter(shareUrl);
 }
 
-export function shareNft(kolAddress: string, projectId: number, retailId: number, nftType: 1 | 2) {
-  const shareUrl = `${getOrigin()}/store/${kolAddress}/nft/:retailId/${nftType}`;
+export function shareNft(
+  kolAddress: string,
+  projectId: number,
+  retailId: number,
+  nftType: number,
+  retailAddress: string,
+  bizId: number,
+) {
+  const shareUrl = `${getOrigin()}/store/${kolAddress}/nft/${retailId}/${nftType}?retailAddress=${retailAddress}&bizId=${bizId}`;
   shareToTwitter(shareUrl);
 }

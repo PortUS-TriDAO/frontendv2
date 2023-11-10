@@ -6,7 +6,7 @@
           <!-- <label>balance:</label>
           <span>xxx USDT</span> -->
         </div>
-        <p-button @click="handleWithdraw"> Withdraw</p-button>
+        <!--        <p-button @click="handleWithdraw"> Withdraw</p-button>-->
       </div>
       <div v-else-if="scenes === 'store'" class="flex-between">
         <div></div>
@@ -64,6 +64,8 @@ const nftType = computed(() => Number(route.query.nftType));
 const nftAddress = computed(() => route.query.nftAddress as string);
 const projectId = computed(() => route.query.projectId as string);
 const businessContractAddress = computed(() => route.query.bizAddress as string);
+const retailId = Number(route.query.retailId);
+const bizId = Number(route.query.bizId);
 
 console.log('query', {
   nftAddress: nftAddress.value,
@@ -78,16 +80,14 @@ const data: NftContractData = {
   name: '',
   nftType: nftType.value,
   // 随意填写一个
-  bizId: 1111,
-  retailAddress: route.params.retailAddress as Address,
+  bizId: bizId,
+  retailAddress: route.query.retailAddress as Address,
   id: nftId.value,
 };
 
 // const { data } = useNftDetail(nftId.value, NftType.SKU);
 const { data: nftList } =
   nftType.value === NftType.SKU ? useSkuList(nftId.value, 1, 25) : useSpuList(nftId.value);
-
-console.log('nftList=', nftList);
 
 function handleDetail(id: number) {
   if (nftType.value === NftType.SKU) {
@@ -112,21 +112,25 @@ async function handleWithdraw() {
   }
 }
 
-function handleShareNFT() {
-  // TODO: handleSharePage
-  console.log('handleShareNFT');
-  // shareNft(account, projectId);
-}
-
 function handleShareToken(item: SkuData) {
   // TODO: handleShareToken
   console.log('handleShareToken, item', item);
+  shareNft(
+    account,
+    Number(projectId.value),
+    retailId,
+    Number(nftType.value),
+    data.retailAddress,
+    bizId,
+  );
   // shareNft(account,projectId,1,)
 }
+
 function handleUp(item: SkuData | SpuData) {
   // TODO: handleUp
   console.log('handleUp, item', item);
 }
+
 function handleDown(item: SkuData | SpuData) {
   // TODO: handleDown
   console.log('handleDown, item', item);

@@ -47,6 +47,7 @@ const kolAddress = route.params.kolAddress as Address;
 
 // const projectId = Number(route.params.projectId);
 const bizId = Number(route.params.bizId);
+console.log('bizId', bizId);
 
 const { data } = useBusinessDetail(bizId.toString());
 // const projectStore = useProjectStore();

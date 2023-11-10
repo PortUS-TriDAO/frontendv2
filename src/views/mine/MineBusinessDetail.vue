@@ -28,7 +28,8 @@
               >withdraw
             </p-button>
           </div>
-          <div>xx USDT</div>
+          <div v-if="scenes === 'submitted'">{{ state.operatorPendingRewards }} USDT</div>
+          <div v-else-if="scenes === 'participated'">{{ state.referrerReward }} USDT</div>
         </div>
         <p-button v-else-if="scenes === 'participated'" @click="handleMintMore">Mint More</p-button>
         <!--        <p-button v-else @click="handleShare">share commercial contract</p-button>-->
@@ -63,13 +64,14 @@
 <script setup lang="ts">
 import { getAccount, waitForTransaction } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
-import { computed, ref } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import { type NftContractData, NftType } from '@/types';
+import { toBN } from '@/utils/bn';
 import { shareContract } from '@/utils/share';
 
 const loading = ref(false);
@@ -80,7 +82,33 @@ const scenes = computed(() => route.meta.scenes);
 const projectId = computed(() => route.params.projectId as string);
 const businessId = computed(() => route.params.businessId as string);
 const { data } = useBusinessDetail(businessId.value);
+
 const { address: account } = getAccount();
+
+const state = reactive({
+  operatorPendingRewards: '0',
+  referrerReward: '0',
+});
+
+watch(data, async () => {
+  try {
+    const operatorReward = await projectStore.operatorPendingRewards(
+      data.value.contractAddress,
+      data.value.payToken,
+    );
+
+    const referrerReward = await projectStore.referrerPendingReward(
+      data.value.contractAddress,
+      data.value.payToken,
+    );
+
+    state.operatorPendingRewards = toBN(operatorReward.toString()).div(1e18).toString(10);
+    state.referrerReward = toBN(referrerReward.toString()).div(1e18).toString(10);
+  } catch (e) {
+    console.log('fetch reward failed', e);
+    ElMessage.error('Fetch reward failed');
+  }
+});
 
 function handleDetail(nftContractData: NftContractData) {
   const query = {
@@ -90,6 +118,8 @@ function handleDetail(nftContractData: NftContractData) {
     retailAddress: nftContractData.retailAddress,
     avatar: nftContractData.avatar,
     nftType: nftContractData.nftType,
+    retailId: nftContractData.id,
+    bizId: businessId.value,
   };
   router.push({
     path: `/mine/${scenes.value}/nftdetail/${nftContractData.id}`,
