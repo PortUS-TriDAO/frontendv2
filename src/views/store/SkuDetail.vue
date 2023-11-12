@@ -62,7 +62,7 @@ const bizId = Number(route.params.bizId);
 const projectStore = useProjectStore();
 const erc20Contract = useERC20Contract();
 
-const { data } = useSkuDetail(skuId);
+const { data, refetch } = useSkuDetail(skuId);
 const { data: nftList } = useSkuList(retailId);
 const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
 
@@ -109,6 +109,7 @@ async function handleBuy(skuData: SkuData) {
       hash: tx.hash,
     });
     await postSkuUpdate({ skuId: Number(skuId.value), isSold: true });
+    refetch();
     ElMessage.success('buy success');
   } catch (error) {
     console.error(error);
