@@ -106,7 +106,7 @@ async function handleBuy(skuData: SkuData) {
       Number(kolRightInfo.value.rightId),
     );
     await waitForTransaction({
-      hash: tx.has,
+      hash: tx.hash,
     });
     await postSkuUpdate({ skuId: Number(skuId.value), isSold: true });
     ElMessage.success('buy success');
