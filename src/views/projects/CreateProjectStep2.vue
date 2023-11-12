@@ -57,7 +57,7 @@
         </el-form>
       </div>
       <p-wallet-button :loading="loading" class="btn" @click="handleSubmit(ruleFormRef)"
-        >submit
+        >Setup ALT Contract
       </p-wallet-button>
     </div>
   </main-content>

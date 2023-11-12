@@ -31,7 +31,9 @@
           <div v-if="scenes === 'submitted'">{{ state.operatorPendingRewards }} USDT</div>
           <div v-else-if="scenes === 'participated'">{{ state.referrerReward }} USDT</div>
         </div>
-        <p-button v-else-if="scenes === 'participated'" @click="handleMintMore">Mint More</p-button>
+        <p-button v-else-if="scenes === 'participated'" @click="handleMintMore"
+          >Apply More</p-button
+        >
         <!--        <p-button v-else @click="handleShare">share commercial contract</p-button>-->
       </div>
     </div>
@@ -143,7 +145,16 @@ function handleAddNft(nftContractData: NftContractData) {
   // TODO: handleAddNft
   // router.push(`/nft/${nftContractData.nftAddress}`);
   console.log('nftContractData=', nftContractData);
-  router.push(`/project/submitsuccess/${projectId.value}/${nftContractData.bizId}`);
+  // router.push(`/project/submitsuccess/${projectId.value}/${nftContractData.bizId}`);
+  if (nftContractData.nftType === 1) {
+    // SKU
+    router.push(
+      `/project/publish/sku/${projectId.value}/${businessId.value}/${nftContractData.nftAddress}/${nftContractData.retailAddress}/${nftContractData.id}`,
+    );
+  } else {
+    // SPU
+    router.push(`/project/submitsuccess/${projectId.value}/${nftContractData.bizId}`);
+  }
 }
 
 async function handleWithdraw() {

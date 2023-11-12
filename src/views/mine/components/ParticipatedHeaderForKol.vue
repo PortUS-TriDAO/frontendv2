@@ -12,7 +12,7 @@
             <p>righted/rights: 56/200</p>
             <p>1.2 USDT</p>
           </div>
-          <p-button>Mint More</p-button>
+          <p-button>Apply More</p-button>
         </div>
       </div>
       <div class="top-box-project">

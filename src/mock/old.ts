@@ -1,29 +1,29 @@
-import Mock from 'mockjs'
+import Mock from 'mockjs';
 
 // 创建项目
 Mock.mock(
   '/project/create',
   'post',
   (params: {
-    name: string
-    icon: string
-    briefIntro: string
-    website: string
-    description: string
-    banner: string
-    token: string
-    symbol: string
-    sharePercentage: number
-    projectAddress: string // 新创建项目的合约地址
-    creatorAddress: string
-    screenShorts: [string]
+    name: string;
+    icon: string;
+    briefIntro: string;
+    website: string;
+    description: string;
+    banner: string;
+    token: string;
+    symbol: string;
+    sharePercentage: number;
+    projectAddress: string; // 新创建项目的合约地址
+    creatorAddress: string;
+    screenShorts: [string];
   }) => {
     return {
       success: true,
-      data: 'project create success'
-    }
-  }
-)
+      data: 'project create success',
+    };
+  },
+);
 // 查询所有项目列表 带分/搜索
 Mock.mock('/project/all', 'get', {
   success: true,
@@ -38,7 +38,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
       },
       {
         id: 24234523422,
@@ -46,7 +46,7 @@ Mock.mock('/project/all', 'get', {
         name: 'Splinterlands',
         briefIntro: 'Splinterlands is a collectible trading card game',
         minted: true,
-        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
       },
       {
         id: 24234523423,
@@ -54,7 +54,7 @@ Mock.mock('/project/all', 'get', {
         name: 'Untitled Platformer',
         briefIntro: 'Untitled Platformer',
         minted: false,
-        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
       },
       {
         id: 24234523424,
@@ -63,7 +63,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
       },
       {
         id: 24234523425,
@@ -72,7 +72,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
       },
       {
         id: 24234523426,
@@ -81,7 +81,7 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
       },
       {
         id: 24234523427,
@@ -90,11 +90,11 @@ Mock.mock('/project/all', 'get', {
         briefIntro:
           'Farmers World is the first farming game to function on the NFTs platformRead more',
         minted: false,
-        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
-      }
-    ]
-  }
-})
+        projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+      },
+    ],
+  },
+});
 // 查询项目详情
 Mock.mock('/project/detail', 'get', (params: { id: string }) => {
   return {
@@ -112,11 +112,11 @@ Mock.mock('/project/detail', 'get', (params: { id: string }) => {
         'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png',
         'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image2-500x315_ae97fa670d1af1c025ce23ad1fc12856.png',
         'https://dashboard-assets.dappradar.com/document/20005/hooked-dapp-other-bsc-image2-500x315_dd3a0ade17b2cc54e0a783b6ee7fa2b4.png',
-        'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png'
-      ]
-    }
-  }
-})
+        'https://dashboard-assets.dappradar.com/document/8430/farmersworld-dapp-games-wax-image1_0dde67f18f3585e4cd5f70386cc1df88.png',
+      ],
+    },
+  };
+});
 
 // MyGames  account: 当前账号钱包地址
 Mock.mock('/mine/games', 'get', {
@@ -130,10 +130,10 @@ Mock.mock('/mine/games', 'get', {
       name: 'Farmers World',
       website: 'http://34.238.85.169/',
       amount: '10000',
-      projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
-    }
-  ]
-})
+      projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+    },
+  ],
+});
 
 // MyDistribute  account: 当前账号钱包地址
 Mock.mock('/mine/distributions', 'get', {
@@ -147,29 +147,29 @@ Mock.mock('/mine/distributions', 'get', {
       name: 'Farmers World',
       website: 'http://34.238.85.169/',
       amount: '237482394',
-      projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8'
-    }
-  ]
-})
+      projectAddress: '0x2cDc5Aa88Ee23c9E1A30a0E121e0f88Fd7c860c8',
+    },
+  ],
+});
 
 // mint 成功后上报数据，后面扫块服务做容错处理
 Mock.mock('/project/mint', 'post', (params: { projectId: string; account: string }) => {
   return {
     success: true,
-    data: 'mint success'
-  }
-})
+    data: 'apply success',
+  };
+});
 
 Mock.mock('/user/generateReferCode', 'post', {
   success: true,
   data: {
-    referCode: 'XqxuO9rMnj885x8RAJ4bQpV4'
-  }
-})
+    referCode: 'XqxuO9rMnj885x8RAJ4bQpV4',
+  },
+});
 
 Mock.mock('/user/share/statistic', 'post', {
   success: true,
   data: {
-    redirectUrl: 'http://34.238.85.169/'
-  }
-})
+    redirectUrl: 'http://34.238.85.169/',
+  },
+});

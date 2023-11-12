@@ -2,12 +2,12 @@
   <main-content>
     <div class="mint-success-box">
       <success-card class="box-top">
-        <p>Mint Success!</p>
+        <p>Apply success!</p>
       </success-card>
       <div class="box-middle">
         <p>
           <span>You can continue to</span>
-          <p-button @click="toMintMore"> Mint More</p-button>
+          <p-button @click="toMintMore"> Apply More</p-button>
           <span>or go to the</span>
           <p-button @click="toMine">Mine</p-button>
           page now.

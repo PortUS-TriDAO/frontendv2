@@ -44,10 +44,10 @@ async function handleMintUSDT() {
     console.log(amount);
     const tx = await erc20Contract.mint(USDT_CONTRACT_ADDRESS, address, amount.toString());
     await waitForTransaction({ hash: tx.hash });
-    ElMessage.success('mint success');
+    ElMessage.success('apply success');
   } catch (e) {
     console.error(e);
-    ElMessage.error('mint failed');
+    ElMessage.error('apply failed');
   } finally {
     loading.value = false;
   }

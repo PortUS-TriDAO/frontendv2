@@ -37,7 +37,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <p-wallet-button class="btn" @click="handleNext(ruleFormRef)">NEXT</p-wallet-button>
+      <p-wallet-button class="btn" @click="handleNext(ruleFormRef)">Save</p-wallet-button>
     </div>
   </main-content>
 </template>

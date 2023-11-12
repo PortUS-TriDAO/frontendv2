@@ -24,7 +24,7 @@
       >
         <template v-if="scenes === 'submitted'" v-slot:actions>
           <!-- 需要添加状态判断 -->
-          <p-button v-if="item.isHide" round size="small" @click="handleUp(item)"> Up </p-button>
+          <p-button v-if="item.isHide" round size="small" @click="handleUp(item)"> Up</p-button>
           <p-button v-else round size="small" @click="handleDown(item)"> Down</p-button>
         </template>
         <template v-else-if="scenes === 'store'" v-slot:actions>
@@ -64,12 +64,7 @@ const projectId = computed(() => route.query.projectId as string);
 const businessContractAddress = computed(() => route.query.bizAddress as string);
 const retailId = Number(route.query.retailId);
 const bizId = Number(route.query.bizId);
-
-console.log('query', {
-  nftAddress: nftAddress.value,
-  projectId: projectId.value,
-  businessContractAddress: businessContractAddress.value,
-});
+const retailAddress = route.query.retailAddress;
 
 const data: NftContractData = {
   nftAddress: nftAddress.value as Address,
@@ -135,9 +130,13 @@ function handleDown(item: SkuData | SpuData) {
 }
 
 function handleAddNft() {
-  // TODO: handleAddNft
-  console.log('handleAddNft...');
-  router.push(`/project/submitsuccess/${projectId.value}/${data.bizId}`);
+  if (nftType.value === 1) {
+    router.push(
+      `/project/publish/sku/${projectId.value}/${bizId}/${nftAddress.value}/${retailAddress}/${retailId}`,
+    );
+  } else {
+    router.push(`/project/submitsuccess/${projectId.value}/${data.bizId}`);
+  }
 }
 </script>
 <style lang="less" scoped>

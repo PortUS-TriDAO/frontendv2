@@ -6,7 +6,7 @@
           <router-link
             :class="['create-project-btn', { selected: selected === 'submitted' }]"
             to="/mine/submitted"
-            >Submitted
+            >Project Created
           </router-link>
         </li>
         <li>
@@ -20,7 +20,7 @@
           <router-link
             :class="['create-project-btn', { selected: selected === 'store' }]"
             to="/mine/store"
-            >Store
+            >My Store
           </router-link>
         </li>
       </ul>

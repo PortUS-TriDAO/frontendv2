@@ -2,8 +2,8 @@
   <main-content>
     <div class="success-box">
       <success-card class="box-top">
-        <p>Submit project success！</p>
-        <p>Add NFT now</p>
+        <p>ALTC created success！</p>
+        <p>Contract Binding</p>
       </success-card>
       <div class="box-middle">
         <div class="box-left">
@@ -20,7 +20,7 @@
       </div>
       <div class="box-bottom">
         <span>or You can add NFT later in Mine- project- commercial</span>
-        <p-wallet-button @click="handleNext" :loading="loading">Next</p-wallet-button>
+        <p-wallet-button @click="handleNext" :loading="loading">Confirm</p-wallet-button>
       </div>
     </div>
   </main-content>

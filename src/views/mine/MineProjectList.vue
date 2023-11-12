@@ -60,7 +60,7 @@ const map = {
     btnText: '',
     btnClick: handleDetail,
     bottomBtn: {
-      text: 'Mint More',
+      text: 'Apply More',
       onClick: () => {
         // TODO: Mint More
         router.push('/project/list');
