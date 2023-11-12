@@ -12,11 +12,12 @@
           <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a>
         </div>
       </div>
-      <p>{{ res?.data?.briefIntro }}</p>
+      <p style="margin-bottom: 20px">{{ res?.data?.briefIntro }}</p>
       <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
     </div>
+    <div class="detail-divider"></div>
     <div class="title">List of NFT Goods</div>
-    <div>
+    <div class="list">
       <SkuItem
         v-for="item in data || []"
         :key="item.id"
@@ -215,12 +216,29 @@ const map = {
     }
   }
 
+  .detail-divider {
+    margin: 20px 0;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  }
+
   .title {
     font-size: 34px;
     font-weight: 700;
     line-height: 40px;
     color: #000;
     margin: 14px 0;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // justify-content: space-between;
+    gap: 12px;
+
+    > div {
+      cursor: pointer;
+    }
   }
 
   .project-detail {

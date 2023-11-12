@@ -13,7 +13,7 @@
     </div>
     <div class="detail-divider"></div>
     <div class="list-title">List of NFT Goods</div>
-    <div v-if="data">
+    <div v-if="data" class="list">
       <SkuItem
         v-for="item in data || []"
         :key="item.id"
@@ -111,6 +111,15 @@ function handleDetail(item: SkuSpuData) {
     line-height: 28px;
     color: #000;
     margin: 0 0 14px 0;
+  }
+  .list {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+
+    > div {
+      cursor: pointer;
+    }
   }
   .detail-divider {
     margin: 20px 0;
