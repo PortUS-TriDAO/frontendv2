@@ -66,7 +66,7 @@ const map = {
   },
   participated: {
     title: 'participated projects list',
-    btnText: '',
+    btnText: 'Project Detail',
     btnClick: handleDetail,
     bottomBtn: {
       text: 'Apply More',
@@ -78,8 +78,8 @@ const map = {
   },
   store: {
     title: '',
-    btnText: '',
-    btnClick: () => {},
+    btnText: 'Project Detail',
+    btnClick: handleDetail,
     // btnText: 'Share Project',
     // btnClick: (item: ProjectItem) => {
     //   // TODO: edit
