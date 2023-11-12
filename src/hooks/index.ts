@@ -12,10 +12,12 @@ import type {
   ProjectDetailData,
   RightData,
   SkuData,
+  SkuSpuData,
   SpuData,
 } from '@/types';
 
 import {
+  getAllSkuSpu,
   getBusinessDetail,
   getkolRightId,
   getNftDetail,
@@ -140,6 +142,33 @@ export function useNftList(
       const res = await getSkuList({ retailId, page, limit });
       if (res.success) {
         return res.data;
+      }
+      return null;
+    },
+  });
+  return result;
+}
+
+export function useProjectSkuSpu(
+  projectId: number,
+  // page?: number,
+  // limit?: number,
+): UseQueryReturnType<SkuSpuData[], Error> {
+  const result = useQuery({
+    queryKey: ['getSkuList', projectId],
+    queryFn: async () => {
+      const res = await getAllSkuSpu({ projectId });
+      if (res.success) {
+        const arr: SkuSpuData[] = (res?.data?.sku || []).map((item) => ({
+          ...item,
+          nftQuantity: 1,
+          cover: '',
+          isSku: true,
+        }));
+        const spu = (res?.data?.spu || []).map((item) => ({ ...item, isSku: false }));
+        arr.concat(spu);
+        console.log('arr==', arr);
+        return arr;
       }
       return null;
     },

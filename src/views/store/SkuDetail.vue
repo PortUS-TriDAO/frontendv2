@@ -8,7 +8,7 @@
       </div>
     </sku-card>
 
-    <div class="detail-divider"></div>
+    <!-- <div class="detail-divider"></div> -->
     <!--    <div class="list-title">Items</div>-->
     <!--    <div class="list">-->
     <!--      <sku-item-->

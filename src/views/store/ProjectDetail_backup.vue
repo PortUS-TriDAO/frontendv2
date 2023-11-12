@@ -8,20 +8,19 @@
           <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a>
         </div>
       </div>
-      <p>{{ res?.data?.briefIntro }}</p>
+      <text-ellipsis>{{ res?.data?.briefIntro }}</text-ellipsis>
       <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
     </div>
     <div class="detail-divider"></div>
-    <div class="list-title">List of NFT Goods</div>
-    <div v-if="data">
+    <div class="list-title">NFT list</div>
+    <div v-if="res?.data">
       <SkuItem
-        v-for="item in data || []"
+        v-for="item in nftList?.rows || []"
         :key="item.id"
         :item="item"
         @click="handleDetail(item)"
-        class="pointer"
       >
-        <!-- <template v-slot:actions>
+        <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
             <p-button
               v-if="!(item.isSold || item.isHide)"
@@ -33,8 +32,16 @@
               Buy Now
             </p-button>
           </div>
-        </template> -->
+        </template>
       </SkuItem>
+      <!-- <business-item
+        v-for="item in res.data.rows || []"
+        :avatar="res.data.avatar"
+        :key="item.id"
+        :item="item"
+        btnText="Contract Detail"
+        @onDetail="handleDetail"
+      /> -->
     </div>
   </page-container>
 </template>
@@ -44,9 +51,8 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
 import SkuItem from '@/components/sku-item/index.vue';
-import { useProjectSkuSpu } from '@/hooks';
 // import BusinessItem from '@/components/business-item/index.vue';
-import type { Address, SkuSpuData } from '@/types';
+import type { Address, BusinessData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
@@ -59,16 +65,10 @@ const { data: res } = useQuery({
     return getProjectDetail({ projectId: projectId.toString() });
   },
 });
+console.log('getProjects result=', res);
 
-const { data } = useProjectSkuSpu(projectId);
-console.log('getProjects result=', data);
-
-function handleDetail(item: SkuSpuData) {
-  if (item.isSku) {
-    router.push(`/store/${kolAddress}/sku/${item.retailId}/${item.id}/${item.bizId}`);
-  } else {
-    router.push(`/store/${kolAddress}/spu/${item.retailId}/${item.id}/${item.bizId}`);
-  }
+function handleDetail(businessData: BusinessData) {
+  router.push(`/store/${kolAddress}/project/${projectId}/${businessData.id}`);
 }
 </script>
 <style lang="less" scoped>
@@ -104,13 +104,6 @@ function handleDetail(item: SkuSpuData) {
         font-size: inherit;
       }
     }
-  }
-  .list-title {
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 28px;
-    color: #000;
-    margin: 0 0 14px 0;
   }
   .detail-divider {
     margin: 20px 0;

@@ -89,13 +89,8 @@ export interface SkuData {
   nftName: string;
   avatar: string;
   imgUrl: string;
-  // isSalesEnd: boolean;
   briefIntro: string;
   description: string;
-  //
-  // deadline: number;
-  // retailerAddress: Address;
-  //
   ddl: number;
   isHide: number;
   isSold: number;
@@ -105,27 +100,18 @@ export interface SkuData {
   seller: Address;
   signature: string;
   tokenId: number;
+  //
+  bizId: number;
+  retailId: number;
 }
 
-export interface SpuData {
-  id: number;
-  name: string;
-  nftName: string;
-  avatar: string;
-  imgUrl: string;
-  briefIntro: string;
-  cover: string;
-  ddl: number;
-  isSold: number;
-  description: string;
-  image: string;
-  isHide: number;
+export interface SpuData extends SkuData {
   nftQuantity: number;
-  payToken: Address;
-  price: number;
-  retailAddress: Address;
-  seller: Address;
-  signature: string;
+  cover: string;
+}
+
+export interface SkuSpuData extends SpuData {
+  isSku: boolean;
 }
 
 export interface RightData {

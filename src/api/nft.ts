@@ -39,6 +39,13 @@ export const getSpuList = (params: {
   limit?: number;
 }): Promise<IListResponse<SpuData>> => axios.get('/project/spu/list', { params });
 
+export const getAllSkuSpu = (params: {
+  projectId: number;
+  // page?: number;
+  // limit?: number;
+}): Promise<IResponse<{ sku: SkuData[]; spu: SpuData[] }>> =>
+  axios.get('/project/skuspu/all', { params });
+
 // 购买完或者添加SKU的时候给服务端上报数据
 export const postSkuUpdate = (params: {
   skuId: number;

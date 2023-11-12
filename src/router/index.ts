@@ -8,6 +8,7 @@ const MineBusinessDetail = () => import('../views/mine/MineBusinessDetail.vue');
 const mimeMineNftDetail = () => import('../views/mine/MineNftDetail.vue');
 const mimeMineSpuDetail = () => import('../views/mine/MineSpu.vue');
 const MineSkuDetail = () => import('../views/mine/MineSkuDetail.vue');
+const MineStoreProjectDetail = () => import('../views/mine/MineStoreProjectDetail.vue');
 
 const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
   const capitalizedName = scenes.charAt(0).toUpperCase() + scenes.slice(1);
@@ -49,15 +50,25 @@ const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
         scenes,
       },
     },
-    {
-      // MineProjectDetail
-      path: `/mine/${scenes}/:projectId`,
-      name: `Mine${capitalizedName}ProjectDetail`,
-      component: MineProjectDetail,
-      meta: {
-        scenes,
-      },
-    },
+    scenes === 'store'
+      ? {
+          // MineStoreProjectDetail
+          path: `/mine/${scenes}/:projectId`,
+          name: `Mine${capitalizedName}ProjectDetail`,
+          component: MineStoreProjectDetail,
+          meta: {
+            scenes,
+          },
+        }
+      : {
+          // MineProjectDetail
+          path: `/mine/${scenes}/:projectId`,
+          name: `Mine${capitalizedName}ProjectDetail`,
+          component: MineProjectDetail,
+          meta: {
+            scenes,
+          },
+        },
     {
       // MineProjectList
       path: `/mine/${scenes}`,

@@ -2,7 +2,7 @@
   <div class="sku-item">
     <img alt="avatar" :src="item.avatar || item.imgUrl" />
     <h3>{{ item?.name || item?.nftName }}</h3>
-    <div>{{ item.price }} {{ PayTokenMap[item.payToken]?.symbol }}</div>
+    <div>{{ item.price }} {{ PayTokenMap[item.payToken]?.symbol || 'USDT' }}</div>
     <text-ellipsis :line="3" hideAction>
       {{ item.briefIntro }}
     </text-ellipsis>
@@ -12,7 +12,9 @@
 <script setup lang="ts">
 import { PayTokenMap } from '@/constant/contracts';
 import type { SkuData, SpuData } from '@/types';
-
+defineOptions({
+  name: 'SkuItem',
+});
 defineProps<{
   item: SkuData | SpuData;
 }>();
