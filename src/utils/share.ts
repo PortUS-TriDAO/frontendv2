@@ -15,6 +15,7 @@ function getOrigin(): string {
 export function shareStore(kolAddress: string) {
   const shareUrl = `${getOrigin()}/store/${kolAddress}/projects`;
   shareToTwitter(shareUrl);
+  return shareUrl;
 }
 
 export function shareProject(kolAddress: string, projectId: number) {
@@ -24,7 +25,8 @@ export function shareProject(kolAddress: string, projectId: number) {
 
 export function shareContract(kolAddress: string, projectId: number, bizId: number) {
   const shareUrl = `${getOrigin()}/store/${kolAddress}/project/${projectId}/${bizId}`;
-  shareToTwitter(shareUrl);
+  shareToTwitter(encodeURIComponent(shareUrl));
+  return shareUrl;
 }
 
 export function shareNft(
@@ -36,5 +38,6 @@ export function shareNft(
   bizId: number,
 ) {
   const shareUrl = `${getOrigin()}/store/${kolAddress}/nft/${retailId}/${nftType}?retailAddress=${retailAddress}&bizId=${bizId}`;
-  shareToTwitter(shareUrl);
+  shareToTwitter(encodeURIComponent(shareUrl));
+  return shareUrl;
 }
