@@ -3,7 +3,7 @@
     <div class="searchbar">
       <el-input v-model="searchKey" placeholder="Search Name" class="search-input" />
       <p-button @click="refetch">Search</p-button>
-      <p-button @click="handleSubmit">SubmitProject</p-button>
+      <p-button @click="handleSubmit">Create Project</p-button>
     </div>
     <div>
       <project-item

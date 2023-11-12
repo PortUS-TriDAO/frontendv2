@@ -12,7 +12,7 @@
       <div class="business-mint">
         <label>righted/rights:</label>
         <span>{{ data?.rightMinted }}/{{ data?.rightQuantity }}</span>
-        <p-button :loading="loading" @click="handleMint">Mint</p-button>
+        <p-wallet-button :loading="loading" @click="handleMint">Apply</p-wallet-button>
       </div>
       <!-- <div>
         <span>1.2 USDT</span>
@@ -71,11 +71,11 @@ async function handleMint() {
   try {
     loading.value = true;
     await projectStore.mint(data.value.contractAddress, projectId, bizId);
-    ElMessage.success('mint success');
+    ElMessage.success('apply success');
     router.push('/project/mint/success');
   } catch (error) {
     console.log('error', error);
-    ElMessage.error('mint failed');
+    ElMessage.error('apply failed');
   } finally {
     loading.value = false;
   }

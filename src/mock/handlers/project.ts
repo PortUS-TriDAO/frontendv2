@@ -177,7 +177,7 @@ const handlers: RestHandler[] = [
     return res(
       ctx.json({
         success: true,
-        data: 'mint success',
+        data: 'apply success',
       }),
     );
   }),

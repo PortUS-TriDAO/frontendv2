@@ -8,7 +8,7 @@
         {{ scenesData.topBtn.text }}
       </p-button>
     </div>
-    <div class="title">commercial contract list</div>
+    <div class="title">Agent license token contract</div>
     <div v-if="res?.data">
       <business-item
         :scenes="scenes"
@@ -116,7 +116,7 @@ const map = {
       },
     ],
     buttonBtn: {
-      text: 'Submit Commercial Contract',
+      text: 'Setup ALT Contract',
       onClick: () => {
         // TODO: edSubmit Commercial Contract
         router.push(`/project/create/step2/${projectId}`);
@@ -149,7 +149,7 @@ const map = {
       },
     ],
     buttonBtn: {
-      text: 'Mint More',
+      text: 'Apply More',
       onClick: (item) => {
         console.log('mint more', item);
         // TODO: Mint More

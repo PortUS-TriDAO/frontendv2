@@ -158,34 +158,34 @@
       </div>
     </section>
     <!-- Satisfies Industry Needs -->
-    <section class="case">
-      <h2>Customer Case</h2>
-      <div class="section-content">
-        <div class="case-content">
-          <div>
-            <img :src="state.primaryProjectInfo.avatar" />
-            <div style="text-align: center; padding-top: 8px">
-              {{ state.primaryProjectInfo.briefIntro }}
-            </div>
-          </div>
-          <div class="case-detail">
-            <h3>{{ state.primaryProjectInfo.name }}</h3>
-            <!--            <div>-->
-            <!--              <label>Items</label>-->
-            <!--              <span style="margin-right: 116px">1,259</span>-->
-            <!--              <label>Chain</label>-->
-            <!--              <strong>Ethereum</strong>-->
-            <!--            </div>-->
-            <div>
-              <label>Share precentage:</label>
-              <span>{{ state.primaryProjectInfo.sharePercentage }}%</span>
-            </div>
-            <!-- <button @click="handleMint">Mint</button> -->
-            <p-button :loading="loading" @click="handleMint">Mint</p-button>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!--    <section class="case">-->
+    <!--      <h2>Customer Case</h2>-->
+    <!--      <div class="section-content">-->
+    <!--        <div class="case-content">-->
+    <!--          <div>-->
+    <!--            <img :src="state.primaryProjectInfo.avatar" />-->
+    <!--            <div style="text-align: center; padding-top: 8px">-->
+    <!--              {{ state.primaryProjectInfo.briefIntro }}-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--          <div class="case-detail">-->
+    <!--            <h3>{{ state.primaryProjectInfo.name }}</h3>-->
+    <!--            &lt;!&ndash;            <div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;              <label>Items</label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;              <span style="margin-right: 116px">1,259</span>&ndash;&gt;-->
+    <!--            &lt;!&ndash;              <label>Chain</label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;              <strong>Ethereum</strong>&ndash;&gt;-->
+    <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+    <!--            <div>-->
+    <!--              <label>Share precentage:</label>-->
+    <!--              <span>{{ state.primaryProjectInfo.sharePercentage }}%</span>-->
+    <!--            </div>-->
+    <!--            &lt;!&ndash; <button @click="handleMint">Mint</button> &ndash;&gt;-->
+    <!--            <p-button :loading="loading" @click="handleMint">Mint</p-button>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </section>-->
     <!-- Monetize Your Influence Instantly -->
     <section class="monetize">
       <h2>Monetize Your Influence Instantly</h2>
@@ -310,10 +310,10 @@ async function handleMint() {
   try {
     const { projectAddress, projectId, bizId } = toRaw(state.primaryProjectInfo);
     await projectStore.mint(projectAddress as Address, projectId, bizId);
-    ElMessage.success('mint success');
+    ElMessage.success('apply success');
   } catch (error) {
-    console.error('mint failed：', error);
-    ElMessage.error('mint failed');
+    console.error('apply failed：', error);
+    ElMessage.error('apply failed');
   } finally {
     loading.value = false;
   }

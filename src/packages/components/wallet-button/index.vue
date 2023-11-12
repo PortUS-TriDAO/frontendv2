@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <p-button v-if="account" v-on:click="handleClick" v-bind="props"><slot></slot></p-button>
-    <p-button v-else v-on:click="connect">Connect Wallet</p-button>
-  </div>
+  <!--  <div>-->
+  <p-button v-if="account" v-on:click="handleClick" v-bind="props">
+    <slot></slot>
+  </p-button>
+  <p-button v-else v-on:click="connect">Connect Wallet</p-button>
+  <!--  </div>-->
 </template>
 
 <script setup lang="ts">
@@ -21,6 +23,7 @@ const props = defineProps({
 });
 
 const account = computed(() => walletStore.state.account);
+
 function connect(e) {
   web3Modal.open();
   e.preventDefault();

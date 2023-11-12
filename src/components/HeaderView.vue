@@ -8,7 +8,9 @@
           <template v-else>
             <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
             <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
-            <router-link to="/mine/submitted" @click.stop="switchMenu(true)">Mine</router-link>
+            <router-link to="/mine/submitted" @click.stop="switchMenu(true)"
+              >My Profile</router-link
+            >
             <router-link to="/faucet" @click.stop="switchMenu(true)">Faucet</router-link>
           </template>
           <!-- <button v-if="!account" @click.stop="connect">connect</button>
