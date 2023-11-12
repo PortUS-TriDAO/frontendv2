@@ -14,7 +14,7 @@
       </div>
     </nft-contract-item>
     <div class="detail-divider"></div>
-    <div class="list-title">NFT list</div>
+    <div class="list-title">List of NFT Goods</div>
     <div class="list">
       <SkuItem
         v-for="(item, index) in nftList?.rows || []"
@@ -24,8 +24,8 @@
       >
         <template v-if="scenes === 'submitted'" v-slot:actions>
           <!-- 需要添加状态判断 -->
-          <p-button v-if="item.isHide" round size="small" @click="handleUp(item)"> Up</p-button>
-          <p-button v-else round size="small" @click="handleDown(item)"> Down</p-button>
+          <p-button v-if="item.isHide" round size="small" @click="handleUp(item)"> ON</p-button>
+          <p-button v-else round size="small" @click="handleDown(item)"> OFF</p-button>
         </template>
         <template v-else-if="scenes === 'store'" v-slot:actions>
           <p-button round size="small" @click="handleShareToken(item)"> Share</p-button>
@@ -56,6 +56,7 @@ const route = useRoute();
 const router = useRouter();
 const scenes = computed(() => route.meta.scenes);
 const { address: account } = getAccount();
+import { postNFTDown, postNFTUP } from '@/api';
 
 const nftId = computed(() => Number(route.params.id));
 const nftType = computed(() => Number(route.query.nftType));
@@ -79,8 +80,8 @@ const data: NftContractData = {
 };
 
 // const { data } = useNftDetail(nftId.value, NftType.SKU);
-const { data: nftList } =
-  nftType.value === NftType.SKU ? useSkuList(nftId.value, 1, 25) : useSpuList(nftId.value);
+const { data: nftList, refetch } =
+  nftType.value === NftType.SKU ? useSkuList(nftId.value, 1, 100) : useSpuList(nftId.value, 1, 100);
 
 function handleDetail(id: number) {
   if (nftType.value === NftType.SKU) {
@@ -119,14 +120,38 @@ function handleShareToken(item: SkuData) {
   // shareNft(account,projectId,1,)
 }
 
-function handleUp(item: SkuData | SpuData) {
+async function handleUp(item: SkuData | SpuData) {
   // TODO: handleUp
   console.log('handleUp, item', item);
+  try {
+    const { success, data } = await postNFTUP({ id: item.id, nftType: nftType.value });
+    if (success) {
+      ElMessage.success('on nft success');
+      refetch();
+    } else {
+      ElMessage.error('on nft failed');
+    }
+  } catch (e) {
+    console.error('on nft failed', e);
+    ElMessage.error('on nft failed');
+  }
 }
 
-function handleDown(item: SkuData | SpuData) {
+async function handleDown(item: SkuData | SpuData) {
   // TODO: handleDown
   console.log('handleDown, item', item);
+  try {
+    const { success, data } = await postNFTDown({ id: item.id, nftType: nftType.value });
+    if (success) {
+      ElMessage.success('off nft success');
+      refetch();
+    } else {
+      ElMessage.error('off nft failed');
+    }
+  } catch (e) {
+    console.log('off nft failed', e);
+    ElMessage.error('off nft failed');
+  }
 }
 
 function handleAddNft() {
