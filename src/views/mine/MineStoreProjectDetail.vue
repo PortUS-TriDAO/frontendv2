@@ -75,9 +75,9 @@ const { data } = useProjectSkuSpu(projectId);
 
 function handleDetail(item: SkuSpuData) {
   if (item.isSku) {
-    router.push(`/mine/${scenes.value}/sku/${item.id}/${item.bizId}`);
+    router.push(`/mine/${scenes.value}/sku/${item.bizId}/${item.id}`);
   } else {
-    router.push(`/mine/${scenes.value}/spu/${item.id}/${item.bizId}`);
+    router.push(`/mine/${scenes.value}/spu/${item.bizId}/${item.id}`);
   }
 }
 
