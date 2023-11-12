@@ -15,6 +15,13 @@
       >
       </project-item>
     </div>
+    <el-pagination
+      background
+      @current-change="handlePageChange"
+      layout="prev, pager, next"
+      :total="res?.data?.totalPage * 10"
+      class="mt-4"
+    />
   </page-container>
 </template>
 <script setup lang="ts">
@@ -28,15 +35,16 @@ import type { ProjectData } from '@/types';
 
 const searchKey = ref('');
 const router = useRouter();
+const page = ref(1);
 
 const {
   data: res,
   refetch,
   isPending,
 } = useQuery({
-  queryKey: ['getProjects', searchKey.value],
+  queryKey: ['getProjects', searchKey.value, page],
   queryFn: () => {
-    return getProjects({ key: searchKey.value });
+    return getProjects({ key: searchKey.value, page: page.value, limit: 10 });
   },
 });
 
@@ -46,6 +54,11 @@ function handleDetail(item: ProjectData) {
 
 function handleSubmit() {
   router.push('/project/create/step1');
+}
+
+function handlePageChange(currentPage: number) {
+  console.log('page===', currentPage);
+  page.value = currentPage;
 }
 </script>
 <style lang="less" scoped>

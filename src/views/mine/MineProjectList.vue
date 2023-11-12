@@ -14,15 +14,22 @@
     <div class="text-center" v-if="scenesData.bottomBtn">
       <p-button @click="scenesData.bottomBtn.onClick">{{ scenesData.bottomBtn.text }}</p-button>
     </div>
+
+    <share-dialog
+      @close="shareDialogVisible = false"
+      :visible="shareDialogVisible"
+      :share-url="shareUrl"
+    ></share-dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { getAccount } from '@wagmi/core';
-import { computed, toRaw } from 'vue';
+import { computed, ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import ProjectItem from '@/components/project-item/index.vue';
+import ShareDialog from '@/components/ShareDialog.vue';
 import { useScenesProjects } from '@/hooks';
 import type { ProjectData } from '@/types';
 import { shareProject, shareStore } from '@/utils/share';
@@ -31,6 +38,8 @@ defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
 const route = useRoute();
 const scenes = computed(() => route.meta.scenes);
+const shareDialogVisible = ref(false);
+const shareUrl = ref('');
 
 const { data } = useScenesProjects(scenes);
 const { address: account } = getAccount();
@@ -81,7 +90,11 @@ const map = {
       text: 'share My Store',
       onClick: () => {
         // TODO: share My Store
-        shareStore(account);
+        const url = shareStore(account);
+
+        // dialog share
+        // shareDialogVisible.value = true;
+        // shareUrl.value = url;
       },
     },
   },

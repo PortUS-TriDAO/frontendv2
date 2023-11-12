@@ -32,8 +32,11 @@ export const createProjectStep2 = (params: {
 }): Promise<IResponse> => axios.post('/project/biz/create', params);
 
 // 请求游戏列表
-export const getProjects = (params: { key?: string }): Promise<IListResponse<ProjectData>> =>
-  axios.get('/project/all', { params });
+export const getProjects = (params: {
+  key?: string;
+  page?: number;
+  limit?: number;
+}): Promise<IListResponse<ProjectData>> => axios.get('/project/all', { params });
 // 获取游戏详情
 export const getProjectDetail = (params: {
   projectId: string;

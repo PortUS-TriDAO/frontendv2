@@ -75,7 +75,6 @@ function handleDetail(item: any) {
   } else {
     router.push(`/store/${kolAddress}/spu/${retailId}/${item.id}/${bizId}`);
   }
-  // router.push(`/store/${kolAddress}/sku/${nftAddress.value}/${tokenId}`);
 }
 
 async function handleBuy(item: SkuData | SpuData) {

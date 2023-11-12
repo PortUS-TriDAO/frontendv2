@@ -35,6 +35,12 @@
     <div v-if="scenes === 'submitted'" class="text-center">
       <p-button @click="handleAddNft">Add NFT</p-button>
     </div>
+
+    <share-dialog
+      @close="dialogVisible = false"
+      :visible="dialogVisible"
+      :share-url="shareUrl"
+    ></share-dialog>
   </div>
 </template>
 <script setup lang="ts">
@@ -44,6 +50,7 @@ import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
+import ShareDialog from '@/components/ShareDialog.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
@@ -67,6 +74,8 @@ const retailId = Number(route.query.retailId);
 const bizId = Number(route.query.bizId);
 const retailAddress = route.query.retailAddress;
 
+const dialogVisible = ref(false);
+const shareUrl = ref('');
 const data: NftContractData = {
   nftAddress: nftAddress.value as Address,
   avatar: route.query.avatar as string,
@@ -107,9 +116,7 @@ async function handleWithdraw() {
 }
 
 function handleShareToken(item: SkuData) {
-  // TODO: handleShareToken
-  console.log('handleShareToken, item', item);
-  shareNft(
+  const url = shareNft(
     account,
     Number(projectId.value),
     retailId,
@@ -117,7 +124,10 @@ function handleShareToken(item: SkuData) {
     data.retailAddress,
     bizId,
   );
-  // shareNft(account,projectId,1,)
+
+  // dialog share
+  // dialogVisible.value = true;
+  // shareUrl.value = url;
 }
 
 async function handleUp(item: SkuData | SpuData) {
