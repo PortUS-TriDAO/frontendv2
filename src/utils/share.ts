@@ -41,3 +41,21 @@ export function shareNft(
   shareToTwitter(encodeURIComponent(shareUrl));
   return shareUrl;
 }
+
+export function shareNftDetail(
+  kolAddress: string,
+  retailId: number,
+  bizId: number,
+  skuSpuId: number,
+  nftType: number,
+) {
+  let shareUrl: string;
+  if (nftType === 1) {
+    shareUrl = `${getOrigin()}/store/${kolAddress}/sku/${retailId}/${skuSpuId}/${bizId}`;
+  } else {
+    shareUrl = `${getOrigin()}/store/${kolAddress}/spu/${retailId}/${skuSpuId}/${bizId}`;
+  }
+
+  shareToTwitter(encodeURIComponent(shareUrl));
+  return shareUrl;
+}

@@ -25,7 +25,7 @@
         @click="handleDetail(item)"
         class="pointer"
       >
-        <template v-slot:actions>
+        <template v-slot:actions v-if="item.isSold === 0">
           <p-button round size="small" @click="handleShareToken(item)"> Share</p-button>
         </template>
       </SkuItem>
@@ -49,7 +49,7 @@ import SkuItem from '@/components/sku-item/index.vue';
 import { useProjectSkuSpu } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData, SkuSpuData } from '@/types';
-import { shareNft } from '@/utils/share';
+import { shareNftDetail } from '@/utils/share';
 const route = useRoute();
 const router = useRouter();
 const { address: account } = getAccount();
@@ -84,7 +84,8 @@ function handleDetail(item: SkuSpuData) {
 function handleShareToken(item: SkuSpuData) {
   // TODO: handleShareToken
   // 数据列表缺少 item.retailAddress
-  shareNft(account, projectId, item.retailId, item.isSku ? 1 : 2, item.retailAddress, item.bizId);
+  // shareNft(account, projectId, item.retailId, item.isSku ? 1 : 2, item.retailAddress, item.bizId);
+  shareNftDetail(account, item.retailId, item.bizId, item.id, item.isSku ? 1 : 2);
 }
 
 const map = {
