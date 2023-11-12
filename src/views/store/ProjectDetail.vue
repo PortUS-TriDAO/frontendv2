@@ -8,7 +8,7 @@
           <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a>
         </div>
       </div>
-      <p>{{ res?.data?.briefIntro }}</p>
+      <p style="margin-bottom: 16px">{{ res?.data?.briefIntro }}</p>
       <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
     </div>
     <div class="detail-divider"></div>
