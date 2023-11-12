@@ -21,7 +21,7 @@
         @click="handleDetail(item)"
         class="pointer"
       >
-        <!-- <template v-slot:actions>
+        <template v-slot:actions>
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
             <p-button
               v-if="!(item.isSold || item.isHide)"
@@ -33,20 +33,27 @@
               Buy Now
             </p-button>
           </div>
-        </template> -->
+        </template>
       </SkuItem>
     </div>
   </page-container>
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
+import { waitForTransaction } from '@wagmi/core';
+import { ElLoading, ElMessage } from 'element-plus';
+import { ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { getProjectDetail } from '@/api';
+import { getkolRightId, getProjectDetail } from '@/api';
+import { postSkuUpdate } from '@/api/nft';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useProjectSkuSpu } from '@/hooks';
+import { useERC20Contract } from '@/stores/useERC20Contract';
+import { useProjectStore } from '@/stores/useProject';
 // import BusinessItem from '@/components/business-item/index.vue';
-import type { Address, SkuSpuData } from '@/types';
+import type { Address, SkuData, SkuSpuData, SpuData } from '@/types';
+import { extendsDecimals } from '@/utils/bn';
 
 const route = useRoute();
 const router = useRouter();
@@ -60,7 +67,7 @@ const { data: res } = useQuery({
   },
 });
 
-const { data } = useProjectSkuSpu(projectId);
+const { data, refetch } = useProjectSkuSpu(projectId);
 console.log('getProjects result=', data);
 
 function handleDetail(item: SkuSpuData) {
@@ -69,6 +76,65 @@ function handleDetail(item: SkuSpuData) {
   } else {
     router.push(`/store/${kolAddress}/spu/${item.retailId}/${item.id}/${item.bizId}`);
   }
+}
+
+const erc20Contract = useERC20Contract();
+const loading = ref(false);
+const projectStore = useProjectStore();
+
+async function handleBuy(item: SkuSpuData) {
+  const itemInfo = toRaw(item);
+  // loading.value = true;
+
+  const fullScreenLoading = ElLoading.service({
+    lock: true,
+    text: 'Approve',
+    background: 'rgba(0, 0, 0, 0.7)',
+  });
+  try {
+    const buyParams = {
+      seller: itemInfo.seller,
+      payToken: itemInfo.payToken,
+      payPrice: extendsDecimals(itemInfo.price).toString(10),
+      nftTokenId: itemInfo.tokenId,
+      deadline: itemInfo.ddl,
+      signature: itemInfo.signature,
+    };
+    console.log('buy params', buyParams);
+
+    // approve ERC20
+    const approveTx = await erc20Contract.approve(
+      buyParams.payToken,
+      item.retailAddress,
+      buyParams.payPrice,
+    );
+    await waitForTransaction({ hash: approveTx.hash });
+
+    fullScreenLoading.text.value = 'Buy';
+
+    const { success, data: kolRightInfo } = await getkolRightId({ bizId: item.bizId, kolAddress });
+    if (!success) {
+      throw new Error('getKolRightId error');
+    }
+
+    const tx = await projectStore.handleBuyMintedNft(
+      item.retailAddress,
+      [buyParams],
+      kolRightInfo.rightId,
+    );
+    await waitForTransaction({ hash: tx.hash });
+    //
+    await postSkuUpdate({ skuId: item.id, isSold: true });
+    refetch();
+    ElMessage.success('buy success');
+  } catch (e) {
+    console.error(e);
+    ElMessage.error('buy failed');
+  } finally {
+    loading.value = false;
+    fullScreenLoading.close();
+  }
+  // router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
 }
 </script>
 <style lang="less" scoped>
