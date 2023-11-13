@@ -2,13 +2,13 @@
   <main-content>
     <div class="page-nft-success">
       <success-card>
-        <p>Add NFT success！</p>
+        <p>Contract Binding Success!</p>
       </success-card>
       <p v-if="nftType === 'sku'">
         You can continue to
         <router-link to="/project/publish/sku">add more NFTs</router-link>
         , or add them later in
-        <router-link to="/mine/submitted">Mine</router-link>
+        <router-link to="/mine/submitted">Mine Profile</router-link>
       </p>
       <p v-else>
         You can manage them in

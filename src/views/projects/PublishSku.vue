@@ -112,11 +112,11 @@ async function publishSku() {
       imgUrl: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp',
       nftName: 'FarmersWorld',
     });
-    ElMessage.success('Publish sku success');
+    ElMessage.success('Contract Binding Success');
     router.push('/project/addnft/success');
   } catch (error) {
     console.log('Publish sku failed', error);
-    ElMessage.error('Publish sku failed');
+    ElMessage.error('Contract Binding Failed');
   } finally {
     loading.value = false;
   }

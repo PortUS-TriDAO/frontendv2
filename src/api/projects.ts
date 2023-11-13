@@ -31,6 +31,17 @@ export const createProjectStep2 = (params: {
   contractAddress: string;
 }): Promise<IResponse> => axios.post('/project/biz/create', params);
 
+export const updateProjectInfo = (params: {
+  projectId: number;
+  projectName: string;
+  briefIntro: string;
+  website: string;
+  description: string;
+  avatar: string;
+  cover: string;
+  creatorAddress: string;
+}) => axios.post('/project/update', params);
+
 // 请求游戏列表
 export const getProjects = (params: {
   key?: string;

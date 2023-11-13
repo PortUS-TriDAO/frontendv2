@@ -26,10 +26,10 @@
           </el-form-item>
           <el-form-item>
             <div class="uploads">
-              <uploader @onSuccess="handleAvatar">
+              <uploader :src="form.avatar" @onSuccess="handleAvatar">
                 <span>Avatar</span>
               </uploader>
-              <uploader @onSuccess="handleCover">
+              <uploader :src="form.cover" @onSuccess="handleCover">
                 <span>Cover</span>
               </uploader>
             </div>
@@ -75,8 +75,9 @@ const rules = reactive({
   cover: [{ required: true, message: 'Please input cover', trigger: 'blur' }],
 });
 
+const projectId = route.params.projectId;
+
 onMounted(async () => {
-  const projectId = route.params.projectId as string;
   if (!projectId) return;
   const { success, data } = await api.getProjectDetail({ projectId });
   if (success) {
@@ -112,8 +113,34 @@ async function createProjectStep1() {
     ElMessage.error('Please upload cover');
     return;
   }
+
+  if (projectId) {
+    updateProject();
+  } else {
+    createProject();
+  }
+}
+
+async function updateProject() {
   const { address } = getAccount();
-  // TODO: formData as any
+  const formData = toRaw(form);
+  const { success, data } = await api.updateProjectInfo({
+    projectId: Number(projectId),
+    creatorAddress: address,
+    ...formData,
+  });
+  if (!success) {
+    ElMessage.error('update project failed');
+  } else {
+    const { projectId } = data as any;
+    ElMessage.success('update project success');
+    router.push(`/project/create/step2/${projectId}`);
+  }
+}
+
+async function createProject() {
+  const { address } = getAccount();
+  const formData = toRaw(form);
   const { success, data } = await api.createProjectStep1({ creatorAddress: address, ...formData });
   if (!success) {
     ElMessage.error('create project failed');

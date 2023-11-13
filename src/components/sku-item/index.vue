@@ -7,11 +7,13 @@
       {{ item.briefIntro }}
     </text-ellipsis>
     <slot name="actions" />
+    <div v-if="item.isSold" class="sold-out">sold out</div>
   </div>
 </template>
 <script setup lang="ts">
 import { PayTokenMap } from '@/constant/contracts';
 import type { SkuData, SpuData } from '@/types';
+
 defineOptions({
   name: 'SkuItem',
 });
@@ -30,6 +32,7 @@ defineProps<{
   margin-bottom: 12px;
   width: 170px;
   color: rgba(0, 0, 0, 1);
+  position: relative;
 
   > img {
     width: 150px;
@@ -43,16 +46,30 @@ defineProps<{
     font-size: 20px;
     line-height: 24px;
   }
+
   div {
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
   }
+
   p {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0px;
     line-height: 16.41px;
+  }
+
+  .sold-out {
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 16px;
+    position: absolute;
+    left: 0;
+    top: 50%;
   }
 }
 </style>

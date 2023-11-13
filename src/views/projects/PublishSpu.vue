@@ -54,8 +54,8 @@
         </el-form>
       </div>
       <p-wallet-button :loading="loading" class="btn" @click="handleSave(ruleFormRef)"
-        >Save</p-wallet-button
-      >
+        >Save
+      </p-wallet-button>
     </div>
   </main-content>
 </template>
@@ -146,10 +146,10 @@ async function publishSpu() {
       cover: ruleForm.cover,
     });
     if (!success) throw new Error(data);
-    ElMessage.success('Publish spu success');
+    ElMessage.success('Contract Binding Success');
     router.push('/project/addnft/success');
   } catch (error) {
-    ElMessage.error('publish spu failed');
+    ElMessage.error('Contract Binding Failed');
   } finally {
     loading.value = false;
   }

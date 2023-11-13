@@ -8,7 +8,9 @@
   >
     <img width="200" height="200" v-if="state" :src="state" alt="" />
     <div v-else>
-      <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+      <el-icon class="el-icon--upload">
+        <upload-filled />
+      </el-icon>
       <div>
         <slot></slot>
       </div>
@@ -18,16 +20,22 @@
 
 <script lang="ts" setup>
 import { type UploadProps } from 'element-plus';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 import ossClient from '@/utils/ossClient';
 
 const props = defineProps({
   onSuccess: Function,
+  src: String,
 });
 const emit = defineEmits(['onSuccess']);
 
 const state = ref('');
+
+watch(props, () => {
+  state.value = props.src;
+});
+
 const onUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
   const filename = response.file.name;
   const result = await ossClient.put('/filename/' + filename, response.file, {
@@ -48,6 +56,7 @@ const onUpload: UploadProps['onSuccess'] = async (response, uploadFile) => {
   width: 200px;
   height: 200px;
 }
+
 .has-img {
   :deep(.el-upload-dragger) {
     margin: 0;
