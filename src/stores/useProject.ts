@@ -153,8 +153,13 @@ export const useProjectStore = defineStore('project', () => {
   }) {
     // approve NFT
     const nftContract = useNftContract();
-    const approveTx = await nftContract.approve(nftAddress, retailerAddress, nftTokenId);
-    await waitForTransaction({ hash: approveTx.hash });
+
+    // 检查是否已经approve过了
+    const hasApproved = await nftContract.isApprovedForAll(nftAddress, retailerAddress);
+    if (!hasApproved) {
+      const approveTx = await nftContract.setApprovalForAll(nftAddress, retailerAddress, true);
+      await waitForTransaction({ hash: approveTx.hash });
+    }
 
     // const { payToken } = data;
     const signTypedDataStore = useSignTypedDataStore();
