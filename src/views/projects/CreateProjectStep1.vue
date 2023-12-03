@@ -2,13 +2,7 @@
   <main-content>
     <div class="step1-form">
       <div class="form-content">
-        <el-form
-          ref="ruleFormRef"
-          label-position="top"
-          label-width="100px"
-          :model="form"
-          :rules="rules"
-        >
+        <el-form ref="ruleFormRef" label-position="top" :inline="true" :model="form" :rules="rules">
           <el-form-item label="Project Name" prop="projectName">
             <el-input placeholder="Party A name" v-model="form.projectName"></el-input>
           </el-form-item>
@@ -23,6 +17,18 @@
               placeholder="12 or 1000 characters used"
               v-model="form.description"
             ></el-input>
+          </el-form-item>
+          <el-form-item label="Discord" prop="discord">
+            <el-input v-model="form.discord"></el-input>
+          </el-form-item>
+          <el-form-item label="X" prop="twitter">
+            <el-input v-model="form.twitter"></el-input>
+          </el-form-item>
+          <el-form-item label="Instagram" prop="instagram">
+            <el-input v-model="form.instagram"></el-input>
+          </el-form-item>
+          <el-form-item label="External Link" prop="externallink">
+            <el-input v-model="form.externallink"></el-input>
           </el-form-item>
           <el-form-item>
             <div class="uploads">
@@ -63,6 +69,10 @@ const form = reactive({
   description: '',
   avatar: '',
   cover: '',
+  discord: '',
+  twitter: '',
+  instagram: '',
+  externallink: '',
 });
 
 const ruleFormRef = ref<FormInstance>();
@@ -168,7 +178,6 @@ async function handleCover(url: string) {
   padding-right: 30px;
 
   .form-content {
-    width: 658px;
     margin-top: 20px;
   }
 
@@ -185,6 +194,10 @@ async function handleCover(url: string) {
   .uploads {
     display: flex;
     flex-direction: row;
+  }
+
+  .el-form-item {
+    width: 340px;
   }
 }
 </style>

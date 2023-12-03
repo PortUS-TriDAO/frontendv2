@@ -24,7 +24,7 @@ defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #f7f7f7;
+  background: rgba(6, 23, 58, 1);
   // justify-content: center;
   // width: 100%;
   flex: 1;
@@ -39,7 +39,7 @@ defineProps({
   }
   .page-banner {
     width: 100%;
-    height: 200px;
+    height: 220px;
     overflow: hidden;
     background-color: rgb(4, 1, 14);
     display: flex;

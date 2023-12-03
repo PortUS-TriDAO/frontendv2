@@ -144,6 +144,11 @@ const router = createRouter({
       component: () => import('../views/projects/CreateProjectStep2.vue'),
     },
     {
+      path: '/project/create/deployaltc',
+      name: 'DeployAltc',
+      component: () => import('../views/projects/DeployAltc.vue'),
+    },
+    {
       path: '/project/submitsuccess/:projectId/:bizId',
       name: 'SubmitSuccess',
       component: () => import('../components/SubmitSuccess.vue'),
