@@ -3,7 +3,10 @@
     <img alt="avatar" :src="item.avatar" />
     <div class="project-item-detail">
       <h3>{{ item.name || item.projectName }}</h3>
-      <text-ellipsis :line="2" hideAction>{{ item.briefIntro }}</text-ellipsis>
+      <div class="project-item-desc">
+        Project intro: {{ item.briefIntro }}
+        <!-- <text-ellipsis :line="2" hideAction>Project intro: {{ item.briefIntro }}</text-ellipsis> -->
+      </div>
       <!-- <div class="item-row2">
             <div>
               <label>items:</label>
@@ -15,11 +18,11 @@
             </div>
           </div>-->
       <!-- <div style="flex-grow: 1"></div> -->
-      <div class="item-action">
-        <p-button v-if="btnText" @click="handleClick(item)">
-          {{ btnText || 'Detail' }}
-        </p-button>
-      </div>
+    </div>
+    <div class="item-action">
+      <p-button v-if="btnText" @click="handleClick(item)">
+        {{ btnText || 'Detail' }}
+      </p-button>
     </div>
   </div>
 </template>
@@ -38,10 +41,14 @@ function handleClick(item: ProjectData) {
   display: flex;
   flex-direction: row;
   gap: 38px;
-  padding: 10px;
-  background: #f7f7f7;
+  padding: 24px 30px;
+  // background: #f7f7f7;
   border-radius: 10px;
   margin-bottom: 20px;
+  background: url('@/assets/images/item-bg.png');
+  background-size: 100% 100%;
+  height: 258px;
+  // width: 913px;
 
   > img {
     width: 200px;
@@ -82,9 +89,17 @@ function handleClick(item: ProjectData) {
     //     width: 245px;
     //   }
     // }
-    .item-action {
-      text-align: right;
-    }
+  }
+  .item-action {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 16px;
+  }
+
+  .project-item-desc {
+    font-size: 20px;
   }
 }
 </style>

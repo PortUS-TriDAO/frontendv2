@@ -1,15 +1,28 @@
 <template>
-  <page-container class="pg-store-project-detail" :bannerImg="res?.data?.cover" showBanner>
+  <page-container class="pg-store-project-detail">
     <div class="project-detail">
       <div class="detail-row">
         <img alt="avatar" :src="res?.data?.avatar" />
-        <div>
-          <h3>{{ res?.data?.projectName }}</h3>
-          <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a>
+        <div class="detail-row-right">
+          <div class="detail-header">
+            <h3>{{ res?.data?.projectName }}</h3>
+            <div class="detail-social">
+              <!-- <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a> -->
+              <a class="icon-social-1" :href="res?.data?.website" target="_blank"></a>
+              <a class="icon-social-2" target="_blank"></a>
+              <a class="icon-social-3" target="_blank"></a>
+              <a class="icon-social-4" target="_blank"></a>
+            </div>
+          </div>
+          <p style="margin-bottom: 16px">{{ res?.data?.briefIntro }}</p>
+          <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
+          <div class="detail-item">
+            <div>Items: {{ (data || []).length }}</div>
+            <div>Created: Oct 2023</div>
+            <div>Chain: Ethereum</div>
+          </div>
         </div>
       </div>
-      <p style="margin-bottom: 16px">{{ res?.data?.briefIntro }}</p>
-      <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
     </div>
     <div class="detail-divider"></div>
     <div class="list-title">List of NFT Goods</div>
@@ -143,8 +156,11 @@ async function handleBuy(item: SkuSpuData) {
     padding: 15px 30px 0;
     font-size: 24px;
     letter-spacing: 0px;
-    line-height: 28px;
+    // line-height: 28px;
+    line-height: 1.5;
     font-weight: 400;
+    color: rgba(94, 94, 94, 1);
+    font-size: 14px;
 
     .detail-row {
       display: flex;
@@ -154,13 +170,13 @@ async function handleBuy(item: SkuSpuData) {
       > img {
         width: 200px;
         height: 200px;
-        margin-top: -100px;
+        // margin-top: -100px;
       }
       h3 {
         font-weight: 700;
         color: #000000;
         margin-bottom: 16px;
-        font-size: inherit;
+        font-size: 28px;
       }
       p {
         font-size: inherit;
@@ -169,6 +185,49 @@ async function handleBuy(item: SkuSpuData) {
         font-weight: 400;
         font-size: inherit;
       }
+    }
+
+    .detail-row-right {
+      flex-grow: 1;
+      overflow: hidden;
+    }
+    .detail-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .detail-social {
+        display: flex;
+        justify-content: space-between;
+        gap: 32px;
+        > a {
+          display: block;
+          width: 32px;
+          height: 32px;
+        }
+
+        .icon-social-1 {
+          background: url('@/assets/images/social/icon-1.png') center center;
+          background-size: 100%;
+        }
+        .icon-social-2 {
+          background: url('@/assets/images/social/icon-2.png') center center;
+          background-size: 100%;
+        }
+        .icon-social-3 {
+          background: url('@/assets/images/social/icon-3.png') center center;
+          background-size: 100%;
+        }
+        .icon-social-4 {
+          background: url('@/assets/images/social/icon-4.jpg') center center;
+          background-size: 100%;
+        }
+      }
+    }
+    .detail-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
   }
   .list-title {
