@@ -144,7 +144,7 @@ const router = createRouter({
       component: () => import('../views/projects/CreateProjectStep2.vue'),
     },
     {
-      path: '/project/create/deployaltc',
+      path: '/project/create/deployaltc/:projectId',
       name: 'DeployAltc',
       component: () => import('../views/projects/DeployAltc.vue'),
     },

@@ -125,10 +125,6 @@
           </p-wallet-button>
         </div>
       </div>
-
-      <!--  test   -->
-      <upload-white-list-card :visible="visible"></upload-white-list-card>
-      <el-button type="primary" @click="visible = !visible">show upload</el-button>
     </div>
   </main-content>
 </template>
@@ -141,7 +137,6 @@ import { reactive, ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import MainContent from '@/components/MainContent.vue';
-import UploadWhiteListCard from '@/components/UploadWhiteListCard.vue';
 import { SelectTokenList } from '@/constant/contracts';
 import { useProjectStore } from '@/stores/useProject';
 import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract';
@@ -157,18 +152,18 @@ const allowWhiteList = ref(false);
 const allowFreeMint = ref(false);
 const allowAirdrop = ref(false);
 const dropSettingLoading = ref(false);
-
-const visible = ref(false);
+const projectAddress = ref('');
+const bizId = ref<Number>(0);
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
-  contractName: '',
-  symbol: '',
-  sharePercentage: '',
-  briefIntro: '',
-  payToken: '',
-  description: '',
-  rightQuantity: '',
+  contractName: 'dgdfg',
+  symbol: 'tttt',
+  sharePercentage: '2',
+  briefIntro: 'dfgdfsgds',
+  payToken: '0x99479872494dc582af1F7fBBE43Ea9CC6143d159',
+  description: 'sdfsdfsf',
+  rightQuantity: '2342',
 });
 
 const dropSettingForm = reactive({
@@ -194,14 +189,24 @@ async function setDropSetting() {
   try {
     dropSettingLoading.value = true;
     const { whiteListCount, freeMintStartTime, whiteListStartTime } = toRaw(dropSettingForm);
+    console.log({
+      projectAddress: projectAddress.value,
+      freeMintStartTime: new Date(freeMintStartTime).valueOf(),
+      whiteListStartTime: new Date(whiteListStartTime).valueOf(),
+      whiteListCount,
+      bizid: bizId.value,
+    });
     const tx = await whiteListRightsContract.setDropSetting(
-      freeMintStartTime,
-      whiteListStartTime,
+      projectAddress.value as Address,
+      new Date(freeMintStartTime).valueOf() / 1000,
+      new Date(whiteListStartTime).valueOf() / 1000,
       whiteListCount,
     );
     await waitForTransaction(tx);
     ElMessage.success('setting success');
+    toNext();
   } catch (e) {
+    console.error(e, bizId);
     ElMessage.error('setting failed');
   } finally {
     dropSettingLoading.value = false;
@@ -223,7 +228,11 @@ const createProject = async () => {
     loading.value = true;
 
     // TODO: percentage
-    const { success, data } = await projectStore.createProject({
+    const {
+      success,
+      data,
+      projectAddress: projectAddr,
+    } = await projectStore.createProject({
       projectId,
       briefIntro,
       description,
@@ -233,10 +242,12 @@ const createProject = async () => {
       rightQuantity,
       sharePercentage,
     });
-
+    console.log('createProject===,', projectAddr);
     if (!success) throw new Error(data);
     ElMessage.success('create project success');
-    router.push(`/project/submitsuccess/${projectId}/${data.bizId}`);
+    projectAddress.value = projectAddr;
+    // router.push(`/project/submitsuccess/${projectId}/${data.bizId}`);
+    bizId.value = data.bizId;
   } catch (e) {
     console.error('create project fail', e);
     ElMessage.error('create project fail');
@@ -244,6 +255,14 @@ const createProject = async () => {
     loading.value = false;
   }
 };
+
+function toNext() {
+  if (!bizId.value) {
+    ElMessage.error('No bizId found');
+    return;
+  }
+  router.push(`/project/submitsuccess/${projectId}/${bizId.value}`);
+}
 </script>
 
 <style lang="less" scoped>

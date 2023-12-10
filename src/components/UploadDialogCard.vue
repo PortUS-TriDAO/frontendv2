@@ -34,8 +34,10 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
   reader.onload = function (e) {
     try {
       let res = e.target.result;
+      console.log(res);
       let buf = Buffer.from(res as Buffer);
       parse(buf, {}, (err, data) => {
+        // console.log('parse', err, data);
         emit('onUpload', err, data);
       });
       // console.log('data===', data);

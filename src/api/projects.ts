@@ -113,3 +113,7 @@ export const getkolRightId = (params: {
 
 export const getPrimaryProjectInfo = (): Promise<IResponse<Array<PrimaryProjectInfo>>> =>
   axios.get('/project/primary');
+
+// 上传csv文件里的whitelist列表
+export const postProjectWhitelist = (params: { projectId: number; bizId: number; wls: string[] }) =>
+  axios.post('/project/whitelist', params);

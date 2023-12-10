@@ -63,12 +63,12 @@ const route = useRoute();
 const router = useRouter();
 
 const form = reactive({
-  projectName: '',
-  briefIntro: '',
-  website: '',
-  description: '',
-  avatar: '',
-  cover: '',
+  projectName: 'kkkk',
+  briefIntro: 'sdfsfdsf',
+  website: 'www.baidu.com',
+  description: 'sfsfdsf',
+  avatar: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/screenshot.png',
+  cover: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp',
   discord: '',
   twitter: '',
   instagram: '',
@@ -144,7 +144,8 @@ async function updateProject() {
   } else {
     const { projectId } = data as any;
     ElMessage.success('update project success');
-    router.push(`/project/create/step2/${projectId}`);
+    // router.push(`/project/create/step2/${projectId}`);
+    router.push(`/project/create/deployaltc/${projectId}`);
   }
 }
 
@@ -157,7 +158,8 @@ async function createProject() {
   } else {
     const { projectId } = data as any;
     ElMessage.success('create project success');
-    router.push(`/project/create/step2/${projectId}`);
+    // router.push(`/project/create/step2/${projectId}`);
+    router.push(`/project/create/deployaltc/${projectId}`);
   }
 }
 

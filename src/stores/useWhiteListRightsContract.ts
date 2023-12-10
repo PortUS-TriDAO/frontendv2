@@ -1,12 +1,20 @@
-import { writeContract } from '@wagmi/core';
+import { type Address, writeContract } from '@wagmi/core';
 import { defineStore } from 'pinia';
 
 import WHITELIST_RIGHTS_ABI from '@/abi/whiteListRights.abi.json';
+import { useProjectContract } from '@/stores/useProjectContract';
 
 export const useWhiteListRightsContract = defineStore('whiteListRights', () => {
-  function setDropSetting(freeMintTime: number, wlTime: number, wlAmount: number) {
+  async function setDropSetting(
+    projectAddress: Address,
+    freeMintTime: number,
+    wlTime: number,
+    wlAmount: number,
+  ) {
+    const projectContract = useProjectContract();
+    const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
     const params = {
-      address: '',
+      address: rightsContractAddress,
       abi: WHITELIST_RIGHTS_ABI,
       functionName: 'setDropSetting',
       args: [freeMintTime, wlTime, wlAmount],
@@ -14,9 +22,11 @@ export const useWhiteListRightsContract = defineStore('whiteListRights', () => {
     return writeContract(params);
   }
 
-  function setMerkleRoot(merkleRoot: string) {
+  async function setMerkleRoot(merkleRoot: string) {
+    const projectContract = useProjectContract();
+    const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
     const params = {
-      address: '',
+      address: rightsContractAddress,
       abi: WHITELIST_RIGHTS_ABI,
       functionName: 'setMerkleRoot',
       args: [merkleRoot],
