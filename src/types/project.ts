@@ -17,6 +17,7 @@ export interface ProjectData {
  */
 export interface ProjectDetailData {
   createdAt: number;
+  creatorAddress: string;
   cover: string;
   avatar: string;
   projectName: string;
