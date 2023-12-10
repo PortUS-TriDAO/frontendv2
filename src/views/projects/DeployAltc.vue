@@ -157,13 +157,13 @@ const bizId = ref<Number>(0);
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
-  contractName: 'dgdfg',
-  symbol: 'tttt',
-  sharePercentage: '2',
-  briefIntro: 'dfgdfsgds',
-  payToken: '0x99479872494dc582af1F7fBBE43Ea9CC6143d159',
-  description: 'sdfsdfsf',
-  rightQuantity: '2342',
+  contractName: '',
+  symbol: '',
+  sharePercentage: '',
+  briefIntro: '',
+  payToken: '',
+  description: '',
+  rightQuantity: '',
 });
 
 const dropSettingForm = reactive({
