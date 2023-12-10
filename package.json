@@ -20,6 +20,8 @@
     "ali-oss": "^6.18.0",
     "axios": "^1.4.0",
     "bignumber.js": "^9.1.1",
+    "buffer": "^6.0.3",
+    "csv-parse": "^5.5.3",
     "dayjs": "^1.11.10",
     "element-plus": "^2.3.9",
     "ethers": "^5.7.2",
