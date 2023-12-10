@@ -1,13 +1,6 @@
 <template>
   <div class="pg-mime-project-detail">
-    <div class="banner">
-      <img alt="cover" class="bg" :src="res?.data?.cover" />
-      <img alt="avatar" class="avatar" :src="res?.data?.avatar" />
-      <!-- <p-button v-if="scenes === 'submitted'" @click="handleEdit">Edit project</p-button> -->
-      <p-button v-if="scenesData.topBtn" @click="scenesData.topBtn.onClick">
-        {{ scenesData.topBtn.text }}
-      </p-button>
-    </div>
+    <project-header :project-info="res?.data" :item-count="res?.data?.rows?.length" />
     <div class="title">Agent license token contract</div>
     <div v-if="res?.data">
       <business-item
@@ -17,6 +10,7 @@
         :item="item"
         hideDetail
         @click="handleDetail(item)"
+        @onUploadWhiteList="handleUploadWhiteList"
         class="pointer"
       >
         <template v-slot:actions>
@@ -50,15 +44,16 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
+import projectHeader from '@/components/project-header/index.vue';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
-import { shareContract } from '@/utils/share';
+// import { shareContract } from '@/utils/share';
 
 const route = useRoute();
 const router = useRouter();
 const { address: account } = getAccount();
 
-const projectId = route.params.projectId as number;
+const projectId = Number(route.params.projectId);
 const scenes = computed(() => route.meta.scenes);
 const loading = ref(false);
 
@@ -71,12 +66,16 @@ const scenesData = computed(() => {
 const { data: res } = useQuery({
   queryKey: ['getProjectDetail', projectId],
   queryFn: () => {
-    return getProjectDetail({ projectId: projectId as string });
+    return getProjectDetail({ projectId: projectId.toString() });
   },
 });
 
 function handleDetail(businessData: BusinessData) {
   router.push(`/mime/${scenes.value}/${projectId}/${businessData.id}`);
+}
+function handleUploadWhiteList(businessData: BusinessData) {
+  // todo: handleUploadWhiteList
+  console.log('todo: handleUploadWhiteList=', businessData);
 }
 
 const map = {
@@ -175,39 +174,6 @@ const map = {
 </script>
 <style lang="less" scoped>
 .pg-mime-project-detail {
-  .banner {
-    height: 200px;
-    overflow: hidden;
-    background-color: rgb(4, 1, 14);
-    display: flex;
-    justify-content: center;
-    margin-top: -20px;
-    margin-left: -30px;
-    margin-right: -30px;
-    position: relative;
-
-    .bg {
-      width: 100%;
-      height: 200px;
-    }
-
-    .avatar {
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      top: 25px;
-      left: 30px;
-      z-index: 2;
-    }
-
-    > button {
-      position: absolute;
-      right: 30px;
-      bottom: 20px;
-      z-index: 2;
-    }
-  }
-
   .title {
     font-size: 34px;
     font-weight: 700;

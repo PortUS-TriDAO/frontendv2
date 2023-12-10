@@ -1,20 +1,6 @@
 <template>
   <div class="pg-mime-project-detail">
-    <div class="banner">
-      <img alt="cover" class="bg" :src="res?.data?.cover" />
-      <!-- <img alt="avatar" class="avatar" :src="res?.data?.avatar" /> -->
-    </div>
-    <div class="project-detail">
-      <div class="detail-row">
-        <img alt="avatar" :src="res?.data?.avatar" />
-        <div>
-          <h3>{{ res?.data?.projectName }}</h3>
-          <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a>
-        </div>
-      </div>
-      <p style="margin-bottom: 20px">{{ res?.data?.briefIntro }}</p>
-      <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
-    </div>
+    <project-header :project-info="res?.data" :item-count="res?.data?.rows?.length" />
     <div class="detail-divider"></div>
     <div class="title">List of NFT Goods</div>
     <div class="list">
@@ -45,6 +31,7 @@ import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
+import projectHeader from '@/components/project-header/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useProjectSkuSpu } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
@@ -184,39 +171,6 @@ const map = {
 </script>
 <style lang="less" scoped>
 .pg-mime-project-detail {
-  .banner {
-    height: 200px;
-    overflow: hidden;
-    background-color: rgb(4, 1, 14);
-    display: flex;
-    justify-content: center;
-    margin-top: -20px;
-    margin-left: -30px;
-    margin-right: -30px;
-    // position: relative;
-
-    .bg {
-      width: 100%;
-      height: 200px;
-    }
-
-    // .avatar {
-    //   position: absolute;
-    //   width: 150px;
-    //   height: 150px;
-    //   top: 25px;
-    //   left: 30px;
-    //   z-index: 2;
-    // }
-
-    > button {
-      position: absolute;
-      right: 30px;
-      bottom: 20px;
-      z-index: 2;
-    }
-  }
-
   .detail-divider {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
@@ -239,40 +193,6 @@ const map = {
 
     > div {
       cursor: pointer;
-    }
-  }
-
-  .project-detail {
-    padding: 15px 30px 0;
-    font-size: 24px;
-    letter-spacing: 0px;
-    line-height: 28px;
-    font-weight: 400;
-    z-index: 222;
-
-    .detail-row {
-      display: flex;
-      gap: 26px;
-      margin-bottom: 16px;
-
-      > img {
-        width: 200px;
-        height: 200px;
-        margin-top: -100px;
-      }
-      h3 {
-        font-weight: 700;
-        color: #000000;
-        margin-bottom: 16px;
-        font-size: inherit;
-      }
-      p {
-        font-size: inherit;
-      }
-      a {
-        font-weight: 400;
-        font-size: inherit;
-      }
     }
   }
 

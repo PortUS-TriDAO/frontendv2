@@ -2,7 +2,7 @@
   <div class="pg-mine-business-detail">
     <div class="business-detail">
       <div class="business-title">
-        <h2>{{ data?.contractName }}===</h2>
+        <h2>{{ data?.contractName }}</h2>
       </div>
       <div>
         <span>Percent for KOL: </span> <span class="light">{{ data?.sharePercentage }}%</span>
@@ -182,7 +182,7 @@ function handleSubmit() {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    font-size: 20px;
+    font-size: 16px;
     position: relative;
 
     .right-action {

@@ -16,13 +16,22 @@
           />
         </div>
       </div>
-      <p>Project intro: {{ item.briefIntro }}.</p>
+      <p v-if="scenes !== 'submitted'">Project intro: {{ item.briefIntro }}.</p>
       <div>
         <div>
           <label>Percent for KOL:</label>
           <span>{{ item.sharePercentage }}%</span>
         </div>
       </div>
+      <template v-if="scenes === 'submitted'">
+        <div class="line-white-list">
+          <div>
+            <label>White list:</label>
+            <span>{{ item.whitelistCount }}/450</span>
+          </div>
+          <button class="btn-upload" @click="handleUploadWhiteList"></button>
+        </div>
+      </template>
       <div v-if="scenes === 'submitted' || scenes === 'participated'">
         <div>
           <label>Withdraw Balance:</label>
@@ -58,7 +67,7 @@ const props = defineProps<{
   hideDetail?: boolean;
   btnText?: string;
 }>();
-const emit = defineEmits(['onDetail']);
+const emit = defineEmits(['onDetail', 'onUploadWhiteList']);
 
 const state = reactive({
   pendingReward: '0',
@@ -85,6 +94,10 @@ onMounted(async () => {
 
 function handleDetail(item: BusinessData) {
   emit('onDetail', item);
+}
+function handleUploadWhiteList(e: Event) {
+  e.stopPropagation();
+  emit('onUploadWhiteList', props.item);
 }
 </script>
 <style lang="less">
@@ -152,6 +165,21 @@ function handleDetail(item: BusinessData) {
       strong {
         font-weight: 700;
       }
+    }
+  }
+  .line-white-list {
+    display: inline-flex;
+    align-items: center;
+    > div {
+      width: 172px;
+    }
+    .btn-upload {
+      margin-left: 16px;
+      border: none;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      background: transparent url('@/assets/images/icon-upload.png') center center;
     }
   }
 }

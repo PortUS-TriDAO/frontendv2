@@ -1,10 +1,33 @@
 <template>
   <div class="social-bar">
-    <!-- <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a> -->
-    <a class="icon-social-1" target="_blank" :href="website"></a>
-    <a class="icon-social-2" target="_blank" :href="twitter"></a>
-    <a class="icon-social-3" target="_blank" :href="discord"></a>
-    <a class="icon-social-4" target="_blank" :href="instagram"></a>
+    <a
+      v-if="website"
+      class="icon-social-1"
+      ref="noopener noreferrer"
+      target="_blank"
+      :href="website"
+    ></a>
+    <a
+      v-if="twitter"
+      class="icon-social-2"
+      ref="noopener noreferrer"
+      target="_blank"
+      :href="twitter"
+    ></a>
+    <a
+      v-if="discord"
+      class="icon-social-3"
+      ref="noopener noreferrer"
+      target="_blank"
+      :href="discord"
+    ></a>
+    <a
+      v-if="instagram"
+      class="icon-social-4"
+      ref="noopener noreferrer"
+      target="_blank"
+      :href="instagram"
+    ></a>
   </div>
 </template>
 

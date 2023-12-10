@@ -1,11 +1,18 @@
 <template>
   <div class="project-item">
-    <img alt="avatar" :src="item.avatar" />
+    <div class="project-item-avatar">
+      <img alt="avatar" :src="item.avatar" />
+    </div>
     <div class="project-item-detail">
       <h3>{{ item.name || item.projectName }}</h3>
       <div class="project-item-desc">
         Project intro: {{ item.briefIntro }}
         <!-- <text-ellipsis :line="2" hideAction>Project intro: {{ item.briefIntro }}</text-ellipsis> -->
+      </div>
+      <div class="item-action">
+        <p-button v-if="btnText" @click="handleClick(item)">
+          {{ btnText || 'See more' }}
+        </p-button>
       </div>
       <!-- <div class="item-row2">
             <div>
@@ -18,11 +25,6 @@
             </div>
           </div>-->
       <!-- <div style="flex-grow: 1"></div> -->
-    </div>
-    <div class="item-action">
-      <p-button v-if="btnText" @click="handleClick(item)">
-        {{ btnText || 'See more' }}
-      </p-button>
     </div>
   </div>
 </template>
@@ -47,14 +49,20 @@ function handleClick(item: ProjectData) {
   margin-bottom: 20px;
   background: url('@/assets/images/item-bg.png');
   background-size: 100% 100%;
-  height: 258px;
+  // height: 258px;
   // width: 913px;
 
-  > img {
-    width: 200px;
-    height: 200px;
+  .project-item-avatar {
+    background-color: #fff;
+    // border: 1px solid rgba(187, 187, 187, 1);
+    padding: 8px;
     border-radius: 10px;
     flex-shrink: 0;
+    > img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+    }
   }
 
   .project-item-detail {
@@ -92,10 +100,12 @@ function handleClick(item: ProjectData) {
   }
   .item-action {
     text-align: right;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     justify-content: flex-end;
-    padding-bottom: 16px;
+    // padding-bottom: 16px;
   }
 
   .project-item-desc {
