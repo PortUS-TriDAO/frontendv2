@@ -93,10 +93,15 @@ export const useProjectStore = defineStore('project', () => {
     nftAddress: string,
     bizContract: string,
     bizId: string,
+    nftType: number, // 721 or 1155 type
   ) {
     const deployerContract = useDeployerContractStore();
     // bussinessContractAddress
-    const contractAddress = await deployerContract.createMintedRetailer(bizContract, nftAddress);
+    const contractAddress = await deployerContract.createMintedRetailer(
+      bizContract,
+      nftAddress,
+      nftType,
+    );
     const { success, data } = await projectApi.postRetailCreate({
       projectId,
       bizId: Number(bizId),
@@ -114,10 +119,15 @@ export const useProjectStore = defineStore('project', () => {
     nftAddress: string,
     bizContract: string,
     bizId: string,
+    nftType: number,
   ) {
     const deployerContract = useDeployerContractStore();
     // bussinessContractAddress
-    const contractAddress = await deployerContract.createUnmintedRetailer(bizContract, nftAddress);
+    const contractAddress = await deployerContract.createUnmintedRetailer(
+      bizContract,
+      nftAddress,
+      nftType,
+    );
     const { success, data } = await projectApi.postRetailCreate({
       projectId,
       bizId: Number(bizId),
