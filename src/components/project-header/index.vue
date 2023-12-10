@@ -5,14 +5,18 @@
       <div class="detail-row-right">
         <div class="detail-header">
           <h3>{{ projectInfo?.projectName }}</h3>
-          <social-bar :website="projectInfo?.website" />
+          <social-bar
+            :website="projectInfo?.website"
+            :discord="projectInfo?.discord"
+            :twitter="projectInfo?.twitter"
+            :instagram="projectInfo?.instagram"
+          />
         </div>
         <p style="margin-bottom: 1em">{{ projectInfo?.briefIntro }}</p>
         <text-ellipsis>{{ projectInfo?.description }}</text-ellipsis>
         <div class="detail-item">
           <div>Items: {{ itemCount }}</div>
-          <!-- <div>Items: {{ (data || []).length }}</div> -->
-          <div>Created: Oct 2023</div>
+          <div>Created: {{ dayjs(projectInfo.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
           <div>Chain: Ethereum</div>
         </div>
       </div>
@@ -20,6 +24,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import dayjs from 'dayjs';
+
 import socialBar from '@/components/social-bar/index.vue';
 import type { ProjectDetailData } from '@/types';
 
@@ -51,6 +57,8 @@ defineProps<{
       height: 200px;
       flex-shrink: 0;
       background-color: #eee;
+      border-radius: 10px;
+
       // margin-top: -100px;
     }
     h3 {
@@ -80,7 +88,22 @@ defineProps<{
   .detail-item {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
+    > div {
+      position: relative;
+      &::after {
+        position: absolute;
+        text-align: center;
+        content: '·';
+        right: 0;
+        top: 50%;
+        transform: translate(100%, -50%);
+        width: 16px;
+      }
+      &:last-child::after {
+        display: none;
+      }
+    }
   }
 }
 </style>

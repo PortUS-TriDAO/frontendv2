@@ -9,6 +9,11 @@
         Project intro: {{ item.briefIntro }}
         <!-- <text-ellipsis :line="2" hideAction>Project intro: {{ item.briefIntro }}</text-ellipsis> -->
       </div>
+      <div class="item-action">
+        <p-button v-if="btnText" @click="handleClick(item)">
+          {{ btnText || 'See more' }}
+        </p-button>
+      </div>
       <!-- <div class="item-row2">
             <div>
               <label>items:</label>
@@ -20,11 +25,6 @@
             </div>
           </div>-->
       <!-- <div style="flex-grow: 1"></div> -->
-    </div>
-    <div class="item-action">
-      <p-button v-if="btnText" @click="handleClick(item)">
-        {{ btnText || 'See more' }}
-      </p-button>
     </div>
   </div>
 </template>
@@ -100,10 +100,12 @@ function handleClick(item: ProjectData) {
   }
   .item-action {
     text-align: right;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     justify-content: flex-end;
-    padding-bottom: 16px;
+    // padding-bottom: 16px;
   }
 
   .project-item-desc {

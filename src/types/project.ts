@@ -16,10 +16,14 @@ export interface ProjectData {
  * 项目详情
  */
 export interface ProjectDetailData {
+  createdAt: number;
   cover: string;
   avatar: string;
   projectName: string;
   website: string;
+  twitter: string;
+  discord: string;
+  instagram: string;
   /**
    * 介绍
    */
