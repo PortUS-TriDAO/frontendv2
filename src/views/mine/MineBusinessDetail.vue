@@ -2,7 +2,7 @@
   <div class="pg-mine-business-detail">
     <div class="business-detail">
       <div class="business-title">
-        <h2>{{ data?.contractName }}===</h2>
+        <h2>{{ data?.contractName }}</h2>
       </div>
       <div>
         <span>Percent for KOL: </span> <span class="light">{{ data?.sharePercentage }}%</span>
