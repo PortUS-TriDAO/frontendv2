@@ -25,26 +25,26 @@
     <!--    </div>-->
     <div class="success-box">
       <h5>Submit project success! Add NFT now</h5>
-      <div>
+      <div class="row-box">
         <h6>The standard of the NFT</h6>
         <el-radio-group v-model="nftType" fill="#000000" text-color="#000000">
           <el-radio label="1">ERC721</el-radio>
           <el-radio label="2">ERC1155</el-radio>
         </el-radio-group>
       </div>
-      <div>
+      <div class="row-box">
         <h6>The type of the NFT</h6>
         <el-radio-group v-model="deployType" fill="#000000" text-color="#000000">
           <el-radio label="1">Minted NFT</el-radio>
           <el-radio label="2">Unmint NFT</el-radio>
         </el-radio-group>
       </div>
-      <div>
+      <div class="row-box">
         <h6>Contract Type</h6>
         <el-input placeholder="NFT Address" v-model="nftAddress"></el-input>
       </div>
       <div class="box-bottom">
-        <span>or You can add NFT later in Mine- project- commercial</span>
+        <span>or You can add NFT later in My Profile</span>
         <p-wallet-button @click="handleNext" :loading="loading">Confirm</p-wallet-button>
       </div>
     </div>
@@ -69,7 +69,7 @@ const nftAddress = ref('');
 const route = useRoute();
 const projectId = route.params.projectId;
 const bizId = route.params.bizId as string;
-const nftType = ref(1);
+const nftType = ref('1');
 
 const loading = ref(false);
 
@@ -106,7 +106,7 @@ async function deployMintedContract() {
       nftAddress.value,
       bizDetail.value.contractAddress!,
       bizId,
-      nftType.value,
+      Number(nftType.value),
     );
     if (!success) throw new Error('deploy minted contract failed');
     router.push(
@@ -157,42 +157,74 @@ async function deployUnMintedContract() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 88px 50px 50px 50px;
+  justify-content: center;
+  padding: 43px;
 
-  .box-top {
-    > p {
-      font-size: 30px;
-      font-weight: 700;
-      text-align: center;
-      line-height: 50px;
-    }
-  }
+  .row-box {
+    width: 544px;
+    margin-top: 51px;
 
-  .box-middle {
-    margin-top: 109px;
-    display: flex;
-    flex: 1;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .box-left {
-      .el-input {
-        width: 450px;
-      }
-    }
-
-    p {
-      margin-bottom: 12px;
+    > h6 {
+      font-size: 32px;
+      margin-bottom: 10px;
     }
   }
 
   .box-bottom {
-    margin-top: 133px;
-    width: 100%;
+    margin-top: 51px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    width: 544px;
+
+    > span {
+    }
   }
+
+  h5 {
+    font-size: 40px;
+  }
+
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  //padding: 88px 50px 50px 50px;
+  //
+  //.box-top {
+  //  > p {
+  //    font-size: 30px;
+  //    font-weight: 700;
+  //    text-align: center;
+  //    line-height: 50px;
+  //  }
+  //}
+  //
+  //.box-middle {
+  //  margin-top: 109px;
+  //  display: flex;
+  //  flex: 1;
+  //  width: 100%;
+  //  flex-direction: row;
+  //  justify-content: space-between;
+  //
+  //  .box-left {
+  //    .el-input {
+  //      width: 450px;
+  //    }
+  //  }
+  //
+  //  p {
+  //    margin-bottom: 12px;
+  //  }
+  //}
+  //
+  //.box-bottom {
+  //  margin-top: 133px;
+  //  width: 100%;
+  //  display: flex;
+  //  flex-direction: row;
+  //  justify-content: space-between;
+  //}
 }
 </style>

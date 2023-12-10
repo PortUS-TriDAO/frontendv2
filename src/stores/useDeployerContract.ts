@@ -21,12 +21,13 @@ export const useDeployerContractStore = defineStore('deployer', () => {
   async function createMintedRetailer(
     projectContract: string,
     nftContract: string,
+    nftType: number,
   ): Promise<string> {
     const salt = createRandomNumber();
     const tx = await writeContract({
       ...getDeployerContract(),
       functionName: 'createMintedRetailer',
-      args: [projectContract, nftContract, salt],
+      args: [projectContract, nftContract, nftType, salt],
     });
 
     await waitForTransaction({ hash: tx.hash });
@@ -42,6 +43,7 @@ export const useDeployerContractStore = defineStore('deployer', () => {
   async function createUnmintedRetailer(
     projectContract: string,
     nftContract: string,
+    nftType: number,
   ): Promise<string> {
     const salt = createRandomNumber();
     const tx = await writeContract({
@@ -55,7 +57,7 @@ export const useDeployerContractStore = defineStore('deployer', () => {
     const address: string = (await readContract({
       ...getDeployerContract(),
       functionName: 'getUnmintedRetailerAddress',
-      args: [projectContract, nftContract, salt],
+      args: [projectContract, nftContract, nftType, salt],
     })) as string;
 
     return address;
