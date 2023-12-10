@@ -66,10 +66,17 @@ defineProps<{
     text-align: center;
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
-    font-size: 16px;
+    // font-size: 16px;
     position: absolute;
     left: 0;
-    top: 50%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    border-radius: 10px;
   }
 }
 </style>
