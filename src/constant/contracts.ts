@@ -11,7 +11,7 @@ export const ContractAddress = {
     funds: '0xF90E849c1c48a49c5ECEAf16028aec030f72722D',
     rights: '0x34aC005A59cd4Ec5831e28Eb269AAB125b44789a',
     usdt: '0x99479872494dc582af1F7fBBE43Ea9CC6143d159',
-    deployer: '0x67B64D54C5bf7E4CFBC17c25Dbd3D1B16c6A16C9',
+    deployer: '0xaeAF44FA4F1b8533E5fe844D0C280dC5B8EfaD48',
   },
 };
 
