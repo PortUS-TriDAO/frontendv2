@@ -29,6 +29,12 @@ dependencies:
   bignumber.js:
     specifier: ^9.1.1
     version: 9.1.1
+  buffer:
+    specifier: ^6.0.3
+    version: 6.0.3
+  csv-parse:
+    specifier: ^5.5.3
+    version: 5.5.3
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
@@ -4308,6 +4314,10 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+
+  /csv-parse@5.5.3:
+    resolution: {integrity: sha512-v0KW6C0qlZzoGjk6u5tLmVfyZxNgPGXZsWTXshpAgKVGmGXzaVWGdlCFxNx5iuzcXT/oJN1HHM9DZKwtAtYa+A==}
+    dev: false
 
   /dateformat@2.2.0:
     resolution: {integrity: sha512-GODcnWq3YGoTnygPfi02ygEiRxqUxpJwuRHjdhJYuxpcZmDq4rjBiXYmbCCzStxo176ixfLT6i4NPwQooRySnw==}
