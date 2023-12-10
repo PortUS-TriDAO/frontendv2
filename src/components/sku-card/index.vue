@@ -14,7 +14,7 @@
         <div>#{{ item.tokenId }}</div>
         <div>{{ item.price }} USDT</div>
         <div>
-          {{ item.ddl ? dayjs(item.ddl * 1000).format('YYYY-MM-DD HH:mm') : '' }}
+          Sales ends {{ item.ddl ? dayjs(item.ddl * 1000).format('YYYY-MM-DD HH:mm') : '' }}
         </div>
       </div>
       <div class="card-action">
@@ -53,14 +53,14 @@ function buy(item: SkuData) {
   border-radius: 10px;
   margin-bottom: 20px;
   color: #000;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 28px;
   font-weight: 400;
 
   .detail-card {
     display: flex;
     gap: 26px;
-    background: #f7f7f7;
+    // background: #f7f7f7;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 18px;
@@ -81,9 +81,9 @@ function buy(item: SkuData) {
     }
 
     h3 {
-      font-weight: 700;
+      font-weight: 500;
       color: #000000;
-      font-size: inherit;
+      font-size: 24px;
     }
 
     div {
