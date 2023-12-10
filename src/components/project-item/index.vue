@@ -1,6 +1,8 @@
 <template>
   <div class="project-item">
-    <img alt="avatar" :src="item.avatar" />
+    <div class="project-item-avatar">
+      <img alt="avatar" :src="item.avatar" />
+    </div>
     <div class="project-item-detail">
       <h3>{{ item.name || item.projectName }}</h3>
       <div class="project-item-desc">
@@ -47,14 +49,20 @@ function handleClick(item: ProjectData) {
   margin-bottom: 20px;
   background: url('@/assets/images/item-bg.png');
   background-size: 100% 100%;
-  height: 258px;
+  // height: 258px;
   // width: 913px;
 
-  > img {
-    width: 200px;
-    height: 200px;
+  .project-item-avatar {
+    background-color: #fff;
+    // border: 1px solid rgba(187, 187, 187, 1);
+    padding: 8px;
     border-radius: 10px;
     flex-shrink: 0;
+    > img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+    }
   }
 
   .project-item-detail {

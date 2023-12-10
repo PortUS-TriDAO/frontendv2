@@ -49,6 +49,8 @@ defineProps<{
     > img {
       width: 200px;
       height: 200px;
+      flex-shrink: 0;
+      background-color: #eee;
       // margin-top: -100px;
     }
     h3 {

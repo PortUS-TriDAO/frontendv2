@@ -182,7 +182,7 @@ function handleSubmit() {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    font-size: 20px;
+    font-size: 16px;
     position: relative;
 
     .right-action {
