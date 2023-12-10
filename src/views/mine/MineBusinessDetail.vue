@@ -2,24 +2,22 @@
   <div class="pg-mine-business-detail">
     <div class="business-detail">
       <div class="business-title">
-        <h2>{{ data?.contractName }}</h2>
+        <h2>{{ data?.contractName }}===</h2>
       </div>
       <div>
-        <h2>
-          <strong>Percent for KOL</strong> <span class="light">{{ data?.sharePercentage }}%</span>
-        </h2>
+        <span>Percent for KOL: </span> <span class="light">{{ data?.sharePercentage }}%</span>
       </div>
       <!-- <div>
         <span>1.2 USDT</span>
       </div> -->
       <div class="flex-between">
         <div>
-          <label>righted/rights:</label>
+          <label>righted/rights: </label>
           <span>{{ data?.rightMinted }}/{{ data?.rightQuantity }}</span>
         </div>
       </div>
-      <text-ellipsis>Dreamed of moonshots but awoke to a capitulation.</text-ellipsis>
-      <text-ellipsis>{{ data?.description }}</text-ellipsis>
+      <p>Dreamed of moonshots but awoke to a capitulation.</p>
+      <p>{{ data?.description }}</p>
       <div class="right-action">
         <div v-if="scenes === 'submitted'" class="balance">
           <div class="flex-between">
@@ -34,7 +32,6 @@
         <p-button v-else-if="scenes === 'participated'" @click="handleMintMore"
           >Apply More</p-button
         >
-        <!--        <p-button v-else @click="handleShare">share commercial contract</p-button>-->
       </div>
     </div>
     <div class="detail-divider"></div>
@@ -185,7 +182,7 @@ function handleSubmit() {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    font-size: 24px;
+    font-size: 20px;
     position: relative;
 
     .right-action {
