@@ -28,8 +28,8 @@
       <div class="row-box">
         <h6>The standard of the NFT</h6>
         <el-radio-group v-model="nftType" fill="#000000" text-color="#000000">
-          <el-radio label="1">ERC721</el-radio>
-          <el-radio label="2">ERC1155</el-radio>
+          <el-radio label="0">ERC721</el-radio>
+          <el-radio label="1">ERC1155</el-radio>
         </el-radio-group>
       </div>
       <div class="row-box">
@@ -69,7 +69,7 @@ const nftAddress = ref('');
 const route = useRoute();
 const projectId = route.params.projectId;
 const bizId = route.params.bizId as string;
-const nftType = ref('1');
+const nftType = ref('0');
 
 const loading = ref(false);
 

@@ -108,6 +108,7 @@ export const useProjectStore = defineStore('project', () => {
       retailAddress: contractAddress,
       nftAddress,
       nftType: 1,
+      retailType: 1,
       avatar: '',
     });
 
@@ -119,7 +120,7 @@ export const useProjectStore = defineStore('project', () => {
     nftAddress: string,
     bizContract: string,
     bizId: string,
-    nftType: number,
+    nftType: 0 | 1,
   ) {
     const deployerContract = useDeployerContractStore();
     // bussinessContractAddress
@@ -133,7 +134,8 @@ export const useProjectStore = defineStore('project', () => {
       bizId: Number(bizId),
       retailAddress: contractAddress,
       nftAddress,
-      nftType: 2,
+      nftType,
+      retailType: 2,
       avatar: '',
     });
 

@@ -62,8 +62,9 @@ export const postRetailCreate = (params: {
   bizId: number;
   retailAddress: string;
   nftAddress: string;
-  nftType: 1 | 2;
+  nftType: 0 | 1; //0 表示erc721, 1 表示erc1155
   avatar: string;
+  retailType: number;
 }): Promise<IResponse> => axios.post('project/retail/create', params);
 
 // 上架SKU

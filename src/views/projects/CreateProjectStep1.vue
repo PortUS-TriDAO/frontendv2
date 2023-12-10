@@ -63,12 +63,12 @@ const route = useRoute();
 const router = useRouter();
 
 const form = reactive({
-  projectName: 'kkkk',
-  briefIntro: 'sdfsfdsf',
-  website: 'www.baidu.com',
-  description: 'sfsfdsf',
-  avatar: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/screenshot.png',
-  cover: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp',
+  projectName: '',
+  briefIntro: '',
+  website: '',
+  description: '',
+  avatar: '',
+  cover: '',
   discord: '',
   twitter: '',
   instagram: '',
