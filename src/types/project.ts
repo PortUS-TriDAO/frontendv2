@@ -52,6 +52,7 @@ export interface BusinessData {
   quantity: number;
   rightQuantity: number;
   rightMinted: number;
+  whitelistCount: number;
   contractAddress: Address;
   payToken: Address;
 }

@@ -10,6 +10,7 @@
         :item="item"
         hideDetail
         @click="handleDetail(item)"
+        @onUploadWhiteList="handleUploadWhiteList"
         class="pointer"
       >
         <template v-slot:actions>
@@ -46,13 +47,13 @@ import BusinessItem from '@/components/business-item/index.vue';
 import projectHeader from '@/components/project-header/index.vue';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
-import { shareContract } from '@/utils/share';
+// import { shareContract } from '@/utils/share';
 
 const route = useRoute();
 const router = useRouter();
 const { address: account } = getAccount();
 
-const projectId = route.params.projectId as number;
+const projectId = Number(route.params.projectId);
 const scenes = computed(() => route.meta.scenes);
 const loading = ref(false);
 
@@ -65,12 +66,16 @@ const scenesData = computed(() => {
 const { data: res } = useQuery({
   queryKey: ['getProjectDetail', projectId],
   queryFn: () => {
-    return getProjectDetail({ projectId: projectId as string });
+    return getProjectDetail({ projectId: projectId.toString() });
   },
 });
 
 function handleDetail(businessData: BusinessData) {
   router.push(`/mime/${scenes.value}/${projectId}/${businessData.id}`);
+}
+function handleUploadWhiteList(businessData: BusinessData) {
+  // todo: handleUploadWhiteList
+  console.log('todo: handleUploadWhiteList=', businessData);
 }
 
 const map = {

@@ -16,7 +16,7 @@
         <text-ellipsis>{{ projectInfo?.description }}</text-ellipsis>
         <div class="detail-item">
           <div>Items: {{ itemCount }}</div>
-          <div>Created: {{ dayjs(projectInfo.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
+          <div>Created: {{ dayjs(projectInfo?.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
           <div>Chain: Ethereum</div>
         </div>
       </div>
