@@ -3,17 +3,17 @@
     <div class="business-detail">
       <div class="business-title">
         <h2>{{ data?.contractName }}</h2>
-        <h2>
-          <strong>Percent for KOL</strong>
-          <span>{{ data?.sharePercentage }}%</span>
-        </h2>
+        <p-wallet-button :loading="loading" @click="handleMint">Apply</p-wallet-button>
       </div>
-      <p>Dreamed of moonshots but awoke to a capitulation.</p>
+      <div>
+        <label>Percent for KOL: </label>
+        <span>{{ data?.sharePercentage }}%</span>
+      </div>
       <div class="business-mint">
         <label>righted/rights:</label>
         <span>{{ data?.rightMinted }}/{{ data?.rightQuantity }}</span>
-        <p-wallet-button :loading="loading" @click="handleMint">Apply</p-wallet-button>
       </div>
+      <p>Dreamed of moonshots but awoke to a capitulation.</p>
       <!-- <div>
         <span>1.2 USDT</span>
       </div> -->
@@ -89,7 +89,7 @@ async function handleMint() {
     gap: 14px;
     padding-top: 20px;
     padding: 20px 28px 0 28px;
-    font-size: 24px;
+    font-size: 16px;
   }
 
   .business-title {
@@ -99,7 +99,7 @@ async function handleMint() {
 
     > h2 {
       height: 40px;
-      font-size: 34px;
+      font-size: 28px;
       font-weight: 700;
       letter-spacing: 0px;
       line-height: 40px;

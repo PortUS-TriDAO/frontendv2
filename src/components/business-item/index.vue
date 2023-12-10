@@ -36,7 +36,7 @@
         </div>
         <slot name="actions">
           <p-button v-if="!hideDetail" @click="handleDetail(item)">
-            {{ btnText || 'Detail' }}
+            {{ btnText || 'See more' }}
           </p-button>
         </slot>
       </div>

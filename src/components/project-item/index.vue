@@ -21,7 +21,7 @@
     </div>
     <div class="item-action">
       <p-button v-if="btnText" @click="handleClick(item)">
-        {{ btnText || 'Detail' }}
+        {{ btnText || 'See more' }}
       </p-button>
     </div>
   </div>

@@ -3,14 +3,14 @@
     <div class="searchbar">
       <el-input v-model="searchKey" placeholder="Search Name" class="search-input" />
       <p-button @click="refetch">Search</p-button>
-      <p-button @click="handleSubmit">Create Project</p-button>
+      <!-- <p-button @click="handleSubmit">Create Project</p-button> -->
     </div>
     <div>
       <project-item
         v-for="item in res?.data?.rows || []"
         :key="item.projectId"
         :item="item"
-        btnText="Detail"
+        btnText="See more"
         @btnClick="handleDetail"
       >
       </project-item>

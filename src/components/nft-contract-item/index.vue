@@ -16,7 +16,7 @@
       <div class="flex-between" v-if="hideActions !== true">
         <div></div>
         <slot name="actions">
-          <p-button @click="handleDetail(item)">Detail</p-button>
+          <p-button @click="handleDetail(item)">See more</p-button>
         </slot>
       </div>
       <slot />
