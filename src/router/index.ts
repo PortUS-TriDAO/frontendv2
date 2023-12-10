@@ -43,7 +43,7 @@ const getMinePath = (scenes: 'submitted' | 'participated' | 'store') => {
     },
     {
       // MineBusinessDetail
-      path: `/mime/${scenes}/:projectId/:businessId`,
+      path: `/mine/${scenes}/:projectId/:businessId`,
       name: `Mine${capitalizedName}BusinessDetail`,
       component: MineBusinessDetail,
       meta: {

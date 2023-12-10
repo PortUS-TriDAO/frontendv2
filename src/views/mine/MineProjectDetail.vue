@@ -71,7 +71,7 @@ const { data: res } = useQuery({
 });
 
 function handleDetail(businessData: BusinessData) {
-  router.push(`/mime/${scenes.value}/${projectId}/${businessData.id}`);
+  router.push(`/mine/${scenes.value}/${projectId}/${businessData.id}`);
 }
 function handleUploadWhiteList(businessData: BusinessData) {
   // todo: handleUploadWhiteList
