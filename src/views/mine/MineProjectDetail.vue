@@ -33,6 +33,13 @@
         {{ scenesData.buttonBtn.text }}
       </p-button>
     </div>
+    <upload-white-list-card
+      :visible="visible"
+      :project-address="res?.creatorAddress"
+      :projectId="projectId"
+      :bizId="bizId"
+      @success="visible = false"
+    ></upload-white-list-card>
   </div>
 </template>
 <script setup lang="ts">
@@ -45,6 +52,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
 import projectHeader from '@/components/project-header/index.vue';
+import UploadWhiteListCard from '@/components/UploadWhiteListCard.vue';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
 // import { shareContract } from '@/utils/share';
@@ -56,6 +64,8 @@ const { address: account } = getAccount();
 const projectId = Number(route.params.projectId);
 const scenes = computed(() => route.meta.scenes);
 const loading = ref(false);
+const visible = ref(false);
+const bizId = ref(0);
 
 const projectStore = useProjectStore();
 
@@ -73,9 +83,12 @@ const { data: res } = useQuery({
 function handleDetail(businessData: BusinessData) {
   router.push(`/mine/${scenes.value}/${projectId}/${businessData.id}`);
 }
+
 function handleUploadWhiteList(businessData: BusinessData) {
   // todo: handleUploadWhiteList
   console.log('todo: handleUploadWhiteList=', businessData);
+  visible.value = true;
+  bizId.value = businessData.id;
 }
 
 const map = {

@@ -11,10 +11,10 @@
           </el-icon>
           <div class="el-upload__text">Drop csv file here or <em>click to upload</em></div>
         </el-upload>
-        <div class="upload-btns">
-          <!--          <slot name="btnbox"></slot>-->
-          <el-button>Upload</el-button>
-        </div>
+        <!--        <div class="upload-btns">-->
+        <!--          &lt;!&ndash;          <slot name="btnbox"></slot>&ndash;&gt;-->
+        <!--          <el-button :loading="loading">Upload</el-button>-->
+        <!--        </div>-->
       </template>
     </el-dialog>
   </div>
@@ -22,13 +22,31 @@
 
 <script setup lang="ts">
 import { UploadFilled } from '@element-plus/icons-vue';
+import { waitForTransaction } from '@wagmi/core';
 import { Buffer } from 'buffer';
 import { parse } from 'csv-parse/browser/esm';
 import { ElMessage, UploadFile, UploadFiles } from 'element-plus';
+import { ref } from 'vue';
 
 import { postProjectWhitelist } from '@/api';
+import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract';
 
-const props = defineProps(['visible', 'title', 'projectId', 'bizId']);
+const whitelistContract = useWhiteListRightsContract();
+const props = defineProps(['visible', 'title', 'projectAddress', 'projectId', 'bizId']);
+const emit = defineEmits(['success']);
+const loading = ref(false);
+
+async function setMerkleRoot(root: string) {
+  console.log('root', root);
+  try {
+    const tx = await whitelistContract.setMerkleRoot(props.projectAddress, root);
+    await waitForTransaction(tx);
+    ElMessage.success('upload success');
+    emit('success');
+  } catch (e) {
+    ElMessage.error('upload failed');
+  }
+}
 
 function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) {
   let reader = new FileReader();
@@ -45,11 +63,16 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
         const addresses = datas.map((v) => v[0]);
         console.log('addresses', addresses);
         try {
-          const { success, result } = await postProjectWhitelist({
+          const { success, data: result } = await postProjectWhitelist({
             projectId: props.projectId,
             bizId: props.bizId,
             wls: addresses,
           });
+          if (success) {
+            // TODO: set merker root
+            await setMerkleRoot(result.root);
+            // emit('success');
+          }
         } catch (e) {
           ElMessage.error('post white list failed');
         }

@@ -22,7 +22,7 @@ export const useWhiteListRightsContract = defineStore('whiteListRights', () => {
     return writeContract(params);
   }
 
-  async function setMerkleRoot(merkleRoot: string) {
+  async function setMerkleRoot(projectAddress: Address, merkleRoot: string) {
     const projectContract = useProjectContract();
     const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
     const params = {
