@@ -1,19 +1,26 @@
 <template>
   <div class="business-item">
-    <img v-if="avatar" alt="avatar" :src="avatar" />
+    <!-- <img v-if="avatar" alt="avatar" :src="avatar" /> -->
     <div class="business-item-detail">
       <div class="flex-row-between">
         <h3>{{ item.contractName }}</h3>
-        <div>
-          <label><strong>Percent for KOL:</strong></label>
-          <strong>{{ item.sharePercentage }}%</strong>
+        <div style="padding-right: 50px">
+          <div style="margin-bottom: 10px">
+            <label>righted/rights:</label>
+            <span>{{ item.rightMinted }}/{{ item.rightQuantity }}</span>
+          </div>
+          <el-progress
+            :text-inside="true"
+            :stroke-width="26"
+            :percentage="(item.rightMinted / item.rightQuantity) * 100"
+          />
         </div>
       </div>
-      <p>{{ item.briefIntro }}.</p>
+      <p>Project intro: {{ item.briefIntro }}.</p>
       <div>
         <div>
-          <label>righted/rights:</label>
-          <span>{{ item.rightMinted }}/{{ item.rightQuantity }}</span>
+          <label>Percent for KOL:</label>
+          <span>{{ item.sharePercentage }}%</span>
         </div>
       </div>
       <div v-if="scenes === 'submitted' || scenes === 'participated'">
@@ -89,6 +96,13 @@ function handleDetail(item: BusinessData) {
   background: #f7f7f7;
   border-radius: 10px;
   margin-bottom: 20px;
+  border-radius: 40px;
+  background-color: rgba(243, 247, 255, 1);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
+  background-image: url('@/assets/images/card-bg.png');
+  background-repeat: no-repeat;
+  font-size: 20px;
+  line-height: 1.5;
 
   > img {
     width: 200px;
@@ -107,10 +121,8 @@ function handleDetail(item: BusinessData) {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    font-size: 24px;
+    gap: 14px;
     letter-spacing: 0px;
-    line-height: 29px;
     color: #000000;
     padding-top: 10px;
 
@@ -121,6 +133,7 @@ function handleDetail(item: BusinessData) {
 
     > p {
       font-weight: 400;
+      font-size: 20px;
     }
 
     .item-row2 {

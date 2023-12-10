@@ -6,15 +6,15 @@
         <div class="detail-row-right">
           <div class="detail-header">
             <h3>{{ res?.data?.projectName }}</h3>
-            <div class="detail-social">
-              <!-- <a :href="res?.data?.website" target="_blank">{{ res?.data?.website }}</a> -->
+            <social-bar :website="res?.data?.website" />
+            <!-- <div class="detail-social">
               <a class="icon-social-1" :href="res?.data?.website" target="_blank"></a>
               <a class="icon-social-2" target="_blank"></a>
               <a class="icon-social-3" target="_blank"></a>
               <a class="icon-social-4" target="_blank"></a>
-            </div>
+            </div> -->
           </div>
-          <p style="margin-bottom: 16px">{{ res?.data?.briefIntro }}</p>
+          <p style="margin-bottom: 1em">{{ res?.data?.briefIntro }}</p>
           <text-ellipsis>{{ res?.data?.description }}</text-ellipsis>
           <div class="detail-item">
             <div>Items: {{ (data || []).length }}</div>
@@ -61,6 +61,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { getkolRightId, getProjectDetail } from '@/api';
 import { postSkuUpdate } from '@/api/nft';
 import SkuItem from '@/components/sku-item/index.vue';
+import socialBar from '@/components/social-bar/index.vue';
 import { useProjectSkuSpu } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
@@ -195,34 +196,6 @@ async function handleBuy(item: SkuSpuData) {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-
-      .detail-social {
-        display: flex;
-        justify-content: space-between;
-        gap: 32px;
-        > a {
-          display: block;
-          width: 32px;
-          height: 32px;
-        }
-
-        .icon-social-1 {
-          background: url('@/assets/images/social/icon-1.png') center center;
-          background-size: 100%;
-        }
-        .icon-social-2 {
-          background: url('@/assets/images/social/icon-2.png') center center;
-          background-size: 100%;
-        }
-        .icon-social-3 {
-          background: url('@/assets/images/social/icon-3.png') center center;
-          background-size: 100%;
-        }
-        .icon-social-4 {
-          background: url('@/assets/images/social/icon-4.jpg') center center;
-          background-size: 100%;
-        }
-      }
     }
     .detail-item {
       display: inline-flex;
