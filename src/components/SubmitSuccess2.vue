@@ -1,47 +1,22 @@
 <template>
   <main-content>
-    <!--    <div class="success-box">-->
-    <!--      <success-card class="box-top">-->
-    <!--        <p>ALTC created success！</p>-->
-    <!--        <p>Contract Binding</p>-->
-    <!--      </success-card>-->
-    <!--      <div class="box-middle">-->
-    <!--        <div class="box-left">-->
-    <!--          <p>NFT Address</p>-->
-    <!--          <el-input placeholder="NFT Address" v-model="nftAddress"></el-input>-->
-    <!--        </div>-->
-    <!--        <div class="box-right">-->
-    <!--          <p>The type of the NFT</p>-->
-    <!--          <el-radio-group v-model="deployType" fill="#000000" text-color="#000000">-->
-    <!--            <el-radio label="1">Minted NFT</el-radio>-->
-    <!--            <el-radio label="2">Unmint NFT</el-radio>-->
-    <!--          </el-radio-group>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class="box-bottom">-->
-    <!--        <span>or You can add NFT later in Mine- project- commercial</span>-->
-    <!--        <p-wallet-button @click="handleNext" :loading="loading">Confirm</p-wallet-button>-->
-    <!--      </div>-->
-    <!--    </div>-->
     <div class="success-box">
-      <h5>Submit project success! Add NFT now</h5>
-      <div>
-        <h6>The standard of the NFT</h6>
-        <el-radio-group v-model="nftType" fill="#000000" text-color="#000000">
-          <el-radio label="1">ERC721</el-radio>
-          <el-radio label="2">ERC1155</el-radio>
-        </el-radio-group>
-      </div>
-      <div>
-        <h6>The type of the NFT</h6>
-        <el-radio-group v-model="deployType" fill="#000000" text-color="#000000">
-          <el-radio label="1">Minted NFT</el-radio>
-          <el-radio label="2">Unmint NFT</el-radio>
-        </el-radio-group>
-      </div>
-      <div>
-        <h6>Contract Type</h6>
-        <el-input placeholder="NFT Address" v-model="nftAddress"></el-input>
+      <success-card class="box-top">
+        <p>ALTC created success！</p>
+        <p>Contract Binding</p>
+      </success-card>
+      <div class="box-middle">
+        <div class="box-left">
+          <p>NFT Address</p>
+          <el-input placeholder="NFT Address" v-model="nftAddress"></el-input>
+        </div>
+        <div class="box-right">
+          <p>The type of the NFT</p>
+          <el-radio-group v-model="deployType" fill="#000000" text-color="#000000">
+            <el-radio label="1">Minted NFT</el-radio>
+            <el-radio label="2">Unmint NFT</el-radio>
+          </el-radio-group>
+        </div>
       </div>
       <div class="box-bottom">
         <span>or You can add NFT later in Mine- project- commercial</span>
