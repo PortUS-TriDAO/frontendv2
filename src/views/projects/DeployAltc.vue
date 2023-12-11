@@ -12,7 +12,13 @@
 
         <div class="contract-type">
           <h5>Contract Type</h5>
-          <div class="contract-type-box">ALTC</div>
+          <div
+            @click="contractTypeSelect = !contractTypeSelect"
+            class="contract-type-box"
+            :class="{ 'contract-type-select': contractTypeSelect }"
+          >
+            ALTC
+          </div>
         </div>
       </div>
       <div class="form-box">
@@ -154,6 +160,7 @@ const allowAirdrop = ref(false);
 const dropSettingLoading = ref(false);
 const projectAddress = ref('');
 const bizId = ref<Number>(0);
+const contractTypeSelect = ref(false);
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
@@ -306,6 +313,11 @@ function toNext() {
         line-height: 50px;
         text-align: center;
         border: solid 1px #ccc;
+        cursor: pointer;
+      }
+
+      .contract-type-select {
+        border: solid 2px #3182f7;
       }
     }
   }
