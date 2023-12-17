@@ -7,6 +7,7 @@ import FooterView from './components/FooterView.vue';
 import HeaderView from './components/HeaderView.vue';
 const route = useRoute();
 const title = ref('');
+const showBanner = ref(false);
 
 watch(
   () => route.path,
@@ -22,6 +23,7 @@ watch(
     } else {
       title.value = '';
     }
+    showBanner.value === (route.fullPath !== '/' && route.fullPath !== '/goods');
   },
 );
 </script>
@@ -29,7 +31,9 @@ watch(
 <template>
   <div class="container">
     <HeaderView />
-    <div v-if="route.fullPath !== '/'" class="banner">{{ title }}</div>
+    <div v-if="showBanner" class="banner">
+      {{ title }}
+    </div>
     <div class="main">
       <router-view></router-view>
     </div>
