@@ -61,7 +61,6 @@ const { data: res } = useQuery({
 });
 
 const { data, refetch } = useProjectSkuSpu(projectId);
-console.log('getProjects result=', data);
 
 function handleDetail(item: SkuSpuData) {
   if (item.isSku) {
@@ -116,6 +115,7 @@ async function handleBuy(item: SkuSpuData) {
       kolRightInfo.rightId,
     );
     await waitForTransaction({ hash: tx.hash });
+    await projectStore.handleTickVerify(itemInfo.nftAddress, itemInfo.tokenId, itemInfo.id);
     //
     await postSkuUpdate({ skuId: item.id, isSold: true });
     refetch();

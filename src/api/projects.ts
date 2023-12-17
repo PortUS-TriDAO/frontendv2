@@ -118,3 +118,15 @@ export const getPrimaryProjectInfo = (): Promise<IResponse<Array<PrimaryProjectI
 // 上传csv文件里的whitelist列表
 export const postProjectWhitelist = (params: { projectId: number; bizId: number; wls: string[] }) =>
   axios.post('/project/whitelist', params);
+
+// post hashkey 返回的tickInfo发到服务端
+export const postUserByTicket = (params: {
+  ticketToken: string;
+  ticketStatus: number;
+  owner: string;
+  skuId: number;
+}) => axios.post('/user/buyticket', params);
+
+// get user tickets
+export const getUserTickets = (params: { owner: string; ticketStatus: number }) =>
+  axios.post('/user/tickets', { params });

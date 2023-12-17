@@ -42,8 +42,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { postSkuUpdate } from '@/api/nft';
 import SkuCard from '@/components/sku-card/index.vue';
-import SkuItem from '@/components/sku-item/index.vue';
-import { useKolRightId, useSkuDetail, useSkuList } from '@/hooks';
+import { useKolRightId, useSkuDetail } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
 import type { SkuData } from '@/types';
@@ -63,7 +62,6 @@ const projectStore = useProjectStore();
 const erc20Contract = useERC20Contract();
 
 const { data, refetch } = useSkuDetail(skuId);
-const { data: nftList } = useSkuList(retailId);
 const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
 
 function handleDetail(id: number) {
@@ -95,19 +93,16 @@ async function handleBuy(skuData: SkuData) {
     );
     await waitForTransaction({ hash: approveTx.hash });
     fullScreenLoading.text.value = 'Buy';
-    console.log('buy params ===', {
-      retailAddress: data.value.retailAddress,
-      buyParams: [buyParams],
-      tokenId: Number(kolRightInfo.value.rightId),
-    });
+    const tokenId = Number(kolRightInfo.value.rightId);
     const tx = await projectStore.handleBuyMintedNft(
       data.value.retailAddress,
       [buyParams],
-      Number(kolRightInfo.value.rightId),
+      tokenId,
     );
     await waitForTransaction({
       hash: tx.hash,
     });
+    await projectStore.handleTickVerify(skuData.nftAddress, skuData.tokenId, skuData.id);
     await postSkuUpdate({ skuId: Number(skuId.value), isSold: true });
     refetch();
     ElMessage.success('buy success');
