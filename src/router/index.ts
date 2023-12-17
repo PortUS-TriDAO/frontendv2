@@ -209,6 +209,17 @@ const router = createRouter({
       name: 'Faucet',
       component: () => import('../views/faucet/faucet.vue'),
     },
+    // goods mobile
+    {
+      path: '/goods/:id',
+      name: 'GoodsDetail',
+      component: () => import('../views/goods/GoodsDetail.vue'),
+    },
+    {
+      path: '/goods',
+      name: 'GoodsList',
+      component: () => import('../views/goods/GoodsList.vue'),
+    },
   ],
 });
 
