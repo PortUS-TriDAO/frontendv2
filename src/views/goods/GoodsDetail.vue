@@ -1,5 +1,5 @@
 <template>
-  <page-container class="pg-goods-detail">
+  <page-container class="pg-goods-detail" title="Detail">
     <div class="item-card">
       <h3>Goods name</h3>
       <div class="item-row">

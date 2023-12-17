@@ -1,5 +1,5 @@
 <template>
-  <page-container class="pg-goods-list">
+  <page-container class="pg-goods-list" title="Goods">
     <div class="list">
       <div>
         <div class="item-card" @click="handleDetail(111)">
@@ -68,6 +68,7 @@
 import { useRouter } from 'vue-router';
 
 import avatar from '@/assets/images/demo-avatar.png';
+
 const router = useRouter();
 
 function handleDetail(id: number) {
