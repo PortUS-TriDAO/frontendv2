@@ -3,6 +3,7 @@
     <div class="header-section">
       <div class="header-container">
         <router-link class="logo" to="/"></router-link>
+        <div v-if="isAgent" class="agent">agent</div>
         <div class="menus" ref="elMenu">
           <div v-if="isStore" style="height: 66px"></div>
           <template v-else>
@@ -45,6 +46,7 @@ import { useWalletStore } from '@/stores/useWallet';
 
 const route = useRoute();
 const isStore = computed(() => route.path.indexOf('/store') === 0);
+const isAgent = computed(() => route.path.indexOf('/goods') === 0);
 
 const walletStore = useWalletStore();
 
@@ -100,6 +102,21 @@ function connect() {
       height: 32px;
       background: url('@/assets/logo.png') center center no-repeat;
       background-size: contain;
+    }
+
+    .agent {
+      height: 24px;
+      line-height: 24px;
+      border-left: 1px solid rgba(187, 187, 187, 1);
+      font-size: 22px;
+      text-align: center;
+      color: #fff;
+      width: 90px;
+      display: block;
+      flex-grow: 1;
+      text-align: left;
+      margin-left: 18px;
+      padding-left: 18px;
     }
 
     .menus {
