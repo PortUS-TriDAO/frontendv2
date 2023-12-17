@@ -69,20 +69,25 @@
     }
   }
   @media screen and (max-width: 800px) {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 20px 16px;
     height: auto;
     .footer-container {
-      flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      padding: 0;
+      height: auto;
+
       .logo {
-        margin-top: 0;
+        height: 24px;
+        width: 90px;
       }
-      > div {
-        margin-top: 15px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      // > div {
+      //   margin-top: 15px;
+      //   display: flex;
+      //   flex-direction: column;
+      //   align-items: center;
+      // }
+      .footer-right {
+        display: none;
       }
     }
   }
