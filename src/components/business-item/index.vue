@@ -112,7 +112,7 @@ function handleUploadWhiteList(e: Event) {
   border-radius: 40px;
   background-color: rgba(243, 247, 255, 1);
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
-  background-image: url('@/assets/images/card-bg.png');
+  background-image: url('@/assets/images/item-bg-1.jpg');
   background-repeat: no-repeat;
   font-size: 20px;
   line-height: 1.5;
