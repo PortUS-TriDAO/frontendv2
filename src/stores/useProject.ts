@@ -153,6 +153,7 @@ export const useProjectStore = defineStore('project', () => {
     payToken,
     bizId,
     retailId,
+    sellAmount,
   }: {
     projectId: number;
     price: string;
@@ -163,6 +164,7 @@ export const useProjectStore = defineStore('project', () => {
     payToken: Address;
     bizId: number;
     retailId: number;
+    sellAmount: number;
   }) {
     // approve NFT
     const nftContract = useNftContract();
@@ -182,6 +184,7 @@ export const useProjectStore = defineStore('project', () => {
       nftTokenId,
       deadline,
       retailerAddress,
+      sellAmount,
     );
     const { address: seller } = getAccount();
 
@@ -202,6 +205,7 @@ export const useProjectStore = defineStore('project', () => {
       seller: seller,
       payToken,
       signature,
+      sellAmount,
     });
   }
 

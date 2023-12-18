@@ -6,6 +6,7 @@ import type {
   ProjectData,
   ProjectDetailData,
   RightData,
+  TicketInfo,
 } from '@/types';
 
 import axios from '../utils/axios';
@@ -78,6 +79,7 @@ export const publishSku = (params: {
   seller: string;
   payToken: string;
   signature: string;
+  sellAmount: number;
 }): Promise<IResponse> => axios.post('/project/sku/publish', params);
 
 // 上架SPU
@@ -128,5 +130,5 @@ export const postUserByTicket = (params: {
 }) => axios.post('/user/buyticket', params);
 
 // get user tickets
-export const getUserTickets = (params: { owner: string; ticketStatus: number }) =>
+export const getUserTickets = (params: { owner: string }): Promise<IListResponse<TicketInfo>> =>
   axios.post('/user/tickets', { params });

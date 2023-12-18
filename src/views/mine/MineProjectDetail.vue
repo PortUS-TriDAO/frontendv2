@@ -44,7 +44,7 @@
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { getAccount, waitForTransaction } from '@wagmi/core';
+import { waitForTransaction } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -55,11 +55,9 @@ import projectHeader from '@/components/project-header/index.vue';
 import UploadWhiteListCard from '@/components/UploadWhiteListCard.vue';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
-// import { shareContract } from '@/utils/share';
 
 const route = useRoute();
 const router = useRouter();
-const { address: account } = getAccount();
 
 const projectId = Number(route.params.projectId);
 const scenes = computed(() => route.meta.scenes);

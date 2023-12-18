@@ -65,11 +65,17 @@
   </page-container>
 </template>
 <script setup lang="ts">
+import { getAccount } from '@wagmi/core';
 import { useRouter } from 'vue-router';
 
 import avatar from '@/assets/images/demo-avatar.png';
+import { useTicketList } from '@/hooks';
 
 const router = useRouter();
+
+const { address } = getAccount();
+
+const { data } = useTicketList(address);
 
 function handleDetail(id: number) {
   router.push(`/goods/${id}`);
