@@ -5,6 +5,7 @@ import { reactive } from 'vue';
 
 import RETAILER_ABI from '@/abi/retailer.abi.json';
 import * as projectApi from '@/api/projects';
+import { postTicketInfo } from '@/api/ticket';
 import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useRouterContract } from '@/stores/useRouterContract';
@@ -152,6 +153,7 @@ export const useProjectStore = defineStore('project', () => {
     payToken,
     bizId,
     retailId,
+    sellAmount,
   }: {
     projectId: number;
     price: string;
@@ -162,6 +164,7 @@ export const useProjectStore = defineStore('project', () => {
     payToken: Address;
     bizId: number;
     retailId: number;
+    sellAmount: number;
   }) {
     // approve NFT
     const nftContract = useNftContract();
@@ -181,6 +184,7 @@ export const useProjectStore = defineStore('project', () => {
       nftTokenId,
       deadline,
       retailerAddress,
+      sellAmount,
     );
     const { address: seller } = getAccount();
 
@@ -201,6 +205,7 @@ export const useProjectStore = defineStore('project', () => {
       seller: seller,
       payToken,
       signature,
+      sellAmount,
     });
   }
 
@@ -368,6 +373,20 @@ export const useProjectStore = defineStore('project', () => {
     return rewards as bigint;
   }
 
+  async function handleTickVerify(nftAddress: string, tokenId: number, skuId: number) {
+    const { address } = getAccount();
+    const { returnDesc, data } = await postTicketInfo(address, nftAddress, tokenId);
+    if (returnDesc !== 'Success') throw new Error('get ticket info failed');
+
+    const { owner, ticketStatus, ticketToken } = data;
+    return projectApi.postUserByTicket({
+      ticketStatus,
+      ticketToken,
+      owner,
+      skuId,
+    });
+  }
+
   return {
     state,
     createProject,
@@ -382,5 +401,6 @@ export const useProjectStore = defineStore('project', () => {
     operatorWithdraw,
     operatorPendingRewards,
     referrerPendingReward,
+    handleTickVerify,
   };
 });

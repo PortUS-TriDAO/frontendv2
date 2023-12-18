@@ -67,7 +67,7 @@ export interface BusinessDetailData {
   rightMinted: number;
   payToken: Address;
   description: string;
-  contractAddress: Address | undefined;
+  contractAddress: Address | undefined; // business contract address
   // nft contract list
   // rows: NftContractData[];
   retailContracts: NftContractData[];
@@ -106,6 +106,7 @@ export interface SkuData {
   seller: Address;
   signature: string;
   tokenId: number;
+  nftAddress: string;
   //
   bizId: number;
   retailId: number;
@@ -138,4 +139,15 @@ export interface PrimaryProjectInfo {
   projectAddress: string;
   projectId: number;
   bizId: number;
+}
+
+export interface TicketInfo {
+  id: number;
+  owner: string;
+  ticketStatus: number;
+  ticketToken: string;
+  imgUrl: string;
+  nftName: string;
+  payToken: string;
+  price: number;
 }

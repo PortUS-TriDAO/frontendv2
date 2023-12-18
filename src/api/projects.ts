@@ -6,6 +6,7 @@ import type {
   ProjectData,
   ProjectDetailData,
   RightData,
+  TicketInfo,
 } from '@/types';
 
 import axios from '../utils/axios';
@@ -78,6 +79,7 @@ export const publishSku = (params: {
   seller: string;
   payToken: string;
   signature: string;
+  sellAmount: number;
 }): Promise<IResponse> => axios.post('/project/sku/publish', params);
 
 // 上架SPU
@@ -118,3 +120,15 @@ export const getPrimaryProjectInfo = (): Promise<IResponse<Array<PrimaryProjectI
 // 上传csv文件里的whitelist列表
 export const postProjectWhitelist = (params: { projectId: number; bizId: number; wls: string[] }) =>
   axios.post('/project/whitelist', params);
+
+// post hashkey 返回的tickInfo发到服务端
+export const postUserByTicket = (params: {
+  ticketToken: string;
+  ticketStatus: number;
+  owner: string;
+  skuId: number;
+}) => axios.post('/user/buyticket', params);
+
+// get user tickets
+export const getUserTickets = (params: { owner: string }): Promise<IListResponse<TicketInfo>> =>
+  axios.post('/user/tickets', { params });

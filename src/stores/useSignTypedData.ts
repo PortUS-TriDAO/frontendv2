@@ -3,18 +3,12 @@ import { type Address, getAccount, getNetwork, signTypedData } from '@wagmi/core
 import type { TypedDataDomain } from 'ethers';
 import { defineStore } from 'pinia';
 
-// export interface DomainType {
-//   name: string;
-//   version: string;
-//   chainId: number;
-//   verifyingContract: string;
-// }
-
 const NFT_RETAILER_TYPES = {
   NftRetailer: [
     { name: 'seller', type: 'address' },
     { name: 'payToken', type: 'address' },
     { name: 'payPrice', type: 'uint256' },
+    { name: 'sellAmount', type: 'uint256' },
     { name: 'nftTokenId', type: 'uint256' },
     { name: 'deadline', type: 'uint256' },
   ],
@@ -41,12 +35,14 @@ export const useSignTypedDataStore = defineStore('signTypedData', () => {
     nftTokenId: number,
     deadline: number,
     retailerAddress: Address,
+    sellAmount: number,
   ): Promise<SignTypedDataResult> {
     const { address } = await getAccount();
     const message = {
       seller: address,
       payToken: payToken,
       payPrice,
+      sellAmount,
       nftTokenId,
       deadline,
     };
@@ -65,12 +61,14 @@ export const useSignTypedDataStore = defineStore('signTypedData', () => {
     nftTokenId: number,
     deadline: number,
     retailerAddress: Address,
+    sellAmount: number,
   ): Promise<SignTypedDataResult> {
     const { address } = await getAccount();
     const message = {
       seller: address,
       payToken,
       payPrice,
+      sellAmount,
       nftTokenId,
       deadline,
     };

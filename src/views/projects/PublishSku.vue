@@ -26,6 +26,13 @@
           <el-form-item label="DDL" prop="ddl">
             <el-date-picker v-model="ruleForm.ddl" type="datetime" placeholder="DDL" />
           </el-form-item>
+          <el-form-item label="NFT Quantity" prop="sellAmount">
+            <el-input
+              placeholder="Price"
+              v-model="ruleForm.sellAmount"
+              oninput="value=value.replace(/[^0-9]/g, '')"
+            ></el-input>
+          </el-form-item>
           <el-form-item label="Seller">
             <el-input placeholder="wallet address" disabled :value="ruleForm.seller"></el-input>
           </el-form-item>
@@ -44,7 +51,7 @@
 <script lang="ts" setup>
 import { type Address, getAccount } from '@wagmi/core';
 import { ElMessage, type FormInstance } from 'element-plus';
-import { onMounted, reactive, ref, toRaw } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { postSkuUpdate } from '@/api/nft';
@@ -52,7 +59,6 @@ import MainContent from '@/components/MainContent.vue';
 import { useBusinessDetail } from '@/hooks';
 import router from '@/router';
 import { useProjectStore } from '@/stores/useProject';
-import { toBN } from '@/utils/bn';
 
 import { publishSkuRules as rules } from './rules';
 
@@ -60,18 +66,19 @@ const route = useRoute();
 const ruleFormRef = ref<FormInstance>();
 const projectStore = useProjectStore();
 
-const projectId = route.params.projectId as number;
-const bizId = route.params.bizId as number;
+const projectId = Number(route.params.projectId);
+const bizId = Number(route.params.bizId);
 const nftAddress = route.params.nftAddress as Address;
 const retailAddress = route.params.retailAddress as Address;
-const retailId = route.params.retailId as number;
+const retailId = Number(route.params.retailId);
 const { address: account } = getAccount();
 
 const ruleForm = reactive({
-  tokenId: '1',
-  price: '1000',
+  tokenId: '',
+  price: '',
   ddl: '',
   seller: account,
+  sellAmount: 1,
   payToken: '',
 });
 const loading = ref(false);
@@ -89,17 +96,31 @@ async function handleSave(formEl: FormInstance | undefined) {
 }
 
 async function publishSku() {
-  if (!projectId || typeof projectId !== 'string') {
+  console.log('projectId:', projectId);
+  if (!projectId) {
     ElMessage.error('Project ID is required');
     return;
   }
   try {
     loading.value = true;
+    console.log('publishSku', {
+      projectId,
+      price: ruleForm.price,
+      nftTokenId: Number(ruleForm.tokenId),
+      deadline: new Date(ruleForm.ddl).valueOf() / 1000,
+      sellAmount: Number(ruleForm.sellAmount),
+      retailerAddress: retailAddress,
+      nftAddress: nftAddress,
+      payToken: bizDetail.value.payToken,
+      bizId: bizId,
+      retailId: retailId,
+    });
     const { success, data } = await projectStore.publishSku({
       projectId,
       price: ruleForm.price,
       nftTokenId: Number(ruleForm.tokenId),
       deadline: new Date(ruleForm.ddl).valueOf() / 1000,
+      sellAmount: Number(ruleForm.sellAmount),
       retailerAddress: retailAddress,
       nftAddress: nftAddress,
       payToken: bizDetail.value.payToken,
@@ -108,7 +129,7 @@ async function publishSku() {
     });
     if (!success) throw new Error(data as string);
     await postSkuUpdate({
-      skuId: data.skuId,
+      skuId: data?.skuId,
       imgUrl: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp',
       nftName: 'FarmersWorld',
     });

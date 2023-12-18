@@ -28,11 +28,10 @@
   </page-container>
 </template>
 <script setup lang="ts">
-import { waitForTransaction } from '@wagmi/core';
+import { getAccount, waitForTransaction } from '@wagmi/core';
 import { ElLoading, ElMessage } from 'element-plus';
 import { ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { state } from 'vue-tsc/out/shared';
 
 import { postSkuUpdate } from '@/api/nft';
 import NftContractItem from '@/components/nft-contract-item/index.vue';
@@ -52,10 +51,11 @@ const retailId = Number(route.params.retailId);
 const nftType = Number(route.params.nftType);
 const retailerAddress = route.query.retailAddress as Address;
 const bizId = Number(route.query.bizId);
+const nftAddress = route.query.nftAddress as Address;
 
 const loading = ref(false);
 const data: NftContractData = {
-  nftAddress: route.query.nftAddress as Address,
+  nftAddress: nftAddress,
   avatar: route.query.avatar as string,
   nftID: '',
   name: '',
@@ -112,6 +112,7 @@ async function handleBuy(item: SkuData | SpuData) {
       kolRightInfo.value.rightId,
     );
     await waitForTransaction({ hash: tx.hash });
+    await projectStore.handleTickVerify(nftAddress, itemInfo.tokenId, item.id);
     await postSkuUpdate({ skuId: item.id, isSold: true });
     ElMessage.success('buy success');
   } catch (e) {

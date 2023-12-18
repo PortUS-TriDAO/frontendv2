@@ -134,6 +134,11 @@ const router = createRouter({
       children: mineChildren,
     },
     {
+      path: '/mine/project/setting/:projectId/:bizId',
+      name: 'MineSetting',
+      component: () => import('../views/mine/SettingWhiteList.vue'),
+    },
+    {
       path: '/project/create/step1/:projectId?',
       name: 'CreateProjectStep1',
       component: () => import('../views/projects/CreateProjectStep1.vue'),

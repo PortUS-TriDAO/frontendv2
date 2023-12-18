@@ -10,10 +10,19 @@
         <span>Get Matic</span>
         <a href="https://faucet.polygon.technology/">get matic</a>
       </div>
+      <div>
+        <span>Mint 1155 NFT Address: 0x1592355Ec9c0bd8886142012c668F3735AcE6218</span>
+        <a
+          target="_blank"
+          href="https://mumbai.polygonscan.com/address/0x1592355Ec9c0bd8886142012c668F3735AcE6218#writeContract"
+          >Mint NFT</a
+        >
+      </div>
 
       <div>
-        <span>NFT Address: 0xd27e829502F1933f1C6ee13f7b7afc048cC07A45</span>
+        <span>Mint 721 NFT Address: 0xd27e829502F1933f1C6ee13f7b7afc048cC07A45</span>
         <a
+          target="_blank"
           href="https://mumbai.polygonscan.com/address/0xd27e829502F1933f1C6ee13f7b7afc048cC07A45#writeContract"
           >Mint NFT</a
         >

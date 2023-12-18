@@ -14,6 +14,7 @@ import type {
   SkuData,
   SkuSpuData,
   SpuData,
+  TicketInfo,
 } from '@/types';
 
 import {
@@ -31,6 +32,7 @@ import {
   getSpuDetail,
   getSpuList,
   getSubmittedProjects,
+  getUserTickets,
 } from '../api';
 
 export function useProjects(key?: string): UseQueryReturnType<PageData<ProjectData>, Error> {
@@ -99,7 +101,7 @@ export function useSubmittedProjects(): UseQueryReturnType<PageData<ProjectData>
 }
 
 export function useBusinessDetail(
-  businessId: string,
+  businessId: number,
 ): UseQueryReturnType<BusinessDetailData, Error> {
   const result = useQuery({
     queryKey: ['getBusinessDetail', businessId],
@@ -280,11 +282,23 @@ export function useKolRightId(
   return result;
 }
 
-export function usePrimaryProjectInfo(): UseQueryReturnType<Arrray<PrimaryProjectInfo>, Error> {
+export function usePrimaryProjectInfo(): UseQueryReturnType<Array<PrimaryProjectInfo>, Error> {
   const result = useQuery({
     queryKey: ['getPrimaryProjectInfo'],
     queryFn: async () => {
       const { success, data } = await getPrimaryProjectInfo();
+      if (!success) return null;
+      return data;
+    },
+  });
+  return result;
+}
+
+export function useTicketList(owner: string): UseQueryReturnType<PageData<TicketInfo>, Error> {
+  const result = useQuery({
+    queryKey: ['getUserTickets', owner],
+    queryFn: async () => {
+      const { success, data } = await getUserTickets({ owner });
       if (!success) return null;
       return data;
     },
