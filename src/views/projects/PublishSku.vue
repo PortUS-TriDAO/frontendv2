@@ -30,7 +30,7 @@
             <el-input
               placeholder="Price"
               v-model="ruleForm.sellAmount"
-              oninput="value=value.replace(/[^0-9]/g, '')"
+              oninput="value=value.replace(/[^1-9]/g, '')"
             ></el-input>
           </el-form-item>
           <el-form-item label="Seller">
