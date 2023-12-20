@@ -5,19 +5,23 @@
       <div class="top-box">
         <div class="blockchain">
           <h5>BlockChain</h5>
-          <div class="chain-box">
+          <div
+            class="chain-box"
+            @click="blockChainSelect = !blockChainSelect"
+            :class="{ 'contract-type-select': blockChainSelect }"
+          >
             <span>Ethereum</span>
           </div>
         </div>
 
-        <div class="contract-type">
+        <div class="blockchain">
           <h5>Contract Type</h5>
           <div
+            class="chain-box"
             @click="contractTypeSelect = !contractTypeSelect"
-            class="contract-type-box"
             :class="{ 'contract-type-select': contractTypeSelect }"
           >
-            ALTC
+            <span>ALTC</span>
           </div>
         </div>
       </div>
@@ -72,65 +76,6 @@
           </el-form-item>
         </el-form>
       </div>
-
-      <!-- Drop Setting -->
-      <div class="drop-setting">
-        <h5>Drop Setting</h5>
-        <!-- White List -->
-        <div class="drop-item">
-          <div class="title">
-            <el-switch v-model="allowWhiteList"></el-switch>
-            <h6>White list</h6>
-          </div>
-          <el-form label-position="top" :inline="true">
-            <el-form-item label="Numbers of items">
-              <el-input
-                v-model="dropSettingForm.whiteListCount"
-                oninput="value=value.replace(/[^0-9.]/g, '')"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="Mint start date & time">
-              <el-date-picker
-                v-model="dropSettingForm.whiteListStartTime"
-                type="datetime"
-                placeholder="Select date and time"
-              />
-            </el-form-item>
-          </el-form>
-        </div>
-
-        <!-- Free mint -->
-        <div class="drop-item">
-          <div class="title">
-            <el-switch v-model="allowFreeMint"></el-switch>
-            <h6>Free Mint</h6>
-          </div>
-          <el-form label-position="top" :inline="true">
-            <el-form-item label="Mint start time">
-              <el-date-picker
-                v-model="dropSettingForm.freeMintStartTime"
-                type="datetime"
-                placeholder="Select date and time"
-              />
-            </el-form-item>
-          </el-form>
-        </div>
-
-        <!-- Airdrop -->
-        <div class="drop-item">
-          <div class="title">
-            <el-switch v-model="allowAirdrop"></el-switch>
-            <h6>Airdrop</h6>
-          </div>
-          <p style="margin-left: 20px">Add address in My profile</p>
-        </div>
-
-        <div class="save-btn">
-          <p-wallet-button :loading="dropSettingLoading" @click="setDropSetting"
-            >Save
-          </p-wallet-button>
-        </div>
-      </div>
     </div>
   </main-content>
 </template>
@@ -154,13 +99,11 @@ const projectStore = useProjectStore();
 const whiteListRightsContract = useWhiteListRightsContract();
 const projectId: string = route.params.projectId as string;
 const loading = ref(false);
-const allowWhiteList = ref(false);
-const allowFreeMint = ref(false);
-const allowAirdrop = ref(false);
 const dropSettingLoading = ref(false);
 const projectAddress = ref('');
 const bizId = ref<Number>(0);
 const contractTypeSelect = ref(false);
+const blockChainSelect = ref(false);
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
@@ -171,12 +114,6 @@ const ruleForm = reactive({
   payToken: '',
   description: '',
   rightQuantity: '',
-});
-
-const dropSettingForm = reactive({
-  whiteListCount: 0,
-  whiteListStartTime: 0,
-  freeMintStartTime: 0,
 });
 
 const rules = reactive(deployAltcRules);
@@ -190,34 +127,6 @@ async function handleSubmit(formEl: FormInstance | undefined) {
       console.log('error submit', fields);
     }
   });
-}
-
-async function setDropSetting() {
-  try {
-    dropSettingLoading.value = true;
-    const { whiteListCount, freeMintStartTime, whiteListStartTime } = toRaw(dropSettingForm);
-    console.log({
-      projectAddress: projectAddress.value,
-      freeMintStartTime: new Date(freeMintStartTime).valueOf(),
-      whiteListStartTime: new Date(whiteListStartTime).valueOf(),
-      whiteListCount,
-      bizid: bizId.value,
-    });
-    const tx = await whiteListRightsContract.setDropSetting(
-      projectAddress.value as Address,
-      new Date(freeMintStartTime).valueOf() / 1000,
-      new Date(whiteListStartTime).valueOf() / 1000,
-      whiteListCount,
-    );
-    await waitForTransaction(tx);
-    ElMessage.success('setting success');
-    toNext();
-  } catch (e) {
-    console.error(e, bizId);
-    ElMessage.error('setting failed');
-  } finally {
-    dropSettingLoading.value = false;
-  }
 }
 
 const createProject = async () => {
@@ -249,12 +158,11 @@ const createProject = async () => {
       rightQuantity,
       sharePercentage,
     });
-    console.log('createProject===,', projectAddr);
     if (!success) throw new Error(data);
     ElMessage.success('create project success');
     projectAddress.value = projectAddr;
-    // router.push(`/project/submitsuccess/${projectId}/${data.bizId}`);
     bizId.value = data.bizId;
+    router.push(`/project/create/dropSetting/${projectId}/${projectAddr}/${bizId.value}`);
   } catch (e) {
     console.error('create project fail', e);
     ElMessage.error('create project fail');
@@ -262,14 +170,6 @@ const createProject = async () => {
     loading.value = false;
   }
 };
-
-function toNext() {
-  if (!bizId.value) {
-    ElMessage.error('No bizId found');
-    return;
-  }
-  router.push(`/project/submitsuccess/${projectId}/${bizId.value}`);
-}
 </script>
 
 <style lang="less" scoped>
@@ -289,6 +189,7 @@ function toNext() {
       // height: 389px;
       padding: 20px;
       box-sizing: border-box;
+      border-width: 2px;
 
       .chain-box {
         width: 437px;
@@ -303,10 +204,16 @@ function toNext() {
           font-weight: 700;
         }
       }
+
+      .contract-type-select {
+        border: solid 2px #3182f7;
+        border-radius: 45px 0 45px 45px;
+      }
     }
 
     .contract-type {
       padding: 20px;
+      box-sizing: border-box;
 
       .contract-type-box {
         width: 220px;

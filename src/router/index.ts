@@ -154,6 +154,11 @@ const router = createRouter({
       component: () => import('../views/projects/DeployAltc.vue'),
     },
     {
+      path: '/project/create/dropSetting/:projectId/:projectAddress/:bizId',
+      name: 'DropSetting',
+      component: () => import('../views/projects/DropSetting.vue'),
+    },
+    {
       path: '/project/submitsuccess/:projectId/:bizId',
       name: 'SubmitSuccess',
       component: () => import('../components/SubmitSuccess.vue'),
