@@ -134,7 +134,7 @@ async function handleUp(item: SkuData | SpuData) {
   // TODO: handleUp
   console.log('handleUp, item', item);
   try {
-    const { success, data } = await postNFTUP({ id: item.id, nftType: nftType.value });
+    const { success, data } = await postNFTUP({ id: item.id, retailType: nftType.value });
     if (success) {
       ElMessage.success('on nft success');
       refetch();
@@ -151,7 +151,7 @@ async function handleDown(item: SkuData | SpuData) {
   // TODO: handleDown
   console.log('handleDown, item', item);
   try {
-    const { success, data } = await postNFTDown({ id: item.id, nftType: nftType.value });
+    const { success, data } = await postNFTDown({ id: item.id, retailType: nftType.value });
     if (success) {
       ElMessage.success('off nft success');
       refetch();

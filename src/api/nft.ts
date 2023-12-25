@@ -54,8 +54,8 @@ export const postSkuUpdate = (params: {
   isSold?: boolean;
 }) => axios.post('/project/sku/update', params);
 
-export const postNFTUP = (params: { nftType: number; id: number }) =>
+export const postNFTUP = (params: { retailType: number; id: number }) =>
   axios.post('/mine/skuspu/up', params);
 
-export const postNFTDown = (params: { nftType: number; id: number }) =>
+export const postNFTDown = (params: { retailType: number; id: number }) =>
   axios.post('/mine/skuspu/down', params);
