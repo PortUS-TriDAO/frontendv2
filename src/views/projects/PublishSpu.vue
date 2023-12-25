@@ -144,6 +144,7 @@ async function publishSpu() {
       avatar: ruleForm.avatar,
       image: ruleForm.image,
       cover: ruleForm.cover,
+      sellAmount: ruleForm.quantity,
     });
     if (!success) throw new Error(data);
     ElMessage.success('Contract Binding Success');

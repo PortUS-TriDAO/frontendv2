@@ -91,6 +91,7 @@ async function handleBuy(item: SkuData | SpuData) {
       seller: itemInfo.seller,
       payToken: itemInfo.payToken,
       payPrice: extendsDecimals(itemInfo.price).toString(10),
+      sellAmount: itemInfo.sellAmount,
       nftTokenId: itemInfo.tokenId,
       deadline: itemInfo.ddl,
       signature: itemInfo.signature,

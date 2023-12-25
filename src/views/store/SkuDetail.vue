@@ -31,6 +31,7 @@
     <!--        </template>-->
     <!--      </sku-item>-->
     <!--    </div>-->
+    <ticket-qrcode :content="qrcodeContent" :visible="qrcodeVisible"></ticket-qrcode>
   </page-container>
 </template>
 <script setup lang="ts">
@@ -42,6 +43,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { postSkuUpdate } from '@/api/nft';
 import SkuCard from '@/components/sku-card/index.vue';
+import TicketQrcode from '@/components/TicketQrcode.vue';
 import { useKolRightId, useSkuDetail } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
@@ -55,6 +57,8 @@ const kolAddress = route.params.kolAddress as string;
 const retailId = Number(route.params.retailId);
 const skuId = computed(() => Number(route.params.skuId));
 const bizId = Number(route.params.bizId);
+const qrcodeContent = ref('');
+const qrcodeVisible = ref(false);
 
 // const nftAddress = computed(() => route.params.nftAddress as string);
 // const skuId = computed(() => route.params.skuId as string);
@@ -80,6 +84,7 @@ async function handleBuy(skuData: SkuData) {
       seller: data.value.seller as Address,
       payToken: data.value.payToken as Address,
       payPrice: extendsDecimals(data.value.price).toString(10),
+      sellAmount: data.value.sellAmount,
       nftTokenId: Number(data.value.tokenId),
       deadline: Number(data.value.ddl),
       signature: data.value.signature,
@@ -102,9 +107,21 @@ async function handleBuy(skuData: SkuData) {
     await waitForTransaction({
       hash: tx.hash,
     });
-    await projectStore.handleTickVerify(skuData.nftAddress, skuData.tokenId, skuData.id);
     await postSkuUpdate({ skuId: Number(skuId.value), isSold: true });
     refetch();
+
+    try {
+      const { ticketToken } = await projectStore.handleTickVerify(
+        skuData.nftAddress,
+        skuData.tokenId,
+        skuData.id,
+      );
+      qrcodeVisible.value = true;
+      qrcodeContent.value = ticketToken;
+    } catch (e) {
+      ElMessage.error('fetch ticket info failed');
+    }
+
     ElMessage.success('buy success');
   } catch (error) {
     console.error(error);

@@ -107,6 +107,7 @@ export interface SkuData {
   signature: string;
   tokenId: number;
   nftAddress: string;
+  sellAmount: number;
   //
   bizId: number;
   retailId: number;
