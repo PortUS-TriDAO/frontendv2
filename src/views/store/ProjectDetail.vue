@@ -27,6 +27,8 @@
           </div>
         </template>
       </SkuItem>
+
+      <ticket-qrcode :content="qrcodeContent" :visible="qrcodeVisible"></ticket-qrcode>
     </div>
   </page-container>
 </template>
@@ -41,17 +43,19 @@ import { getkolRightId, getProjectDetail } from '@/api';
 import { postSkuUpdate } from '@/api/nft';
 import projectHeader from '@/components/project-header/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
+import TicketQrcode from '@/components/TicketQrcode.vue';
 import { useProjectSkuSpu } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
-// import BusinessItem from '@/components/business-item/index.vue';
-import type { Address, SkuData, SkuSpuData, SpuData } from '@/types';
+import type { Address, SkuSpuData } from '@/types';
 import { extendsDecimals } from '@/utils/bn';
 
 const route = useRoute();
 const router = useRouter();
 const kolAddress = route.params.kolAddress as Address;
 const projectId = Number(route.params.projectId);
+const qrcodeVisible = ref(false);
+const qrcodeContent = ref('');
 
 const { data: res } = useQuery({
   queryKey: ['getProjectDetail', projectId],
@@ -76,6 +80,7 @@ const projectStore = useProjectStore();
 
 async function handleBuy(item: SkuSpuData) {
   const itemInfo = toRaw(item);
+  console.log('itemInfo:', itemInfo);
   // loading.value = true;
 
   const fullScreenLoading = ElLoading.service({
@@ -88,11 +93,11 @@ async function handleBuy(item: SkuSpuData) {
       seller: itemInfo.seller,
       payToken: itemInfo.payToken,
       payPrice: extendsDecimals(itemInfo.price).toString(10),
+      sellAmount: itemInfo.sellAmount,
       nftTokenId: itemInfo.tokenId,
       deadline: itemInfo.ddl,
       signature: itemInfo.signature,
     };
-    console.log('buy params', buyParams);
 
     // approve ERC20
     const approveTx = await erc20Contract.approve(
@@ -115,10 +120,21 @@ async function handleBuy(item: SkuSpuData) {
       kolRightInfo.rightId,
     );
     await waitForTransaction({ hash: tx.hash });
-    await projectStore.handleTickVerify(itemInfo.nftAddress, itemInfo.tokenId, itemInfo.id);
-    //
     await postSkuUpdate({ skuId: item.id, isSold: true });
     refetch();
+
+    try {
+      const { ticketToken } = await projectStore.handleTickVerify(
+        itemInfo.nftAddress,
+        itemInfo.tokenId,
+        itemInfo.id,
+      );
+      qrcodeVisible.value = true;
+      qrcodeContent.value = ticketToken;
+    } catch (e) {
+      ElMessage.error('fetch ticket info failed');
+    }
+
     ElMessage.success('buy success');
   } catch (e) {
     console.error(e);
@@ -139,6 +155,7 @@ async function handleBuy(item: SkuSpuData) {
     color: #000;
     margin: 0 0 14px 0;
   }
+
   .list {
     display: flex;
     flex-direction: row;
@@ -148,6 +165,7 @@ async function handleBuy(item: SkuSpuData) {
       cursor: pointer;
     }
   }
+
   .detail-divider {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);

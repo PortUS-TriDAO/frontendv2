@@ -32,6 +32,7 @@ interface IBuyInfo {
   seller: Address;
   payToken: Address;
   payPrice: string;
+  sellAmount: number;
   nftTokenId: number;
   deadline: number;
   signature: string;
@@ -225,6 +226,7 @@ export const useProjectStore = defineStore('project', () => {
     avatar,
     image,
     cover,
+    sellAmount,
   }: {
     retailerAddress: Address;
     nftAddress: Address;
@@ -241,6 +243,7 @@ export const useProjectStore = defineStore('project', () => {
     avatar: string;
     image: string;
     cover: string;
+    sellAmount: number;
   }) {
     const signTypedDataStore = useSignTypedDataStore();
     const signature = await signTypedDataStore.signUnmintedNftRetailer(
@@ -249,6 +252,7 @@ export const useProjectStore = defineStore('project', () => {
       tokenId,
       ddl,
       retailerAddress,
+      sellAmount,
     );
 
     const { address: seller } = await getAccount();
@@ -271,32 +275,32 @@ export const useProjectStore = defineStore('project', () => {
     });
   }
 
-  // buy sku
-  async function buyMintedNft(
-    retailerContract: Address, // business contract
-    buyNftParams: IBuyInfo[],
-    kolTokenId: number,
-  ) {
-    if (buyNftParams.length === 0) throw new Error('Invalid params');
-    // approve erc20
-    const { payToken, payPrice, nftTokenId } = buyNftParams[0];
-    const erc20Contract = useERC20Contract();
-    const approveTx = await erc20Contract.approve(payToken, retailerContract, payPrice);
-    await waitForTransaction(approveTx);
-
-    const buyParams = buyNftParams.map((item) => {
-      const { r, s, v } = splitSignature(item.signature);
-      return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
-    });
-
-    await writeContract({
-      address: retailerContract,
-      abi: RETAILER_ABI,
-      functionName: 'buy',
-      // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
-      args: [buyParams, kolTokenId],
-    });
-  }
+  // // buy sku
+  // async function buyMintedNft(
+  //   retailerContract: Address, // business contract
+  //   buyNftParams: IBuyInfo[],
+  //   kolTokenId: number,
+  // ) {
+  //   if (buyNftParams.length === 0) throw new Error('Invalid params');
+  //   // approve erc20
+  //   const { payToken, payPrice, nftTokenId } = buyNftParams[0];
+  //   const erc20Contract = useERC20Contract();
+  //   const approveTx = await erc20Contract.approve(payToken, retailerContract, payPrice);
+  //   await waitForTransaction(approveTx);
+  //
+  //   const buyParams = buyNftParams.map((item) => {
+  //     const { r, s, v } = splitSignature(item.signature);
+  //     return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
+  //   });
+  //
+  //   await writeContract({
+  //     address: retailerContract,
+  //     abi: RETAILER_ABI,
+  //     functionName: 'buy',
+  //     // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
+  //     args: [buyParams, [1], kolTokenId],
+  //   });
+  // }
 
   async function handleBuyMintedNft(
     retailerContract: Address, // business contract
@@ -305,7 +309,17 @@ export const useProjectStore = defineStore('project', () => {
   ) {
     const buyParams = buyNftParams.map((item) => {
       const { r, s, v } = splitSignature(item.signature);
-      return [item.seller, item.payToken, item.payPrice, item.nftTokenId, item.deadline, v, r, s];
+      return [
+        item.seller,
+        item.payToken,
+        item.payPrice,
+        item.sellAmount,
+        item.nftTokenId,
+        item.deadline,
+        v,
+        r,
+        s,
+      ];
     });
 
     return writeContract({
@@ -313,7 +327,7 @@ export const useProjectStore = defineStore('project', () => {
       abi: RETAILER_ABI,
       functionName: 'buy',
       // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
-      args: [buyParams, kolTokenId],
+      args: [buyParams, [buyParams.length], kolTokenId],
     });
   }
 
@@ -373,18 +387,24 @@ export const useProjectStore = defineStore('project', () => {
     return rewards as bigint;
   }
 
-  async function handleTickVerify(nftAddress: string, tokenId: number, skuId: number) {
+  async function handleTickVerify(
+    nftAddress: string,
+    tokenId: number,
+    skuId: number,
+  ): Promise<{ ticketToken: string }> {
     const { address } = getAccount();
     const { returnDesc, data } = await postTicketInfo(address, nftAddress, tokenId);
     if (returnDesc !== 'Success') throw new Error('get ticket info failed');
 
     const { owner, ticketStatus, ticketToken } = data;
-    return projectApi.postUserByTicket({
+    await projectApi.postUserByTicket({
       ticketStatus,
       ticketToken,
       owner,
       skuId,
     });
+
+    return { ticketToken };
   }
 
   return {
@@ -394,7 +414,7 @@ export const useProjectStore = defineStore('project', () => {
     deployUnmintedNftContract,
     publishSku,
     publishSpu,
-    buyMintedNft,
+    // buyMintedNft,
     handleBuyMintedNft,
     mint,
     kolWithdraw,

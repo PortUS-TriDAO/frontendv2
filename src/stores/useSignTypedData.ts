@@ -46,6 +46,7 @@ export const useSignTypedDataStore = defineStore('signTypedData', () => {
       nftTokenId,
       deadline,
     };
+    console.log('signMintedNftRetailer===', message);
     const domain = getNftRetailerDomain('MintedNftRetailer', retailerAddress);
     return signTypedData({
       domain: domain as any,
