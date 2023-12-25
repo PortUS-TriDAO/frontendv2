@@ -85,7 +85,7 @@ const rules = reactive({
   cover: [{ required: true, message: 'Please input cover', trigger: 'blur' }],
 });
 
-const projectId = route.params.projectId;
+const projectId = route.params.projectId as string;
 
 onMounted(async () => {
   if (!projectId) return;
@@ -142,7 +142,6 @@ async function updateProject() {
   if (!success) {
     ElMessage.error('update project failed');
   } else {
-    const { projectId } = data as any;
     ElMessage.success('update project success');
     // router.push(`/project/create/step2/${projectId}`);
     router.push(`/project/create/deployaltc/${projectId}`);

@@ -34,7 +34,7 @@
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { waitForTransaction } from '@wagmi/core';
+import { getAccount, waitForTransaction } from '@wagmi/core';
 import { ElLoading, ElMessage } from 'element-plus';
 import { ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -99,13 +99,17 @@ async function handleBuy(item: SkuSpuData) {
       signature: itemInfo.signature,
     };
 
-    // approve ERC20
-    const approveTx = await erc20Contract.approve(
-      buyParams.payToken,
-      item.retailAddress,
-      buyParams.payPrice,
-    );
-    await waitForTransaction({ hash: approveTx.hash });
+    const { address: seller } = getAccount();
+    const allowance = await erc20Contract.allowance(buyParams.payToken, seller, item.retailAddress);
+    if (BigInt(buyParams.payPrice) > BigInt(allowance as string)) {
+      // approve ERC20
+      const approveTx = await erc20Contract.approve(
+        buyParams.payToken,
+        item.retailAddress,
+        buyParams.payPrice,
+      );
+      await waitForTransaction({ hash: approveTx.hash });
+    }
 
     fullScreenLoading.text.value = 'Buy';
 

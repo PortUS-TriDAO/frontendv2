@@ -106,12 +106,13 @@ export function useBusinessDetail(
   const result = useQuery({
     queryKey: ['getBusinessDetail', businessId],
     queryFn: async () => {
-      const res = await getBusinessDetail({ bizId: businessId });
+      const res = await getBusinessDetail({ bizId: businessId.toString() });
       if (res.success) {
         return res.data;
       }
       return null;
     },
+    enabled: !!businessId,
   });
   return result;
 }

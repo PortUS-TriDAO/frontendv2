@@ -327,7 +327,7 @@ export const useProjectStore = defineStore('project', () => {
       abi: RETAILER_ABI,
       functionName: 'buy',
       // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
-      args: [buyParams, [buyParams.length], kolTokenId],
+      args: [buyParams, [1], kolTokenId],
     });
   }
 
