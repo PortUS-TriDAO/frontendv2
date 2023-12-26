@@ -6,7 +6,7 @@
         <div class="avatar">
           <img :src="avatar" />
         </div>
-        <div>
+        <div class="item-right">
           <div class="price-action">
             <span>0.028ETH</span>
             <p-button @click="showQrCode = true">QR code</p-button>
@@ -70,6 +70,7 @@ function handleDownload() {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    font-size: 12px;
     .avatar {
       width: 150px;
       height: 150px;
@@ -94,6 +95,9 @@ function handleDownload() {
     display: flex;
     flex-direction: row;
     gap: 12px;
+    .item-right {
+      flex-grow: 1;
+    }
   }
   .price-action {
     display: flex;
@@ -103,7 +107,6 @@ function handleDownload() {
     margin-bottom: 8px;
   }
   .detail-item {
-    font-size: 12px;
     line-height: 1.5;
     > div {
       display: flex;
@@ -115,7 +118,6 @@ function handleDownload() {
     }
   }
   p {
-    font-size: 12px;
     line-height: 1.5;
   }
 
@@ -173,6 +175,28 @@ function handleDownload() {
         &:active {
           opacity: 0.85;
         }
+      }
+    }
+  }
+  @media screen and (min-width: 600px) {
+    .item-card {
+      font-size: 14px;
+      .avatar {
+        width: 200px;
+        height: 200px;
+      }
+      button {
+        min-width: 76px;
+        width: 90px;
+        height: 26px;
+        font-size: 16px;
+        padding: 8px;
+      }
+    }
+    .detail-item {
+      padding: 20px 0;
+      > div {
+        margin-bottom: 12px;
       }
     }
   }

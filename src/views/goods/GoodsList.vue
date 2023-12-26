@@ -127,5 +127,16 @@ function handleDetail(id: number) {
       font-size: 12px;
     }
   }
+
+  @media screen and (min-width: 600px) {
+    .list > div {
+      width: 33.33%;
+    }
+  }
+  @media screen and (min-width: 800px) {
+    .list > div {
+      width: 25%;
+    }
+  }
 }
 </style>
