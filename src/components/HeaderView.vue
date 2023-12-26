@@ -105,6 +105,7 @@ function connect() {
     }
 
     .agent {
+      display: none;
       height: 24px;
       line-height: 24px;
       border-left: 1px solid rgba(187, 187, 187, 1);
@@ -148,8 +149,11 @@ function connect() {
         color: #fff;
         opacity: 0.5;
         display: inline-block;
-        //margin-right: 80px;
-        margin-right: 50px;
+        margin-right: 40px;
+        white-space: nowrap;
+      }
+      .router-link-active {
+        opacity: 1;
       }
     }
 

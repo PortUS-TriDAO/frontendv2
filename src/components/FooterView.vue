@@ -3,11 +3,20 @@
     <div class="footer-container">
       <div class="logo"></div>
       <div class="footer-right">
-        <!-- <span>List of services that we’re using to calculate data:</span> -->
-        <span> © 2023 PortUS </span>
-        <span class="icons">
-          <a href="https://twitter.com/PortUS_DeCPS" target="_blank" class="icon-twitter"></a>
-          <a href="https://t.co/lippmVY1t1" target="_blank" class="icon-discord"></a>
+        <span class="social">
+          <a href="https://twitter.com/PortUS_DeCPS" target="_blank" rel="noopener noreferrer">
+            <img src="@/assets/images/social-x.png" width="16px" height="14px" />
+            <span>@PortUS_DeCPS</span>
+          </a>
+          <a href="https://t.co/lippmVY1t1" target="_blank" rel="noopener noreferrer">
+            <img src="@/assets/images/social-discord.png" width="18px" height="14px" />
+            <span>@PortUS_DeCPS</span>
+          </a>
+          <a href="mailto:info@tridao.xyz">
+            <img src="@/assets/images/social-email.png" width="17px" height="13px" />
+            <span>info@tridao.xyz</span>
+          </a>
+          <a target="_blank" rel="noopener noreferrer"> Legal disclaimer </a>
         </span>
       </div>
     </div>
@@ -36,35 +45,25 @@
       background: url('@/assets/footer-logo.png') center center no-repeat;
       background-size: contain;
     }
-    span {
-      color: #fff;
-      opacity: 0.8;
-      margin-left: 24px;
-    }
     .footer-right {
       display: inline-flex;
       align-items: center;
     }
-    .icons {
+    .social {
       display: inline-flex;
       align-items: center;
       gap: 20px;
       > a {
-        display: inline-block;
-        width: 25px;
-        line-height: 25px;
-      }
-      .icon-discord {
-        background: url('@/assets/images/icon-discord.png') center center no-repeat;
-        background-size: contain;
-        width: 25px;
-        height: 25px;
-      }
-      .icon-twitter {
-        background: url('@/assets/images/icon-footer-twitter.png') center center no-repeat;
-        background-size: contain;
-        width: 25px;
-        height: 25px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16px;
+        color: #fff;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
