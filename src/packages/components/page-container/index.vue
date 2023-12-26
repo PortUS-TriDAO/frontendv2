@@ -68,6 +68,7 @@ function handleBack() {
     }
   }
   .page-container-header {
+    max-width: var(--container-width);
     width: 100%;
     height: 38px;
     display: flex;
@@ -84,6 +85,7 @@ function handleBack() {
       border-style: none;
       background-color: transparent;
       padding: 0;
+      cursor: pointer;
       > img {
         height: 36px;
         width: 36px;

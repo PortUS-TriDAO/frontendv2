@@ -3,20 +3,48 @@
     <div class="header-section">
       <div class="header-container">
         <router-link class="logo" to="/"></router-link>
-        <div v-if="isAgent" class="agent">agent</div>
-        <div class="menus" ref="elMenu">
-          <div v-if="isStore" style="height: 66px"></div>
-          <template v-else>
-            <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
-            <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
-            <router-link to="/mine/submitted" @click.stop="switchMenu(true)"
-              >My Profile</router-link
+        <template v-if="isStore || isAgent">
+          <div v-if="isStore || isAgent" class="agent">agent</div>
+          <w3m-button balance="hide">connect</w3m-button>
+          <button v-if="account && (isStore || isAgent)" class="btn-user" @click.stop="gotoGoods()">
+            <svg
+              focusable="false"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              data-testid="AccountCircleIcon"
+              tabindex="-1"
+              title="AccountCircle"
             >
-            <router-link to="/faucet" @click.stop="switchMenu(true)">Faucet</router-link>
-          </template>
+              <path
+                fill="white"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"
+              ></path>
+            </svg>
+          </button>
+        </template>
+        <div v-else class="menus" ref="elMenu">
+          <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
+          <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
+          <router-link to="/mine/submitted" @click.stop="switchMenu(true)">My Profile</router-link>
+          <router-link to="/faucet" @click.stop="switchMenu(true)">Faucet</router-link>
           <!-- <button v-if="!account" @click.stop="connect">connect</button>
           <button v-else @click.stop>{{ shortAddress }}</button> -->
-          <w3m-button>connect</w3m-button>
+          <w3m-button balance="hide">connect</w3m-button>
+          <button class="btn-user" @click.stop="gotoGoods()">
+            <svg
+              focusable="false"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              data-testid="AccountCircleIcon"
+              tabindex="-1"
+              title="AccountCircle"
+            >
+              <path
+                fill="white"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"
+              ></path>
+            </svg>
+          </button>
         </div>
         <button class="btn-menus" @click.stop="switchMenu()">
           <svg
@@ -40,11 +68,12 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import { useWalletStore } from '@/stores/useWallet';
 
 const route = useRoute();
+const router = useRouter();
 const isStore = computed(() => route.path.indexOf('/store') === 0);
 const isAgent = computed(() => route.path.indexOf('/goods') === 0);
 
@@ -78,6 +107,9 @@ function connect() {
   switchMenu(true);
   walletStore.connect();
 }
+function gotoGoods() {
+  router.push('/goods');
+}
 </script>
 <style lang="less">
 .page-header {
@@ -91,7 +123,7 @@ function connect() {
     padding-left: var(--container-padding-left);
     padding-right: var(--container-padding-right);
     margin: 0 auto;
-    line-height: 66px;
+    height: 66px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -126,24 +158,24 @@ function connect() {
       align-items: center;
       color: #fff;
 
-      > button {
-        width: 140px;
-        height: 40px;
-        font-size: 18px;
-        font-weight: 700;
-        border: none;
-        border-radius: 8px;
-        color: #fff;
-        cursor: pointer;
-        background: linear-gradient(90deg, rgba(251, 114, 47, 1) 0%, rgba(246, 37, 12, 1) 100%);
-        padding: 0 10px;
-        display: flex;
-        align-items: center;
+      // > button {
+      //   width: 140px;
+      //   height: 40px;
+      //   font-size: 18px;
+      //   font-weight: 700;
+      //   border: none;
+      //   border-radius: 8px;
+      //   color: #fff;
+      //   cursor: pointer;
+      //   background: linear-gradient(90deg, rgba(251, 114, 47, 1) 0%, rgba(246, 37, 12, 1) 100%);
+      //   padding: 0 10px;
+      //   display: flex;
+      //   align-items: center;
 
-        > svg {
-          margin-right: 22px;
-        }
-      }
+      //   > svg {
+      //     margin-right: 22px;
+      //   }
+      // }
 
       > a {
         color: #fff;
@@ -168,6 +200,17 @@ function connect() {
         max-width: 100%;
         max-height: 100%;
       }
+    }
+    .btn-user {
+      border: none;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      margin-left: 12px;
+      cursor: pointer;
     }
   }
 
