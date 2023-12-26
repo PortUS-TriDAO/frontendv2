@@ -68,6 +68,7 @@ function handleDetail(id: number) {
   .list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
 
     > div {
