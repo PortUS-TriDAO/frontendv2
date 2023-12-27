@@ -44,7 +44,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="Deploy Intro" prop="briefIntro">
-            <el-input placeholder="100 characters used" v-model="ruleForm.briefIntro"></el-input>
+            <el-input type="textarea" autosize v-model="ruleForm.briefIntro"></el-input>
           </el-form-item>
           <el-form-item label="Pay token" prop="payToken">
             <el-select class="item-select" v-model="ruleForm.payToken">

@@ -32,6 +32,7 @@ import {
   getSpuDetail,
   getSpuList,
   getSubmittedProjects,
+  getTicketDetail,
   getUserTickets,
 } from '../api';
 
@@ -300,6 +301,18 @@ export function useTicketList(owner: string): UseQueryReturnType<PageData<Ticket
     queryKey: ['getUserTickets', owner],
     queryFn: async () => {
       const { success, data } = await getUserTickets({ owner });
+      if (!success) return null;
+      return data;
+    },
+  });
+  return result;
+}
+
+export function useTicketDetail(ticketId: number): UseQueryReturnType<TicketInfo, Error> {
+  const result = useQuery({
+    queryKey: ['getTicketDetail', ticketId],
+    queryFn: async () => {
+      const { success, data } = await getTicketDetail({ ticketId });
       if (!success) return null;
       return data;
     },

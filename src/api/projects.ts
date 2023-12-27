@@ -131,4 +131,8 @@ export const postUserByTicket = (params: {
 
 // get user tickets
 export const getUserTickets = (params: { owner: string }): Promise<IListResponse<TicketInfo>> =>
-  axios.post('/user/tickets', { params });
+  axios.get('/user/tickets', { params });
+
+// 查询ticket详情
+export const getTicketDetail = (params: { ticketId: number }): Promise<IResponse<TicketInfo>> =>
+  axios.get('/user/tickets/detail', { params });

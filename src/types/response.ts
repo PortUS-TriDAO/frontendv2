@@ -5,7 +5,7 @@ export interface IResponse<T = unknown> {
 }
 
 export interface PageData<T = unknown> {
-  total: number;
+  totalPage: number;
   currentPage: number;
   rows: T[];
 }

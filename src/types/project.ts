@@ -147,8 +147,12 @@ export interface TicketInfo {
   owner: string;
   ticketStatus: number;
   ticketToken: string;
-  imgUrl: string;
+  imgUrl?: string;
   nftName: string;
   payToken: string;
   price: number;
+  contractAddress: string;
+  tokenId: number;
+  nftType: number;
+  briefIntro: string;
 }
