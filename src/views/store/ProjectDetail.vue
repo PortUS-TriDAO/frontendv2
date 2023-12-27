@@ -28,6 +28,11 @@
         </template>
       </SkuItem>
 
+      <your-info-confirm
+        :visible="yourInfoConfirmVisible"
+        @close="yourInfoConfirmVisible = false"
+      ></your-info-confirm>
+
       <ticket-qrcode :content="qrcodeContent" :visible="qrcodeVisible"></ticket-qrcode>
     </div>
   </page-container>
@@ -44,6 +49,7 @@ import { postSkuUpdate } from '@/api/nft';
 import projectHeader from '@/components/project-header/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import TicketQrcode from '@/components/TicketQrcode.vue';
+import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
 import { useProjectSkuSpu } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
@@ -54,6 +60,10 @@ const route = useRoute();
 const router = useRouter();
 const kolAddress = route.params.kolAddress as Address;
 const projectId = Number(route.params.projectId);
+// your info
+const yourInfoConfirmVisible = ref(false);
+const currItemInfo = ref<SkuSpuData>(null);
+// qrcode
 const qrcodeVisible = ref(false);
 const qrcodeContent = ref('');
 
@@ -79,6 +89,10 @@ const loading = ref(false);
 const projectStore = useProjectStore();
 
 async function handleBuy(item: SkuSpuData) {
+  currItemInfo.value = toRaw(item);
+  yourInfoConfirmVisible.value = true;
+}
+async function handleBuyConfirm(item: SkuSpuData) {
   const itemInfo = toRaw(item);
   console.log('itemInfo:', itemInfo);
   // loading.value = true;
@@ -163,6 +177,7 @@ async function handleBuy(item: SkuSpuData) {
   .list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
 
     > div {
