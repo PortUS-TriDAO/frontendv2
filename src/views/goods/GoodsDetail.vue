@@ -1,27 +1,33 @@
 <template>
   <page-container class="pg-goods-detail" title="Detail">
     <div class="item-card">
-      <h3>Goods name</h3>
+      <h3>{{ ticketDetail.nftName }}</h3>
       <div class="item-row">
         <div class="avatar">
-          <img :src="avatar" />
+          <img :src="ticketDetail?.imgUrl" />
         </div>
         <div class="item-right">
           <div class="price-action">
-            <span>0.028ETH</span>
+            <span>{{ ticketDetail.price }} {{ ticketDetail.payToken }}</span>
             <p-button @click="showQrCode = true">QR code</p-button>
           </div>
           <div class="detail-item">
-            <div><label>Contract Address:</label><span>0x0012282923132323</span></div>
-            <div><label>Token ID:</label><span>12121</span></div>
-            <div><label>Token Standard:</label><span>ERC-1155</span></div>
+            <div>
+              <label>Contract Address:</label><span>{{ ticketDetail.contractAddress }}</span>
+            </div>
+            <div>
+              <label>Token ID:</label><span>{{ ticketDetail.tokenId }}</span>
+            </div>
+            <div>
+              <label>Token Standard:</label
+              ><span>{{ Number(ticketDetail.nftType) === 1 ? 'ERC712' : 'ERC1155' }}</span>
+            </div>
             <div><label>Chain:</label><span>Ethereum</span></div>
           </div>
         </div>
       </div>
       <p>
-        A Popper can be used to display some content on top of another. It's an alternative to
-        react-popper.
+        {{ ticketDetail.briefIntro }}
       </p>
     </div>
     <div class="qrcode-dialog" v-if="showQrCode">
@@ -30,7 +36,12 @@
         <button class="qrcode-dialog-close" @click="showQrCode = false"></button>
         <div class="qrcode-content">
           <h3>Goods name</h3>
-          <qrcode-vue :value="qrcode" size="300" margin="1" id="qrcode-canvas" />
+          <qrcode-vue
+            :value="ticketDetail.ticketToken"
+            :size="300"
+            :margin="1"
+            id="qrcode-canvas"
+          />
           <button @click="handleDownload">Download</button>
         </div>
       </div>
@@ -40,10 +51,15 @@
 <script setup lang="ts">
 import QrcodeVue from 'qrcode.vue';
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-import avatar from '@/assets/images/demo-avatar.png';
-const qrcode =
-  '0x00122829231323230x00122829231323230x00122829231323230x00122829231323230x0012282923132323';
+import { useTicketDetail } from '@/hooks';
+
+const route = useRoute();
+
+const ticketId = Number(route.params.id);
+
+const { data: ticketDetail } = useTicketDetail(ticketId);
 
 const showQrCode = ref(null);
 

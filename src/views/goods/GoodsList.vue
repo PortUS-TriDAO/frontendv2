@@ -1,7 +1,17 @@
 <template>
   <page-container class="pg-goods-list" title="Goods">
     <div class="list">
-      <div>
+      <div v-for="item in ticketList" :key="item.id">
+        <div class="item-card" @click="handleDetail(item)">
+          <div class="avatar">
+            <img :src="item.imgUrl" />
+          </div>
+          <h3>{{ item.nftName }}</h3>
+          <div>{{ item.price }} {{ item.payToken }}</div>
+          <p-button>Detail</p-button>
+        </div>
+      </div>
+      <!-- <div>
         <div class="item-card" @click="handleDetail(111)">
           <div class="avatar">
             <img :src="avatar" />
@@ -50,17 +60,7 @@
           <div>0.028ETH</div>
           <p-button>Detail</p-button>
         </div>
-      </div>
-      <div>
-        <div class="item-card" @click="handleDetail(111)">
-          <div class="avatar">
-            <img :src="avatar" />
-          </div>
-          <h3>Goods name</h3>
-          <div>0.028ETH</div>
-          <p-button>Detail</p-button>
-        </div>
-      </div>
+      </div> -->
     </div>
   </page-container>
 </template>
@@ -76,6 +76,7 @@ const router = useRouter();
 const { address } = getAccount();
 
 const { data } = useTicketList(address);
+const ticketList = data.rows;
 
 function handleDetail(id: number) {
   router.push(`/goods/${id}`);

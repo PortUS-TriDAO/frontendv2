@@ -7,7 +7,7 @@
             <el-input placeholder="Party A name" v-model="form.projectName"></el-input>
           </el-form-item>
           <el-form-item label="Brief introduction" prop="briefIntro">
-            <el-input placeholder="100 characters used" v-model="form.briefIntro"></el-input>
+            <el-input autosize type="textarea" v-model="form.briefIntro"></el-input>
           </el-form-item>
           <el-form-item label="Website" prop="website">
             <el-input placeholder="https:// or http://" v-model="form.website"></el-input>
