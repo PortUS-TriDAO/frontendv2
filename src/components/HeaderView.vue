@@ -2,10 +2,10 @@
   <div class="page-header">
     <div class="header-section">
       <div class="header-container">
-        <router-link class="logo" to="/"></router-link>
         <template v-if="isStore || isAgent">
-          <div v-if="isStore || isAgent" class="agent">agent</div>
-          <w3m-button balance="hide">connect</w3m-button>
+          <span class="logo" to="/"></span>
+          <div v-if="isStore || isAgent" class="agent">Agent</div>
+          <w3m-button balance="hide" size="sm">connect</w3m-button>
           <button v-if="account && (isStore || isAgent)" class="btn-user" @click.stop="gotoGoods()">
             <svg
               focusable="false"
@@ -22,46 +22,51 @@
             </svg>
           </button>
         </template>
-        <div v-else class="menus" ref="elMenu">
-          <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
-          <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
-          <router-link to="/mine/submitted" @click.stop="switchMenu(true)">My Profile</router-link>
-          <router-link to="/faucet" @click.stop="switchMenu(true)">Faucet</router-link>
-          <!-- <button v-if="!account" @click.stop="connect">connect</button>
+        <template v-else>
+          <router-link class="logo" to="/"></router-link>
+          <div class="menus" ref="elMenu">
+            <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
+            <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
+            <router-link to="/mine/submitted" @click.stop="switchMenu(true)"
+              >My Profile</router-link
+            >
+            <router-link to="/faucet" @click.stop="switchMenu(true)">Faucet</router-link>
+            <!-- <button v-if="!account" @click.stop="connect">connect</button>
           <button v-else @click.stop>{{ shortAddress }}</button> -->
-          <w3m-button balance="hide">connect</w3m-button>
-          <button class="btn-user" @click.stop="gotoGoods()">
+            <w3m-button balance="hide">connect</w3m-button>
+            <button class="btn-user" @click.stop="gotoGoods()">
+              <svg
+                focusable="false"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                data-testid="AccountCircleIcon"
+                tabindex="-1"
+                title="AccountCircle"
+              >
+                <path
+                  fill="white"
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <button v-if="!(isStore || isAgent)" class="btn-menus" @click.stop="switchMenu()">
             <svg
-              focusable="false"
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              data-testid="AccountCircleIcon"
-              tabindex="-1"
-              title="AccountCircle"
+              width="40"
+              height="37"
+              viewBox="0 0 40 37"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M0 1.73913C0 0.778635 0.778636 0 1.73913 0H38.2609C39.2214 0 40 0.778635 40 1.73913C40 2.69963 39.2214 3.47826 38.2609 3.47826H1.73913C0.778637 3.47826 0 2.69963 0 1.73913ZM0 18.2611C0 17.3006 0.778636 16.522 1.73913 16.522H38.2609C39.2214 16.522 40 17.3006 40 18.2611C40 19.2216 39.2214 20.0002 38.2609 20.0002H1.73913C0.778637 20.0002 0 19.2216 0 18.2611ZM1.73913 33.0435C0.778636 33.0435 0 33.8221 0 34.7826C0 35.7431 0.778637 36.5217 1.73913 36.5217H38.2609C39.2214 36.5217 40 35.7431 40 34.7826C40 33.8221 39.2214 33.0435 38.2609 33.0435H1.73913Z"
                 fill="white"
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"
-              ></path>
+              />
             </svg>
           </button>
-        </div>
-        <button class="btn-menus" @click.stop="switchMenu()">
-          <svg
-            width="40"
-            height="37"
-            viewBox="0 0 40 37"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M0 1.73913C0 0.778635 0.778636 0 1.73913 0H38.2609C39.2214 0 40 0.778635 40 1.73913C40 2.69963 39.2214 3.47826 38.2609 3.47826H1.73913C0.778637 3.47826 0 2.69963 0 1.73913ZM0 18.2611C0 17.3006 0.778636 16.522 1.73913 16.522H38.2609C39.2214 16.522 40 17.3006 40 18.2611C40 19.2216 39.2214 20.0002 38.2609 20.0002H1.73913C0.778637 20.0002 0 19.2216 0 18.2611ZM1.73913 33.0435C0.778636 33.0435 0 33.8221 0 34.7826C0 35.7431 0.778637 36.5217 1.73913 36.5217H38.2609C39.2214 36.5217 40 35.7431 40 34.7826C40 33.8221 39.2214 33.0435 38.2609 33.0435H1.73913Z"
-              fill="white"
-            />
-          </svg>
-        </button>
+        </template>
       </div>
     </div>
   </div>
@@ -150,6 +155,12 @@ function gotoGoods() {
       text-align: left;
       margin-left: 18px;
       padding-left: 18px;
+
+      @media screen and (max-width: 800px) {
+        margin-left: 8px;
+        padding-left: 8px;
+        font-size: 20px;
+      }
     }
 
     .menus {
@@ -211,6 +222,7 @@ function gotoGoods() {
       height: 24px;
       margin-left: 12px;
       cursor: pointer;
+      flex-shrink: 0;
     }
   }
 

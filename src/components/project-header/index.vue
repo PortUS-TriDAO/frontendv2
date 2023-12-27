@@ -105,5 +105,25 @@ defineProps<{
       }
     }
   }
+  @media screen and (max-width: 800px) {
+    .detail-row {
+      width: 100%;
+      flex-direction: column;
+      > img {
+        width: 150px;
+        height: 150px;
+      }
+      h3 {
+        font-size: 20px;
+      }
+      p {
+        word-wrap: break-word;
+      }
+    }
+    // .detail-header {
+    //   flex-direction: column-reverse;
+    //   gap: 16px;
+    // }
+  }
 }
 </style>
