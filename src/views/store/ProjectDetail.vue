@@ -77,11 +77,12 @@ const { data: res } = useQuery({
 const { data, refetch } = useProjectSkuSpu(projectId);
 
 function handleDetail(item: SkuSpuData) {
-  if (item.isSku) {
-    router.push(`/store/${kolAddress}/sku/${item.retailId}/${item.id}/${item.bizId}`);
-  } else {
-    router.push(`/store/${kolAddress}/spu/${item.retailId}/${item.id}/${item.bizId}`);
-  }
+  // TODO: 暂时去除进入 详情页面
+  // if (item.isSku) {
+  //   router.push(`/store/${kolAddress}/sku/${item.retailId}/${item.id}/${item.bizId}`);
+  // } else {
+  //   router.push(`/store/${kolAddress}/spu/${item.retailId}/${item.id}/${item.bizId}`);
+  // }
 }
 
 const erc20Contract = useERC20Contract();
