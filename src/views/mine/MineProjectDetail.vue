@@ -129,8 +129,7 @@ const map = {
     buttonBtn: {
       text: 'Setup ALT Contract',
       onClick: () => {
-        // TODO: edSubmit Commercial Contract
-        router.push(`/project/create/step2/${projectId}`);
+        router.push(`/project/create/deployaltc/${projectId}`);
       },
     },
   },

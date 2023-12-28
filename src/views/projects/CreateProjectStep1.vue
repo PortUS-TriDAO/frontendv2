@@ -13,10 +13,7 @@
             <el-input placeholder="https:// or http://" v-model="form.website"></el-input>
           </el-form-item>
           <el-form-item label="Description" prop="description">
-            <el-input
-              placeholder="12 or 1000 characters used"
-              v-model="form.description"
-            ></el-input>
+            <el-input autosize type="textarea" v-model="form.description"></el-input>
           </el-form-item>
           <el-form-item label="Discord" prop="discord">
             <el-input v-model="form.discord"></el-input>

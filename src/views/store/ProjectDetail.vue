@@ -135,7 +135,6 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     if (!success) {
       throw new Error('getKolRightId error');
     }
-
     const tx = await projectStore.handleBuyMintedNft(
       item.retailAddress,
       [buyParams],
@@ -150,7 +149,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
         nftAddress: itemInfo.nftAddress,
         tokenId: itemInfo.tokenId,
         skuId: itemInfo.id,
-        ...form,
+        ...toRaw(form),
       });
       qrcodeVisible.value = true;
       qrcodeContent.value = ticketToken;
