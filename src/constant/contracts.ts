@@ -13,14 +13,42 @@ export const ContractAddress = {
     usdt: '0x99479872494dc582af1F7fBBE43Ea9CC6143d159',
     deployer: '0xaeAF44FA4F1b8533E5fe844D0C280dC5B8EfaD48',
   },
+  137: {
+    router: '0x8D55a9dE0A7A07ab88828dC4Ec7eF27ff7ea4CB3',
+    bank: '0xA6AebFeB0A67Dd339851e39BF0D6D64e7A858981',
+    funds: '0x160cce858B4e40cD71E3c38BcfB198A4f49e2Bc9',
+    rights: '0x67391c17850389B4e924bBA240d5EDB3c4A23BbD',
+    usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+    deployer: '0xae950Cb6dd6e033057F9844BD0B67c576c915A0C',
+  },
 };
 
-export const SelectTokenList = [
-  {
-    label: 'USDT',
-    value: '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964',
-  },
-];
+// 'polygon' = {
+//   router: '0x8D55a9dE0A7A07ab88828dC4Ec7eF27ff7ea4CB3',
+//   bank: '0xA6AebFeB0A67Dd339851e39BF0D6D64e7A858981',
+//   feeManager: '0x8bDC4add043feC87bbB359a10027E35f4c546949',
+//   templateManager: '0x2AD2B7d78626F51b95ac02D3f0610648B3BB5a3E',
+//   fundsTemplate: '0x160cce858B4e40cD71E3c38BcfB198A4f49e2Bc9',
+//   simpleRightsTemplate: '0x3D7C58d29251786f5808ef6659E0805d7D5524ac',
+//   whitelistRightsTemplate: '0x67391c17850389B4e924bBA240d5EDB3c4A23BbD',
+//   retailerDeployer: '0xae950Cb6dd6e033057F9844BD0B67c576c915A0C',
+// };
+
+const isProd = ['www.portus.world', 'portus.world'].includes(window.location.host);
+
+export const SelectTokenList = isProd
+  ? [
+      {
+        label: 'USDT',
+        value: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+      },
+    ]
+  : [
+      {
+        label: 'USDT',
+        value: '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964',
+      },
+    ];
 
 export const PayTokenMap: Record<Address, { symbol: string }> = SelectTokenList.reduce(
   (prev, item) => {

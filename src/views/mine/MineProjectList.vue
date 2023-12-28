@@ -57,12 +57,14 @@ const map = {
       // TODO: edit
       router.push(`/project/create/step1/${item.id || item.projectId}`);
     },
-    bottomBtn: {
-      text: 'Create Project',
-      onClick: () => {
-        router.push('/project/create/step1');
-      },
-    },
+    bottomBtn: ['www.portus.world', 'portus.world'].includes(location.host)
+      ? null
+      : {
+          text: 'Create Project',
+          onClick: () => {
+            router.push('/project/create/step1');
+          },
+        },
   },
   participated: {
     title: 'participated projects list',

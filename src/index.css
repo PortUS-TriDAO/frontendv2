@@ -77,4 +77,10 @@ a {
     --container-padding-left: 16px;
     --container-padding-right: 16px;
   }
+  .el-overlay-dialog {
+    padding: 24px !important;
+  }
+  .el-dialog {
+    width: 100% !important;
+  }
 }

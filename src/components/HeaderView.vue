@@ -30,7 +30,9 @@
             <router-link to="/mine/submitted" @click.stop="switchMenu(true)"
               >My Profile</router-link
             >
-            <router-link to="/faucet" @click.stop="switchMenu(true)">Faucet</router-link>
+            <router-link v-if="!isProd" to="/faucet" @click.stop="switchMenu(true)"
+              >Faucet</router-link
+            >
             <!-- <button v-if="!account" @click.stop="connect">connect</button>
           <button v-else @click.stop>{{ shortAddress }}</button> -->
             <w3m-button balance="hide">connect</w3m-button>
@@ -81,6 +83,7 @@ const route = useRoute();
 const router = useRouter();
 const isStore = computed(() => route.path.indexOf('/store') === 0);
 const isAgent = computed(() => route.path.indexOf('/goods') === 0);
+const isProd = computed(() => ['www.portus.world', 'portus.world'].includes(window.location.host));
 
 const walletStore = useWalletStore();
 
