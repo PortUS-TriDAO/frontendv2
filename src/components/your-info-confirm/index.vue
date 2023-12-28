@@ -27,7 +27,7 @@
         <el-input v-model="ruleForm.jobTitle" autocomplete="off" />
       </el-form-item>
       <el-form-item label="所在或家或地品/Country or Region">
-        <el-input v-model="ruleForm.region" autocomplete="off" />
+        <el-input v-model="ruleForm.countryOrRegion" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -42,7 +42,7 @@
 </template>
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus';
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 
 // 區塊鏈/Web3 Blockchain/Web3, 互聯網及信息服務 Internet/IT, 金融 Finance, 投資 Investment,
 // 科技 Technology, 製造業 Manufacturing, 農業 Agriculture, 交通運輸 Transportation, 批發零售 Wholesale / Retail,
@@ -91,6 +91,12 @@ const dialogTableVisible = computed({
   },
 });
 
+watch(dialogTableVisible, () => {
+  if (dialogTableVisible.value === true) {
+    resetForm();
+  }
+});
+
 interface RuleForm {
   name: string;
   email: string;
@@ -98,7 +104,7 @@ interface RuleForm {
   industry: string;
   company: string;
   jobTitle: string;
-  region: string;
+  countryOrRegion: string;
 }
 
 const ruleFormDefault = {
@@ -108,7 +114,7 @@ const ruleFormDefault = {
   industry: '',
   company: '',
   jobTitle: '',
-  region: '',
+  countryOrRegion: '',
 };
 
 const ruleFormRef = ref<FormInstance>();
@@ -126,11 +132,11 @@ const rules = reactive<FormRules<RuleForm>>({
   industry: [{ required: true, message: 'Please select industry', trigger: 'change' }],
   company: [{ required: true, message: 'Please input company', trigger: 'blur' }],
   jobTitle: [{ required: true, message: 'Please input job title', trigger: 'blur' }],
-  region: [{ required: true, message: 'Please input region', trigger: 'blur' }],
+  countryOrRegion: [{ required: true, message: 'Please input region', trigger: 'blur' }],
 });
 
 const close = () => {
-  resetForm();
+  // resetForm();
   emit('close');
 };
 
@@ -141,7 +147,7 @@ const resetForm = () => {
   ruleForm.industry = '';
   ruleForm.company = '';
   ruleForm.jobTitle = '';
-  ruleForm.region = '';
+  ruleForm.countryOrRegion = '';
 };
 
 const loading = ref(false);

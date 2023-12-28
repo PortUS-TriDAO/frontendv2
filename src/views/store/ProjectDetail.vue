@@ -34,7 +34,11 @@
         @submit="handleSubmit"
       ></your-info-confirm>
 
-      <ticket-qrcode :content="qrcodeContent" :visible="qrcodeVisible"></ticket-qrcode>
+      <ticket-qrcode
+        :content="qrcodeContent"
+        :visible="qrcodeVisible"
+        @close="qrcodeVisible = false"
+      ></ticket-qrcode>
     </div>
   </page-container>
 </template>
@@ -100,6 +104,7 @@ function handleSubmit(form) {
   handleBuyConfirm(currItemInfo.value, form);
 }
 async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
+  const formData = toRaw(form);
   const itemInfo = toRaw(item);
   const fullScreenLoading = ElLoading.service({
     lock: true,
@@ -142,20 +147,19 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     );
     await waitForTransaction({ hash: tx.hash });
     await postSkuUpdate({ skuId: item.id, isSold: true });
-    refetch();
 
-    try {
-      const { ticketToken } = await projectStore.handleTickVerify({
-        nftAddress: itemInfo.nftAddress,
-        tokenId: itemInfo.tokenId,
-        skuId: itemInfo.id,
-        ...toRaw(form),
-      });
-      qrcodeVisible.value = true;
-      qrcodeContent.value = ticketToken;
-    } catch (e) {
-      ElMessage.error('fetch ticket info failed');
-    }
+    // try {
+    const { ticketToken } = await projectStore.handleTickVerify({
+      nftAddress: itemInfo.nftAddress,
+      tokenId: itemInfo.tokenId,
+      skuId: itemInfo.id,
+      ...formData,
+    });
+    qrcodeVisible.value = true;
+    qrcodeContent.value = ticketToken;
+    // } catch (e) {
+    //   ElMessage.error('fetch ticket info failed');
+    // }
 
     ElMessage.success('buy success');
   } catch (e) {
@@ -164,6 +168,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
   } finally {
     loading.value = false;
     fullScreenLoading.close();
+    refetch();
   }
   // router.push(`/store/${storeId.value}/nft/${nftAddress.value}/${tokenId}`);
 }

@@ -31,7 +31,11 @@
     <!--        </template>-->
     <!--      </sku-item>-->
     <!--    </div>-->
-    <ticket-qrcode :content="qrcodeContent" :visible="qrcodeVisible"></ticket-qrcode>
+    <ticket-qrcode
+      :content="qrcodeContent"
+      :visible="qrcodeVisible"
+      @close="qrcodeVisible = false"
+    ></ticket-qrcode>
   </page-container>
 </template>
 <script setup lang="ts">

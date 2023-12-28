@@ -135,7 +135,7 @@ export const postUserByTicket = (params: {
   industry?: string;
   company?: string;
   jobTitle?: string;
-  region?: string;
+  countryOrRegion?: string;
 }) => axios.post('/user/buyticket', params);
 
 // get user tickets
