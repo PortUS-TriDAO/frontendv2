@@ -31,6 +31,7 @@
       <your-info-confirm
         :visible="yourInfoConfirmVisible"
         @close="yourInfoConfirmVisible = false"
+        @submit="handleSubmit"
       ></your-info-confirm>
 
       <ticket-qrcode :content="qrcodeContent" :visible="qrcodeVisible"></ticket-qrcode>
@@ -49,7 +50,7 @@ import { postSkuUpdate } from '@/api/nft';
 import projectHeader from '@/components/project-header/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import TicketQrcode from '@/components/TicketQrcode.vue';
-import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
+import YourInfoConfirm, { RuleForm } from '@/components/your-info-confirm/index.vue';
 import { useProjectSkuSpu } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
@@ -93,11 +94,13 @@ async function handleBuy(item: SkuSpuData) {
   currItemInfo.value = toRaw(item);
   yourInfoConfirmVisible.value = true;
 }
-async function handleBuyConfirm(item: SkuSpuData) {
-  const itemInfo = toRaw(item);
-  console.log('itemInfo:', itemInfo);
-  // loading.value = true;
 
+function handleSubmit(form) {
+  console.log('form:', form);
+  handleBuyConfirm(currItemInfo.value, form);
+}
+async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
+  const itemInfo = toRaw(item);
   const fullScreenLoading = ElLoading.service({
     lock: true,
     text: 'Approve',
@@ -143,11 +146,12 @@ async function handleBuyConfirm(item: SkuSpuData) {
     refetch();
 
     try {
-      const { ticketToken } = await projectStore.handleTickVerify(
-        itemInfo.nftAddress,
-        itemInfo.tokenId,
-        itemInfo.id,
-      );
+      const { ticketToken } = await projectStore.handleTickVerify({
+        nftAddress: itemInfo.nftAddress,
+        tokenId: itemInfo.tokenId,
+        skuId: itemInfo.id,
+        ...form,
+      });
       qrcodeVisible.value = true;
       qrcodeContent.value = ticketToken;
     } catch (e) {

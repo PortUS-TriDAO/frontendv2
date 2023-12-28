@@ -123,10 +123,19 @@ export const postProjectWhitelist = (params: { projectId: number; bizId: number;
 
 // post hashkey 返回的tickInfo发到服务端
 export const postUserByTicket = (params: {
-  ticketToken: string;
-  ticketStatus: number;
-  owner: string;
   skuId: number;
+  address: string;
+  contractAddress: string;
+  tokenId: number;
+  message: string;
+  signature: string;
+  mobile?: string;
+  name?: string;
+  email?: string;
+  industry?: string;
+  company?: string;
+  jobTitle?: string;
+  region?: string;
 }) => axios.post('/user/buyticket', params);
 
 // get user tickets
