@@ -58,7 +58,12 @@
             </el-select>
           </el-form-item>
           <el-form-item label="ALTC Description" prop="description">
-            <el-input placeholder="description" v-model="ruleForm.description"></el-input>
+            <el-input
+              type="textarea"
+              autosize
+              placeholder="description"
+              v-model="ruleForm.description"
+            ></el-input>
           </el-form-item>
           <el-form-item label="Right Quantity" prop="rightQuantity">
             <el-input

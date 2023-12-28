@@ -41,13 +41,5 @@ export const deployAltcRules = {
       trigger: 'blur',
     },
   ],
-  description: [
-    { required: true, message: 'Description is required', trigger: 'blur' },
-    {
-      min: 1,
-      max: 1000,
-      message: 'Description must be between 1 and 100 characters',
-      trigger: 'blur',
-    },
-  ],
+  description: [{ required: true, message: 'Description is required', trigger: 'blur' }],
 };

@@ -44,7 +44,12 @@
             <!--            <el-input placeholder="Pay token" v-model="ruleForm.payToken"></el-input>-->
           </el-form-item>
           <el-form-item label="Description" prop="description">
-            <el-input placeholder="description" v-model="ruleForm.description"></el-input>
+            <el-input
+              type="textarea"
+              autosize
+              placeholder="description"
+              v-model="ruleForm.description"
+            ></el-input>
           </el-form-item>
           <el-form-item label="Right quantity" prop="rightQuantity">
             <!--            <el-input placeholder="Right quantity" v-model="ruleForm.rightQuantity"></el-input>-->
@@ -118,15 +123,7 @@ const rules = reactive({
       trigger: 'blur',
     },
   ],
-  description: [
-    { required: true, message: 'Description is required', trigger: 'blur' },
-    {
-      min: 1,
-      max: 1000,
-      message: 'Description must be between 1 and 100 characters',
-      trigger: 'blur',
-    },
-  ],
+  description: [{ required: true, message: 'Description is required', trigger: 'blur' }],
 });
 
 async function handleSubmit(formEl: FormInstance | undefined) {
