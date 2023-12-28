@@ -26,7 +26,7 @@ import { waitForTransaction } from '@wagmi/core';
 import { Buffer } from 'buffer';
 import { parse } from 'csv-parse/browser/esm';
 import { ElMessage, type UploadFile, type UploadFiles } from 'element-plus';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import { postProjectWhitelist } from '@/api';
 import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract';
@@ -98,7 +98,7 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
 }
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 .dialog-box {
   width: 450px;
 

@@ -51,7 +51,7 @@
 <script lang="ts" setup>
 import { type Address, getAccount } from '@wagmi/core';
 import { ElMessage, type FormInstance } from 'element-plus';
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { postSkuUpdate } from '@/api/nft';
@@ -84,7 +84,11 @@ const ruleForm = reactive({
 const loading = ref(false);
 
 const { data: bizDetail } = useBusinessDetail(bizId);
-ruleForm.payToken = bizDetail.value?.payToken;
+watch(bizDetail, () => {
+  if (bizDetail) {
+    ruleForm.payToken = bizDetail.value?.payToken;
+  }
+});
 
 async function handleSave(formEl: FormInstance | undefined) {
   if (!formEl) return;
@@ -128,6 +132,7 @@ async function publishSku() {
       retailId: retailId,
     });
     if (!success) throw new Error(data as string);
+    // TODO: 等待产品给默认图片
     await postSkuUpdate({
       skuId: data?.skuId,
       imgUrl: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp',

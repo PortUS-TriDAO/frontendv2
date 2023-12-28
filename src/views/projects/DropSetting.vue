@@ -91,8 +91,12 @@ const dropSettingForm = reactive({
 
 async function setDropSetting() {
   try {
-    if (!(allowWhiteList.value || allowAirdrop.value || allowAirdrop.value)) {
-      router.push(`/project/submitsuccess/${projectId}/${bizId}`);
+    // if (!(allowWhiteList.value || allowAirdrop.value || allowAirdrop.value)) {
+    //   router.push(`/project/submitsuccess/${projectId}/${bizId}`);
+    //   return;
+    // }
+    if (dropSettingForm.whiteListStartTime === 0 && dropSettingForm.freeMintStartTime === 0) {
+      ElMessage.error('Please set valid start time');
       return;
     }
     dropSettingLoading.value = true;

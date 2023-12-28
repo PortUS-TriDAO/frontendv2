@@ -114,15 +114,15 @@ async function handleNext(formEl: FormInstance | undefined) {
 
 async function createProjectStep1() {
   const formData = toRaw(form);
-  if (!formData.avatar) {
-    ElMessage.error('Please upload avatar');
-    return;
-  }
+  // if (!formData.avatar) {
+  //   ElMessage.error('Please upload avatar');
+  //   return;
+  // }
 
-  if (!formData.cover) {
-    ElMessage.error('Please upload cover');
-    return;
-  }
+  // if (!formData.cover) {
+  //   ElMessage.error('Please upload cover');
+  //   return;
+  // }
 
   if (projectId) {
     updateProject();

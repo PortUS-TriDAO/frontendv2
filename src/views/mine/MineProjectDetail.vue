@@ -39,6 +39,7 @@
       :projectId="projectId"
       :bizId="bizId"
       @success="visible = false"
+      @close="visible = false"
     ></upload-white-list-card>
   </div>
 </template>
