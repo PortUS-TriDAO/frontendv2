@@ -246,7 +246,11 @@ const news = [
 ];
 
 function goToCreate() {
-  router.push('/project/create/step1');
+  if (['www.portus.world', 'portus.world'].includes(location.host)) {
+    router.push('/mine/submitted');
+  } else {
+    router.push('/project/create/step1');
+  }
 }
 
 function goToDistribute() {
