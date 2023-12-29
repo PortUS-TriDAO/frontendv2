@@ -70,7 +70,7 @@ export const useProjectStore = defineStore('project', () => {
       contractName,
       symbol,
       payToken,
-      extendsDecimals(sharePercentage).div(100).toString(),
+      toBN(sharePercentage).multipliedBy(toBN(10).pow(18)).div(100).toString(),
       rightQuantity,
     );
     await waitForTransaction({ hash: tx.hash });
