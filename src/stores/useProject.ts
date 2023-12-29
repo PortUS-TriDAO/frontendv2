@@ -10,6 +10,7 @@ import { useDeployerContractStore } from '@/stores/useDeployerContract';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
+import { isProd } from '@/utils';
 import { extendsDecimals, toBN } from '@/utils/bn';
 
 import { useFundsContract } from './useFundsContract';
@@ -179,9 +180,12 @@ export const useProjectStore = defineStore('project', () => {
 
     // const { payToken } = data;
     const signTypedDataStore = useSignTypedDataStore();
+    const extendsPrice = isProd()
+      ? toBN(price).multipliedBy(1e6).toString(10)
+      : toBN(price).multipliedBy(1e18).toString(10);
     const signature = await signTypedDataStore.signMintedNftRetailer(
       payToken,
-      toBN(price).multipliedBy(1e18).toString(10),
+      extendsPrice,
       nftTokenId,
       deadline,
       retailerAddress,
