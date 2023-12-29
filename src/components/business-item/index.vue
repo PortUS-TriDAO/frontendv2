@@ -57,6 +57,7 @@ import { onMounted, reactive } from 'vue';
 
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
+import { isProd } from '@/utils';
 import { toBN } from '@/utils/bn';
 
 defineOptions({ name: 'BusinessItem' });
@@ -89,7 +90,8 @@ onMounted(async () => {
     );
   }
 
-  state.pendingReward = toBN(pendingReward.toString()).div(1e18).toString(10);
+  const decimals = isProd() ? 1e6 : 1e18;
+  state.pendingReward = toBN(pendingReward.toString()).div(decimals).toString(10);
 });
 
 function handleDetail(item: BusinessData) {

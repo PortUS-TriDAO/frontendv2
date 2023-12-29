@@ -70,6 +70,7 @@ import NftContractItem from '@/components/nft-contract-item/index.vue';
 import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import { type NftContractData, NftType } from '@/types';
+import { isProd } from '@/utils';
 import { toBN } from '@/utils/bn';
 import { shareContract } from '@/utils/share';
 
@@ -101,8 +102,10 @@ watch(data, async () => {
       data.value.payToken,
     );
 
-    state.operatorPendingRewards = toBN(operatorReward.toString()).div(1e18).toString(10);
-    state.referrerReward = toBN(referrerReward.toString()).div(1e18).toString(10);
+    const decimals = isProd() ? 1e6 : 1e18;
+
+    state.operatorPendingRewards = toBN(operatorReward.toString()).div(decimals).toString(10);
+    state.referrerReward = toBN(referrerReward.toString()).div(decimals).toString(10);
   } catch (e) {
     console.log('fetch reward failed', e);
     ElMessage.error('Fetch reward failed');
