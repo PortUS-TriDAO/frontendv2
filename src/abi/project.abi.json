@@ -249,13 +249,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "beneficiary",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "operatorWithdraw",
     "outputs": [],
     "stateMutability": "nonpayable",

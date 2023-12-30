@@ -44,12 +44,11 @@ export const useProjectContract = defineStore('projectContract', () => {
 
   // 项目方领收益
   function operatorWithdraw(projectAddress: Address) {
-    const { address } = getAccount();
     const params: ContractFunctionConfig = {
       address: projectAddress,
       abi: PROJECT_ABI as Abi,
       functionName: 'operatorWithdraw',
-      args: [address],
+      args: [],
     };
 
     return writeContract(params);
