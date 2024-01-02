@@ -4,7 +4,6 @@ const shareLinks = {
 
 export function shareToTwitter(content: string) {
   const url = `${shareLinks.twitter}${content}`;
-  console.log('url===,', url);
   window.open(url);
 }
 
@@ -14,7 +13,7 @@ function getOrigin(): string {
 
 export function shareStore(kolAddress: string) {
   const shareUrl = `${getOrigin()}/store/${kolAddress}/projects`;
-  shareToTwitter(shareUrl);
+  // shareToTwitter(shareUrl);
   return shareUrl;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="props.visible" title="Share" center>
+  <el-dialog v-model="dailogVisible" title="Share" center>
     <div class="content">Share to twitter</div>
     <template #footer>
       <span class="dialog-footer">
@@ -12,12 +12,24 @@
 
 <script setup lang="ts">
 import { ElMessage } from 'element-plus';
+import { computed } from 'vue';
 import useClipboard from 'vue-clipboard3';
 
 const props = defineProps(['visible', 'shareUrl']);
 const emit = defineEmits(['close']);
 
 const { toClipboard } = useClipboard();
+
+const dailogVisible = computed({
+  get() {
+    return props.visible;
+  },
+  set(value) {
+    if (!value) {
+      close();
+    }
+  },
+});
 
 function close() {
   emit('close');
