@@ -25,14 +25,14 @@
 
 <script lang="ts" setup>
 import { getAccount } from '@wagmi/core';
-import { computed, ref, toRaw } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import ProjectItem from '@/components/project-item/index.vue';
 import ShareDialog from '@/components/ShareDialog.vue';
 import { useScenesProjects } from '@/hooks';
 import type { ProjectData } from '@/types';
-import { shareProject, shareStore } from '@/utils/share';
+import { shareStore } from '@/utils/share';
 
 defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
@@ -93,6 +93,8 @@ const map = {
       onClick: () => {
         // TODO: share My Store
         const url = shareStore(account);
+        shareDialogVisible.value = true;
+        shareUrl.value = url;
 
         // dialog share
         // shareDialogVisible.value = true;

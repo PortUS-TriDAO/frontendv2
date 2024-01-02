@@ -1,5 +1,6 @@
 import { splitSignature } from '@ethersproject/bytes';
 import { type Address, getAccount, waitForTransaction, writeContract } from '@wagmi/core';
+import { ElMessage } from 'element-plus';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
@@ -7,11 +8,10 @@ import RETAILER_ABI from '@/abi/retailer.abi.json';
 import * as projectApi from '@/api/projects';
 import { postTicketInfo } from '@/api/ticket';
 import { useDeployerContractStore } from '@/stores/useDeployerContract';
-import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useRouterContract } from '@/stores/useRouterContract';
 import { useSignTypedDataStore } from '@/stores/useSignTypedData';
 import { isProd } from '@/utils';
-import { extendsDecimals, toBN } from '@/utils/bn';
+import { toBN } from '@/utils/bn';
 
 import { useFundsContract } from './useFundsContract';
 import { useNftContract } from './useNftContract';
@@ -194,11 +194,19 @@ export const useProjectStore = defineStore('project', () => {
     const { address: seller } = getAccount();
 
     // TODO: get nft metadata
-    let metadata = {};
+    let name = '';
+    let imgUrl = '';
     try {
-      const tokenURI = await nftContract.tokenURI(nftAddress, nftTokenId);
-      metadata = await fetch(tokenURI).then((r) => r.json());
-    } catch (err) {}
+      const tokenURI = (await nftContract.tokenURI(nftAddress, nftTokenId)) as string;
+      if (!tokenURI || tokenURI.slice(0, 4) !== 'http') {
+        throw new Error('Parse tokenURL failed');
+      }
+      const metadata = await fetch(tokenURI).then((r) => r.json());
+      name = metadata.name;
+      imgUrl = metadata.image;
+    } catch (err) {
+      ElMessage.error('Parse tokenURI failed');
+    }
 
     return projectApi.publishSku({
       projectId: projectId.toString(),

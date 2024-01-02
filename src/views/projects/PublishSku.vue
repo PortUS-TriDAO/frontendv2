@@ -100,25 +100,12 @@ async function handleSave(formEl: FormInstance | undefined) {
 }
 
 async function publishSku() {
-  console.log('projectId:', projectId);
   if (!projectId) {
     ElMessage.error('Project ID is required');
     return;
   }
   try {
     loading.value = true;
-    console.log('publishSku', {
-      projectId,
-      price: ruleForm.price,
-      nftTokenId: Number(ruleForm.tokenId),
-      deadline: new Date(ruleForm.ddl).valueOf() / 1000,
-      sellAmount: Number(ruleForm.sellAmount),
-      retailerAddress: retailAddress,
-      nftAddress: nftAddress,
-      payToken: bizDetail.value.payToken,
-      bizId: bizId,
-      retailId: retailId,
-    });
     const { success, data } = await projectStore.publishSku({
       projectId,
       price: ruleForm.price,
