@@ -80,6 +80,8 @@ export const publishSku = (params: {
   payToken: string;
   signature: string;
   sellAmount: number;
+  nftName: string;
+  imgUrl: string;
 }): Promise<IResponse> => axios.post('/project/sku/publish', params);
 
 // 上架SPU

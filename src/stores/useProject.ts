@@ -14,6 +14,7 @@ import { isProd } from '@/utils';
 import { toBN } from '@/utils/bn';
 
 import { useFundsContract } from './useFundsContract';
+import { useMetadata } from './useMetadata';
 import { useNftContract } from './useNftContract';
 import { useProjectContract } from './useProjectContract';
 import { useRightsContract } from './useRightsContract';
@@ -168,6 +169,7 @@ export const useProjectStore = defineStore('project', () => {
     retailId: number;
     sellAmount: number;
   }) {
+    const metadataStore = useMetadata();
     // approve NFT
     const nftContract = useNftContract();
 
@@ -194,16 +196,17 @@ export const useProjectStore = defineStore('project', () => {
     const { address: seller } = getAccount();
 
     // TODO: get nft metadata
-    let name = '';
-    let imgUrl = '';
+    let name = 'Hong Kong Web3 Festival 2024  NFT Pass';
+    let imgUrl = 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/passcard.png';
+
     try {
-      const tokenURI = (await nftContract.tokenURI(nftAddress, nftTokenId)) as string;
-      if (!tokenURI || tokenURI.slice(0, 4) !== 'http') {
-        throw new Error('Parse tokenURL failed');
+      const result = await metadataStore.getNft(nftAddress, nftTokenId);
+      if (result.name) {
+        name = result.name;
       }
-      const metadata = await fetch(tokenURI).then((r) => r.json());
-      name = metadata.name;
-      imgUrl = metadata.image;
+      if (result.image_url) {
+        imgUrl = result.image_url;
+      }
     } catch (err) {
       ElMessage.error('Parse tokenURI failed');
     }
@@ -219,6 +222,8 @@ export const useProjectStore = defineStore('project', () => {
       payToken,
       signature,
       sellAmount,
+      nftName: name,
+      imgUrl,
     });
   }
 

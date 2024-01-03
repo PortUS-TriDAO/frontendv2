@@ -119,12 +119,6 @@ async function publishSku() {
       retailId: retailId,
     });
     if (!success) throw new Error(data as string);
-    // TODO: 等待产品给默认图片
-    await postSkuUpdate({
-      skuId: data?.skuId,
-      imgUrl: 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp',
-      nftName: 'FarmersWorld',
-    });
     ElMessage.success('Contract Binding Success');
     router.push('/project/addnft/success');
   } catch (error) {
