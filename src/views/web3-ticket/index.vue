@@ -103,7 +103,7 @@ function connectWallet() {
   web3Modal.open();
 }
 
-const ticketToken = useTicketToken(address);
+const { data: ticketToken } = useTicketToken(address);
 </script>
 <style lang="less">
 * {
