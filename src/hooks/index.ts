@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryReturnType } from '@tanstack/vue-query';
 import { getAccount } from '@wagmi/core';
-import { type ComputedRef, watch } from 'vue';
+import { type ComputedRef, type Ref, watch } from 'vue';
 
 import type {
   BusinessDetailData,
@@ -309,11 +309,11 @@ export function useTicketList(owner: string): UseQueryReturnType<PageData<Ticket
   return result;
 }
 
-export function useTicketToken(owner: string): UseQueryReturnType<string, Error> {
+export function useTicketToken(owner: Ref<string>): UseQueryReturnType<string, Error> {
   const result = useQuery({
-    queryKey: ['getUserTickets_ticketToken', owner],
+    queryKey: ['getUserTickets_ticketToken', owner.value],
     queryFn: async () => {
-      const { success, data } = await getUserTickets({ owner });
+      const { success, data } = await getUserTickets({ owner: owner.value });
       if (!success) return null;
       return data.rows?.[0]?.ticketToken;
     },

@@ -95,7 +95,6 @@ const web3Modal = useWeb3Modal();
 const address = ref(account.address);
 
 const unwatch = watchAccount((account) => {
-  console.log('account=', account);
   address.value = account.address;
 });
 
