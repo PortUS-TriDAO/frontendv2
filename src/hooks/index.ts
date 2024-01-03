@@ -309,6 +309,19 @@ export function useTicketList(owner: string): UseQueryReturnType<PageData<Ticket
   return result;
 }
 
+export function useTicketToken(owner: string): UseQueryReturnType<string, Error> {
+  const result = useQuery({
+    queryKey: ['getUserTickets_ticketToken', owner],
+    queryFn: async () => {
+      const { success, data } = await getUserTickets({ owner });
+      if (!success) return null;
+      return data.rows?.[0]?.ticketToken;
+    },
+    enabled: !!owner,
+  });
+  return result;
+}
+
 export function useTicketDetail(ticketId: number): UseQueryReturnType<TicketInfo, Error> {
   const result = useQuery({
     queryKey: ['getTicketDetail', ticketId],

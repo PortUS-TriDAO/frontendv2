@@ -78,19 +78,13 @@
 import { getAccount } from '@wagmi/core';
 import QrcodeVue from 'qrcode.vue';
 
-import { useTicketList } from '@/hooks';
+import { useTicketToken } from '@/hooks';
 
 defineOptions({
   name: 'ticketPage',
 });
-
 const { address } = getAccount();
-const { data } = useTicketList(address);
-const ticketToken = data?.[0]?.ticketToken;
-
-// mock data
-// const address = '222222';
-// const ticketToken = 'skdfk12123';
+const ticketToken = useTicketToken(address);
 </script>
 <style lang="less">
 * {
