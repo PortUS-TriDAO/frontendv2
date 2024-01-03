@@ -7,7 +7,7 @@
     <div class="page-ticket-content">
       <!-- connect wallet -->
       <template v-if="!address">
-        <button class="btn-connect">
+        <button class="btn-connect" @click="connectWallet">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -78,15 +78,31 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getAccount } from '@wagmi/core';
+import { getAccount, watchAccount } from '@wagmi/core';
+import { useWeb3Modal } from '@web3modal/wagmi/vue';
 import QrcodeVue from 'qrcode.vue';
+import { ref } from 'vue';
 
 import { useTicketToken } from '@/hooks';
 
 defineOptions({
   name: 'ticketPage',
 });
-const { address } = getAccount();
+
+const account = getAccount();
+const web3Modal = useWeb3Modal();
+
+const address = ref(account.address);
+
+const unwatch = watchAccount((account) => {
+  console.log('account=', account);
+  address.value = account.address;
+});
+
+function connectWallet() {
+  web3Modal.open();
+}
+
 const ticketToken = useTicketToken(address);
 </script>
 <style lang="less">
