@@ -131,6 +131,8 @@ const ticketToken = useTicketToken(address);
   }
   .page-ticket-content {
     background: #06173a url('./assets/ticket-bg.png') no-repeat center top;
+    background-size: 100%;
+
     flex-grow: 1;
     display: flex;
     flex-direction: column;
