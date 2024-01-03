@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { RouterView } from 'vue-router';
 import { useRoute } from 'vue-router';
 
@@ -8,6 +8,7 @@ import HeaderView from './components/HeaderView.vue';
 const route = useRoute();
 const title = ref('');
 const showBanner = ref(false);
+const isNullLayout = computed(() => route.path.indexOf('/web3-ticket') === 0);
 
 watch(
   () => route.path,
@@ -23,13 +24,14 @@ watch(
     } else {
       title.value = '';
     }
-    showBanner.value === (route.fullPath !== '/' && route.fullPath !== '/goods');
+    showBanner.value === (route.path !== '/' && route.path !== '/goods');
   },
 );
 </script>
 
 <template>
-  <div class="container">
+  <router-view v-if="isNullLayout"></router-view>
+  <div class="container" v-else>
     <HeaderView />
     <div v-if="showBanner" class="banner">
       {{ title }}

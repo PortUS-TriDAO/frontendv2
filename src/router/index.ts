@@ -96,6 +96,11 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/web3-ticket',
+      name: 'web3Ticket',
+      component: () => import('../views/web3-ticket/index.vue'),
+    },
+    {
       path: '/project/list',
       name: 'ProjectList',
       // component: () => import('../views/projects/ProjectList.vue'),

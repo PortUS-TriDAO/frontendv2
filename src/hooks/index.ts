@@ -304,6 +304,7 @@ export function useTicketList(owner: string): UseQueryReturnType<PageData<Ticket
       if (!success) return null;
       return data;
     },
+    enabled: !!owner,
   });
   return result;
 }
