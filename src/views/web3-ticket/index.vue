@@ -1,6 +1,9 @@
 <template>
   <div class="page-ticket">
-    <div class="page-ticket-header"></div>
+    <div class="page-ticket-header">
+      <img src="./assets/Feng-Mian-EN.png" alt="Form cover" class="sc-ad761a6f-1 bwKkJz" />
+      <!-- <img src="/src/views/web3-ticket/assets/Feng-Mian-EN.png" alt="Form cover" class="sc-ad761a6f-1 bwKkJz"> -->
+    </div>
     <div class="page-ticket-content">
       <!-- connect wallet -->
       <template v-if="!address">
@@ -91,20 +94,27 @@ const ticketToken = useTicketToken(address);
   box-sizing: border-box;
 }
 .page-ticket {
-  width: 960px;
-  margin-left: auto;
-  margin-right: auto;
+  // width: 960px;
+  // margin-left: auto;
+  // margin-right: auto;
   display: flex;
   flex-direction: column;
   height: 100vh;
   background: #06173a;
 
   .page-ticket-header {
-    height: 157px;
-    background: url('./assets/header-bg.png') no-repeat;
+    // height: 157px;
+    // background: url('./assets/header-bg.png') no-repeat;
+    > img {
+      display: block;
+      object-fit: cover;
+      object-position: center 37.5892%;
+      width: 100%;
+      height: 25vh;
+    }
   }
   .page-ticket-content {
-    background: #06173a url('./assets/ticket-bg.png') no-repeat;
+    background: #06173a url('./assets/ticket-bg.png') no-repeat center top;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
