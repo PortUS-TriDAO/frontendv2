@@ -11,6 +11,7 @@
         hideDetail
         @click="handleDetail(item)"
         @onUploadWhiteList="handleUploadWhiteList"
+        @onUploadAirdropList="handleUploadAirdropList"
         class="pointer"
       >
         <template v-slot:actions>
@@ -41,6 +42,16 @@
       @success="visible = false"
       @close="visible = false"
     ></upload-white-list-card>
+
+    <upload-airdrop-list-card
+      :visible="airdropDialogVisible"
+      :project-address="res?.creatorAddress"
+      :projectId="projectId"
+      :bizId="bizId"
+      @success="airdropDialogVisible = false"
+      @close="airdropDialogVisible = false"
+    >
+    </upload-airdrop-list-card>
   </div>
 </template>
 <script setup lang="ts">
@@ -53,6 +64,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
 import projectHeader from '@/components/project-header/index.vue';
+import UploadAirdropListCard from '@/components/UploadAirdropListCard.vue';
 import UploadWhiteListCard from '@/components/UploadWhiteListCard.vue';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
@@ -64,6 +76,7 @@ const projectId = Number(route.params.projectId);
 const scenes = computed(() => route.meta.scenes);
 const loading = ref(false);
 const visible = ref(false);
+const airdropDialogVisible = ref(false);
 const bizId = ref(0);
 
 const projectStore = useProjectStore();
@@ -87,6 +100,11 @@ function handleUploadWhiteList(businessData: BusinessData) {
   // todo: handleUploadWhiteList
   console.log('todo: handleUploadWhiteList=', businessData);
   visible.value = true;
+  bizId.value = businessData.id;
+}
+
+function handleUploadAirdropList(businessData: BusinessData) {
+  airdropDialogVisible.value = true;
   bizId.value = businessData.id;
 }
 

@@ -31,6 +31,13 @@
           </div>
           <button class="btn-upload" @click="handleUploadWhiteList"></button>
         </div>
+        <div class="line-white-list">
+          <div>
+            <label>Airdrop list:</label>
+            <span>{{ item.whitelistCount }}/450</span>
+          </div>
+          <button class="btn-upload" @click="handleUploadAirdropList"></button>
+        </div>
       </template>
       <div v-if="scenes === 'submitted' || scenes === 'participated'">
         <div>
@@ -68,7 +75,7 @@ const props = defineProps<{
   hideDetail?: boolean;
   btnText?: string;
 }>();
-const emit = defineEmits(['onDetail', 'onUploadWhiteList']);
+const emit = defineEmits(['onDetail', 'onUploadWhiteList', 'onUploadAirdropList']);
 
 const state = reactive({
   pendingReward: '0',
@@ -100,6 +107,11 @@ function handleDetail(item: BusinessData) {
 function handleUploadWhiteList(e: Event) {
   e.stopPropagation();
   emit('onUploadWhiteList', props.item);
+}
+
+function handleUploadAirdropList(e: Event) {
+  e.stopPropagation();
+  emit('onUploadAirdropList', props.item);
 }
 </script>
 <style lang="less">

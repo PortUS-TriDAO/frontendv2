@@ -2,7 +2,7 @@
   <div class="dialog-box">
     <el-dialog width="450px" center v-model="dialogTableVisible">
       <template #header>
-        <h5>Add a Whitelist Allowlist</h5>
+        <h5>Add a Airdrop Address List</h5>
       </template>
       <template #default>
         <el-upload class="upload-demo" :on-progress="handleSuccess" drag>
@@ -26,7 +26,7 @@ import { waitForTransaction } from '@wagmi/core';
 import { Buffer } from 'buffer';
 import { parse } from 'csv-parse/browser/esm';
 import { ElMessage, type UploadFile, type UploadFiles } from 'element-plus';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 import { postProjectWhitelist } from '@/api';
 import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract';
@@ -87,8 +87,10 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
             await setMerkleRoot(result.root);
             // emit('success');
           }
+          emit('success');
         } catch (e) {
           ElMessage.error('post white list failed');
+          emit('close');
         }
       });
     } catch (e) {

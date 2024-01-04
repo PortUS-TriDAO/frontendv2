@@ -35,5 +35,18 @@ export const useWhiteListRightsContract = defineStore('whiteListRights', () => {
     return writeContract(params);
   }
 
-  return { setDropSetting, setMerkleRoot };
+  async function airdrop(projectAddress: Address, recepients: string[]) {
+    const projectContract = useProjectContract();
+    const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
+    const params = {
+      address: rightsContractAddress,
+      abi: WHITELIST_RIGHTS_ABI,
+      functionName: 'airdrop',
+      args: [recepients],
+    };
+
+    return writeContract(params);
+  }
+
+  return { setDropSetting, setMerkleRoot, airdrop };
 });
