@@ -28,7 +28,7 @@ import { parse } from 'csv-parse/browser/esm';
 import { ElMessage, type UploadFile, type UploadFiles } from 'element-plus';
 import { computed } from 'vue';
 
-import { postProjectWhitelist } from '@/api';
+import { postProjectAirdropList } from '@/api';
 import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract';
 
 const whitelistContract = useWhiteListRightsContract();
@@ -71,23 +71,25 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
       console.log(res);
       let buf = Buffer.from(res as Buffer);
       parse(buf, {}, async (err, data) => {
+        console.log('handleSuccess', data);
         // console.log(err, data);
         const datas = data.slice(1, data.length - 1);
         console.log(datas);
         const addresses = datas.map((v) => v[0]);
         console.log('addresses', addresses);
         try {
-          const { success, data: result } = await postProjectWhitelist({
+          const { success, data: result } = await postProjectAirdropList({
             projectId: props.projectId,
             bizId: props.bizId,
-            wls: addresses,
+            airdrops: addresses,
           });
+
           if (success) {
-            // TODO: set merker root
-            await setMerkleRoot(result.root);
-            // emit('success');
+            ElMessage.success('upload airdrop list success');
+            emit('success');
+          } else {
+            ElMessage.error('upload airdrop list failed');
           }
-          emit('success');
         } catch (e) {
           ElMessage.error('post white list failed');
           emit('close');

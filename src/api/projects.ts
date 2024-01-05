@@ -123,6 +123,12 @@ export const getPrimaryProjectInfo = (): Promise<IResponse<Array<PrimaryProjectI
 export const postProjectWhitelist = (params: { projectId: number; bizId: number; wls: string[] }) =>
   axios.post('/project/whitelist', params);
 
+export const postProjectAirdropList = (params: {
+  projectId: number;
+  bizId: number;
+  airdrops: string[];
+}): Promise<IResponse<string>> => axios.post('/project/airdrop', params);
+
 // post hashkey 返回的tickInfo发到服务端
 export const postUserByTicket = (params: {
   skuId: number;

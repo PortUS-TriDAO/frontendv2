@@ -34,7 +34,7 @@
         <div class="line-white-list">
           <div>
             <label>Airdrop list:</label>
-            <span>{{ item.whitelistCount }}/450</span>
+            <span>{{ item.airdroplistCount || 0 }}/{{ item.airdroplistCount || 0 }}</span>
           </div>
           <button class="btn-upload" @click="handleUploadAirdropList"></button>
         </div>
