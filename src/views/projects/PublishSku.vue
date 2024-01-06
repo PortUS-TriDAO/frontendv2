@@ -52,17 +52,16 @@
 import { type Address, getAccount } from '@wagmi/core';
 import { ElMessage, type FormInstance } from 'element-plus';
 import { reactive, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-import { postSkuUpdate } from '@/api/nft';
 import MainContent from '@/components/MainContent.vue';
 import { useBusinessDetail } from '@/hooks';
-import router from '@/router';
 import { useProjectStore } from '@/stores/useProject';
 
 import { publishSkuRules as rules } from './rules';
 
 const route = useRoute();
+const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 const projectStore = useProjectStore();
 

@@ -23,15 +23,7 @@ export const deployAltcRules = {
     { required: true, message: 'rightQuantity is required', trigger: 'blur' },
     { min: 1, max: 100, message: 'rightQuantity must be number', trigger: 'blur' },
   ],
-  briefIntro: [
-    { required: true, message: 'Brief introduction is required', trigger: 'blur' },
-    {
-      min: 1,
-      max: 100,
-      message: 'Brief introduction must be between 1 and 100 characters',
-      trigger: 'blur',
-    },
-  ],
+  briefIntro: [{ required: true, message: 'Brief introduction is required', trigger: 'blur' }],
   payToken: [
     { required: true, message: 'Pay token is required', trigger: 'blur' },
     {

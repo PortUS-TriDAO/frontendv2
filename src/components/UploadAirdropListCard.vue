@@ -73,27 +73,32 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
       parse(buf, {}, async (err, data) => {
         console.log('handleSuccess', data);
         // console.log(err, data);
+        if (!data) {
+          ElMessage.error('parse csv failed');
+          return;
+        }
         const datas = data.slice(1, data.length - 1);
         console.log(datas);
         const addresses = datas.map((v) => v[0]);
         console.log('addresses', addresses);
-        try {
-          const { success, data: result } = await postProjectAirdropList({
-            projectId: props.projectId,
-            bizId: props.bizId,
-            airdrops: addresses,
-          });
+        emit('success', addresses);
+        // try {
+        //   const { success, data: result } = await postProjectAirdropList({
+        //     projectId: props.projectId,
+        //     bizId: props.bizId,
+        //     airdrops: addresses,
+        //   });
 
-          if (success) {
-            ElMessage.success('upload airdrop list success');
-            emit('success');
-          } else {
-            ElMessage.error('upload airdrop list failed');
-          }
-        } catch (e) {
-          ElMessage.error('post white list failed');
-          emit('close');
-        }
+        //   if (success) {
+        //     ElMessage.success('upload airdrop list success');
+        //     emit('success');
+        //   } else {
+        //     ElMessage.error('upload airdrop list failed');
+        //   }
+        // } catch (e) {
+        //   ElMessage.error('post white list failed');
+        //   emit('close');
+        // }
       });
     } catch (e) {
       ElMessage.error('parse csv failed');
