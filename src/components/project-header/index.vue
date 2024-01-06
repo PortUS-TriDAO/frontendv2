@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import { Picture as IconPicture } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
-import * as DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify';
 import { computed, ref } from 'vue';
 
 import socialBar from '@/components/social-bar/index.vue';
@@ -95,10 +95,7 @@ const props = defineProps<{
 }>();
 
 const safeDescription = computed(() => {
-  if (!props.projectInfo?.description) {
-    return '';
-  }
-  const clean = DOMPurify.sanitize(props.projectInfo?.description);
+  const clean = DOMPurify.sanitize(props.projectInfo?.description || '');
   return clean;
 });
 const showMore = ref(false);
@@ -170,19 +167,24 @@ function handleMore() {
 
   .project-header-poster {
     > div:first-child {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 20px;
+      row-gap: 20px;
       height: 200px;
       overflow: hidden;
       transition: height ease-in 0.3s;
     }
     :deep(.el-image) {
-      width: 33.33%;
       padding: 10px;
       height: 200px;
       display: flex;
       justify-content: center;
       align-items: center;
+      background: url('./assets/poster-bg.png') center no-repeat;
+      background-size: 120% 120%;
+      border-radius: 20px !important;
+      overflow: hidden;
       > img {
         height: 100%;
       }
