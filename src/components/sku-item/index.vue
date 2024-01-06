@@ -58,6 +58,7 @@ defineProps<{
     position: absolute;
     right: 12px;
     top: 12px;
+    z-index: 2;
     font-size: 24px;
   }
 

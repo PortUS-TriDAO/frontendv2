@@ -41,7 +41,10 @@
       </div>
     </div>
 
-    <div :class="['project-header-poster', { all: showMore }]">
+    <div
+      v-if="projectInfo?.images?.length > 0"
+      :class="['project-header-poster', { all: showMore }]"
+    >
       <div>
         <el-image v-for="item in projectInfo?.images || []" :key="item" :src="item" fit="contain">
           <template #error>
@@ -73,7 +76,7 @@
       </div>
     </div>
     <div class="description">
-      <text-ellipsis :line="3">
+      <text-ellipsis :line="3" v-if="safeDescription">
         <span v-html="safeDescription"></span>
       </text-ellipsis>
     </div>
