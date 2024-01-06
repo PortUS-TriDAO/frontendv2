@@ -48,7 +48,7 @@
       :project-address="res?.creatorAddress"
       :projectId="projectId"
       :bizId="bizId"
-      @success="airdropDialogVisible = false"
+      @success="hanldeAirdrop"
       @close="airdropDialogVisible = false"
     >
     </upload-airdrop-list-card>
@@ -60,18 +60,20 @@
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import { waitForTransaction } from '@wagmi/core';
+import { type Address, waitForTransaction } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
+import { postProjectAirdropList } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
 import projectHeader from '@/components/project-header/index.vue';
 import UploadAirdropListCard from '@/components/UploadAirdropListCard.vue';
 import UploadDialogCard from '@/components/UploadDialogCard.vue';
 import UploadWhiteListCard from '@/components/UploadWhiteListCard.vue';
 import { useProjectStore } from '@/stores/useProject';
+import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract';
 import type { BusinessData } from '@/types';
 
 const route = useRoute();
@@ -83,8 +85,10 @@ const loading = ref(false);
 const visible = ref(false);
 const airdropDialogVisible = ref(false);
 const bizId = ref(0);
+const projectAddress = ref<Address>('0x');
 
 const projectStore = useProjectStore();
+const whiteListStore = useWhiteListRightsContract();
 
 const scenesData = computed(() => {
   return map[scenes.value || 'submitted'];
@@ -111,7 +115,25 @@ function handleUploadWhiteList(businessData: BusinessData) {
 function handleUploadAirdropList(businessData: BusinessData) {
   airdropDialogVisible.value = true;
   bizId.value = businessData.id;
+  projectAddress.value = businessData.contractAddress;
 }
+
+const hanldeAirdrop = async (addressList: string[]) => {
+  console.log('hanldeAirdrop', addressList);
+  try {
+    const tx = await whiteListStore.airdrop(projectAddress.value, addressList);
+    await waitForTransaction(tx);
+    await postProjectAirdropList({
+      projectId: projectId,
+      bizId: bizId.value,
+      airdrops: addressList,
+    });
+    ElMessage.success('airdrop success');
+    airdropDialogVisible.value = false;
+  } catch (error) {
+    ElMessage.error('airdrop failed');
+  }
+};
 
 const map = {
   submitted: {
