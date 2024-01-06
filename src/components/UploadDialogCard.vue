@@ -1,82 +1,77 @@
 <template>
-  <div class="dialog-box">
-    <el-dialog width="450px" center v-model="props.visible">
-      <template #header>
-        <h5>Add a Whitelist Allowlist</h5>
-      </template>
-      <template #default>
-        <el-upload class="upload-demo" :on-progress="handleSuccess" drag>
-          <el-icon class="el-icon--upload">
-            <upload-filled />
-          </el-icon>
-          <div class="el-upload__text">Drop csv file here or <em>click to upload</em></div>
-        </el-upload>
-        <div class="upload-btns">
-          <slot name="btnbox"></slot>
+  <el-dialog :show-close="false" class="upload-dialog" width="570px" v-model="dialogVisible">
+    <template #header>
+      <div class="dialog-header">
+        <h5>Add a Whitelist Allow List</h5>
+        <el-icon @click="close"><CircleClose /></el-icon>
+      </div>
+    </template>
+    <div>
+      <el-upload class="upload-demo" drag>
+        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+        <div class="el-upload__text">
+          Drag and drop a CSV file or <em>select from your computer</em>
         </div>
-      </template>
-    </el-dialog>
-  </div>
+      </el-upload>
+      <div class="btns">
+        <el-button>Download CSV template</el-button>
+        <el-button>Down</el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
-<script setup lang="ts">
-import { UploadFilled } from '@element-plus/icons-vue';
-import { Buffer } from 'buffer';
-import { parse } from 'csv-parse/browser/esm';
-import { ElMessage, UploadFile, UploadFiles } from 'element-plus';
+<script lang="ts" setup>
+import { CircleClose } from '@element-plus/icons-vue';
+import { computed } from 'vue';
 
-const props = defineProps(['visible', 'title']);
-const emit = defineEmits(['onUpload']);
+const props = defineProps(['visible']);
+const emit = defineEmits(['close']);
 
-function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) {
-  let reader = new FileReader();
-  reader.readAsArrayBuffer(uploadFile.raw);
-  reader.onload = function (e) {
-    try {
-      let res = e.target.result;
-      console.log(res);
-      let buf = Buffer.from(res as Buffer);
-      parse(buf, {}, (err, data) => {
-        // console.log('parse', err, data);
-        emit('onUpload', err, data);
-      });
-      // console.log('data===', data);
-    } catch (e) {
-      ElMessage.error('parse csv failed');
+const close = () => {
+  emit('close');
+};
+
+const dialogVisible = computed({
+  get() {
+    return props.visible;
+  },
+  set(value) {
+    if (!value) {
+      close();
     }
-  };
-}
+  },
+});
 </script>
 
 <style lang="less">
-.dialog-box {
-  width: 450px;
-
-  h5 {
-    font-size: 32px;
-  }
-
-  .upload-btns {
+.upload-dialog {
+  background: #274a80 !important;
+  width: 570px;
+  height: 698px;
+  border-radius: 40px;
+  .dialog-header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-
-    .el-button {
-      width: 100%;
-      height: 48px;
-      margin: 10px 0;
-      background-color: #d2dff7;
-      border-radius: 20px;
-      color: #2373c0;
-      font-size: 18px;
+    flex-direction: row;
+    color: #fff;
+    justify-content: space-between;
+    font-size: 36px;
+    > .el-icon {
+      cursor: pointer;
     }
   }
-
-  :deep(.el-dialog) {
-    width: 450px;
-    border-radius: 40px;
-    height: 545px;
+  .el-upload-dragger {
+    background: transparent;
+    color: #fff !important;
+  }
+  .btns {
+    display: flex;
+    flex-direction: column;
+    > .el-button {
+      margin-top: 20px;
+      width: 490px;
+      height: 57px;
+    }
   }
 }
 </style>

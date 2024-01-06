@@ -85,6 +85,14 @@ const mineChildren = [
   ...getMinePath('submitted'),
   ...getMinePath('participated'),
   ...getMinePath('store'),
+  {
+    path: '/mine/profile',
+    name: 'MineProfile',
+    component: () => import('../views/mine/MineProfile.vue'),
+    meta: {
+      scenes: 'profile',
+    },
+  },
 ];
 
 const router = createRouter({
@@ -143,6 +151,7 @@ const router = createRouter({
       name: 'MineSetting',
       component: () => import('../views/mine/SettingWhiteList.vue'),
     },
+
     {
       path: '/project/create/step1/:projectId?',
       name: 'CreateProjectStep1',

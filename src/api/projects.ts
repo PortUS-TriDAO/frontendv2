@@ -19,6 +19,8 @@ export const createProjectStep1 = (params: {
   avatar: string;
   cover: string;
   creatorAddress: string;
+  images: string[];
+  provider: string;
 }): Promise<IResponse> => axios.post('/project/create', params);
 // 提交创建游戏step2
 export const createProjectStep2 = (params: {
@@ -41,7 +43,9 @@ export const updateProjectInfo = (params: {
   avatar: string;
   cover: string;
   creatorAddress: string;
-}) => axios.post('/project/update', params);
+  images: string[];
+  provider: string;
+}): Promise<IResponse> => axios.post('/project/update', params);
 
 // 请求游戏列表
 export const getProjects = (params: {

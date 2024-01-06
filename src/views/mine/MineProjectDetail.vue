@@ -52,6 +52,10 @@
       @close="airdropDialogVisible = false"
     >
     </upload-airdrop-list-card>
+    <!-- <upload-dialog-card
+      :visible="airdropDialogVisible"
+      @close="airdropDialogVisible = false"
+    ></upload-dialog-card> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -65,6 +69,7 @@ import { getProjectDetail } from '@/api';
 import BusinessItem from '@/components/business-item/index.vue';
 import projectHeader from '@/components/project-header/index.vue';
 import UploadAirdropListCard from '@/components/UploadAirdropListCard.vue';
+import UploadDialogCard from '@/components/UploadDialogCard.vue';
 import UploadWhiteListCard from '@/components/UploadWhiteListCard.vue';
 import { useProjectStore } from '@/stores/useProject';
 import type { BusinessData } from '@/types';
