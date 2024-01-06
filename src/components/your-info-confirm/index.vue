@@ -97,7 +97,7 @@ watch(dialogTableVisible, () => {
   }
 });
 
-interface RuleForm {
+export interface RuleForm {
   name: string;
   email: string;
   mobile: string;

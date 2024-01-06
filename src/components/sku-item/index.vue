@@ -1,18 +1,22 @@
 <template>
-  <div class="sku-item">
-    <div class="icon">
-      <img alt="avatar" :src="item.avatar || item.imgUrl" />
-    </div>
-    <h3>{{ item?.name || item?.nftName }}</h3>
+  <div :class="['sku-item', { sold: item.isSold }]">
+    <el-image :src="item.avatar || item.imgUrl" fit="contain">
+      <template #error>
+        <div class="image-slot">
+          <el-icon><icon-picture /></el-icon>
+        </div>
+      </template>
+    </el-image>
+    <h3>{{ item?.name || item?.nftName }}#{{ item?.tokenId }}</h3>
     <div>{{ item.price }} {{ PayTokenMap[item.payToken]?.symbol || 'USDT' }}</div>
-    <text-ellipsis :line="3" hideAction>
-      {{ item.briefIntro }}
-    </text-ellipsis>
-    <slot name="actions" />
-    <div v-if="item.isSold" class="sold-out">sold out</div>
+    <div class="sku-item-action">
+      <slot name="actions" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
+import { Picture as IconPicture } from '@element-plus/icons-vue';
+
 import { PayTokenMap } from '@/constant/contracts';
 import type { SkuData, SpuData } from '@/types';
 
@@ -27,33 +31,53 @@ defineProps<{
 .sku-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   padding: 10px;
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-bottom: 12px;
-  width: 170px;
+  width: 200px;
   color: rgba(0, 0, 0, 1);
   position: relative;
-  .icon {
+  padding-bottom: 62px;
+
+  &.sold {
+    position: relative;
+    background-color: rgba(63, 58, 58, 1);
+    img,
+    button {
+      opacity: 0.5 !important;
+    }
+  }
+
+  .el-image {
     width: 150px;
     height: 150px;
+    border-radius: 10px;
+    flex-shrink: 0;
     overflow: hidden;
     display: flex;
     align-items: center;
-    > img {
-      width: 100%;
+    justify-content: center;
+    .image-slot {
+      font-size: 32px;
     }
   }
 
   h3 {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
+    display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 
   div {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 20px;
   }
@@ -82,6 +106,26 @@ defineProps<{
     justify-content: center;
     font-size: 36px;
     border-radius: 10px;
+  }
+  .sku-item-action {
+    height: 50px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    > button {
+      width: 100% !important;
+      height: 50px;
+      border-radius: 0px 0px 20px 20px !important;
+      background: linear-gradient(
+        90.06deg,
+        rgba(251, 114, 47, 1) -1.7%,
+        rgba(226, 0, 0, 1) 77.7%
+      ) !important;
+      font-size: 24px;
+      color: #fff !important;
+    }
   }
 }
 </style>

@@ -1,10 +1,7 @@
 <template>
   <page-container class="pg-store-project-detail">
     <project-header :project-info="res?.data" :item-count="data?.length" />
-    <!-- <div class="project-detail">
-    </div> -->
     <div class="detail-divider"></div>
-    <div class="list-title">List of NFT Goods</div>
     <div v-if="data" class="list">
       <SkuItem
         v-for="item in data || []"
@@ -14,17 +11,15 @@
         class="pointer"
       >
         <template v-slot:actions>
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">
-            <p-button
-              v-if="!(item.isSold || item.isHide)"
-              :loading="loading"
-              size="small"
-              round
-              v-on:click="handleBuy(item)"
-            >
-              Buy Now
-            </p-button>
-          </div>
+          <p-button
+            v-if="!(item.isSold || item.isHide)"
+            :loading="loading"
+            size="small"
+            round
+            v-on:click="handleBuy(item)"
+          >
+            Buy Now
+          </p-button>
         </template>
       </SkuItem>
 
@@ -54,7 +49,8 @@ import { postSkuUpdate } from '@/api/nft';
 import projectHeader from '@/components/project-header/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import TicketQrcode from '@/components/TicketQrcode.vue';
-import YourInfoConfirm, { RuleForm } from '@/components/your-info-confirm/index.vue';
+import type { RuleForm } from '@/components/your-info-confirm/index.vue';
+import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
 import { useProjectSkuSpu } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
@@ -175,19 +171,20 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
 </script>
 <style lang="less" scoped>
 .pg-store-project-detail {
-  .list-title {
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 28px;
-    color: #000;
-    margin: 0 0 14px 0;
+  > :deep(article) {
+    background: url('./assets/bg.png') no-repeat;
   }
-
   .list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // gap: 12px;
+    // grid-template-columns: 1 1 1 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    // grid-template-rows: 286px auto 80px;
+    column-gap: 40px;
+    row-gap: 40px;
 
     > div {
       cursor: pointer;
