@@ -3,15 +3,15 @@
     <div>
       <div class="agent-info">
         <div class="agent-info-left">
-          <el-avatar :size="48" :src="defaultAvatar" />
-          <span>Nickname</span>
+          <el-avatar :size="48" :src="agentInfo?.logo || defaultAvatar" />
+          <span>{{ agentInfo?.nickName }}</span>
         </div>
         <div class="agent-info-right">
           <social-bar
-            :website="'https://google.com'"
-            :discord="'https://google.com?key=discord'"
-            :twitter="'https://google.com?key=twitter'"
-            :instagram="'https://google.com?key=instagram'"
+            :website="agentInfo?.homePage"
+            :discord="agentInfo?.discord"
+            :twitter="agentInfo?.twitter"
+            :instagram="agentInfo?.instagram"
           />
           <el-input v-model="key">
             <template #prefix>
@@ -48,7 +48,7 @@ import type { ElInput } from 'element-plus';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { getParticipateProjects } from '@/api';
+import { getKolInfo, getParticipateProjects } from '@/api';
 import ProjectItem from '@/components/project-item/index.vue';
 import socialBar from '@/components/social-bar/index.vue';
 import type { Address, ProjectData } from '@/types';
@@ -69,6 +69,15 @@ const { data: res, isPending } = useQuery({
     // return getProjects({});
   },
 });
+
+const { data: agentInfo } = useQuery({
+  queryKey: ['getKolInfo', kolAddress],
+  queryFn: async () => {
+    const res = await getKolInfo({ kolAddress });
+    return res.success ? res.data : null;
+  },
+});
+
 console.log('getProjects result=', isPending, res);
 
 function handleDetail(item: ProjectData) {

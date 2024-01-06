@@ -2,10 +2,10 @@
   <div>
     <el-form :model="form" label-width="180px">
       <el-form-item label="Name">
-        <el-input v-model="form.name" placeholder="name"></el-input>
+        <el-input v-model="form.nickName" placeholder="Nick name"></el-input>
       </el-form-item>
       <el-form-item label="HomePage">
-        <el-input v-model="form.homePage" placeholder="name"></el-input>
+        <el-input v-model="form.homePage" placeholder="homePage"></el-input>
       </el-form-item>
       <el-form-item label="X">
         <el-input v-model="form.twitter" placeholder="X"></el-input>
@@ -36,7 +36,7 @@ import Uploader from '@/components/Uploader.vue';
 
 const defaultForm = {
   kolAddress: '',
-  name: '',
+  nickName: '',
   twitter: '',
   discord: '',
   instagram: '',

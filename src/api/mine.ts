@@ -42,15 +42,19 @@ export const getParticipateProjects = (params: {
 // export const getParticipatProjects = (params: {}): Promise<IListResponse<ProjectData>> =>
 //   axios.get('/mine/participat', { params });
 
-// 保存KOL信息
-export const postKolInfo = (params: {
+export interface IKolInfo {
+  nickName: string;
   kolAddress: string;
   discord: string;
   twitter: string;
   instagram: string;
   homePage: string;
   logo: string;
-}): Promise<IResponse> => axios.post('/mine/kol', params);
+}
+// 保存KOL信息
+export const postKolInfo = (params: IKolInfo): Promise<IResponse> =>
+  axios.post('/mine/kol', params);
 
 // 查询KOL Profile信息
-export const getKolInfo = (params: { kolAddress: string }) => axios.get('/mine/kol', { params });
+export const getKolInfo = (params: { kolAddress: string }): Promise<IResponse<IKolInfo>> =>
+  axios.get('/mine/kol', { params });
