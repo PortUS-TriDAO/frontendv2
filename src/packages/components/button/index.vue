@@ -43,20 +43,11 @@ button {
   min-width: 180px;
   // height: 46px;
   &.el-button--primary {
-    font-size: 20px;
-    line-height: 28px;
-    height: 46px;
-    // background: url('@/assets/images/btn-bg.png');
-    // background: linear-gradient(90deg, rgba(251, 114, 47, 1) 0%, rgba(246, 37, 12, 1) 100%);
-    background: linear-gradient(
-      180deg,
-      rgba(71, 160, 247, 1) 0%,
-      rgba(49, 130, 247, 1) 56%,
-      rgba(145, 201, 251, 0) 99%
-    );
-    border-radius: 40px 0px 40px 40px;
+    font-size: 24px;
+    height: 40px;
+    border-radius: 50px;
+    background: linear-gradient(90.06deg, rgba(125, 152, 221, 1) -1.7%, rgba(0, 108, 255, 1) 77.7%);
     color: #fff;
-    // backdrop-filter: blur(10px);
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
 
     border: none;
