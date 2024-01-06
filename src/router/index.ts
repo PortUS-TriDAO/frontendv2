@@ -229,6 +229,10 @@ const router = createRouter({
       component: () => import('../views/store/SpuDetail.vue'),
     },
     {
+      path: '/store/:kolAddress',
+      redirect: (to) => `/store/${to.params.kolAddress}/projects`,
+    },
+    {
       path: '/faucet',
       name: 'Faucet',
       component: () => import('../views/faucet/faucet.vue'),

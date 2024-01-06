@@ -6,25 +6,41 @@
     <div class="project-item-detail">
       <h3>{{ item.name || item.projectName }}</h3>
       <div class="project-item-desc">
-        Project intro: {{ item.briefIntro }}
-        <!-- <text-ellipsis :line="2" hideAction>Project intro: {{ item.briefIntro }}</text-ellipsis> -->
+        <div>
+          <div>
+            <label>Provider:</label>
+            <span>hashkey</span>
+          </div>
+          <div class="text-2-row">
+            <label>Project intro:</label>
+            <span>
+              a word that refers to a lung disease contracted from the inhalation of very fine
+              silica particles, specifically from a volcano; medically, it is the same as
+              silicosis.</span
+            >
+            <!-- <span>{{ item.briefIntro }}</span> -->
+          </div>
+        </div>
+        <div>
+          <div>
+            <label>ALTCs:</label>
+            <span></span>
+          </div>
+          <div>
+            <label>Collections:</label>
+            <span>3</span>
+          </div>
+          <div>
+            <label>Goods:</label>
+            <span>20</span>
+          </div>
+        </div>
       </div>
-      <div class="item-action">
+      <div class="project-item-action">
         <p-button v-if="btnText" @click="handleClick(item)">
-          {{ btnText || 'See more' }}
+          {{ btnText || 'More' }}
         </p-button>
       </div>
-      <!-- <div class="item-row2">
-            <div>
-              <label>items:</label>
-              <span>136</span>
-            </div>
-            <div>
-              <label>righted/rights:</label>
-              <span>56/200</span>
-            </div>
-          </div>-->
-      <!-- <div style="flex-grow: 1"></div> -->
     </div>
   </div>
 </template>
@@ -42,25 +58,24 @@ function handleClick(item: ProjectData) {
 .project-item {
   display: flex;
   flex-direction: row;
-  gap: 38px;
-  padding: 24px 30px;
-  // background: #f7f7f7;
+  gap: 20px;
+  padding: 15px 30px;
   border-radius: 10px;
   margin-bottom: 20px;
-  background: url('@/assets/images/item-bg.png');
+  background: url('./assets/item-bg.png');
   background-size: 100% 100%;
-  // height: 258px;
-  // width: 913px;
+  min-height: 250px;
 
   .project-item-avatar {
-    background-color: #fff;
-    // border: 1px solid rgba(187, 187, 187, 1);
+    border: solid 1px rgba(229, 229, 229, 1);
     padding: 8px;
     border-radius: 10px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
     > img {
-      width: 200px;
-      height: 200px;
+      width: 150px;
+      height: 150px;
       border-radius: 10px;
     }
   }
@@ -69,14 +84,13 @@ function handleClick(item: ProjectData) {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
     font-size: 24px;
     letter-spacing: 0px;
     line-height: 29px;
-    color: #000000;
-    padding: 14px 10px 10px 0;
 
     > h3 {
+      font-size: 28px;
       font-weight: 700;
       font-size: inherit;
     }
@@ -85,31 +99,35 @@ function handleClick(item: ProjectData) {
       font-size: inherit;
       font-weight: 400;
     }
-
-    // .item-row2 {
-    //   display: flex;
-    //   flex-direction: row;
-    //   align-items: center;
-    //   label {
-    //     margin-right: 4px;
-    //   }
-    //   div:first-child {
-    //     width: 245px;
-    //   }
-    // }
-  }
-  .item-action {
-    text-align: right;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    // padding-bottom: 16px;
   }
 
   .project-item-desc {
-    font-size: 20px;
+    flex-grow: 1;
+    font-size: 16px;
+    line-height: 1.5;
+    display: flex;
+    gap: 20px;
+
+    > div {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      label {
+        margin-right: 4px;
+      }
+    }
+  }
+  .text-2-row {
+    display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .project-item-action {
+    flex-shrink: 0;
+    text-align: center;
   }
 }
 </style>

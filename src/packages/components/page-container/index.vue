@@ -42,18 +42,16 @@ function handleBack() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(6, 23, 58, 1);
-  // justify-content: center;
-  // width: 100%;
+  background: rgba(6, 23, 58, 1) url('./assets/bg-page.png') no-repeat center top;
   flex: 1;
   > article {
-    background: #ffffff;
     flex-grow: 1;
     width: var(--container-width);
     padding-left: var(--container-padding-left);
     padding-right: var(--container-padding-right);
     padding-bottom: 30px;
     padding-top: 20px;
+    color: #fff;
   }
   .page-banner {
     width: 100%;
