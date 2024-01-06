@@ -23,6 +23,13 @@
             >My Store
           </router-link>
         </li>
+        <li>
+          <router-link
+            :class="['create-project-btn', { selected: selected === 'profile' }]"
+            to="/mine/profile"
+            >Profile
+          </router-link>
+        </li>
       </ul>
     </div>
     <div class="mine-content">
@@ -35,6 +42,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+console.log('route:', route);
 
 const selected = computed(() => route.meta.scenes);
 </script>

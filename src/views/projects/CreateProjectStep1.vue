@@ -2,7 +2,7 @@
   <main-content>
     <div class="step1-form">
       <div class="form-content">
-        <el-form ref="ruleFormRef" label-position="top" :inline="true" :model="form" :rules="rules">
+        <el-form ref="ruleFormRef" :model="form" :rules="rules" label-width="180px">
           <el-form-item label="Project Name" prop="projectName">
             <el-input placeholder="Party A name" v-model="form.projectName"></el-input>
           </el-form-item>
@@ -14,6 +14,9 @@
           </el-form-item>
           <el-form-item label="Description" prop="description">
             <el-input autosize type="textarea" v-model="form.description"></el-input>
+          </el-form-item>
+          <el-form-item label="Provider" prop="provider">
+            <el-input v-model="form.provider"></el-input>
           </el-form-item>
           <el-form-item label="Discord" prop="discord">
             <el-input v-model="form.discord"></el-input>
@@ -27,7 +30,7 @@
           <el-form-item label="External Link" prop="externallink">
             <el-input v-model="form.externallink"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item width="100%">
             <div class="uploads">
               <uploader :src="form.avatar" @onSuccess="handleAvatar">
                 <span>Avatar</span>
@@ -37,6 +40,11 @@
               </uploader>
             </div>
             <p>Recommended size: Avatar 200*200 Cover 1200*200</p>
+          </el-form-item>
+          <el-form-item>
+            <div>
+              <upload-picture-list @onUpload="onUploadPictureSuccess"></upload-picture-list>
+            </div>
           </el-form-item>
         </el-form>
       </div>
@@ -54,6 +62,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import * as api from '@/api/projects';
 import MainContent from '@/components/MainContent.vue';
+import UploadPictureList from '@/components/upload-picture-list/index.vue';
 import Uploader from '@/components/Uploader.vue';
 
 const route = useRoute();
@@ -66,17 +75,21 @@ const form = reactive({
   description: '',
   avatar: '',
   cover: '',
+  provider: '',
   discord: '',
   twitter: '',
   instagram: '',
   externallink: '',
 });
 
+const pictures = ref<string[]>([]);
+
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive({
   projectName: [{ required: true, message: 'Please input project name', trigger: 'blur' }],
   briefIntro: [{ required: true, message: 'Please input brief introduction', trigger: 'blur' }],
   website: [{ required: true, message: 'Please input website', trigger: 'blur' }],
+  provider: [{ required: true, message: 'Please input provider', trigger: 'blur' }],
   description: [{ required: true, message: 'Please input description', trigger: 'blur' }],
   avatar: [{ required: true, message: 'Please input avatar', trigger: 'blur' }],
   cover: [{ required: true, message: 'Please input cover', trigger: 'blur' }],
@@ -111,15 +124,15 @@ async function handleNext(formEl: FormInstance | undefined) {
 
 async function createProjectStep1() {
   const formData = toRaw(form);
-  // if (!formData.avatar) {
-  //   ElMessage.error('Please upload avatar');
-  //   return;
-  // }
+  if (!formData.avatar) {
+    ElMessage.error('Please upload avatar');
+    return;
+  }
 
-  // if (!formData.cover) {
-  //   ElMessage.error('Please upload cover');
-  //   return;
-  // }
+  if (!formData.cover) {
+    ElMessage.error('Please upload cover');
+    return;
+  }
 
   if (projectId) {
     updateProject();
@@ -128,12 +141,17 @@ async function createProjectStep1() {
   }
 }
 
+const onUploadPictureSuccess = (url: string) => {
+  pictures.value.push(url);
+};
+
 async function updateProject() {
   const { address } = getAccount();
   const formData = toRaw(form);
   const { success, data } = await api.updateProjectInfo({
     projectId: Number(projectId),
     creatorAddress: address,
+    images: pictures.value,
     ...formData,
   });
   if (!success) {
@@ -148,7 +166,11 @@ async function updateProject() {
 async function createProject() {
   const { address } = getAccount();
   const formData = toRaw(form);
-  const { success, data } = await api.createProjectStep1({ creatorAddress: address, ...formData });
+  const { success, data } = await api.createProjectStep1({
+    creatorAddress: address,
+    images: pictures.value,
+    ...formData,
+  });
   if (!success) {
     ElMessage.error('create project failed');
   } else {
@@ -194,8 +216,8 @@ async function handleCover(url: string) {
     flex-direction: row;
   }
 
-  .el-form-item {
-    width: 340px;
-  }
+  // .el-form-item {
+  //   width: 340px;
+  // }
 }
 </style>

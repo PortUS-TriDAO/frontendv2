@@ -2,6 +2,6 @@ import 'vue-router';
 
 declare module 'vue-router' {
   interface RouteMeta {
-    scenes?: 'submitted' | 'participated' | 'store';
+    scenes?: 'submitted' | 'participated' | 'store' | 'profile';
   }
 }

@@ -1,6 +1,8 @@
 <template>
   <div class="sku-item">
-    <img alt="avatar" :src="item.avatar || item.imgUrl" />
+    <div class="icon">
+      <img alt="avatar" :src="item.avatar || item.imgUrl" />
+    </div>
     <h3>{{ item?.name || item?.nftName }}</h3>
     <div>{{ item.price }} {{ PayTokenMap[item.payToken]?.symbol || 'USDT' }}</div>
     <text-ellipsis :line="3" hideAction>
@@ -33,12 +35,15 @@ defineProps<{
   width: 170px;
   color: rgba(0, 0, 0, 1);
   position: relative;
-
-  > img {
+  .icon {
     width: 150px;
     height: 150px;
-    border-radius: 10px;
-    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    > img {
+      width: 100%;
+    }
   }
 
   h3 {
