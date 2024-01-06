@@ -91,10 +91,12 @@ const elMenu = ref(null);
 
 function switchMenu(hideForce?: boolean) {
   const el = elMenu.value;
-  if (el.classList.contains('menus-show') || hideForce === true) {
-    el.classList.remove('menus-show');
-  } else {
-    el.classList.add('menus-show');
+  if (el?.classList) {
+    if (el.classList.contains('menus-show') || hideForce === true) {
+      el.classList.remove('menus-show');
+    } else {
+      el.classList.add('menus-show');
+    }
   }
 }
 
