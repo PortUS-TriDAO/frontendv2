@@ -79,6 +79,7 @@ const { data: res } = useQuery({
 const { data, refetch } = useProjectSkuSpu(projectId);
 
 function handleDetail(item: SkuSpuData) {
+  router.push(`/store/${kolAddress}/sku/${item.retailId}/${item.id}/${item.bizId}`);
   // TODO: 暂时去除进入 详情页面
   // if (item.isSku) {
   //   router.push(`/store/${kolAddress}/sku/${item.retailId}/${item.id}/${item.bizId}`);
@@ -176,14 +177,8 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     background: url('./assets/bg.png') no-repeat;
   }
   .list {
-    // display: flex;
-    // flex-direction: row;
-    // flex-wrap: wrap;
-    // gap: 12px;
-    // grid-template-columns: 1 1 1 1;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    // grid-template-rows: 286px auto 80px;
     column-gap: 40px;
     row-gap: 40px;
 

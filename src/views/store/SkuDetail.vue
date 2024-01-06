@@ -1,5 +1,9 @@
 <template>
   <page-container class="pg-sku-detail">
+    <!-- <div class="sku-detail-header">
+      <div class="sku-bg"></div>
+      <div></div>
+    </div> -->
     <sku-card :loading="loading" v-if="data" :item="data">
       <div class="info">
         <div v-if="data?.isSold" class="sold-out">sold out</div>
@@ -8,29 +12,6 @@
       </div>
     </sku-card>
 
-    <!-- <div class="detail-divider"></div> -->
-    <!--    <div class="list-title">Items</div>-->
-    <!--    <div class="list">-->
-    <!--      <sku-item-->
-    <!--        v-for="item in (nftList?.rows || []).filter((item) => item.id !== skuId)"-->
-    <!--        :key="item.id"-->
-    <!--        :item="item"-->
-    <!--        @click="handleDetail(item.id)"-->
-    <!--      >-->
-    <!--        <template v-slot:actions>-->
-    <!--          <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end">-->
-    <!--            <p-button-->
-    <!--              v-if="!(item.isSold || item.isHide)"-->
-    <!--              size="small"-->
-    <!--              round-->
-    <!--              v-on:click.stop="handleBuy(item)"-->
-    <!--            >-->
-    <!--              Buy Now-->
-    <!--            </p-button>-->
-    <!--          </div>-->
-    <!--        </template>-->
-    <!--      </sku-item>-->
-    <!--    </div>-->
     <ticket-qrcode
       :content="qrcodeContent"
       :visible="qrcodeVisible"
@@ -138,8 +119,19 @@ async function handleBuy(skuData: SkuData) {
 </script>
 <style lang="less" scoped>
 .pg-sku-detail {
+  // > :deep(article) {
+  //   background: url('./assets/bg.png') no-repeat;
+  // }
   .info {
     height: 100%;
+  }
+  .sku-detail-header {
+    height: 300px;
+  }
+  .sku-bg {
+    width: 443px;
+    height: 214px;
+    background: url('./assets/sku-bg.png') no-repeat;
   }
 
   .sold-out {
