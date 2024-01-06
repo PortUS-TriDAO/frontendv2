@@ -1,5 +1,5 @@
 <template>
-  <main class="page-container">
+  <main class="page-container" :style="style">
     <div class="page-banner" v-if="bannerImg || showBanner">
       <img :src="bannerImg" />
     </div>
@@ -19,6 +19,7 @@
   </main>
 </template>
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import iconBack from '@/assets/images/icon-back.png';
@@ -27,10 +28,18 @@ const router = useRouter();
 defineOptions({
   name: 'PageContainer',
 });
-defineProps({
+const props = defineProps({
   bannerImg: String,
   showBanner: Boolean,
   title: String,
+  backgroundImage: String,
+});
+const style = computed(() => {
+  return props.backgroundImage
+    ? {
+        backgroundImage: `url(${props.backgroundImage})`,
+      }
+    : null;
 });
 function handleBack() {
   router.go(-1);
@@ -43,6 +52,7 @@ function handleBack() {
   flex-direction: column;
   align-items: center;
   background: rgba(6, 23, 58, 1) url('./assets/bg-page.png') no-repeat center top;
+  background-size: contain;
   flex: 1;
   > article {
     flex-grow: 1;

@@ -1,45 +1,48 @@
 <template>
-  <div class="mine-container">
+  <page-container class="mine-container" :background-image="bg">
     <div class="left-menu">
-      <ul>
-        <li>
-          <router-link
-            :class="['create-project-btn', { selected: selected === 'submitted' }]"
-            to="/mine/submitted"
-            >Project Created
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            :class="['create-project-btn', { selected: selected === 'participated' }]"
-            to="/mine/participated"
-            >Participated
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            :class="['create-project-btn', { selected: selected === 'store' }]"
-            to="/mine/store"
-            >My Store
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            :class="['create-project-btn', { selected: selected === 'profile' }]"
-            to="/mine/profile"
-            >Profile
-          </router-link>
-        </li>
-      </ul>
+      <div>
+        <router-link
+          :class="['create-project-btn', { selected: selected === 'submitted' }]"
+          to="/mine/submitted"
+        >
+          <el-icon><Connection /></el-icon>
+          Project Created
+        </router-link>
+        <router-link
+          :class="['create-project-btn', { selected: selected === 'participated' }]"
+          to="/mine/participated"
+        >
+          <el-icon><Collection /></el-icon>
+          Participated
+        </router-link>
+        <router-link
+          :class="['create-project-btn', { selected: selected === 'store' }]"
+          to="/mine/store"
+        >
+          <el-icon><ShoppingTrolley /></el-icon>
+          My Store
+        </router-link>
+        <router-link
+          :class="['create-project-btn', { selected: selected === 'profile' }]"
+          to="/mine/profile"
+        >
+          <el-icon><Avatar /></el-icon>
+          Profile
+        </router-link>
+      </div>
     </div>
     <div class="mine-content">
       <router-view></router-view>
     </div>
-  </div>
+  </page-container>
 </template>
 <script setup lang="ts">
+import { Avatar, Collection, Connection, ShoppingTrolley } from '@element-plus/icons-vue';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+
+import bg from './assets/mine-bg.png';
 
 const route = useRoute();
 console.log('route:', route);
@@ -48,37 +51,45 @@ const selected = computed(() => route.meta.scenes);
 </script>
 <style lang="less">
 .mine-container {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
+  > article {
+    display: flex;
+    flex-direction: row;
+  }
 
   .left-menu {
-    background-color: #fff;
     padding: 18px;
     margin-right: 5px;
+    border-right: 1px solid rgba(187, 187, 187, 1);
 
-    > ul {
+    > div {
       list-style: none;
       margin: 0;
       padding: 0;
-      margin-right: 17px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
 
-      > li {
-        height: 30px;
+      > a {
         cursor: pointer;
         display: flex;
-        flex-direction: row;
+
+        height: 44px;
+        width: 180px;
+        padding-left: 8px;
+        color: #999999;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
         align-items: center;
+        gap: 8px;
+        border-radius: 4px;
 
-        > a {
-          color: #999999;
-          font-size: 16px;
-          font-weight: 600;
-
-          &.selected {
-            color: #f62d10;
-          }
+        &.selected {
+          color: #f62d10;
+          background-color: #00245a;
+        }
+        > .el-icon {
+          font-size: 18px;
         }
       }
     }
@@ -88,7 +99,7 @@ const selected = computed(() => route.meta.scenes);
     flex: 1;
     //width: 976px;
     width: 800px;
-    background-color: #fff;
+    // background-color: #fff;
     padding: 20px 30px;
   }
 }
