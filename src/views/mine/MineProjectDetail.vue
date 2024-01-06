@@ -1,7 +1,7 @@
 <template>
   <div class="pg-mime-project-detail">
     <project-header :project-info="res?.data" :item-count="res?.data?.rows?.length" />
-    <div class="title">Agent license token contract</div>
+    <div class="title">ALTC list</div>
     <div v-if="res?.data">
       <business-item
         :scenes="scenes"
@@ -209,10 +209,10 @@ const map = {
 <style lang="less" scoped>
 .pg-mime-project-detail {
   .title {
-    font-size: 34px;
+    color: rgba(245, 243, 243, 1);
+    font-size: 20px;
     font-weight: 700;
-    line-height: 40px;
-    color: #000;
+    line-height: 26px;
     margin: 14px 0;
   }
 
