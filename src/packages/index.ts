@@ -1,4 +1,5 @@
 import Button from './components/button';
+import NoData from './components/no-data/index.vue';
 import NumberInput from './components/number-input';
 import PageContainer from './components/page-container/index.vue';
 import TextEllipsis from './components/text-ellipsis/index.vue';
@@ -10,5 +11,6 @@ export function initPackages(app: any) {
     .component('p-wallet-button', WalletButton)
     .component('p-number-input', NumberInput)
     .component('text-ellipsis', TextEllipsis)
-    .component('page-container', PageContainer);
+    .component('page-container', PageContainer)
+    .component('no-data', NoData);
 }

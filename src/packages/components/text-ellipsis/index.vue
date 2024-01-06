@@ -50,7 +50,6 @@ const ellipsis = ref(true);
   }
   > a {
     flex-shrink: 0;
-    // color: #2a82e4;
     color: #fff;
     cursor: pointer;
     display: inline-flex;
@@ -58,9 +57,9 @@ const ellipsis = ref(true);
     flex-direction: row;
     gap: 4px;
     padding-left: 8px;
-    background-color: #aaa;
     padding: 2px 4px;
     border-radius: 4px;
+    background: linear-gradient(90.06deg, #fb722f -1.7%, #e20000 77.7%) !important;
   }
   &.text-ellipsis--expand {
     display: block;

@@ -32,20 +32,21 @@
         </div>
       </div>
       <project-item
-        v-for="item in res?.data?.rows || []"
+        v-for="item in list"
         :key="item.projectId"
         :item="item"
         btnText="More"
         @btnClick="handleDetail"
       >
       </project-item>
+      <no-data v-if="list.length === 0" />
     </div>
   </page-container>
 </template>
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
 import type { ElInput } from 'element-plus';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { getKolInfo, getParticipateProjects } from '@/api';
@@ -61,13 +62,24 @@ const key = ref('');
 
 const kolAddress = route.params.kolAddress as Address;
 
-const { data: res, isPending } = useQuery({
+const { data, isPending } = useQuery({
   queryKey: ['getParticipateProjects', kolAddress],
-  queryFn: () => {
+  queryFn: async () => {
     // storeId
-    return getParticipateProjects({ kolAddress });
+    const res = await getParticipateProjects({ kolAddress });
+    return res.success ? res.data : null;
     // return getProjects({});
   },
+});
+
+const list = computed(() => {
+  const value = key.value.trim().toLowerCase();
+  if (!value) {
+    return data?.value?.rows || [];
+  }
+  return data?.value?.rows.filter((item) =>
+    (item.name || item.projectName).toLowerCase().includes(value),
+  );
 });
 
 const { data: agentInfo } = useQuery({
@@ -78,10 +90,10 @@ const { data: agentInfo } = useQuery({
   },
 });
 
-console.log('getProjects result=', isPending, res);
+console.log('getProjects result=', isPending.value, data);
 
 function handleDetail(item: ProjectData) {
-  router.push(`/store/${kolAddress}/project/${item.projectId}`);
+  router.push(`/store/${kolAddress}/project/${item.projectId || item.id}`);
 }
 </script>
 <style lang="less" scoped>

@@ -1,5 +1,6 @@
 <template>
   <div :class="['sku-item', { sold: item.isSold }]">
+    <div class="sku-item-amount">{{ item.soldAmount }}/{{ item.sellAmount }}</div>
     <el-image :src="item.avatar || item.imgUrl" fit="contain">
       <template #error>
         <div class="image-slot">
@@ -33,14 +34,17 @@ defineProps<{
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  padding: 10px;
+  padding: 16px 12px;
   background: #f7f7f7;
   border-radius: 20px;
   margin-bottom: 12px;
   width: 200px;
-  color: rgba(0, 0, 0, 1);
+  color: #fff;
   position: relative;
   padding-bottom: 62px;
+  background: url('./assets/bg.png') center center no-repeat;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
+  background-size: 120% 120%;
 
   &.sold {
     position: relative;
@@ -49,6 +53,12 @@ defineProps<{
     button {
       opacity: 0.5 !important;
     }
+  }
+  .sku-item-amount {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 24px;
   }
 
   .el-image {

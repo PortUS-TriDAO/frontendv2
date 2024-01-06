@@ -22,6 +22,7 @@
           </p-button>
         </template>
       </SkuItem>
+      <no-data v-if="!data || data.length === 0" />
 
       <your-info-confirm
         :visible="yourInfoConfirmVisible"

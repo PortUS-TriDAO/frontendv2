@@ -10,6 +10,9 @@ export interface ProjectData {
   name: string;
   projectName: string;
   briefIntro: string;
+  collectionCount: number;
+  goodsCount: number;
+  provider: number;
 }
 
 /**
@@ -38,7 +41,9 @@ export interface ProjectDetailData {
   payToken: Address;
   projectAddress: Address;
   minted: boolean;
+  provider: string;
   rows: BusinessData[];
+  images: string[];
 }
 
 /**
@@ -109,6 +114,7 @@ export interface SkuData {
   tokenId: number;
   nftAddress: string;
   sellAmount: number;
+  soldAmount: number;
   //
   bizId: number;
   retailId: number;

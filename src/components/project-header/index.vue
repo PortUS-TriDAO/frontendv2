@@ -20,7 +20,7 @@
             </div>
             <div>
               <label>Collections:</label>
-              <span>3</span>
+              <span>{{ projectInfo?.rows?.length }}</span>
             </div>
             <div>
               <label>Goods:</label>
@@ -30,7 +30,7 @@
           <div>
             <div>
               <label>Provider:</label>
-              <span>hashkey</span>
+              <span>{{ projectInfo?.provider }}</span>
             </div>
             <div>
               <label>Created:</label>
@@ -43,79 +43,64 @@
 
     <div :class="['project-header-poster', { all: showMore }]">
       <div>
-        <img src="https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp" />
+        <el-image v-for="item in projectInfo?.images || []" :key="item" :src="item" fit="contain">
+          <template #error>
+            <div class="image-slot">
+              <el-icon><icon-picture /></el-icon>
+            </div>
+          </template>
+        </el-image>
       </div>
-      <div>
-        <img src="https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp" />
-      </div>
-      <div>
-        <img src="https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp" />
-      </div>
-      <div>
-        <img src="https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp" />
-      </div>
-      <div>
-        <img src="https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp" />
-      </div>
-      <div>
-        <img src="https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp" />
-      </div>
-      <div>
-        <img src="https://portus.oss-cn-hongkong.aliyuncs.com/filename/logo.webp" />
+      <div :class="['project-header-poster-more', { up: showMore }]">
+        <button @click="handleMore">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 32 32"
+            width="24"
+            height="24"
+            style=""
+            filter="none"
+          >
+            <g>
+              <path
+                d="M2.016 16c0 7.712 6.272 14.016 13.984 14.016s14.016-6.304 14.016-14.016-6.272-14.016-14.016-14.016-13.984 6.272-13.984 14.016zM16.736 17.28l6.464-6.464c0.288-0.288 0.8-0.288 1.12 0l1.888 1.888c0.288 0.32 0.288 0.832 0 1.12l-9.472 9.472c-0.32 0.32-0.832 0.32-1.12 0l-9.472-9.472c-0.32-0.288-0.32-0.8 0-1.12l1.888-1.888c0.288-0.288 0.8-0.288 1.12 0l6.464 6.464c0.288 0.32 0.8 0.32 1.12 0z"
+                fill="rgba(211,217,226,1)"
+              ></path>
+            </g>
+          </svg>
+        </button>
       </div>
     </div>
-    <div :class="['project-header-poster-more', { up: showMore }]">
-      <button @click="handleMore">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          viewBox="0 0 32 32"
-          width="24"
-          height="24"
-          style=""
-          filter="none"
-        >
-          <g>
-            <path
-              d="M2.016 16c0 7.712 6.272 14.016 13.984 14.016s14.016-6.304 14.016-14.016-6.272-14.016-14.016-14.016-13.984 6.272-13.984 14.016zM16.736 17.28l6.464-6.464c0.288-0.288 0.8-0.288 1.12 0l1.888 1.888c0.288 0.32 0.288 0.832 0 1.12l-9.472 9.472c-0.32 0.32-0.832 0.32-1.12 0l-9.472-9.472c-0.32-0.288-0.32-0.8 0-1.12l1.888-1.888c0.288-0.288 0.8-0.288 1.12 0l6.464 6.464c0.288 0.32 0.8 0.32 1.12 0z"
-              fill="rgba(211,217,226,1)"
-            ></path>
-          </g>
-        </svg>
-      </button>
-    </div>
-    <!-- <text-ellipsis>{{ projectInfo?.description }}</text-ellipsis> -->
     <div class="description">
       <text-ellipsis :line="3">
-        a word that refers to a lung disease contracted from the inhalation of very fine silica
-        particles, specifically from a volcano; medically, it is the same as silicosis.a word that
-        refers to a lung disease contracted from the inhalation of very fine silica particles,
-        specifically from a volcano; medically, it is the same as silicosis.a word that refers to a
-        lung disease contracted from the inhalation of very fine silica particles, specifically from
-        a volcano; medically, it is the same as silicosis.a word that refers to a lung disease
-        contracted from the inhalation of very fine silica particles, specifically from a volcano;
-        medically, it is the same as silicosis.a word that refers to a lung disease contracted from
-        the inhalation of very fine silica particles, specifically from a volcano; medically, it is
-        the same as silicosis.a word that refers to a lung disease contracted from the inhalation of
-        very fine silica particles, specifically from a volcano; medically, it is the same as
-        silicosis.a word that refers to a lung disease contracted from the inhalation of very fine
-        silica particles, specifically from a volcano; medically, it is the same as silicosis.
+        <span v-html="safeDescription"></span>
       </text-ellipsis>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { Picture as IconPicture } from '@element-plus/icons-vue';
 import dayjs from 'dayjs';
-import { ref } from 'vue';
+import * as DOMPurify from 'dompurify';
+import { computed, ref } from 'vue';
 
 import socialBar from '@/components/social-bar/index.vue';
 import type { ProjectDetailData } from '@/types';
 
 defineOptions({ name: 'ProjectHeader' });
-defineProps<{
+const props = defineProps<{
   projectInfo: ProjectDetailData;
   itemCount: number;
 }>();
+
+const safeDescription = computed(() => {
+  if (!props.projectInfo?.description) {
+    return '';
+  }
+  const clean = DOMPurify.sanitize(props.projectInfo?.description);
+  return clean;
+});
 const showMore = ref(false);
 function handleMore() {
   showMore.value = !showMore.value;
@@ -141,7 +126,6 @@ function handleMore() {
       width: 150px;
       height: 150px;
       flex-shrink: 0;
-      background-color: #eee;
       border-radius: 10px;
     }
     > div {
@@ -185,12 +169,14 @@ function handleMore() {
   }
 
   .project-header-poster {
-    display: flex;
-    flex-wrap: wrap;
-    height: 200px;
-    overflow: hidden;
-    transition: height ease-in 0.3s;
-    > div {
+    > div:first-child {
+      display: flex;
+      flex-wrap: wrap;
+      height: 200px;
+      overflow: hidden;
+      transition: height ease-in 0.3s;
+    }
+    :deep(.el-image) {
       width: 33.33%;
       padding: 10px;
       height: 200px;
@@ -201,7 +187,7 @@ function handleMore() {
         height: 100%;
       }
     }
-    &.all {
+    &.all > div:first-child {
       height: auto;
     }
   }

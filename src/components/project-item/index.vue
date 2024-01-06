@@ -9,16 +9,11 @@
         <div>
           <div>
             <label>Provider:</label>
-            <span>hashkey</span>
+            <span>{{ item.provider }}</span>
           </div>
           <div class="text-2-row">
             <label>Project intro:</label>
-            <span>
-              a word that refers to a lung disease contracted from the inhalation of very fine
-              silica particles, specifically from a volcano; medically, it is the same as
-              silicosis.</span
-            >
-            <!-- <span>{{ item.briefIntro }}</span> -->
+            <span>{{ item.briefIntro }}</span>
           </div>
         </div>
         <div>
@@ -28,11 +23,11 @@
           </div>
           <div>
             <label>Collections:</label>
-            <span>3</span>
+            <span>{{ item.collectionCount }}</span>
           </div>
           <div>
             <label>Goods:</label>
-            <span>20</span>
+            <span>{{ item.goodsCount }}</span>
           </div>
         </div>
       </div>
