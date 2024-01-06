@@ -11,6 +11,7 @@
       class="pointer"
     >
     </project-item>
+    <no-data v-if="data?.rows?.length < 1" />
     <div class="text-center" v-if="scenesData.bottomBtn">
       <p-button @click="scenesData.bottomBtn.onClick">{{ scenesData.bottomBtn.text }}</p-button>
     </div>
