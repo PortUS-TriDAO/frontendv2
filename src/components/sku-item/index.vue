@@ -1,5 +1,10 @@
 <template>
-  <div :class="['sku-item', { sold: item.isSold || item.isHide }]">
+  <div
+    :class="[
+      'sku-item',
+      { sold: item.isSold || item.isHide || item.soldAmount >= item.sellAmount },
+    ]"
+  >
     <div class="sku-item-amount">{{ item.soldAmount }}/{{ item.sellAmount }}</div>
     <el-image :src="item.avatar || item.imgUrl" fit="contain">
       <template #error>
