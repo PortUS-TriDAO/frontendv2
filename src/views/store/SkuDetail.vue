@@ -8,10 +8,15 @@
       <div class="info">
         <div v-if="data?.isSold" class="sold-out">sold out</div>
         <div v-else-if="data.isHide" class="sold-out">Down</div>
-        <p-button v-else @click="handleBuy(data)">Buy Now</p-button>
+        <p-button v-else @click="handleBuy()">Buy Now</p-button>
       </div>
     </sku-card>
 
+    <your-info-confirm
+      :visible="yourInfoConfirmVisible"
+      @close="yourInfoConfirmVisible = false"
+      @submit="handleSubmit"
+    ></your-info-confirm>
     <ticket-qrcode
       :content="qrcodeContent"
       :visible="qrcodeVisible"
@@ -20,30 +25,33 @@
   </page-container>
 </template>
 <script setup lang="ts">
-import type { Address } from '@wagmi/core';
-import { waitForTransaction } from '@wagmi/core';
+import { getAccount, waitForTransaction } from '@wagmi/core';
 import { ElLoading, ElMessage } from 'element-plus';
-import { computed, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, ref, toRaw } from 'vue';
+import { useRoute } from 'vue-router';
 
+import { getkolRightId } from '@/api';
 import { postSkuUpdate } from '@/api/nft';
 import SkuCard from '@/components/sku-card/index.vue';
 import TicketQrcode from '@/components/TicketQrcode.vue';
+import type { RuleForm } from '@/components/your-info-confirm/index.vue';
+import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
 import { useKolRightId, useSkuDetail } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
-import type { SkuData } from '@/types';
+import type { SkuData, SkuSpuData } from '@/types';
 import { extendsDecimals } from '@/utils/bn';
 
 const loading = ref(false);
 const route = useRoute();
-const router = useRouter();
 const kolAddress = route.params.kolAddress as string;
 const retailId = Number(route.params.retailId);
 const skuId = computed(() => Number(route.params.skuId));
 const bizId = Number(route.params.bizId);
 const qrcodeContent = ref('');
 const qrcodeVisible = ref(false);
+// your info
+const yourInfoConfirmVisible = ref(false);
 
 // const nftAddress = computed(() => route.params.nftAddress as string);
 // const skuId = computed(() => route.params.skuId as string);
@@ -51,14 +59,19 @@ const projectStore = useProjectStore();
 const erc20Contract = useERC20Contract();
 
 const { data, refetch } = useSkuDetail(skuId);
-const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
+// const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
 
-function handleDetail(id: number) {
-  router.push(`/store/${kolAddress}/sku/${retailId}/${id}`);
+async function handleBuy() {
+  yourInfoConfirmVisible.value = true;
 }
 
-async function handleBuy(skuData: SkuData) {
-  loading.value = true;
+function handleSubmit(form: RuleForm) {
+  console.log('form:', form);
+  handleBuyConfirm(data.value as SkuSpuData, form);
+}
+async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
+  const formData = toRaw(form);
+  const itemInfo = toRaw(item);
   const fullScreenLoading = ElLoading.service({
     lock: true,
     text: 'Approve',
@@ -66,54 +79,58 @@ async function handleBuy(skuData: SkuData) {
   });
   try {
     const buyParams = {
-      seller: data.value.seller as Address,
-      payToken: data.value.payToken as Address,
-      payPrice: extendsDecimals(data.value.price).toString(10),
-      sellAmount: data.value.sellAmount,
-      nftTokenId: Number(data.value.tokenId),
-      deadline: Number(data.value.ddl),
-      signature: data.value.signature,
+      seller: itemInfo.seller,
+      payToken: itemInfo.payToken,
+      payPrice: extendsDecimals(itemInfo.price).toString(10),
+      sellAmount: itemInfo.sellAmount,
+      nftTokenId: itemInfo.tokenId,
+      deadline: itemInfo.ddl,
+      signature: itemInfo.signature,
     };
 
-    // approve ERC20
-    const approveTx = await erc20Contract.approve(
-      buyParams.payToken,
-      data.value.retailAddress,
-      buyParams.payPrice,
-    );
-    await waitForTransaction({ hash: approveTx.hash });
-    fullScreenLoading.text.value = 'Buy';
-    const tokenId = Number(kolRightInfo.value.rightId);
-    const tx = await projectStore.handleBuyMintedNft(
-      data.value.retailAddress,
-      [buyParams],
-      tokenId,
-    );
-    await waitForTransaction({
-      hash: tx.hash,
-    });
-    await postSkuUpdate({ skuId: Number(skuId.value), isSold: true });
-    refetch();
-
-    try {
-      const { ticketToken } = await projectStore.handleTickVerify(
-        skuData.nftAddress,
-        skuData.tokenId,
-        skuData.id,
+    const { address: seller } = getAccount();
+    const allowance = await erc20Contract.allowance(buyParams.payToken, seller, item.retailAddress);
+    if (BigInt(buyParams.payPrice) > BigInt(allowance as string)) {
+      // approve ERC20
+      const approveTx = await erc20Contract.approve(
+        buyParams.payToken,
+        item.retailAddress,
+        buyParams.payPrice,
       );
-      qrcodeVisible.value = true;
-      qrcodeContent.value = ticketToken;
-    } catch (e) {
-      ElMessage.error('fetch ticket info failed');
+      await waitForTransaction({ hash: approveTx.hash });
     }
 
+    fullScreenLoading.text.value = 'Buy';
+
+    const { success, data: kolRightInfo } = await getkolRightId({ bizId, kolAddress });
+    if (!success) {
+      throw new Error('getKolRightId error');
+    }
+    const tx = await projectStore.handleBuyMintedNft(
+      item.retailAddress,
+      [buyParams],
+      kolRightInfo.rightId,
+    );
+    await waitForTransaction({ hash: tx.hash });
+    await postSkuUpdate({ skuId: item.id, isSold: true });
+
+    const { ticketToken } = await projectStore.handleTickVerify({
+      nftAddress: itemInfo.nftAddress,
+      tokenId: itemInfo.tokenId,
+      skuId: itemInfo.id,
+      ...formData,
+    });
+    qrcodeVisible.value = true;
+    qrcodeContent.value = ticketToken;
+
     ElMessage.success('buy success');
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    console.error(e);
     ElMessage.error('buy failed');
   } finally {
     loading.value = false;
     fullScreenLoading.close();
+    refetch();
   }
 }
 </script>
