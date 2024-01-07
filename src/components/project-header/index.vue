@@ -15,10 +15,6 @@
         <div class="project-header-desc">
           <div>
             <div>
-              <label>ALTCs:</label>
-              <span></span>
-            </div>
-            <div>
               <label>Collections:</label>
               <span>{{ projectInfo?.rows?.length }}</span>
             </div>

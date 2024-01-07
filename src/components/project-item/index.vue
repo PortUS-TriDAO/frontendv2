@@ -18,10 +18,6 @@
         </div>
         <div>
           <div>
-            <label>ALTCs:</label>
-            <span></span>
-          </div>
-          <div>
             <label>Collections:</label>
             <span>{{ item.collectionCount }}</span>
           </div>

@@ -57,15 +57,10 @@
       2.Payment should be processed with USDT on Polygon. If you do not have such currencies on
       Polygon, please kindly be reminded to get the currencies ready before you make the payment.<br />
       3.This NFT pass is non-refundable.<br />
-      4.Please be reminded to buy the NFT pass from the event official PortUS store
-      (https://portus.world/store/0x89675ad90a20Dd7e99c6550b0A0EF71F6146a69C/project/4) or certified
-      distributors (refer to the list of NFT pass distributors at:
-      https://en.web3festival.org/hongkong2024/index.php?s=/p/Cooperation.html) in case of any
-      fraudulence and scams.<br />
-      5.If you have purchase the NFT pass, please click: https://portus.world/web3-ticket for your
+      4.If you have purchase the NFT pass, please click: https://portus.world/web3-ticket for your
       e-ticket. Please print or take a screenshot of the QR code in advance and show it to the staff
       at the event entrance to check in.<br />
-      6.If you have any questions about the event or the NFT Pass, please send an email to
+      5.If you have any questions about the event or the NFT Pass, please send an email to
       w3@blockchainlabs.org.<br />
     </p>
   </div>
