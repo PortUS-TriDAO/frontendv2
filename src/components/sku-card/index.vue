@@ -89,6 +89,8 @@ const countdown = reactive({
 function toPadNumber(value: number) {
   return parseInt(value.toString(), 10).toFixed().padStart(2, '0');
 }
+
+let interval: any;
 const computeCountdown = () => {
   const leftTime = props.item.ddl - parseInt((Date.now() / 1000).toFixed(), 10);
   if (leftTime <= 0) {
@@ -99,8 +101,8 @@ const computeCountdown = () => {
     countdown.minutes = toPadNumber((leftTime % 3600) / 60);
   }
 };
+interval = setInterval(computeCountdown, 1000);
 computeCountdown();
-const interval = setInterval(computeCountdown, 1000);
 </script>
 <style lang="less">
 .sku-card {
