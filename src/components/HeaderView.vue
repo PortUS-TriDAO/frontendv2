@@ -4,7 +4,9 @@
       <div class="header-container">
         <template v-if="isStore || isAgent">
           <span class="logo" to="/"></span>
-          <div v-if="isStore || isAgent" class="agent">Agent</div>
+          <div v-if="isStore || isAgent" class="agent">
+            {{ agentNickName }}
+          </div>
           <w3m-button balance="hide" size="sm">connect</w3m-button>
           <button v-if="account && (isStore || isAgent)" class="btn-user" @click.stop="gotoGoods()">
             <svg
@@ -77,6 +79,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+import { useProfile } from '@/hooks';
 import { useWalletStore } from '@/stores/useWallet';
 
 const route = useRoute();
@@ -107,11 +110,17 @@ onMounted(() => {
 });
 
 const account = computed(() => walletStore.state.account);
-const shortAddress = computed(
-  () =>
-    walletStore.state.account &&
-    `${walletStore.state.account.slice(0, 6)}...${walletStore.state.account.slice(-4)}`,
-);
+// const shortAddress = computed(
+//   () =>
+//     walletStore.state.account &&
+//     `${walletStore.state.account.slice(0, 6)}...${walletStore.state.account.slice(-4)}`,
+// );
+
+const kolAddress = computed(() => route.params.kolAddress as string);
+const profile = useProfile(kolAddress);
+const agentNickName = computed(() => {
+  return profile?.data?.value?.nickName || 'Agent';
+});
 
 function connect() {
   switchMenu(true);

@@ -20,6 +20,7 @@ import type {
 import {
   getAllSkuSpu,
   getBusinessDetail,
+  getKolInfo,
   getkolRightId,
   getNftDetail,
   // getNftList,
@@ -34,6 +35,7 @@ import {
   getSubmittedProjects,
   getTicketDetail,
   getUserTickets,
+  type IKolInfo,
 } from '../api';
 
 export function useProjects(key?: string): UseQueryReturnType<PageData<ProjectData>, Error> {
@@ -75,16 +77,27 @@ export function useScenesProjects(
   return submittedResult;
 }
 
-export function useParticipateProjects(): UseQueryReturnType<PageData<ProjectData>, Error> {
-  const { address } = getAccount();
+export function useParticipateProjects(
+  kolAddress: ComputedRef<string>,
+): UseQueryReturnType<PageData<ProjectData>, Error> {
   const result = useQuery({
-    queryKey: ['getParticipateProjects', address],
+    queryKey: ['getParticipateProjects', kolAddress.value],
     queryFn: async () => {
-      const { success, data } = await getParticipateProjects({ kolAddress: address });
+      const { success, data } = await getParticipateProjects({
+        kolAddress: kolAddress.value as `0x${string}`,
+      });
       if (!success) return null;
       return data;
     },
+    enabled: !!kolAddress.value,
+    staleTime: 20_000,
   });
+  watch(
+    () => kolAddress.value,
+    () => {
+      result.refetch();
+    },
+  );
   return result;
 }
 
@@ -331,5 +344,28 @@ export function useTicketDetail(ticketId: number): UseQueryReturnType<TicketInfo
       return data;
     },
   });
+  return result;
+}
+
+export function useProfile(
+  kolAddress: Ref<string> | ComputedRef<string>,
+): UseQueryReturnType<IKolInfo, Error> {
+  console.log('kolAddress.value==', kolAddress.value);
+  const result = useQuery({
+    queryKey: ['getKolInfo', kolAddress.value],
+    queryFn: async () => {
+      const res = await getKolInfo({ kolAddress: kolAddress.value });
+      console.log('getKolInfo:', res);
+      return res.success ? res.data : null;
+    },
+    enabled: !!kolAddress.value,
+    staleTime: Infinity,
+  });
+  watch(
+    () => kolAddress.value,
+    () => {
+      result.refetch();
+    },
+  );
   return result;
 }

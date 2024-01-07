@@ -44,14 +44,13 @@
   </page-container>
 </template>
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
 import type { ElInput } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { getKolInfo, getParticipateProjects } from '@/api';
 import ProjectItem from '@/components/project-item/index.vue';
 import socialBar from '@/components/social-bar/index.vue';
+import { useParticipateProjects, useProfile } from '@/hooks';
 import type { Address, ProjectData } from '@/types';
 
 import defaultAvatar from './assets/avatar.png';
@@ -60,17 +59,9 @@ const router = useRouter();
 const route = useRoute();
 const key = ref('');
 
-const kolAddress = route.params.kolAddress as Address;
+const kolAddress = computed(() => route.params.kolAddress as Address);
 
-const { data, isPending } = useQuery({
-  queryKey: ['getParticipateProjects', kolAddress],
-  queryFn: async () => {
-    // storeId
-    const res = await getParticipateProjects({ kolAddress });
-    return res.success ? res.data : null;
-    // return getProjects({});
-  },
-});
+const { data, isPending } = useParticipateProjects(kolAddress);
 
 const list = computed(() => {
   const value = key.value.trim().toLowerCase();
@@ -82,18 +73,12 @@ const list = computed(() => {
   );
 });
 
-const { data: agentInfo } = useQuery({
-  queryKey: ['getKolInfo', kolAddress],
-  queryFn: async () => {
-    const res = await getKolInfo({ kolAddress });
-    return res.success ? res.data : null;
-  },
-});
+const { data: agentInfo } = useProfile(kolAddress);
 
 console.log('getProjects result=', isPending.value, data);
 
 function handleDetail(item: ProjectData) {
-  router.push(`/store/${kolAddress}/project/${item.projectId || item.id}`);
+  router.push(`/store/${kolAddress.value}/project/${item.projectId || item.id}`);
 }
 </script>
 <style lang="less" scoped>
