@@ -38,6 +38,10 @@
         </el-button>
       </span>
     </template>
+    <p>
+      IMPORTANT:The NFT tickets you are purchasing at the moment are non-refundable once purchased,
+      do you wish to go ahead with the purchase?
+    </p>
   </el-dialog>
 </template>
 <script setup lang="ts">
