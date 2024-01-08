@@ -1,16 +1,16 @@
 <template>
   <el-dialog v-model="dialogTableVisible" title="Your Info">
     <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-position="top">
-      <el-form-item label="Name">
+      <el-form-item label="Name" prop="name">
         <el-input v-model="ruleForm.name" autocomplete="off" placeholder="Your Name" />
       </el-form-item>
-      <el-form-item label="Email">
+      <el-form-item label="Email" prop="email">
         <el-input v-model="ruleForm.email" autocomplete="off" placeholder="you@email.com" />
       </el-form-item>
-      <el-form-item label="參加者手機號碼/Attendee Mobile Phone Number">
+      <el-form-item label="參加者手機號碼/Attendee Mobile Phone Number" prop="mobile">
         <el-input v-model="ruleForm.mobile" autocomplete="off" placeholder="+1 201 555 0123" />
       </el-form-item>
-      <el-form-item label="行業/Industry">
+      <el-form-item label="行業/Industry" prop="industry">
         <el-select v-model="ruleForm.industry" placeholder="Select..." style="width: 100%">
           <el-option
             v-for="item in industryList"
@@ -20,13 +20,13 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="公司/Company">
+      <el-form-item label="公司/Company" prop="company">
         <el-input v-model="ruleForm.company" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="蹴务/ Job Title">
+      <el-form-item label="職務/ Job Title" prop="jobTitle">
         <el-input v-model="ruleForm.jobTitle" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="所在或家或地品/Country or Region">
+      <el-form-item label="所在國家或地區/Country or Region" prop="countryOrRegion">
         <el-input v-model="ruleForm.countryOrRegion" autocomplete="off" />
       </el-form-item>
     </el-form>
@@ -128,9 +128,9 @@ const rules = reactive<FormRules<RuleForm>>({
     { required: true, message: 'Please input email', trigger: 'blur' },
     { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] },
   ],
-  mobile: [{ required: true, message: 'Please input phone number', trigger: 'blur' }],
+  // mobile: [{ required: true, message: 'Please input phone number', trigger: 'blur' }],
   industry: [{ required: true, message: 'Please select industry', trigger: 'change' }],
-  company: [{ required: true, message: 'Please input company', trigger: 'blur' }],
+  // company: [{ required: true, message: 'Please input company', trigger: 'blur' }],
   jobTitle: [{ required: true, message: 'Please input job title', trigger: 'blur' }],
   countryOrRegion: [{ required: true, message: 'Please input region', trigger: 'blur' }],
 });
@@ -157,21 +157,25 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     loading.value = true;
     const pass = await formEl.validate((valid, fields) => {
       if (valid) {
+        console.log('valid=====', valid);
         console.log('submit!', fields);
         //
-        return true;
+        // return true;
+        emit('submit', ruleForm);
+        // 成功后，关闭
+        close();
       } else {
         console.log('error submit!', fields);
         return false;
       }
     });
-    if (pass) {
-      console.log('ruleForm=', ruleForm);
-      // TODO: 实际购买
-      emit('submit', ruleForm);
-      // 成功后，关闭
-      close();
-    }
+    // if (pass) {
+    //   console.log('ruleForm=', ruleForm);
+    //   // TODO: 实际购买
+    //   emit('submit', ruleForm);
+    //   // 成功后，关闭
+    //   close();
+    // }
   } finally {
     loading.value = false;
   }
