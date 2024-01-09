@@ -70,8 +70,8 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
       let res = e.target.result;
       let buf = Buffer.from(res as Buffer);
       parse(buf, {}, async (err, data) => {
-        const datas = data.slice(1, data.length - 1);
-        const addresses = datas.map((v) => v[0]);
+        // const datas = data.slice(1, data.length - 1);
+        const addresses = data.map((v) => v[0]);
         try {
           const { success, data: result } = await postProjectAirdropList({
             projectId: props.projectId,
