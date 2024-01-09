@@ -36,7 +36,7 @@
     </div>
     <upload-white-list-card
       :visible="visible"
-      :project-address="res?.creatorAddress"
+      :project-address="bizData?.contractAddress"
       :projectId="projectId"
       :bizId="bizId"
       @success="visible = false"
@@ -45,7 +45,7 @@
 
     <upload-airdrop-list-card
       :visible="airdropDialogVisible"
-      :project-address="res?.creatorAddress"
+      :project-address="bizData?.contractAddress"
       :projectId="projectId"
       :bizId="bizId"
       @success="airdropDialogVisible = false"
@@ -83,6 +83,7 @@ const loading = ref(false);
 const visible = ref(false);
 const airdropDialogVisible = ref(false);
 const bizId = ref(0);
+const bizData = ref<BusinessData>();
 
 const projectStore = useProjectStore();
 
@@ -102,13 +103,13 @@ function handleDetail(businessData: BusinessData) {
 }
 
 function handleUploadWhiteList(businessData: BusinessData) {
-  // todo: handleUploadWhiteList
-  console.log('todo: handleUploadWhiteList=', businessData);
+  bizData.value = businessData;
   visible.value = true;
   bizId.value = businessData.id;
 }
 
 function handleUploadAirdropList(businessData: BusinessData) {
+  bizData.value = businessData;
   airdropDialogVisible.value = true;
   bizId.value = businessData.id;
 }

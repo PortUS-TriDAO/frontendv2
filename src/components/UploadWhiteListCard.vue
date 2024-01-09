@@ -35,6 +35,8 @@ const whitelistContract = useWhiteListRightsContract();
 const props = defineProps(['visible', 'title', 'projectAddress', 'projectId', 'bizId']);
 const emit = defineEmits(['success', 'close']);
 
+console.log('UPLOAD KWHITELIST', props);
+
 const dialogTableVisible = computed({
   get() {
     return props.visible;

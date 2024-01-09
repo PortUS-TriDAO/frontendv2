@@ -131,7 +131,7 @@ export const postProjectAirdropList = (params: {
   projectId: number;
   bizId: number;
   airdrops: string[];
-}): Promise<IResponse<string>> => axios.post('/project/airdrop', params);
+}): Promise<IResponse> => axios.post('/project/airdrop', params);
 
 // post hashkey 返回的tickInfo发到服务端
 export const postUserByTicket = (params: {

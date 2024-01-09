@@ -34,7 +34,7 @@ import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract'
 const whitelistContract = useWhiteListRightsContract();
 const props = defineProps(['visible', 'title', 'projectAddress', 'projectId', 'bizId']);
 const emit = defineEmits(['success', 'close']);
-
+console.log('UPLOAD AIRDROPS', props);
 const dialogTableVisible = computed({
   get() {
     return props.visible;
@@ -68,22 +68,18 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
   reader.onload = function (e) {
     try {
       let res = e.target.result;
-      console.log(res);
       let buf = Buffer.from(res as Buffer);
       parse(buf, {}, async (err, data) => {
-        console.log('handleSuccess', data);
-        // console.log(err, data);
         const datas = data.slice(1, data.length - 1);
-        console.log(datas);
         const addresses = datas.map((v) => v[0]);
-        console.log('addresses', addresses);
         try {
           const { success, data: result } = await postProjectAirdropList({
             projectId: props.projectId,
             bizId: props.bizId,
             airdrops: addresses,
           });
-
+          const tx = await whitelistContract.airdrop(props.projectAddress, addresses);
+          await waitForTransaction(tx);
           if (success) {
             ElMessage.success('upload airdrop list success');
             emit('success');
