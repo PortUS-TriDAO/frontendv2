@@ -17,7 +17,7 @@
       </el-image>
       <div class="card-desc">
         <h3>{{ item?.name || item.nftName }} #{{ item.tokenId }}</h3>
-        <div>{{ item.soldAmount }}/{{ item.sellAmount }}</div>
+        <!-- <div>{{ item.soldAmount }}/{{ item.sellAmount }}</div> -->
 
         <div class="countdown">
           <div>

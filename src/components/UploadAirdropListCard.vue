@@ -73,13 +73,14 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
         // const datas = data.slice(1, data.length - 1);
         const addresses = data.map((v) => v[0]);
         try {
+          const tx = await whitelistContract.airdrop(props.projectAddress, addresses);
+          await waitForTransaction(tx);
+
           const { success, data: result } = await postProjectAirdropList({
             projectId: props.projectId,
             bizId: props.bizId,
             airdrops: addresses,
           });
-          const tx = await whitelistContract.airdrop(props.projectAddress, addresses);
-          await waitForTransaction(tx);
           if (success) {
             ElMessage.success('upload airdrop list success');
             emit('success');

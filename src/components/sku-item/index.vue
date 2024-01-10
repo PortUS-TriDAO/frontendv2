@@ -5,7 +5,7 @@
       { sold: item.isSold || item.isHide || item.soldAmount >= item.sellAmount },
     ]"
   >
-    <div class="sku-item-amount">{{ item.soldAmount }}/{{ item.sellAmount }}</div>
+    <!-- <div class="sku-item-amount">{{ item.soldAmount }}/{{ item.sellAmount }}</div> -->
     <el-image :src="item.avatar || item.imgUrl" fit="contain">
       <template #error>
         <div class="image-slot">
