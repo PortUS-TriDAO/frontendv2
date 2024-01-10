@@ -101,7 +101,7 @@
         <div>
           <h3>2023</h3>
           <h4>Q4</h4>
-          <p>Releasing MVP of PortUS for beta testing</p>
+          <p>Lauching official PortUS network with NFT dealership fucntion,Onboarding partners.</p>
         </div>
         <div>
           <h3>2024</h3>
@@ -246,15 +246,16 @@ const news = [
 ];
 
 function goToCreate() {
-  if (['www.portus.world', 'portus.world'].includes(location.host)) {
-    router.push('/mine/submitted');
-  } else {
-    router.push('/project/create/step1');
-  }
+  // if (['www.portus.world', 'portus.world'].includes(location.host)) {
+  //   router.push('/mine/submitted');
+  // } else {
+  //   router.push('/project/create/step1');
+  // }
 }
 
 function goToDistribute() {
-  router.push('/mine/participated');
+  // router.push('/mine/participated');
+  window.open('https://hongkong.web3festival.org/sponsorapplication');
 }
 
 const { data: projectInfo } = usePrimaryProjectInfo();
