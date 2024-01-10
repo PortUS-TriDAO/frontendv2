@@ -1,6 +1,12 @@
 <template>
   <div class="dialog-box">
-    <el-dialog width="450px" center v-model="dialogTableVisible">
+    <el-dialog
+      width="450px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      center
+      v-model="dialogTableVisible"
+    >
       <template #header>
         <h5>Add a Airdrop Address List</h5>
       </template>
@@ -29,8 +35,10 @@ import { ElMessage, type UploadFile, type UploadFiles } from 'element-plus';
 import { computed } from 'vue';
 
 import { postProjectAirdropList } from '@/api';
+import { useProjectStore } from '@/stores/useProject';
 import { useWhiteListRightsContract } from '@/stores/useWhiteListRightsContract';
 
+const projectStore = useProjectStore();
 const whitelistContract = useWhiteListRightsContract();
 const props = defineProps(['visible', 'title', 'projectAddress', 'projectId', 'bizId']);
 const emit = defineEmits(['success', 'close']);
@@ -81,6 +89,19 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
             bizId: props.bizId,
             airdrops: addresses,
           });
+
+          for (const address of addresses) {
+            try {
+              await projectStore.airdropAndMint(
+                props.projectAddress,
+                props.projectId,
+                props.bizId,
+                address,
+              );
+            } catch (error) {
+              ElMessage.error(`report address failed: ${address}`);
+            }
+          }
           if (success) {
             ElMessage.success('upload airdrop list success');
             emit('success');
@@ -88,6 +109,7 @@ function handleSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
             ElMessage.error('upload airdrop list failed');
           }
         } catch (e) {
+          console.log('post white list failed', e);
           ElMessage.error('post white list failed');
           emit('close');
         }

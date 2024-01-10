@@ -368,6 +368,31 @@ export const useProjectStore = defineStore('project', () => {
     });
   }
 
+  async function airdropAndMint(
+    projectAddress: Address,
+    projectId: number,
+    bizId: number,
+    kolAddress: Address,
+  ) {
+    const projectContract = useProjectContract();
+    // const tx = await projectContract.referrerSign(projectAddress);
+    // await waitForTransaction({ hash: tx.hash });
+
+    // 查询tokenID
+    // const { address: kolAddress } = await getAccount();
+    const rightsContract = useRightsContract();
+    const rightsContractAddress = (await projectContract.rights(projectAddress)) as Address;
+    const tokenId = await rightsContract.tokenOfOwnerByIndex(rightsContractAddress, kolAddress);
+
+    // 将mint信息保存到后端
+    await projectApi.kolMint({
+      projectId,
+      bizId,
+      kolAddress,
+      rightId: Number(tokenId),
+    });
+  }
+
   async function kolWithdraw(projectAddress: Address) {
     const projectContract = useProjectContract();
     const rightsContract = useRightsContract();
@@ -462,6 +487,7 @@ export const useProjectStore = defineStore('project', () => {
     // buyMintedNft,
     handleBuyMintedNft,
     mint,
+    airdropAndMint,
     kolWithdraw,
     operatorWithdraw,
     operatorPendingRewards,
