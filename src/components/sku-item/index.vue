@@ -150,6 +150,7 @@ defineProps<{
     width: 100%;
     gap: 8px;
     padding-bottom: 42px;
+    margin-bottom: 0;
     h3,
     div {
       font-size: 14px;
