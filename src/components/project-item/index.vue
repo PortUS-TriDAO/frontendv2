@@ -120,5 +120,46 @@ function handleClick(item: ProjectData) {
     flex-shrink: 0;
     text-align: center;
   }
+  @media (max-width: 768px) {
+    min-height: auto;
+    padding: 12px 12px 20px;
+    gap: 10px;
+    .project-item-avatar {
+      padding: 0;
+      border: none;
+      > img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    .project-item-detail {
+      position: relative;
+      gap: 8px;
+      font-size: 12px;
+      > h3 {
+        font-size: 16px;
+      }
+    }
+    .project-item-desc {
+      flex-wrap: wrap;
+      font-size: 12px;
+      gap: 8px;
+      > div {
+        width: 100%;
+      }
+    }
+    .project-item-action {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      > button {
+        min-width: auto;
+        width: 80px;
+        height: 20px;
+        padding: 12px;
+        font-size: 12px;
+      }
+    }
+  }
 }
 </style>

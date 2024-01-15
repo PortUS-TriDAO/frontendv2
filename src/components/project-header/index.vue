@@ -215,6 +215,44 @@ function handleMore() {
   }
 
   @media screen and (max-width: 800px) {
+    h3 {
+      font-size: 16px;
+    }
+    .project-header-desc {
+      font-size: 12px;
+      flex-direction: column-reverse;
+      gap: 8px;
+      > div {
+        width: 100%;
+      }
+    }
+    .project-header-row {
+      gap: 16px;
+      > img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    :deep(.social-bar) {
+      gap: 20px;
+      align-items: center;
+      > a {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .project-header-poster {
+      > div:first-child {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 160px;
+      }
+      :deep(.el-image) {
+        padding: 10px;
+        height: 160px;
+      }
+    }
+
     .detail-row {
       width: 100%;
       flex-direction: column;

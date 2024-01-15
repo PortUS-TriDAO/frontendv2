@@ -65,6 +65,8 @@ defineProps<{
     top: 12px;
     z-index: 2;
     font-size: 24px;
+    // hidden
+    display: none;
   }
 
   .el-image {
@@ -141,6 +143,31 @@ defineProps<{
       ) !important;
       font-size: 24px;
       color: #fff !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 8px;
+    padding-bottom: 42px;
+    h3,
+    div {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0px;
+      line-height: 16.41px;
+    }
+    .sku-item-action {
+      height: 32px;
+      > button {
+        height: 32px;
+        font-size: 20px;
+      }
     }
   }
 }

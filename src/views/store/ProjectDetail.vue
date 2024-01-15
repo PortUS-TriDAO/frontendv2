@@ -191,5 +191,15 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   }
+  @media (max-width: 768px) {
+    .list {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 16px;
+      row-gap: 16px;
+      .sku-item {
+        width: 100%;
+      }
+    }
+  }
 }
 </style>
