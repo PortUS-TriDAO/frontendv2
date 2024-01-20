@@ -202,5 +202,37 @@ computeCountdown();
       gap: 10px;
     }
   }
+  @media (max-width: 768px) {
+    .detail-card {
+      padding: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      gap: 10px;
+      .el-image {
+        width: 190px;
+        height: 190px;
+      }
+      h3 {
+        font-size: 16px;
+      }
+      .countdown {
+        padding: 0;
+        row-gap: 10px;
+        column-gap: 10px;
+        font-size: 12px;
+      }
+      .card-desc {
+        padding: 0;
+        gap: 10px;
+      }
+      .card-action {
+        button {
+          min-width: auto !important;
+          width: 100% !important;
+          font-size: 16px !important;
+        }
+      }
+    }
+  }
 }
 </style>
