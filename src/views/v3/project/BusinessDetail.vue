@@ -23,7 +23,13 @@
     <div class="list">
       <div class="list-title">NFT contract list</div>
       <div v-if="data">
-        <nft-contract-item
+        <!-- <nft-contract-item
+          v-for="item in data.retailContracts || []"
+          :key="item.nftAddress"
+          :item="item"
+          @onDetail="handleDetail"
+        /> -->
+        <nft-list-item
           v-for="item in data.retailContracts || []"
           :key="item.nftAddress"
           :item="item"
@@ -39,6 +45,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
+import NftListItem from '@/components/nft-list-item/index.vue';
 import { useBusinessDetail } from '@/hooks';
 import { useProjectStore } from '@/stores/useProject';
 import type { NftContractData } from '@/types';
@@ -103,7 +110,7 @@ async function handleMint() {
       font-weight: 700;
       letter-spacing: 0px;
       line-height: 40px;
-      color: #000000;
+      color: #fff;
       text-align: center;
       vertical-align: top;
 
@@ -140,7 +147,7 @@ async function handleMint() {
       font-size: 24px;
       font-weight: 700;
       line-height: 28px;
-      color: #000;
+      color: #fff;
       margin-bottom: 12px;
       padding-left: 28px;
     }

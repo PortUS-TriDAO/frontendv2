@@ -1,7 +1,18 @@
 <template>
   <page-container class="pg-nft-detail">
-    <nft-contract-item v-if="data" :item="data" @onDetail="handleDetail" hideActions />
-    <div class="detail-divider"></div>
+    <!-- <nft-contract-item v-if="data" :item="data" @onDetail="handleDetail" hideActions />
+    <div class="detail-divider"></div> -->
+    <div class="detail-header">
+      <div class="left">
+        <span>Address: {{ data?.nftAddress || '' }}</span>
+      </div>
+      <div class="right">
+        <span>Collection Name：{{ data?.name || '' }}</span>
+        <span>Symbol: </span>
+        <span>Standard: {{ data?.nftType === 1 ? 'ERC721' : 'ERC1155' }}</span>
+        <span>Goods:10/35</span>
+      </div>
+    </div>
     <div class="list-title">NFT list</div>
     <div class="list">
       <SkuItem
@@ -19,26 +30,25 @@ import { useRoute, useRouter } from 'vue-router';
 import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
-import type { Address, NftContractData } from '@/types';
 
 const route = useRoute();
 const router = useRouter();
 
 const retailId = Number(route.params.retailId);
 const nftType = Number(route.params.nftType);
-// const { data } = useNftDetail(retailId, nftType);
+const { data } = useNftDetail(retailId, nftType);
 
-const data: NftContractData = {
-  nftAddress: route.query.nftAddress as Address,
-  avatar: route.query.avatar as string,
-  nftID: '',
-  name: '',
-  nftType,
-  // 随意填写一个
-  bizId: 1111,
-  retailAddress: route.query.retailAddress as Address,
-  id: retailId,
-};
+// const data: NftContractData = {
+//   nftAddress: route.query.nftAddress as Address,
+//   avatar: route.query.avatar as string,
+//   nftID: '',
+//   name: '',
+//   nftType,
+//   // 随意填写一个
+//   bizId: 1111,
+//   retailAddress: route.query.retailAddress as Address,
+//   id: retailId,
+// };
 
 const { data: nftList } = nftType === 1 ? useSkuList(retailId) : useSpuList(retailId);
 
@@ -52,6 +62,19 @@ function handleDetail(id: number) {
 </script>
 <style lang="less" scoped>
 .pg-nft-detail {
+  .detail-header {
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+    .right {
+      display: flex;
+      flex-direction: column;
+    }
+  }
   .detail-divider {
     margin: 20px 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
@@ -61,7 +84,7 @@ function handleDetail(id: number) {
     font-size: 24px;
     font-weight: 700;
     line-height: 28px;
-    color: #000;
+    color: #fff;
     margin: 0 0 14px 0;
   }
 

@@ -4,7 +4,14 @@
     <div class="detail-divider"></div>
     <div class="list-title">ALTC list</div>
     <div v-if="res?.data">
-      <business-item
+      <!-- <business-item
+        v-for="item in res.data.rows || []"
+        :avatar="res.data.avatar"
+        :key="item.id"
+        :item="item"
+        @onDetail="handleDetail(item.id)"
+      /> -->
+      <altc-item
         v-for="item in res.data.rows || []"
         :avatar="res.data.avatar"
         :key="item.id"
@@ -19,6 +26,7 @@ import { useQuery } from '@tanstack/vue-query';
 import { useRoute, useRouter } from 'vue-router';
 
 import { getProjectDetail } from '@/api';
+import AltcItem from '@/components/altc-item/index.vue';
 import BusinessItem from '@/components/business-item/index.vue';
 import projectHeader from '@/components/project-header/index.vue';
 import socialBar from '@/components/social-bar/index.vue';
