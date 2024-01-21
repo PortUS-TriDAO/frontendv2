@@ -1,6 +1,6 @@
 <template>
   <div class="nft-list-item">
-    <img :src="item.avatar" alt="" />
+    <img :src="item.avatar" alt="avatar" />
     <div class="item-detail">
       <div class="item-info">
         <h6>Collection Name: {{ item.name }}</h6>
@@ -65,6 +65,35 @@ function handleDetail(item: NftContractData) {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+    > img {
+      min-width: 100px;
+      height: 100px;
+      margin: 0;
+    }
+    .item-detail {
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+      gap: 0;
+      flex-wrap: wrap;
+      overflow: hidden;
+    }
+    .item-info {
+      gap: 4px;
+      h6 {
+        font-size: 12px;
+      }
+    }
+    .item-info-right > button {
+      height: 32px;
+      width: 100px;
+      min-width: 100px;
+      font-size: 18px;
+      margin-top: 10px;
     }
   }
 }

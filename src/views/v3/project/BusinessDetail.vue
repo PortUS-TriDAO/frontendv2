@@ -17,7 +17,9 @@
       <!-- <div>
         <span>1.2 USDT</span>
       </div> -->
-      <text-ellipsis>{{ data?.description }}</text-ellipsis>
+      <text-ellipsis :line="3" v-if="safeDescription">
+        <span v-html="safeDescription"></span>
+      </text-ellipsis>
     </div>
     <div class="detail-divider"></div>
     <div class="list">
@@ -40,8 +42,9 @@
   </page-container>
 </template>
 <script setup lang="ts">
+import DOMPurify from 'dompurify';
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import NftContractItem from '@/components/nft-contract-item/index.vue';
@@ -58,8 +61,14 @@ const router = useRouter();
 const projectId = Number(route.params.projectId);
 const bizId = Number(route.params.bizId);
 
-const { data } = useBusinessDetail(`${bizId}`);
+const { data } = useBusinessDetail(bizId);
 const projectStore = useProjectStore();
+
+// data?.description
+const safeDescription = computed(() => {
+  const clean = DOMPurify.sanitize(data?.value?.description || '');
+  return clean;
+});
 
 function handleDetail(nftContractData: NftContractData) {
   const query = {
@@ -150,6 +159,24 @@ async function handleMint() {
       color: #fff;
       margin-bottom: 12px;
       padding-left: 28px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .business-detail {
+      font-size: 12px;
+      gap: 10px;
+      padding: 0;
+    }
+    .business-title {
+      > h2 {
+        font-size: 16px;
+      }
+      > button {
+        height: 32px;
+        font-size: 18px;
+        width: 100px;
+        min-width: 100px;
+      }
     }
   }
 }

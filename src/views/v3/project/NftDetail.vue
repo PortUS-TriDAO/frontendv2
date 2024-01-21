@@ -3,17 +3,21 @@
     <!-- <nft-contract-item v-if="data" :item="data" @onDetail="handleDetail" hideActions />
     <div class="detail-divider"></div> -->
     <div class="detail-header">
-      <div class="left">
-        <span>Address: {{ data?.nftAddress || '' }}</span>
-      </div>
-      <div class="right">
-        <span>Collection Name：{{ data?.name || '' }}</span>
-        <span>Symbol: </span>
-        <span>Standard: {{ data?.nftType === 1 ? 'ERC721' : 'ERC1155' }}</span>
-        <span>Goods:10/35</span>
+      <div class="detail-header-content">
+        <div class="detail-header-bg"></div>
+        <div class="right">
+          <span v-if="data?.name">Collection Name：{{ data?.name || '' }}</span>
+          <!-- <span>Symbol: </span> -->
+          <span>Standard: {{ data?.nftType === 1 ? 'ERC721' : 'ERC1155' }}</span>
+          <span>Goods: {{ nftList?.rows.length || 0 }}</span>
+        </div>
+        <div v-if="data?.nftAddress">
+          <span>Address: {{ data?.nftAddress || '' }}</span>
+        </div>
       </div>
     </div>
-    <div class="list-title">NFT list</div>
+    <div class="detail-divider"></div>
+    <!-- <div class="list-title">NFT list</div> -->
     <div class="list">
       <SkuItem
         v-for="item in nftList?.rows || []"
@@ -27,7 +31,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 
-import NftContractItem from '@/components/nft-contract-item/index.vue';
+// import NftContractItem from '@/components/nft-contract-item/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useNftDetail, useSkuList, useSpuList } from '@/hooks';
 
@@ -62,40 +66,87 @@ function handleDetail(id: number) {
 </script>
 <style lang="less" scoped>
 .pg-nft-detail {
+  > :deep(article) {
+    background: url('./assets/bg.png') no-repeat;
+  }
   .detail-header {
-    height: 300px;
+    height: 260px;
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 20px;
+    flex-direction: column;
     box-sizing: border-box;
-    .right {
+    .detail-header-content {
+      // position: relative;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+      .detail-header-bg {
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // z-index: 2;
+        width: 443px;
+        height: 214px;
+        background: url('./assets/sku-bg.png') no-repeat;
+        background-size: contain;
+        background-position: center;
+      }
+      .right {
+        width: 230px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
     }
   }
   .detail-divider {
-    margin: 20px 0;
-    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+    // margin: 20px 0;
+    // border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+    height: 42px;
+    background: url('./assets/divider-bg.png') center center no-repeat;
   }
 
-  .list-title {
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 28px;
-    color: #fff;
-    margin: 0 0 14px 0;
-  }
+  // .list-title {
+  //   font-size: 24px;
+  //   font-weight: 700;
+  //   line-height: 28px;
+  //   color: #fff;
+  //   margin: 0 0 14px 0;
+  // }
 
   .list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 40px;
+    padding-top: 32px;
 
     > div {
       cursor: pointer;
+    }
+  }
+  @media (max-width: 768px) {
+    .detail-header {
+      height: 150px;
+      font-size: 12px;
+      .detail-header-content {
+        gap: 10px;
+        .detail-header-bg {
+          width: 270px;
+          height: 130px;
+        }
+        .right {
+          width: auto;
+        }
+      }
+    }
+    .list {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 16px;
+      row-gap: 16px;
+      .sku-item {
+        width: 100%;
+      }
     }
   }
 }
