@@ -18,8 +18,8 @@
           :autoplay="false"
           indicator-position="outside"
           :loop="false"
-          height="500"
         >
+          <!-- height="500" -->
           <el-carousel-item>
             <div class="op-box">
               <div class="op-box-content">
@@ -137,12 +137,24 @@
     <section class="partners">
       <h2>Cooperative Partners</h2>
       <div class="section-content partners-content">
-        <div class="partners-items">
+        <div>
+          <h3>Providers</h3>
+          <img src="./assets/partners1.png" />
+        </div>
+        <div>
+          <h3>Influencers</h3>
+          <img src="./assets/partners2.png" />
+        </div>
+        <div>
+          <h3>Partners</h3>
+          <img src="./assets/partners3.png" />
+        </div>
+        <!-- <div class="partners-items">
           <h3>Providers</h3>
           <h3>Influencers</h3>
           <h3>Partners</h3>
         </div>
-        <img src="@/assets/images/partners.png" />
+        <img src="@/assets/images/partners.png" /> -->
       </div>
     </section>
     <div class="header-box">
@@ -484,11 +496,36 @@ async function handleMint() {
       //   background-image: url('@/assets/images/gamification.png');
       // }
     }
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 250px;
+      padding-top: 36px;
+      .op-box-content {
+        height: 186px;
+        h3 {
+          font-size: 20px;
+          line-height: 1.5;
+          margin-bottom: 10px;
+        }
+        p {
+          font-size: 12px;
+          line-height: 1.5;
+        }
+        .op-box-icon {
+          display: none;
+        }
+      }
+    }
   }
 
   :deep(.el-carousel__container) {
     width: 100%;
     height: 360px;
+  }
+  @media (max-width: 768px) {
+    :deep(.el-carousel__container) {
+      height: 250px;
+    }
   }
 
   .news {
@@ -535,8 +572,8 @@ async function handleMint() {
     }
 
     .news-card {
-      left: 120px;
-      top: 2121px;
+      // left: 120px;
+      // top: 2121px;
       width: 254.95px;
       height: 162px;
       opacity: 1;
@@ -584,6 +621,29 @@ async function handleMint() {
         cursor: pointer;
       }
     }
+    @media (max-width: 768px) {
+      height: auto;
+      .news-content {
+        width: 100%;
+        .news-actions {
+          display: none;
+        }
+      }
+      .news-wrapper {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        // grid-template-rows: 1fr 1fr;
+        column-gap: 10px;
+        row-gap: 10px;
+        // grid-gap: 10px;
+
+        > .news-card {
+          width: 100%;
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .roadmap {
@@ -621,23 +681,65 @@ async function handleMint() {
         }
       }
     }
+    @media (max-width: 768px) {
+      .roadmap-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        > div {
+          overflow: hidden;
+          padding: 10px;
+          h3 {
+            font-size: 20px;
+          }
+          h4 {
+            font-size: 16px;
+          }
+          p {
+            font-size: 14px;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
   }
 
   .partners {
     background: rgba(1, 7, 30, 1);
 
-    .partners-items {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      padding-bottom: 32px;
+    .partners-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
       h3 {
-        width: 275px;
+        width: 100%;
         text-align: center;
         font-size: 30px;
         font-weight: 700;
         letter-spacing: 0px;
         line-height: 24px;
+        margin-bottom: 20px;
+      }
+      img {
+        width: 100%;
+      }
+    }
+    // .partners-items {
+    //   display: flex;
+    //   flex-direction: row;
+    //   justify-content: space-around;
+    //   padding-bottom: 32px;
+    //   h3 {
+    //     width: 275px;
+    //     text-align: center;
+    //     font-size: 30px;
+    //     font-weight: 700;
+    //     letter-spacing: 0px;
+    //     line-height: 24px;
+    //   }
+    // }
+    @media (max-width: 768px) {
+      .partners-content {
+        grid-template-columns: 1fr;
       }
     }
   }
