@@ -23,12 +23,10 @@
             <router-link v-if="!isProd" to="/faucet" @click.stop="switchMenu(true)"
               >Faucet</router-link
             >
-            <!-- <button v-if="!account" @click.stop="connect">connect</button>
-          <button v-else @click.stop>{{ shortAddress }}</button> -->
-            <w3m-button balance="hide">connect</w3m-button>
             <button class="btn-user" @click.stop="gotoGoods()">
               <img src="@/assets/icon-goods.png" />
             </button>
+            <w3m-button balance="hide">connect</w3m-button>
           </div>
           <button v-if="!(isStore || isAgent)" class="btn-menus" @click.stop="switchMenu()">
             <svg
@@ -213,6 +211,7 @@ function gotoGoods() {
       margin-left: 12px;
       cursor: pointer;
       flex-shrink: 0;
+      margin-right: 8px;
     }
   }
 
