@@ -88,11 +88,10 @@ function handleDetail(nftContractData: NftContractData) {
     justify-content: space-between;
 
     > h2 {
-      height: 40px;
       font-size: 34px;
+      line-height: 1.5;
       font-weight: 700;
       letter-spacing: 0px;
-      line-height: 40px;
       color: #000000;
       text-align: center;
       vertical-align: top;
@@ -126,10 +125,8 @@ function handleDetail(nftContractData: NftContractData) {
 
   .list {
     .list-title {
-      height: 29px;
       font-size: 24px;
       font-weight: 700;
-      line-height: 28px;
       color: #000;
       margin-bottom: 12px;
       padding-left: 28px;

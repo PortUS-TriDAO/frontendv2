@@ -114,13 +114,12 @@ async function handleMint() {
     justify-content: space-between;
 
     > h2 {
-      height: 40px;
       font-size: 28px;
+      line-height: 1.5;
       font-weight: 700;
       letter-spacing: 0px;
-      line-height: 40px;
       color: #fff;
-      text-align: center;
+      text-align: left;
       vertical-align: top;
 
       > strong {
