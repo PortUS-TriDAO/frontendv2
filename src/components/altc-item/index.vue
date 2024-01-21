@@ -127,5 +127,35 @@ function handleUploadAirdropList(e: Event) {
       }
     }
   }
+
+  @media (max-width: 768px) {
+    img {
+      max-width: 100px;
+      min-width: 100px;
+      height: auto;
+    }
+    .item-detail {
+      display: flex;
+      flex-wrap: wrap;
+      .item-info {
+        width: 100%;
+
+        h5 {
+          font-size: 18px;
+        }
+        span,
+        p {
+          font-size: 12px;
+        }
+        :deep(.el-progress-bar__outer) {
+          height: 16px !important;
+        }
+        > button {
+          height: 32px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
 }
 </style>
