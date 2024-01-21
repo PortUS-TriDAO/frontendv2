@@ -56,6 +56,7 @@ function handleClick(item: ProjectData) {
   background: url('./assets/item-bg.png');
   background-size: 100% 100%;
   min-height: 250px;
+  overflow: hidden;
 
   .project-item-avatar {
     border: solid 1px rgba(229, 229, 229, 1);
