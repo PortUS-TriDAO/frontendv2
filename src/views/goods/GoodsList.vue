@@ -1,74 +1,30 @@
 <template>
   <page-container class="pg-goods-list" title="Goods">
     <div class="list">
-      <div v-for="item in ticketList" :key="item.id">
-        <div class="item-card" @click="handleDetail(item)">
-          <div class="avatar">
-            <img :src="item.imgUrl" />
-          </div>
-          <h3>{{ item.nftName }}</h3>
-          <div>{{ item.price }} {{ item.payToken }}</div>
-          <p-button>Detail</p-button>
-        </div>
+      <div
+        v-for="item in data?.rows || []"
+        :key="item.id"
+        class="item-card"
+        @click="handleDetail(item.id)"
+      >
+        <el-image :src="item.imgUrl" fit="contain">
+          <template #error>
+            <div class="image-slot">
+              <el-icon><icon-picture /></el-icon>
+            </div>
+          </template>
+        </el-image>
+        <h3>{{ item.nftName }}</h3>
+        <div>{{ item.price }} USDT</div>
       </div>
-      <!-- <div>
-        <div class="item-card" @click="handleDetail(111)">
-          <div class="avatar">
-            <img :src="avatar" />
-          </div>
-          <h3>Goods name</h3>
-          <div>0.028ETH</div>
-          <p-button>Detail</p-button>
-        </div>
-      </div>
-      <div>
-        <div class="item-card" @click="handleDetail(111)">
-          <div class="avatar">
-            <img :src="avatar" />
-          </div>
-          <h3>Goods name</h3>
-          <div>0.028ETH</div>
-          <p-button>Detail</p-button>
-        </div>
-      </div>
-      <div>
-        <div class="item-card" @click="handleDetail(111)">
-          <div class="avatar">
-            <img :src="avatar" />
-          </div>
-          <h3>Goods name</h3>
-          <div>0.028ETH</div>
-          <p-button>Detail</p-button>
-        </div>
-      </div>
-      <div>
-        <div class="item-card" @click="handleDetail(111)">
-          <div class="avatar">
-            <img :src="avatar" />
-          </div>
-          <h3>Goods name</h3>
-          <div>0.028ETH</div>
-          <p-button>Detail</p-button>
-        </div>
-      </div>
-      <div>
-        <div class="item-card" @click="handleDetail(111)">
-          <div class="avatar">
-            <img :src="avatar" />
-          </div>
-          <h3>Goods name</h3>
-          <div>0.028ETH</div>
-          <p-button>Detail</p-button>
-        </div>
-      </div> -->
     </div>
   </page-container>
 </template>
 <script setup lang="ts">
+import { Picture as IconPicture } from '@element-plus/icons-vue';
 import { getAccount } from '@wagmi/core';
 import { useRouter } from 'vue-router';
 
-import avatar from '@/assets/images/demo-avatar.png';
 import { useTicketList } from '@/hooks';
 
 const router = useRouter();
@@ -76,7 +32,6 @@ const router = useRouter();
 const { address } = getAccount();
 
 const { data } = useTicketList(address);
-const ticketList = data.rows;
 
 function handleDetail(id: number) {
   router.push(`/goods/${id}`);
@@ -89,54 +44,70 @@ function handleDetail(id: number) {
     padding-right: 8px !important;
   }
   .list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+    padding-top: 32px;
 
     > div {
       cursor: pointer;
-      width: 50%;
-      padding: 8px;
-      box-sizing: border-box;
+      overflow: hidden;
     }
   }
   .item-card {
+    background: url('./assets/item-bg.png') center center no-repeat;
+    background-size: 150%;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 1);
+    // background-color: rgba(255, 255, 255, 1);
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(187, 187, 187, 1);
-    height: 226px;
+    // border: 1px solid rgba(187, 187, 187, 1);
+    height: 285px;
     padding: 12px 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    .avatar {
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      > img {
-        max-width: 100%;
-        max-height: 100%;
-      }
+    h3 {
+      font-size: 18px;
+      text-overflow: ellipsis;
+      display: -webkit-inline-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
     }
+    // .avatar {
+    //   height: 100px;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   > img {
+    //     max-width: 100%;
+    //     max-height: 100%;
+    //   }
+    // }
     button {
       min-width: 76px;
       width: 100px;
       height: 24px;
       font-size: 12px;
     }
-  }
-
-  @media screen and (min-width: 600px) {
-    .list > div {
-      width: 33.33%;
+    .el-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .image-slot {
+        font-size: 32px;
+      }
     }
   }
-  @media screen and (min-width: 800px) {
-    .list > div {
-      width: 25%;
+  @media screen and (max-width: 768px) {
+    .list {
+      grid-template-columns: 1fr 1fr;
     }
   }
 }
