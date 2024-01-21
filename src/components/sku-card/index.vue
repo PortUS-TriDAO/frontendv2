@@ -34,7 +34,7 @@
           </div>
         </div>
         <div>{{ item.price }} USDT</div>
-        <div style="color: #f98506">
+        <div class="ddl">
           Sales ends {{ item.ddl ? dayjs(item.ddl * 1000).format('YYYY-MM-DD HH:mm') : '' }}
         </div>
         <div class="card-action">
@@ -162,6 +162,9 @@ computeCountdown();
         flex-direction: column;
       }
     }
+    .ddl {
+      color: #f98506;
+    }
   }
 
   p {
@@ -219,6 +222,9 @@ computeCountdown();
         padding: 0;
         row-gap: 10px;
         column-gap: 10px;
+        font-size: 12px;
+      }
+      .ddl {
         font-size: 12px;
       }
       .card-desc {
