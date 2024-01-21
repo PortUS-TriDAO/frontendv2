@@ -23,7 +23,7 @@
     </div>
     <div class="detail-divider"></div>
     <div class="list">
-      <div class="list-title">NFT contract list</div>
+      <!-- <div class="list-title">NFT contract list</div> -->
       <div v-if="data">
         <!-- <nft-contract-item
           v-for="item in data.retailContracts || []"
@@ -151,15 +151,15 @@ async function handleMint() {
   }
 
   .list {
-    .list-title {
-      height: 29px;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 28px;
-      color: #fff;
-      margin-bottom: 12px;
-      padding-left: 28px;
-    }
+    // .list-title {
+    //   height: 29px;
+    //   font-size: 24px;
+    //   font-weight: 700;
+    //   line-height: 28px;
+    //   color: #fff;
+    //   margin-bottom: 12px;
+    //   padding-left: 28px;
+    // }
   }
   @media screen and (max-width: 768px) {
     .business-detail {

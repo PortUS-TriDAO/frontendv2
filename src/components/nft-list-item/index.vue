@@ -1,6 +1,6 @@
 <template>
   <div class="nft-list-item">
-    <img :src="item.avatar" alt="avatar" />
+    <!-- <img :src="item.avatar" alt="avatar" /> -->
     <div class="item-detail">
       <div class="item-info">
         <h6>Collection Name: {{ item.name }}</h6>
