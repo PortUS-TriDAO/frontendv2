@@ -1,6 +1,6 @@
 <template>
   <page-container class="pg-goods-list" title="Goods">
-    <div class="list">
+    <div class="goods-list">
       <div
         v-for="item in data?.rows || []"
         :key="item.id"
@@ -18,6 +18,7 @@
         <div>{{ item.price }} USDT</div>
       </div>
     </div>
+    <no-data v-if="data?.rows && data?.rows?.length === 0" />
   </page-container>
 </template>
 <script setup lang="ts">
@@ -43,11 +44,10 @@ function handleDetail(id: number) {
     padding-left: 8px !important;
     padding-right: 8px !important;
   }
-  .list {
+  .goods-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 30px;
-    padding-top: 32px;
 
     > div {
       cursor: pointer;
@@ -106,7 +106,7 @@ function handleDetail(id: number) {
     }
   }
   @media screen and (max-width: 768px) {
-    .list {
+    .goods-list {
       grid-template-columns: 1fr 1fr;
     }
   }
