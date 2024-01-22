@@ -3,9 +3,9 @@
     <!-- <img :src="item.avatar" alt="avatar" /> -->
     <div class="item-detail">
       <div class="item-info">
-        <h6>Collection Name: {{ item.name }}</h6>
+        <h6 v-if="item.name">Collection Name: {{ item.name }}</h6>
         <span>Address : {{ item.nftAddress }}</span>
-        <span>Symbol : </span>
+        <!-- <span>Symbol : </span> -->
         <span>Standard : {{ item.nftType === 1 ? 'ERC721' : 'ERC1155' }}</span>
       </div>
       <div class="item-info-right">
