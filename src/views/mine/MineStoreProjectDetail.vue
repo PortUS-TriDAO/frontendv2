@@ -181,19 +181,17 @@ const map = {
     font-size: 34px;
     font-weight: 700;
     line-height: 40px;
-    color: #000;
     margin: 14px 0;
   }
 
   .list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    // justify-content: space-between;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
 
     > div {
       cursor: pointer;
+      overflow: hidden;
     }
   }
 

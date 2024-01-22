@@ -197,10 +197,6 @@ function handleAddNft() {
       cursor: pointer;
       overflow: hidden;
     }
-
-    > div {
-      cursor: pointer;
-    }
   }
 }
 </style>
