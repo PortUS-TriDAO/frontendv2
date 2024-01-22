@@ -6,7 +6,7 @@
         <h3>{{ item.contractName }}</h3>
         <div style="padding-right: 50px">
           <div style="margin-bottom: 10px">
-            <label>righted/rights:</label>
+            <label>Applied/Total:</label>
             <span>{{ item.rightMinted }}/{{ item.rightQuantity }}</span>
           </div>
           <el-progress
@@ -19,7 +19,7 @@
       <p v-if="scenes !== 'submitted'">Project intro: {{ item.briefIntro }}.</p>
       <div>
         <div>
-          <label>Percent for KOL:</label>
+          <label>Commission rate:</label>
           <span>{{ item.sharePercentage }}%</span>
         </div>
       </div>

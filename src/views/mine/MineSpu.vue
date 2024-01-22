@@ -35,13 +35,13 @@
               <span>136</span>
             </div>
             <div>
-              <label>righted/rights:</label>
+              <label>Applied/Total:</label>
               <span>56/200</span>
             </div>
           </div>
           <div class="item-action">
             <div>
-              <label><strong>Percent for KOL:</strong></label>
+              <label><strong>Commission rate:</strong></label>
               <strong>10%</strong>
             </div>
             <p-button @click="handleDetail('1231313123')">Detail</p-button>

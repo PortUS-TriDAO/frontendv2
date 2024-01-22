@@ -4,13 +4,13 @@
       <div class="business-title">
         <h2>{{ data?.contractName }}</h2>
         <h2>
-          <strong>Percent for KOL</strong>
+          <strong>Commission rate</strong>
           <span>{{ data?.sharePercentage }}%</span>
         </h2>
       </div>
       <p>Dreamed of moonshots but awoke to a capitulation.</p>
       <div class="business-mint">
-        <label>righted/rights:</label>
+        <label>Applied/Total:</label>
         <span>{{ data?.righted }}/{{ data?.rights }}</span>
       </div>
       <div>

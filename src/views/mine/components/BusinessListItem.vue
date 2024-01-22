@@ -2,7 +2,7 @@
   <div class="p-b-item">
     <h5>Echo of Intensity</h5>
     <p>Dreamed of moonshots but awoke to a capitulation.</p>
-    <p>righted/rights：56/200</p>
+    <p>Applied/Total：56/200</p>
     <div class="options">
       <span>balance: 424234234</span>
       <div>

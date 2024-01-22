@@ -10,7 +10,7 @@
       </div>
       <div class="item-info">
         <h5 class="ratio-title">Commission rate: {{ item.sharePercentage }}%</h5>
-        <span>Righted/Rights: {{ item.rightMinted }}/{{ item.rightQuantity }}</span>
+        <span>Applied/Total: {{ item.rightMinted }}/{{ item.rightQuantity }}</span>
         <el-progress
           :text-inside="true"
           :stroke-width="26"

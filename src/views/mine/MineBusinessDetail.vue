@@ -5,14 +5,14 @@
         <h2>{{ data?.contractName }}</h2>
       </div>
       <div>
-        <span>Percent for KOL: </span> <span class="light">{{ data?.sharePercentage }}%</span>
+        <span>Commission rate: </span> <span class="light">{{ data?.sharePercentage }}%</span>
       </div>
       <!-- <div>
         <span>1.2 USDT</span>
       </div> -->
       <div class="flex-between">
         <div>
-          <label>righted/rights: </label>
+          <label>Applied/Total: </label>
           <span>{{ data?.rightMinted }}/{{ data?.rightQuantity }}</span>
         </div>
       </div>

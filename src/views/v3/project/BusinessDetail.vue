@@ -6,11 +6,11 @@
         <p-wallet-button :loading="loading" @click="handleMint">Apply</p-wallet-button>
       </div>
       <div>
-        <label>Percent for KOL: </label>
+        <label>Commission rate: </label>
         <span>{{ data?.sharePercentage }}%</span>
       </div>
       <div class="business-mint">
-        <label>righted/rights:</label>
+        <label>Applied/Total:</label>
         <span>{{ data?.rightMinted }}/{{ data?.rightQuantity }}</span>
       </div>
       <p>Dreamed of moonshots but awoke to a capitulation.</p>

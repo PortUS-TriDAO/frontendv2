@@ -9,7 +9,7 @@
         </div>
         <div class="content">
           <div class="left">
-            <p>righted/rights: 56/200</p>
+            <p>Applied/Total: 56/200</p>
             <p>1.2 USDT</p>
           </div>
           <p-button>Apply More</p-button>

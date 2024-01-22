@@ -19,7 +19,6 @@
             <el-input placeholder="symbol of contract" v-model="ruleForm.symbol"></el-input>
           </el-form-item>
           <el-form-item label="Percent" prop="sharePercentage">
-            <!--            <el-input placeholder="Percent for KOL" v-model="ruleForm.sharePercentage"></el-input>-->
             <el-input-number
               v-model="ruleForm.sharePercentage"
               :min="1"
