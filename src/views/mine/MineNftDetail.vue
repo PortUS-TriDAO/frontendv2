@@ -17,7 +17,7 @@
     <div class="list-title">List of NFT Goods</div>
     <div class="list">
       <SkuItem
-        v-for="(item, index) in nftList?.rows || []"
+        v-for="item in nftList?.rows || []"
         :key="item.id"
         :item="item"
         @click="handleDetail(item.id)"
@@ -185,16 +185,18 @@ function handleAddNft() {
     font-size: 24px;
     font-weight: 700;
     line-height: 28px;
-    color: #000;
     margin: 0 0 14px 0;
   }
 
   .list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    // justify-content: space-between;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+
+    > div {
+      cursor: pointer;
+      overflow: hidden;
+    }
 
     > div {
       cursor: pointer;

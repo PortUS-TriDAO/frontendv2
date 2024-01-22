@@ -17,7 +17,10 @@
         </div>
       </div>
       <p>Dreamed of moonshots but awoke to a capitulation.</p>
-      <p>{{ data?.description }}</p>
+      <text-ellipsis :line="3" v-if="safeDescription">
+        <span v-html="safeDescription"></span>
+      </text-ellipsis>
+      <!-- <p>{{ data?.description }}</p> -->
       <div class="right-action">
         <div v-if="scenes === 'submitted'" class="balance">
           <div class="flex-between">
@@ -62,6 +65,7 @@
 </template>
 <script setup lang="ts">
 import { getAccount, waitForTransaction } from '@wagmi/core';
+import DOMPurify from 'dompurify';
 import { ElMessage } from 'element-plus';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -128,6 +132,11 @@ function handleDetail(nftContractData: NftContractData) {
     query,
   });
 }
+
+const safeDescription = computed(() => {
+  const clean = DOMPurify.sanitize(data?.value?.description || '');
+  return clean;
+});
 
 function handleMintMore() {
   // TODO: handleMintMore
@@ -221,8 +230,7 @@ function handleSubmit() {
       font-weight: 700;
       letter-spacing: 0px;
       line-height: 40px;
-      color: #000000;
-      text-align: center;
+      text-align: left;
       vertical-align: top;
     }
   }
@@ -238,7 +246,6 @@ function handleSubmit() {
       font-size: 24px;
       font-weight: 700;
       line-height: 28px;
-      color: #000;
       margin-bottom: 12px;
     }
 

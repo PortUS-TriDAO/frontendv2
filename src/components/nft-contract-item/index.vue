@@ -7,7 +7,12 @@
       },
     ]"
   >
-    <img alt="avatar" :src="item.avatar" />
+    <div class="avatar">
+      <img
+        alt="avatar"
+        :src="item.avatar || 'https://portus.oss-cn-hongkong.aliyuncs.com/filename/passcard.png'"
+      />
+    </div>
     <div class="nft-contract-item-detail">
       <h3>{{ item.nftAddress }}</h3>
       <!-- <div>
@@ -53,11 +58,18 @@ function handleDetail(item: NftContractData) {
   background-repeat: no-repeat;
   background-size: 50%;
 
-  > img {
+  .avatar {
     width: 150px;
     height: 150px;
     border-radius: 10px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > img {
+      max-width: 100%;
+      max-height: 100%;
+    }
   }
 
   .nft-contract-item-detail {
@@ -78,7 +90,7 @@ function handleDetail(item: NftContractData) {
     }
   }
   &.nft-contract-item--small {
-    > img {
+    .avatar {
       width: 100px;
       height: 100px;
     }
