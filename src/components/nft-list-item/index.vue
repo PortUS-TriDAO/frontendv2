@@ -9,7 +9,7 @@
         <span>Standard : {{ item.nftType === 1 ? 'ERC721' : 'ERC1155' }}</span>
       </div>
       <div class="item-info-right">
-        <span>Goods: </span>
+        <!-- <span>Goods: </span> -->
         <p-button @click="handleDetail(item)">More</p-button>
       </div>
     </div>
@@ -57,6 +57,7 @@ function handleDetail(item: NftContractData) {
     flex-direction: row;
     justify-content: space-between;
     margin: 10px;
+    line-height: 1.5;
     .item-info {
       display: flex;
       flex-direction: column;

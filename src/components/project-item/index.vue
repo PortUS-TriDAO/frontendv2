@@ -17,11 +17,11 @@
           </div>
         </div>
         <div>
-          <div>
+          <div v-if="item.collectionCount">
             <label>Collections:</label>
             <span>{{ item.collectionCount }}</span>
           </div>
-          <div>
+          <div v-if="item.goodsCount">
             <label>Goods:</label>
             <span>{{ item.goodsCount }}</span>
           </div>
