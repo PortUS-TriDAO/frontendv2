@@ -26,7 +26,7 @@
             </div>
             <div>
               <label>Token Standard:</label
-              ><span>{{ Number(ticketDetail?.nftType) === 1 ? 'ERC712' : 'ERC1155' }}</span>
+              ><span>{{ Number(ticketDetail?.nftType) === 1 ? 'ERC1155' : 'ERC721' }}</span>
             </div>
             <div><label>Chain:</label><span>Ethereum</span></div>
           </div>

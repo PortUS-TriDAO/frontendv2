@@ -6,7 +6,7 @@
         <h6 v-if="item.name">Collection Name: {{ item.name }}</h6>
         <span>Address : {{ item.nftAddress }}</span>
         <!-- <span>Symbol : </span> -->
-        <span>Standard : {{ item.nftType === 1 ? 'ERC721' : 'ERC1155' }}</span>
+        <span>Standard : {{ item.nftType === 1 ? 'ERC1155' : 'ERC721' }}</span>
       </div>
       <div class="item-info-right">
         <!-- <span>Goods: </span> -->

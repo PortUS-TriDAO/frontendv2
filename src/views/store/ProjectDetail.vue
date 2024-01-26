@@ -22,7 +22,6 @@
           </p-button>
         </template>
       </SkuItem>
-      <no-data v-if="!data || data.length === 0" />
 
       <your-info-confirm
         :visible="yourInfoConfirmVisible"
@@ -36,6 +35,7 @@
         @close="qrcodeVisible = false"
       ></ticket-qrcode>
     </div>
+    <no-data v-if="!data || data.length === 0" />
   </page-container>
 </template>
 <script setup lang="ts">
@@ -52,7 +52,7 @@ import SkuItem from '@/components/sku-item/index.vue';
 import TicketQrcode from '@/components/TicketQrcode.vue';
 import type { RuleForm } from '@/components/your-info-confirm/index.vue';
 import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
-import { useProjectSkuSpu } from '@/hooks';
+import { useProjectSkuSpuForStore } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
 import type { Address, SkuSpuData } from '@/types';
@@ -76,16 +76,10 @@ const { data: res } = useQuery({
   },
 });
 
-const { data, refetch } = useProjectSkuSpu(projectId);
+const { data, refetch } = useProjectSkuSpuForStore(projectId, kolAddress);
 
 function handleDetail(item: SkuSpuData) {
   router.push(`/store/${kolAddress}/sku/${item.retailId}/${item.id}/${item.bizId}`);
-  // TODO: 暂时去除进入 详情页面
-  // if (item.isSku) {
-  //   router.push(`/store/${kolAddress}/sku/${item.retailId}/${item.id}/${item.bizId}`);
-  // } else {
-  //   router.push(`/store/${kolAddress}/spu/${item.retailId}/${item.id}/${item.bizId}`);
-  // }
 }
 
 const erc20Contract = useERC20Contract();
