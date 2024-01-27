@@ -1,6 +1,15 @@
 <template>
   <el-dialog v-model="dialogTableVisible" title="Your Info">
     <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-position="top">
+      <el-form-item label="購買數量/Purchase quantity" prop="quantity">
+        <el-input
+          v-model="ruleForm.quantity"
+          oninput="value=value.replace(/[^0-9]/g, '')"
+          autocomplete="off"
+          placeholder="Purchase quantity"
+        />
+      </el-form-item>
+      <el-divider />
       <el-form-item label="Name" prop="name">
         <el-input v-model="ruleForm.name" autocomplete="off" placeholder="Your Name" />
       </el-form-item>
@@ -102,6 +111,7 @@ watch(dialogTableVisible, () => {
 });
 
 export interface RuleForm {
+  quantity: number;
   name: string;
   email: string;
   mobile: string;
@@ -112,6 +122,7 @@ export interface RuleForm {
 }
 
 const ruleFormDefault = {
+  quantity: 1,
   name: '',
   email: '',
   mobile: '',
@@ -123,7 +134,20 @@ const ruleFormDefault = {
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive<RuleForm>(ruleFormDefault);
+const quantityValidate = (rule: any, value: any, callback: any) => {
+  if (Number(value) === 0) {
+    callback(new Error('quantity must greater than 0'));
+  } else {
+    callback();
+  }
+};
 const rules = reactive<FormRules<RuleForm>>({
+  quantity: [
+    {
+      validator: quantityValidate,
+      trigger: 'blur',
+    },
+  ],
   name: [
     { required: true, message: 'Please input name', trigger: 'blur' },
     { min: 3, max: 30, message: 'Length should be 3 to 30', trigger: 'blur' },
@@ -145,6 +169,7 @@ const close = () => {
 };
 
 const resetForm = () => {
+  ruleForm.quantity = 1;
   ruleForm.name = '';
   ruleForm.email = '';
   ruleForm.mobile = '';
@@ -157,14 +182,16 @@ const resetForm = () => {
 const loading = ref(false);
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
+
   try {
     loading.value = true;
     const pass = await formEl.validate((valid, fields) => {
+      console.log({
+        valid,
+        fields,
+      });
       if (valid) {
-        console.log('valid=====', valid);
-        console.log('submit!', fields);
-        //
-        // return true;
+        console.log('vlidate success');
         emit('submit', ruleForm);
         // 成功后，关闭
         close();
@@ -173,6 +200,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         return false;
       }
     });
+    console.log('pass:', pass);
     // if (pass) {
     //   console.log('ruleForm=', ruleForm);
     //   // TODO: 实际购买

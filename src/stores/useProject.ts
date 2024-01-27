@@ -323,6 +323,7 @@ export const useProjectStore = defineStore('project', () => {
     retailerContract: Address, // business contract
     buyNftParams: IBuyInfo[],
     kolTokenId: number,
+    quantity: number,
   ) {
     const buyParams = buyNftParams.map((item) => {
       const { r, s, v } = splitSignature(item.signature);
@@ -344,7 +345,7 @@ export const useProjectStore = defineStore('project', () => {
       abi: RETAILER_ABI,
       functionName: 'buy',
       // [[seller,payToken,payPrice,nftTokenId,deadline,v,r,s]],referralTokenId
-      args: [buyParams, [1], kolTokenId],
+      args: [buyParams, [quantity], kolTokenId],
     });
   }
 

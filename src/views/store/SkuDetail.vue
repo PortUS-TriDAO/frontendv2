@@ -36,16 +36,15 @@ import SkuCard from '@/components/sku-card/index.vue';
 import TicketQrcode from '@/components/TicketQrcode.vue';
 import type { RuleForm } from '@/components/your-info-confirm/index.vue';
 import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
-import { useKolRightId, useSkuDetail } from '@/hooks';
+import { useSkuDetail } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
-import type { SkuData, SkuSpuData } from '@/types';
-import { extendsDecimals } from '@/utils/bn';
+import type { SkuSpuData } from '@/types';
+import { extendsDecimals, toBN } from '@/utils/bn';
 
 const loading = ref(false);
 const route = useRoute();
 const kolAddress = route.params.kolAddress as string;
-const retailId = Number(route.params.retailId);
 const skuId = computed(() => Number(route.params.skuId));
 const bizId = Number(route.params.bizId);
 const qrcodeContent = ref('');
@@ -95,7 +94,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
       const approveTx = await erc20Contract.approve(
         buyParams.payToken,
         item.retailAddress,
-        buyParams.payPrice,
+        toBN(buyParams.payPrice).multipliedBy(toBN(formData.quantity)).toString(10),
       );
       await waitForTransaction({ hash: approveTx.hash });
     }
@@ -110,14 +109,15 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
       item.retailAddress,
       [buyParams],
       kolRightInfo.rightId,
+      formData.quantity,
     );
     await waitForTransaction({ hash: tx.hash });
-    await postSkuUpdate({ skuId: item.id, isSold: true });
+    await postSkuUpdate({ skuId: skuId.value, isSold: true });
 
     const { ticketToken } = await projectStore.handleTickVerify({
       nftAddress: itemInfo.nftAddress,
       tokenId: itemInfo.tokenId,
-      skuId: itemInfo.id,
+      skuId: skuId.value,
       ...formData,
     });
     qrcodeVisible.value = true;
