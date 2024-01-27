@@ -13,6 +13,8 @@ export interface ProjectData {
   collectionCount: number;
   goodsCount: number;
   provider: number;
+  altcs: number;
+  statistic?: any;
 }
 
 /**

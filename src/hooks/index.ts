@@ -64,6 +64,14 @@ export function useScenesProjects(
           ? await getSubmittedProjects({ creatorAddress: address, page })
           : await getParticipateProjects({ kolAddress: address, page });
       if (!success) return null;
+      if (scenes.value === 'submitted') {
+        data.rows = data.rows.map((v) => {
+          return {
+            ...v,
+            ...v.statistic,
+          };
+        });
+      }
       return data;
     },
   });

@@ -8,6 +8,10 @@
       <div class="project-item-desc">
         <div>
           <div>
+            <label>ProjectName:</label>
+            <span>{{ item.projectName }}</span>
+          </div>
+          <div>
             <label>Provider:</label>
             <span>{{ item.provider }}</span>
           </div>
@@ -17,6 +21,10 @@
           </div>
         </div>
         <div>
+          <div v-if="item.altcs">
+            <label>ALTCS:</label>
+            <span>{{ item.altcs }}</span>
+          </div>
           <div v-if="item.collectionCount">
             <label>Collections:</label>
             <span>{{ item.collectionCount }}</span>
