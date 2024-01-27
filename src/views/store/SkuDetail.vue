@@ -8,7 +8,7 @@
       <div class="info">
         <div v-if="data?.isSold" class="sold-out">sold out</div>
         <div v-else-if="data.isHide" class="sold-out">Down</div>
-        <p-button v-else @click="handleBuy()">Buy Now</p-button>
+        <p-button class="buy-btn" v-else @click="handleBuy()">Buy Now</p-button>
       </div>
     </sku-card>
 
@@ -186,6 +186,9 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     > div {
       cursor: pointer;
     }
+  }
+  .buy-btn {
+    background: linear-gradient(90.06deg, #fb722f -1.7%, #e20000 77.7%) !important;
   }
 }
 </style>
