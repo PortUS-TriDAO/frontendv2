@@ -19,6 +19,7 @@ import type {
 
 import {
   getAllSkuSpu,
+  getAllSkuSpuForStore,
   getBusinessDetail,
   getKolInfo,
   getkolRightId,
@@ -184,6 +185,34 @@ export function useProjectSkuSpu(
           isSku: true,
         }));
         const spu = (res?.data?.spu || []).map((item) => ({ ...item, isSku: false }));
+        arr.concat(spu);
+        console.log('arr==', arr);
+        return arr;
+      }
+      return null;
+    },
+  });
+  return result;
+}
+
+export function useProjectSkuSpuForStore(
+  projectId: number,
+  kolAddress: string,
+  // page?: number,
+  // limit?: number,
+): UseQueryReturnType<SkuSpuData[], Error> {
+  const result = useQuery({
+    queryKey: ['useProjectSkuSpuForStore', projectId, kolAddress],
+    queryFn: async () => {
+      const res = await getAllSkuSpuForStore({ projectId, kolAddress });
+      if (res.success) {
+        const arr: SkuSpuData[] = (res?.data?.skus || []).map((item) => ({
+          ...item,
+          nftQuantity: 1,
+          cover: '',
+          isSku: true,
+        }));
+        const spu = (res?.data?.spus || []).map((item) => ({ ...item, isSku: false }));
         arr.concat(spu);
         console.log('arr==', arr);
         return arr;

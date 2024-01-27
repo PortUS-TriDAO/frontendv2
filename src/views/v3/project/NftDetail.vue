@@ -8,7 +8,9 @@
         <div class="right">
           <span v-if="data?.name">Collection Name：{{ data?.name || '' }}</span>
           <!-- <span>Symbol: </span> -->
-          <span>Standard: {{ data?.nftType === 1 ? 'ERC721' : 'ERC1155' }}</span>
+          <span>Standard: ERC1155</span>
+          <!-- TODO: 定制获取data数据错误问题 -->
+          <!-- <span>Standard: {{ data?.nftType === 1 ? 'ERC1155' : 'ERC721' }}</span> -->
           <span>Goods: {{ nftList?.rows.length || 0 }}</span>
         </div>
         <div v-if="data?.nftAddress">
@@ -17,7 +19,7 @@
       </div>
     </div>
     <div class="detail-divider"></div>
-    <!-- <div class="list-title">NFT list</div> -->
+    <!-- <div class="list-title">NFT list</div> -->`
     <div class="list">
       <SkuItem
         v-for="item in nftList?.rows || []"
