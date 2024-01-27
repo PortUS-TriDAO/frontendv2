@@ -11,6 +11,7 @@
             <img src="@/assets/icon-goods.png" />
           </button>
           <w3m-button balance="hide" size="sm">connect</w3m-button>
+          <w3m-network-button />
         </template>
         <template v-else>
           <router-link class="logo" to="/"></router-link>
@@ -27,6 +28,7 @@
               <img src="@/assets/icon-goods.png" />
             </button>
             <w3m-button balance="hide">connect</w3m-button>
+            <w3m-network-button />
           </div>
           <button v-if="!(isStore || isAgent)" class="btn-menus" @click.stop="switchMenu()">
             <svg
@@ -46,10 +48,24 @@
           </button>
         </template>
       </div>
+
+      <el-dialog
+        v-model="networkDialogVisible"
+        title="Current Netowrk Not Support"
+        width="30%"
+        align-center
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+      >
+        <div style="text-align: center">
+          <el-button type="primary" @click="switchChain">Switch Network</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { getNetwork, switchNetwork, watchNetwork } from '@wagmi/core';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -61,10 +77,22 @@ const router = useRouter();
 const isStore = computed(() => route.path.indexOf('/store') === 0);
 const isAgent = computed(() => route.path.indexOf('/goods') === 0);
 const isProd = computed(() => ['www.portus.world', 'portus.world'].includes(window.location.host));
+const networkDialogVisible = ref(false);
 
 const walletStore = useWalletStore();
 
 const elMenu = ref(null);
+
+watchNetwork((network) => {
+  const { chains, chain } = network;
+  const chainIds = chains.map((v) => v.id);
+  if (!chainIds.includes(chain.id)) {
+    console.log('current chain not support');
+    networkDialogVisible.value = true;
+  } else {
+    networkDialogVisible.value = false;
+  }
+});
 
 function switchMenu(hideForce?: boolean) {
   const el = elMenu.value;
@@ -103,6 +131,11 @@ function connect() {
 function gotoGoods() {
   router.push('/goods');
 }
+
+const switchChain = () => {
+  const { chains } = getNetwork();
+  switchNetwork({ chainId: chains[0].id });
+};
 </script>
 <style lang="less">
 .page-header {

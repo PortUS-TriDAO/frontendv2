@@ -56,7 +56,7 @@ import { useProjectSkuSpuForStore } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
 import type { Address, SkuSpuData } from '@/types';
-import { extendsDecimals } from '@/utils/bn';
+import { extendsDecimals, toBN } from '@/utils/bn';
 
 const route = useRoute();
 const router = useRouter();
@@ -103,6 +103,10 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     text: 'Approve',
     background: 'rgba(0, 0, 0, 0.7)',
   });
+  console.log({
+    formData,
+    itemInfo,
+  });
   try {
     const buyParams = {
       seller: itemInfo.seller,
@@ -121,7 +125,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
       const approveTx = await erc20Contract.approve(
         buyParams.payToken,
         item.retailAddress,
-        buyParams.payPrice,
+        toBN(buyParams.payPrice).multipliedBy(toBN(formData.quantity)).toString(10),
       );
       await waitForTransaction({ hash: approveTx.hash });
     }
@@ -136,6 +140,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
       item.retailAddress,
       [buyParams],
       kolRightInfo.rightId,
+      formData.quantity,
     );
     await waitForTransaction({ hash: tx.hash });
     await postSkuUpdate({ skuId: item.id, isSold: true });

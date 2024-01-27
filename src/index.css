@@ -52,6 +52,11 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
 /* :root {
   --container-width: 1200px;
   --container-max-width: 1200px;

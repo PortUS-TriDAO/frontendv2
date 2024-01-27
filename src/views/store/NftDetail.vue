@@ -111,6 +111,7 @@ async function handleBuy(item: SkuData | SpuData) {
       retailerAddress,
       [buyParams],
       kolRightInfo.value.rightId,
+      1,
     );
     await waitForTransaction({ hash: tx.hash });
     // await projectStore.handleTickVerify(nftAddress, itemInfo.tokenId, item.id);

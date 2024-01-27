@@ -53,15 +53,16 @@ export function useProjects(key?: string): UseQueryReturnType<PageData<ProjectDa
 
 export function useScenesProjects(
   scenes: ComputedRef<'submitted' | 'participated' | 'store'>,
+  page: 1,
 ): UseQueryReturnType<PageData<ProjectData>, Error> {
   const { address } = getAccount();
   const submittedResult = useQuery({
-    queryKey: ['useScenesProjects', address],
+    queryKey: ['useScenesProjects', address, page],
     queryFn: async () => {
       const { success, data } =
         scenes.value === 'submitted'
-          ? await getSubmittedProjects({ creatorAddress: address })
-          : await getParticipateProjects({ kolAddress: address });
+          ? await getSubmittedProjects({ creatorAddress: address, page })
+          : await getParticipateProjects({ kolAddress: address, page });
       if (!success) return null;
       return data;
     },

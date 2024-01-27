@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-form :model="form" label-width="180px">
+  <div class="mine-profile">
+    <el-form v-if="editMode" :model="form" label-width="180px">
       <el-form-item label="Name">
         <el-input v-model="form.nickName" placeholder="Nick name"></el-input>
       </el-form-item>
@@ -21,17 +21,32 @@
       </el-form-item>
       <el-form-item>
         <p-button @click="onSubmit">Submit</p-button>
+        <p-button @click="handleCancel">Cancel</p-button>
       </el-form-item>
     </el-form>
+    <div v-else class="profile">
+      <img :src="form.logo" alt="" />
+      <div class="profile-right">
+        <div class="contact">
+          <a class="twitter" target="_blank" :href="form.twitter"></a>
+          <a class="homepage" target="_blank" :href="form.homePage"></a>
+          <a class="discord" target="_blank" :href="form.discord"></a>
+          <a class="instagram" target="_blank" :href="form.instagram"></a>
+        </div>
+        <div class="ben">
+          <p-button @click="handleEdit">Edit</p-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { getAccount } from '@wagmi/core';
 import { ElMessage } from 'element-plus';
-import { reactive, toRaw } from 'vue';
+import { onMounted, reactive, ref, toRaw } from 'vue';
 
-import { postKolInfo } from '@/api';
+import { getKolInfo, postKolInfo } from '@/api';
 import Uploader from '@/components/Uploader.vue';
 
 const defaultForm = {
@@ -43,6 +58,7 @@ const defaultForm = {
   homePage: '',
   logo: '',
 };
+const editMode = ref(false);
 
 const form = reactive({ ...defaultForm });
 
@@ -52,6 +68,21 @@ const onAvatarSuccess = (url: string) => {
 
 const resetForm = () => {
   Object.assign(form, defaultForm);
+};
+
+onMounted(async () => {
+  const { address } = getAccount();
+  const { data } = await getKolInfo({ kolAddress: address });
+  console.log('onMounted:', data);
+  Object.assign(form, data);
+});
+
+const handleEdit = () => {
+  editMode.value = true;
+};
+
+const handleCancel = () => {
+  editMode.value = false;
 };
 
 const onSubmit = async () => {
@@ -72,4 +103,45 @@ const onSubmit = async () => {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.mine-profile {
+  .profile {
+    display: flex;
+    flex-direction: row;
+    > img {
+      width: 150px;
+      height: 150px;
+      margin-right: 15px;
+    }
+    &-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      a {
+        display: inline-block;
+        margin: 10px;
+        color: #fff;
+        width: 25px;
+        height: 25px;
+
+        &.homepage {
+          background: url('@/assets/images/social/icon-1.png') center center no-repeat;
+          background-size: contain;
+        }
+        &.twitter {
+          background: url('@/assets/images/social/icon-2.png') center center no-repeat;
+          background-size: contain;
+        }
+        &.discord {
+          background: url('@/assets/images/social/icon-3.png') center center no-repeat;
+          background-size: contain;
+        }
+        &.instagram {
+          background: url('@/assets/images/social/icon-4.png') center center no-repeat;
+          background-size: contain;
+        }
+      }
+    }
+  }
+}
+</style>

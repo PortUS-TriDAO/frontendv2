@@ -15,13 +15,15 @@
       >
       </project-item>
     </div>
-    <el-pagination
-      background
-      @current-change="handlePageChange"
-      layout="prev, pager, next"
-      :total="res?.data?.totalPage * 10"
-      class="mt-4"
-    />
+    <div class="pagination">
+      <el-pagination
+        background
+        @current-change="handlePageChange"
+        layout="prev, pager, next"
+        :total="res?.data?.totalPage * 10"
+        class="mt-4"
+      />
+    </div>
   </page-container>
 </template>
 <script setup lang="ts">
@@ -74,6 +76,10 @@ function handlePageChange(currentPage: number) {
     .search-input {
       width: 270px;
     }
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

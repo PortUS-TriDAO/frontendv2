@@ -93,6 +93,9 @@ const selected = computed(() => route.meta.scenes);
         }
       }
     }
+    @media (max-width: 800px) {
+      display: none;
+    }
   }
 
   .mine-content {

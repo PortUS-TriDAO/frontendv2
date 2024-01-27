@@ -12,7 +12,7 @@
             <span>{{ item.provider }}</span>
           </div>
           <div class="text-2-row">
-            <label>Project intro:</label>
+            <!-- <label></label> -->
             <span>{{ item.briefIntro }}</span>
           </div>
         </div>

@@ -12,6 +12,15 @@
     >
     </project-item>
     <no-data v-if="data?.rows?.length < 1" />
+    <div class="pagination">
+      <el-pagination
+        background
+        @current-change="handlePageChange"
+        layout="prev, pager, next"
+        :pageCount="data?.totalPage"
+        class="mt-4"
+      />
+    </div>
     <div class="text-center" v-if="scenesData.bottomBtn">
       <p-button @click="scenesData.bottomBtn.onClick">{{ scenesData.bottomBtn.text }}</p-button>
     </div>
@@ -41,13 +50,18 @@ const route = useRoute();
 const scenes = computed(() => route.meta.scenes);
 const shareDialogVisible = ref(false);
 const shareUrl = ref('');
+const page = ref(1);
 
-const { data } = useScenesProjects(scenes);
+const { data } = useScenesProjects(scenes, page.value);
 const { address: account } = getAccount();
 
 function handleDetail(item: ProjectData) {
   router.push(`/mine/${scenes.value}/${item.id || item.projectId}`);
 }
+
+const handlePageChange = (currentPage: number) => {
+  page.value = currentPage;
+};
 
 const map = {
   submitted: {

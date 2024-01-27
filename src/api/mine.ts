@@ -33,10 +33,12 @@ export const getMyBussiness = (params: { address: string; tokenId: string }): Pr
 //
 export const getSubmittedProjects = (params: {
   creatorAddress: Address;
+  page: number;
 }): Promise<IListResponse<ProjectData>> => axios.get('/mine/submitted', { params });
 
 export const getParticipateProjects = (params: {
   kolAddress: Address;
+  page: number;
 }): Promise<IListResponse<ProjectData>> => axios.get('/mine/participat', { params });
 
 // export const getParticipatProjects = (params: {}): Promise<IListResponse<ProjectData>> =>
