@@ -1,6 +1,6 @@
 <template>
   <div class="mine-profile">
-    <el-form v-if="editMode" :model="form" label-width="180px">
+    <el-form v-show="editMode" :model="form" label-width="180px">
       <el-form-item label="Name">
         <el-input v-model="form.nickName" placeholder="Nick name"></el-input>
       </el-form-item>
@@ -24,7 +24,7 @@
         <p-button @click="handleCancel">Cancel</p-button>
       </el-form-item>
     </el-form>
-    <div v-else class="profile">
+    <div v-show="!editMode" class="profile">
       <img :src="form.logo" alt="" />
       <div class="profile-right">
         <div class="contact">
@@ -66,15 +66,9 @@ const form = reactive({ ...defaultForm });
 const onAvatarSuccess = (url: string) => {
   form.logo = url;
 };
-
-const resetForm = () => {
-  Object.assign(form, defaultForm);
-};
-
 onMounted(async () => {
   const { address } = getAccount();
   const { data } = await getKolInfo({ kolAddress: address });
-  console.log('onMounted:', data);
   Object.assign(form, data);
 });
 
@@ -94,7 +88,8 @@ const onSubmit = async () => {
     const result = await postKolInfo(params);
     if (result.success) {
       ElMessage.success('submit profile info success');
-      resetForm();
+      // resetForm();
+      editMode.value = false;
     } else {
       ElMessage('submit profile info failed');
     }
