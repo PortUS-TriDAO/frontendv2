@@ -14,10 +14,7 @@
       />
     </div>
     <div class="nft-contract-item-detail">
-      <h3>{{ item.nftAddress }}</h3>
-      <!-- <div>
-        {{ item.nftID }}
-      </div> -->
+      <short-address :address="item.nftAddress"></short-address>
       <div class="flex-between" v-if="hideActions !== true">
         <div></div>
         <slot name="actions">
@@ -29,6 +26,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import ShortAddress from '@/components/short-address/index.vue';
 import type { NftContractData } from '@/types';
 
 defineOptions({ name: 'NftContractItem' });

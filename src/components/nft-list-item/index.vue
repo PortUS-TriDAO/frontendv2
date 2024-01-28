@@ -4,7 +4,8 @@
     <div class="item-detail">
       <div class="item-info">
         <h6 v-if="item.name">Collection Name: {{ item.name }}</h6>
-        <span>Address : {{ item.nftAddress }}</span>
+        <!-- <span>Address : {{ item.nftAddress }}</span> -->
+        <short-address :address="item.nftAddress"></short-address>
         <!-- <span>Symbol : </span> -->
         <span>Standard : {{ item.nftType === 1 ? 'ERC1155' : 'ERC721' }}</span>
       </div>
@@ -17,6 +18,7 @@
 </template>
 
 <script lang="ts" setup>
+import ShortAddress from '@/components/short-address/index.vue';
 import type { NftContractData } from '@/types';
 
 defineOptions({

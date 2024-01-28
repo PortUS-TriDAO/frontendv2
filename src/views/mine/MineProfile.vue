@@ -17,7 +17,7 @@
         <el-input v-model="form.instagram" placeholder="Instagram"></el-input>
       </el-form-item>
       <el-form-item label="Avatar">
-        <uploader @on-success="onAvatarSuccess"></uploader>
+        <uploader :src="form.logo" @on-success="onAvatarSuccess"></uploader>
       </el-form-item>
       <el-form-item>
         <p-button @click="onSubmit">Submit</p-button>
@@ -28,6 +28,7 @@
       <img :src="form.logo" alt="" />
       <div class="profile-right">
         <div class="contact">
+          <span>{{ form.nickName }}</span>
           <a class="twitter" target="_blank" :href="form.twitter"></a>
           <a class="homepage" target="_blank" :href="form.homePage"></a>
           <a class="discord" target="_blank" :href="form.discord"></a>
@@ -117,28 +118,31 @@ const onSubmit = async () => {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      a {
-        display: inline-block;
-        margin: 10px;
-        color: #fff;
-        width: 25px;
-        height: 25px;
+      align-items: center;
+      .contact {
+        a {
+          display: inline-block;
+          margin: 0 10px;
+          color: #fff;
+          width: 25px;
+          height: 25px;
 
-        &.homepage {
-          background: url('@/assets/images/social/icon-1.png') center center no-repeat;
-          background-size: contain;
-        }
-        &.twitter {
-          background: url('@/assets/images/social/icon-2.png') center center no-repeat;
-          background-size: contain;
-        }
-        &.discord {
-          background: url('@/assets/images/social/icon-3.png') center center no-repeat;
-          background-size: contain;
-        }
-        &.instagram {
-          background: url('@/assets/images/social/icon-4.png') center center no-repeat;
-          background-size: contain;
+          &.homepage {
+            background: url('@/assets/images/social/icon-1.png') center center no-repeat;
+            background-size: contain;
+          }
+          &.twitter {
+            background: url('@/assets/images/social/icon-2.png') center center no-repeat;
+            background-size: contain;
+          }
+          &.discord {
+            background: url('@/assets/images/social/icon-3.png') center center no-repeat;
+            background-size: contain;
+          }
+          &.instagram {
+            background: url('@/assets/images/social/icon-4.png') center center no-repeat;
+            background-size: contain;
+          }
         }
       }
     }
