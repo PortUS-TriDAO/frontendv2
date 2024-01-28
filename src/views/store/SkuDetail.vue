@@ -1,9 +1,6 @@
 <template>
   <page-container class="pg-sku-detail">
-    <!-- <div class="sku-detail-header">
-      <div class="sku-bg"></div>
-      <div></div>
-    </div> -->
+    <collection-header name="" :nft-type="1" address="" :goods-length="false" />
     <sku-card :loading="loading" v-if="data" :item="data">
       <div class="info">
         <div v-if="data?.isSold" class="sold-out">sold out</div>
@@ -32,6 +29,7 @@ import { useRoute } from 'vue-router';
 
 import { getkolRightId } from '@/api';
 import { postSkuUpdate } from '@/api/nft';
+import CollectionHeader from '@/components/collection-header/index.vue';
 import SkuCard from '@/components/sku-card/index.vue';
 import TicketQrcode from '@/components/TicketQrcode.vue';
 import type { RuleForm } from '@/components/your-info-confirm/index.vue';
@@ -136,9 +134,9 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
 </script>
 <style lang="less" scoped>
 .pg-sku-detail {
-  // > :deep(article) {
-  //   background: url('./assets/bg.png') no-repeat;
-  // }
+  > :deep(article) {
+    background: url('@/assets/images/article-bg.png') no-repeat;
+  }
   .info {
     height: 100%;
   }

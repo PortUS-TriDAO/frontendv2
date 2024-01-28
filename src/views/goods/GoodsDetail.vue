@@ -118,7 +118,7 @@ function handleDownload() {
 <style lang="less" scoped>
 .page-container.pg-goods-detail {
   > :deep(article) {
-    background: url('./assets/bg.png') no-repeat;
+    background: url('@/assets/images/article-bg.png') no-repeat;
   }
   .goods-card {
     border-radius: 10px;

@@ -1,5 +1,11 @@
 <template>
   <div class="pg-mine-sku-detail">
+    <collection-header
+      :name="data?.name"
+      :nft-type="1"
+      :address="data?.nftAddress"
+      :goods-length="nftList?.rows.length"
+    />
     <sku-card v-if="data" :item="data" @buy="handleBuy">
       <template v-if="scenes === 'submitted'" v-slot:actions>
         <p-button v-if="data.isHide" round @click="handleUp">Up</p-button>
@@ -24,6 +30,7 @@
 import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+import CollectionHeader from '@/components/collection-header/index.vue';
 import SkuCard from '@/components/sku-card/index.vue';
 import SkuItem from '@/components/sku-item/index.vue';
 import { useSkuDetail, useSkuList } from '@/hooks';
