@@ -12,7 +12,7 @@
       >
         <template v-slot:actions>
           <p-button
-            v-if="!(item.isSold || item.isHide)"
+            v-if="!(item.isSold || item.isHide || item.ddl < now)"
             :loading="loading"
             size="small"
             round
@@ -68,6 +68,7 @@ const currItemInfo = ref<SkuSpuData>(null);
 // qrcode
 const qrcodeVisible = ref(false);
 const qrcodeContent = ref('');
+const now = ref(parseInt((Date.now() / 1000).toFixed(0), 10));
 
 const { data: res } = useQuery({
   queryKey: ['getProjectDetail', projectId],

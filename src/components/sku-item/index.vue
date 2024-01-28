@@ -2,7 +2,7 @@
   <div
     :class="[
       'sku-item',
-      { sold: item.isSold || item.isHide || item.soldAmount >= item.sellAmount },
+      { sold: item.isSold || item.isHide || item.soldAmount >= item.sellAmount || item.ddl < now },
     ]"
   >
     <!-- <div class="sku-item-amount">{{ item.soldAmount }}/{{ item.sellAmount }}</div> -->
@@ -22,6 +22,7 @@
 </template>
 <script setup lang="ts">
 import { Picture as IconPicture } from '@element-plus/icons-vue';
+import { ref } from 'vue';
 
 import { PayTokenMap } from '@/constant/contracts';
 import type { SkuData, SpuData } from '@/types';
@@ -32,6 +33,7 @@ defineOptions({
 defineProps<{
   item: SkuData | SpuData;
 }>();
+const now = ref(parseInt((Date.now() / 1000).toFixed(0), 10));
 </script>
 <style lang="less">
 .sku-item {

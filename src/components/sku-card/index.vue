@@ -74,10 +74,13 @@ import type { SkuData } from '@/types';
 
 defineOptions({ name: 'SkuItem' });
 const props = defineProps<{ item: SkuData; size?: 'small' }>();
-const emit = defineEmits(['buy']);
+const emit = defineEmits(['buy', 'end']);
 
 function buy(item: SkuData) {
   emit('buy', item);
+}
+function end() {
+  emit('end', true);
 }
 
 const countdown = reactive({
@@ -95,6 +98,7 @@ const computeCountdown = () => {
   const leftTime = props.item.ddl - parseInt((Date.now() / 1000).toFixed(), 10);
   if (leftTime <= 0) {
     clearInterval(interval);
+    end();
   } else {
     countdown.days = toPadNumber(leftTime / (3600 * 24));
     countdown.hours = toPadNumber((leftTime % (3600 * 24)) / 3600);

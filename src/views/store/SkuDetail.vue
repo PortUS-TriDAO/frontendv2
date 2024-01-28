@@ -1,10 +1,10 @@
 <template>
   <page-container class="pg-sku-detail">
     <collection-header name="" :nft-type="1" address="" :goods-length="false" />
-    <sku-card :loading="loading" v-if="data" :item="data">
+    <sku-card :loading="loading" v-if="data" :item="data" @end="isEnd = true">
       <div class="info">
         <div v-if="data?.isSold" class="sold-out">sold out</div>
-        <div v-else-if="data.isHide" class="sold-out">Down</div>
+        <div v-else-if="data.isHide || isEnd" class="sold-out">Down</div>
         <p-button class="buy-btn" v-else @click="handleBuy()">Buy Now</p-button>
       </div>
     </sku-card>
@@ -49,6 +49,7 @@ const qrcodeContent = ref('');
 const qrcodeVisible = ref(false);
 // your info
 const yourInfoConfirmVisible = ref(false);
+const isEnd = ref(false);
 
 // const nftAddress = computed(() => route.params.nftAddress as string);
 // const skuId = computed(() => route.params.skuId as string);
