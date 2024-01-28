@@ -16,7 +16,7 @@
     >
     </project-item>
     <no-data v-if="data?.rows?.length < 1" />
-    <div class="pagination">
+    <div class="pagination" v-if="data?.rows?.length > 1">
       <el-pagination
         background
         @current-change="handlePageChange"
