@@ -7,9 +7,6 @@
       <div>
         <span>Commission rate: </span> <span class="light">{{ data?.sharePercentage }}%</span>
       </div>
-      <!-- <div>
-        <span>1.2 USDT</span>
-      </div> -->
       <div class="flex-between">
         <div>
           <label>Applied/Total: </label>
@@ -20,7 +17,6 @@
       <text-ellipsis :line="3" v-if="safeDescription">
         <span v-html="safeDescription"></span>
       </text-ellipsis>
-      <!-- <p>{{ data?.description }}</p> -->
       <div class="right-action">
         <div v-if="scenes === 'submitted'" class="balance">
           <div class="flex-between">

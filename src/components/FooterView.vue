@@ -16,7 +16,7 @@
             <img src="@/assets/images/social-email.png" width="17px" height="13px" />
             <span>info@tridao.xyz</span>
           </a>
-          <a target="_blank" rel="noopener noreferrer"> Legal disclaimer </a>
+          <a target="_blank" rel="noopener noreferrer" class="disclaimer"> Legal disclaimer </a>
         </span>
       </div>
     </div>
@@ -71,7 +71,7 @@
     padding: 20px 16px;
     height: auto;
     .footer-container {
-      justify-content: flex-start;
+      justify-content: space-between;
       padding: 0;
       height: auto;
 
@@ -79,14 +79,13 @@
         height: 24px;
         width: 90px;
       }
-      // > div {
-      //   margin-top: 15px;
-      //   display: flex;
-      //   flex-direction: column;
-      //   align-items: center;
-      // }
-      .footer-right {
-        display: none;
+      .social {
+        span {
+          display: none;
+        }
+        .disclaimer {
+          display: none;
+        }
       }
     }
   }
