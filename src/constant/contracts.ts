@@ -50,6 +50,31 @@ export const SelectTokenList = isProd
       },
     ];
 
+export interface Token {
+  symbol: string;
+  name: string;
+  address: string;
+  decimals: number;
+}
+export const TokenList: { [chainId: number]: Token[] } = {
+  80001: [
+    {
+      symbol: 'USDT',
+      name: 'Mock USD',
+      address: '0xB1f42b23C3eBf27b10cF89860fFB702c9e05c964',
+      decimals: 18,
+    },
+  ],
+  137: [
+    {
+      symbol: 'USDT',
+      name: 'Tether USD',
+      address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+      decimals: 6,
+    },
+  ],
+};
+
 export const PayTokenMap: Record<Address, { symbol: string }> = SelectTokenList.reduce(
   (prev, item) => {
     prev[item.value] = {
