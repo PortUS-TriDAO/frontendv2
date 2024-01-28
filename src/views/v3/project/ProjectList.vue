@@ -45,8 +45,15 @@ const {
   isPending,
 } = useQuery({
   queryKey: ['getProjects', searchKey.value, page],
-  queryFn: () => {
-    return getProjects({ key: searchKey.value, page: page.value, limit: 10 });
+  queryFn: async () => {
+    let res = await getProjects({ key: searchKey.value, page: page.value, limit: 10 });
+    res.data.rows = res.data.rows.map((v) => {
+      return {
+        ...v,
+        ...v.statistic,
+      };
+    });
+    return res;
   },
 });
 

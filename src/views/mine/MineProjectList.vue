@@ -1,6 +1,10 @@
 <template>
   <div class="page-mine-submitted">
-    <h3 v-if="scenesData.title" class="mine-page-title">{{ scenesData.title }}</h3>
+    <!-- <h3 v-if="scenesData.title" class="mine-page-title">{{ scenesData.title }}</h3> -->
+    <div class="page-list-header">
+      <h5>Projects</h5>
+      <p-button @click="scenesData.bottomBtn.onClick">{{ scenesData.bottomBtn.text }}</p-button>
+    </div>
     <project-item
       v-for="item in data?.rows || []"
       :key="item.id || item.projectId"
@@ -44,6 +48,8 @@ import { useScenesProjects } from '@/hooks';
 import type { ProjectData } from '@/types';
 import { shareStore } from '@/utils/share';
 
+import ProjectListHeader from './components/ProjectListHeader.vue';
+
 defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
 const route = useRoute();
@@ -56,7 +62,14 @@ const { data } = useScenesProjects(scenes, page.value);
 const { address: account } = getAccount();
 
 function handleDetail(item: ProjectData) {
-  router.push(`/mine/${scenes.value}/${item.id || item.projectId}`);
+  if (scenes.value === 'store') {
+    const { address } = getAccount();
+    // router.push(`/store/${address}/project/${item.id}`);
+    const resolveData = router.resolve(`/store/${address}/project/${item.id}`);
+    window.open(resolveData.href, '_blank');
+  } else {
+    router.push(`/mine/${scenes.value}/${item.id || item.projectId}`);
+  }
 }
 
 const handlePageChange = (currentPage: number) => {
@@ -67,6 +80,8 @@ const map = {
   submitted: {
     title: 'ProjectList',
     btnText: 'Edit',
+    headerBtnText: 'Create Project',
+    headerBtnClick: () => {},
     btnClick: (item: ProjectData) => {
       console.log('handleEdit item', item);
       // TODO: edit
@@ -104,7 +119,7 @@ const map = {
     //   shareProject(account, projectInfo.projectId);
     // },
     bottomBtn: {
-      text: 'share My Store',
+      text: 'Share My Store',
       onClick: () => {
         // TODO: share My Store
         const url = shareStore(account);
@@ -130,6 +145,16 @@ const scenesData = computed(() => {
     font-size: 34px;
     font-weight: 700;
     margin-bottom: 26px;
+  }
+  .page-list-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    > h5 {
+      font-size: 30px;
+    }
   }
 }
 </style>
