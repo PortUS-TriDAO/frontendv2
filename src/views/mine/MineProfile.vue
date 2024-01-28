@@ -135,7 +135,7 @@ const onSubmit = async () => {
             background-size: contain;
           }
           &.instagram {
-            background: url('@/assets/images/social/icon-4.png') center center no-repeat;
+            background: url('@/assets/images/social/icon-4.jpg') center center no-repeat;
             background-size: contain;
           }
         }

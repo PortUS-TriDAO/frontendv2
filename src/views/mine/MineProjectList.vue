@@ -48,8 +48,6 @@ import { useScenesProjects } from '@/hooks';
 import type { ProjectData } from '@/types';
 import { shareStore } from '@/utils/share';
 
-import ProjectListHeader from './components/ProjectListHeader.vue';
-
 defineOptions({ name: 'MimeProjectList' });
 const router = useRouter();
 const route = useRoute();
