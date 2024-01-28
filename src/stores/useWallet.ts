@@ -1,6 +1,6 @@
 import { watchAccount, watchNetwork } from '@wagmi/core';
 import { defineStore } from 'pinia';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 
 import { web3modal } from '@/utils/wallet';
 export const useWalletStore = defineStore('wallet', () => {
@@ -20,5 +20,8 @@ export const useWalletStore = defineStore('wallet', () => {
   watchNetwork((newnetwork) => {
     console.log({ newnetwork });
   });
-  return { state, connect };
+
+  const shortAddress = computed(() => `${state.account.slice(0, 4)}...${state.account.slice(-6)}`);
+
+  return { state, connect, shortAddress };
 });

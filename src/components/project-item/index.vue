@@ -13,7 +13,7 @@
           </div>
           <div>
             <label>Provider:</label>
-            <span>{{ item.provider }}</span>
+            <span class="provider">{{ item.provider }}</span>
           </div>
           <div class="text-2-row">
             <!-- <label></label> -->
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div>
-          <div v-if="item.altcs">
+          <div v-if="item.altcs && scenes !== 'store' && !isStorePage">
             <label>ALTCS:</label>
             <span>{{ item.altcs }}</span>
           </div>
@@ -32,6 +32,10 @@
           <div v-if="item.goodsCount">
             <label>Goods:</label>
             <span>{{ item.goodsCount }}</span>
+          </div>
+          <div v-if="item.createdAt">
+            <label>Created:</label>
+            <span>{{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</span>
           </div>
         </div>
       </div>
@@ -44,7 +48,15 @@
   </div>
 </template>
 <script setup lang="ts">
+import dayjs from 'dayjs';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
 import type { ProjectData } from '@/types';
+const route = useRoute();
+
+const scenes = computed(() => route.meta.scenes);
+const isStorePage = computed(() => route.path.slice(0, 6) === '/store');
 
 defineOptions({ name: 'ProjectItem' });
 defineProps<{ item: ProjectData; btnText?: string }>();
@@ -116,6 +128,14 @@ function handleClick(item: ProjectData) {
       label {
         margin-right: 4px;
       }
+      .provider {
+        display: inline-block;
+        word-break: keep-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        width: 100px;
+      }
     }
   }
   .text-2-row {
@@ -155,6 +175,9 @@ function handleClick(item: ProjectData) {
       gap: 8px;
       > div {
         width: 100%;
+        .provider {
+          width: 100%;
+        }
       }
     }
     .project-item-action {

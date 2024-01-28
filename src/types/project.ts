@@ -15,6 +15,7 @@ export interface ProjectData {
   provider: number;
   altcs: number;
   statistic?: any;
+  createdAt?: string;
 }
 
 /**
