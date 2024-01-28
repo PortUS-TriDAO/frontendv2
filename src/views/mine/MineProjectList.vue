@@ -25,9 +25,9 @@
         class="mt-4"
       />
     </div>
-    <div class="text-center" v-if="scenesData.bottomBtn">
+    <!-- <div class="text-center" v-if="scenesData.bottomBtn">
       <p-button @click="scenesData.bottomBtn.onClick">{{ scenesData.bottomBtn.text }}</p-button>
-    </div>
+    </div> -->
 
     <share-dialog
       @close="shareDialogVisible = false"
