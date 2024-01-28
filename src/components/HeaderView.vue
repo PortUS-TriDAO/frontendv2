@@ -16,21 +16,48 @@
         <template v-else>
           <router-link class="logo" to="/"></router-link>
           <div class="menus" ref="elMenu">
-            <router-link to="/" @click.stop="switchMenu(true)">Home</router-link>
-            <router-link to="/project/list" @click.stop="switchMenu(true)">Project</router-link>
-            <router-link to="/mine/submitted" @click.stop="switchMenu(true)"
-              >My Profile</router-link
-            >
-            <router-link v-if="!isProd" to="/faucet" @click.stop="switchMenu(true)"
-              >Faucet</router-link
-            >
-            <button class="btn-user" @click.stop="gotoGoods()">
-              <img src="@/assets/icon-goods.png" />
-            </button>
-            <w3m-button balance="hide">connect</w3m-button>
+            <router-link to="/" @click.stop="switchMenu(true)">
+              <el-icon><HomeFilled /></el-icon>
+              Home
+            </router-link>
+            <router-link to="/project/list" @click.stop="switchMenu(true)">
+              <el-icon><MessageBox /></el-icon>
+              Project
+            </router-link>
+            <router-link to="/mine/submitted" @click.stop="switchMenu(true)" class="hide-in-mobile">
+              <el-icon><Menu /></el-icon>
+              My Profile
+            </router-link>
+            <a class="show-in-mobile">
+              <el-icon><Menu /></el-icon>
+              My Profile
+            </a>
+            <div class="my-profile">
+              <router-link to="/mine/submitted" @click.stop="switchMenu(true)">
+                <el-icon><Collection /></el-icon>
+                Project Created
+              </router-link>
+              <router-link to="/mine/participated" @click.stop="switchMenu(true)">
+                <el-icon><Star /></el-icon>
+                Participated
+              </router-link>
+              <router-link to="/mine/submitted" @click.stop="switchMenu(true)">
+                <el-icon><ShoppingBag /></el-icon>
+                My Store
+              </router-link>
+              <router-link to="/mine/submitted" @click.stop="switchMenu(true)">
+                <el-icon><User /></el-icon>
+                profile
+              </router-link>
+            </div>
+            <router-link v-if="!isProd" to="/faucet" @click.stop="switchMenu(true)">
+              <el-icon><Lightning /></el-icon>
+              Faucet
+            </router-link>
+            <w3m-button balance="hide" size="small">connect</w3m-button>
             <w3m-network-button />
           </div>
-          <button v-if="!(isStore || isAgent)" class="btn-menus" @click.stop="switchMenu()">
+          <button class="btn-menus" @click.stop="switchMenu()">
             <svg
               width="40"
               height="37"
@@ -65,6 +92,15 @@
   </div>
 </template>
 <script setup lang="ts">
+import {
+  Collection,
+  HomeFilled,
+  Menu,
+  MessageBox,
+  ShoppingBag,
+  Star,
+  User,
+} from '@element-plus/icons-vue';
 import { getNetwork, switchNetwork, watchNetwork } from '@wagmi/core';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -156,6 +192,7 @@ const switchChain = () => {
     justify-content: space-between;
 
     .logo {
+      flex-shrink: 0;
       width: 105px;
       height: 32px;
       background: url('@/assets/logo.png') center center no-repeat;
@@ -167,7 +204,7 @@ const switchChain = () => {
       height: 24px;
       line-height: 24px;
       border-left: 1px solid rgba(187, 187, 187, 1);
-      font-size: 22px;
+      font-size: 18px;
       text-align: center;
       color: #fff;
       width: 90px;
@@ -176,11 +213,15 @@ const switchChain = () => {
       text-align: left;
       margin-left: 18px;
       padding-left: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      gap: 8px;
 
       @media screen and (max-width: 800px) {
         margin-left: 8px;
         padding-left: 8px;
-        font-size: 20px;
+        font-size: 18px;
       }
     }
 
@@ -190,31 +231,14 @@ const switchChain = () => {
       align-items: center;
       color: #fff;
 
-      // > button {
-      //   width: 140px;
-      //   height: 40px;
-      //   font-size: 18px;
-      //   font-weight: 700;
-      //   border: none;
-      //   border-radius: 8px;
-      //   color: #fff;
-      //   cursor: pointer;
-      //   background: linear-gradient(90deg, rgba(251, 114, 47, 1) 0%, rgba(246, 37, 12, 1) 100%);
-      //   padding: 0 10px;
-      //   display: flex;
-      //   align-items: center;
-
-      //   > svg {
-      //     margin-right: 22px;
-      //   }
-      // }
-
-      > a {
+      a {
         color: #fff;
         opacity: 0.5;
-        display: inline-block;
         margin-right: 40px;
         white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
       }
       .router-link-active {
         opacity: 1;
@@ -248,7 +272,25 @@ const switchChain = () => {
     }
   }
 
+  .show-in-mobile {
+    display: none !important;
+  }
+  .my-profile {
+    display: none;
+  }
+
   @media screen and (max-width: 800px) {
+    .hide-in-mobile {
+      display: none !important;
+    }
+    .show-in-mobile {
+      display: block !important;
+    }
+    .my-profile {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+    }
     height: 60px;
     .header-section {
       position: fixed;
@@ -263,6 +305,8 @@ const switchChain = () => {
       line-height: 60px;
       position: relative;
       z-index: 9;
+      padding-right: 8px;
+      padding-left: 8px;
 
       .btn-menus {
         display: block;
@@ -278,8 +322,9 @@ const switchChain = () => {
         padding: 0 20px;
         background-color: #000425;
 
-        > a {
-          display: block;
+        a {
+          display: flex;
+          gap: 8px;
           margin-right: 0;
         }
       }
@@ -288,6 +333,9 @@ const switchChain = () => {
         display: block;
       }
     }
+  }
+  w3m-network-button {
+    display: none;
   }
 }
 </style>
