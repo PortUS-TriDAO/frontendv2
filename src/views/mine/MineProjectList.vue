@@ -16,7 +16,7 @@
     >
     </project-item>
     <no-data v-if="data?.rows?.length < 1" />
-    <div class="pagination">
+    <div class="pagination" v-if="data?.rows?.length > 1">
       <el-pagination
         background
         @current-change="handlePageChange"
@@ -25,9 +25,9 @@
         class="mt-4"
       />
     </div>
-    <div class="text-center" v-if="scenesData.bottomBtn">
+    <!-- <div class="text-center" v-if="scenesData.bottomBtn">
       <p-button @click="scenesData.bottomBtn.onClick">{{ scenesData.bottomBtn.text }}</p-button>
-    </div>
+    </div> -->
 
     <share-dialog
       @close="shareDialogVisible = false"

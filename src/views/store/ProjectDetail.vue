@@ -173,7 +173,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
 <style lang="less" scoped>
 .pg-store-project-detail {
   > :deep(article) {
-    background: url('./assets/bg.png') no-repeat;
+    background: url('@/assets/images/article-bg.png') no-repeat;
   }
   .list {
     display: grid;

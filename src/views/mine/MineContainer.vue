@@ -100,10 +100,13 @@ const selected = computed(() => route.meta.scenes);
 
   .mine-content {
     flex: 1;
-    //width: 976px;
     width: 800px;
-    // background-color: #fff;
     padding: 20px 30px;
+  }
+  @media (max-width: 800px) {
+    .mine-content {
+      padding: 0;
+    }
   }
 }
 </style>
