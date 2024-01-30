@@ -60,6 +60,7 @@ export const postSkuUpdate = (params: {
   imgUrl?: string;
   nftName?: string;
   isSold?: boolean;
+  soldAmount: number;
 }) => axios.post('/project/sku/update', params);
 
 export const postNFTUP = (params: { retailType: number; id: number }) =>

@@ -115,7 +115,7 @@ async function handleBuy(item: SkuData | SpuData) {
     );
     await waitForTransaction({ hash: tx.hash });
     // await projectStore.handleTickVerify(nftAddress, itemInfo.tokenId, item.id);
-    await postSkuUpdate({ skuId: item.id, isSold: true });
+    await postSkuUpdate({ skuId: item.id, isSold: true, soldAmount: 1 });
     ElMessage.success('buy success');
   } catch (e) {
     console.error(e);
