@@ -144,7 +144,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
       formData.quantity,
     );
     await waitForTransaction({ hash: tx.hash });
-    await postSkuUpdate({ skuId: item.id, isSold: true, soldAmount: formData.quantity });
+    await postSkuUpdate({ skuId: item.id, isSold: true, soldAmount: Number(formData.quantity) });
 
     // try {
     const { ticketToken } = await projectStore.handleTickVerify({
