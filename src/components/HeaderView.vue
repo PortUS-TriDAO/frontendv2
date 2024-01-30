@@ -41,11 +41,11 @@
                 <el-icon><Star /></el-icon>
                 Participated
               </router-link>
-              <router-link to="/mine/submitted" @click.stop="switchMenu(true)">
+              <router-link to="/mine/store" @click.stop="switchMenu(true)">
                 <el-icon><ShoppingBag /></el-icon>
                 My Store
               </router-link>
-              <router-link to="/mine/submitted" @click.stop="switchMenu(true)">
+              <router-link to="/mine/profile" @click.stop="switchMenu(true)">
                 <el-icon><User /></el-icon>
                 profile
               </router-link>

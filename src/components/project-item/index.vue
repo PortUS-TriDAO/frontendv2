@@ -7,10 +7,10 @@
       <h3>{{ item.name || item.projectName }}</h3>
       <div class="project-item-desc">
         <div>
-          <div>
+          <!-- <div>
             <label>ProjectName:</label>
             <span>{{ item.projectName }}</span>
-          </div>
+          </div> -->
           <div>
             <label>Provider:</label>
             <span class="provider">{{ item.provider }}</span>

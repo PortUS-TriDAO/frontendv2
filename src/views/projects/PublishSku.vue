@@ -54,7 +54,6 @@ import { ElMessage, type FormInstance } from 'element-plus';
 import { reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { postSkuUpdate } from '@/api/nft';
 import MainContent from '@/components/MainContent.vue';
 import { useBusinessDetail } from '@/hooks';
 import router from '@/router';

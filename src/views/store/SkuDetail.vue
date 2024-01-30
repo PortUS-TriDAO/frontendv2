@@ -111,7 +111,7 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
       formData.quantity,
     );
     await waitForTransaction({ hash: tx.hash });
-    await postSkuUpdate({ skuId: skuId.value, isSold: true });
+    await postSkuUpdate({ skuId: skuId.value, isSold: true, soldAmount: formData.quantity });
 
     const { ticketToken } = await projectStore.handleTickVerify({
       nftAddress: itemInfo.nftAddress,
