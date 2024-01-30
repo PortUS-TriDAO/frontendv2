@@ -20,8 +20,10 @@
         <uploader :src="form.logo" @on-success="onAvatarSuccess"></uploader>
       </el-form-item>
       <el-form-item>
-        <p-button @click="onSubmit">Submit</p-button>
-        <p-button @click="handleCancel">Cancel</p-button>
+        <div class="btns">
+          <p-button @click="onSubmit">Submit</p-button>
+          <p-button @click="handleCancel">Cancel</p-button>
+        </div>
       </el-form-item>
     </el-form>
     <div v-show="!editMode" class="profile">
@@ -232,12 +234,24 @@ const onSubmit = async () => {
         }
       }
     }
+  }
 
-    @media (max-width: 800px) {
+  @media (max-width: 800px) {
+    .profile {
       flex-direction: column;
       align-items: center;
       .profile-right {
         margin: 20px 0;
+      }
+    }
+    .btns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      button {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 15px;
       }
     }
   }

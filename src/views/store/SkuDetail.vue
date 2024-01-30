@@ -3,9 +3,9 @@
     <collection-header name="" :nft-type="1" address="" :goods-length="false" />
     <sku-card :loading="loading" v-if="data" :item="data" @end="isEnd = true">
       <div class="info">
-        <div v-if="data?.isSold" class="sold-out">sold out</div>
+        <div v-if="data.soldAmount >= data.sellAmount" class="sold-out">sold out</div>
         <div v-else-if="data.isHide || isEnd" class="sold-out">Down</div>
-        <p-button class="buy-btn" v-else @click="handleBuy()">Buy Now</p-button>
+        <p-button class="buy-btn" v-else @click="handleBuy(data)">Buy Now</p-button>
       </div>
     </sku-card>
 
@@ -37,7 +37,7 @@ import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
 import { useSkuDetail } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
 import { useProjectStore } from '@/stores/useProject';
-import type { SkuSpuData } from '@/types';
+import type { SkuData, SkuSpuData } from '@/types';
 import { extendsDecimals, toBN } from '@/utils/bn';
 
 const loading = ref(false);
@@ -59,8 +59,11 @@ const erc20Contract = useERC20Contract();
 const { data, refetch } = useSkuDetail(skuId);
 // const { data: kolRightInfo } = useKolRightId(bizId, kolAddress);
 
-async function handleBuy() {
-  yourInfoConfirmVisible.value = true;
+async function handleBuy(data: SkuData) {
+  console.log('handleBuy=========', data);
+  if (!data?.isSold) {
+    yourInfoConfirmVisible.value = true;
+  }
 }
 
 function handleSubmit(form: RuleForm) {

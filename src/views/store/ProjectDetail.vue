@@ -12,7 +12,9 @@
       >
         <template v-slot:actions>
           <p-button
-            v-if="!(item.isSold || item.isHide || item.ddl < now)"
+            v-if="
+              !(item.isSold || item.isHide || item.soldAmount >= item.sellAmount || item.ddl < now)
+            "
             :loading="loading"
             size="small"
             round
