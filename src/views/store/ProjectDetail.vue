@@ -56,6 +56,7 @@ import type { RuleForm } from '@/components/your-info-confirm/index.vue';
 import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
 import { useProjectSkuSpuForStore } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
+import { useGlobalStore } from '@/stores/useGlobal';
 import { useProjectStore } from '@/stores/useProject';
 import type { Address, SkuSpuData } from '@/types';
 import { extendsDecimals, toBN } from '@/utils/bn';
@@ -71,6 +72,7 @@ const currItemInfo = ref<SkuSpuData>(null);
 const qrcodeVisible = ref(false);
 const qrcodeContent = ref('');
 const now = ref(parseInt((Date.now() / 1000).toFixed(0), 10));
+const globalStore = useGlobalStore();
 
 const { data: res } = useQuery({
   queryKey: ['getProjectDetail', projectId],
@@ -90,6 +92,11 @@ const loading = ref(false);
 const projectStore = useProjectStore();
 
 async function handleBuy(item: SkuSpuData) {
+  const isSupportNetwork = globalStore.checkNetwork();
+  if (!isSupportNetwork) {
+    ElMessage.error('Current network not support');
+    return;
+  }
   currItemInfo.value = toRaw(item);
   yourInfoConfirmVisible.value = true;
 }
@@ -105,10 +112,6 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     lock: true,
     text: 'Approve',
     background: 'rgba(0, 0, 0, 0.7)',
-  });
-  console.log({
-    formData,
-    itemInfo,
   });
   try {
     const buyParams = {
@@ -148,7 +151,6 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     await waitForTransaction({ hash: tx.hash });
     await postSkuUpdate({ skuId: item.id, isSold: true, soldAmount: Number(formData.quantity) });
 
-    // try {
     const { ticketToken } = await projectStore.handleTickVerify({
       nftAddress: itemInfo.nftAddress,
       tokenId: itemInfo.tokenId,
@@ -157,9 +159,6 @@ async function handleBuyConfirm(item: SkuSpuData, form: RuleForm) {
     });
     qrcodeVisible.value = true;
     qrcodeContent.value = ticketToken;
-    // } catch (e) {
-    //   ElMessage.error('fetch ticket info failed');
-    // }
 
     ElMessage.success('buy success');
   } catch (e) {

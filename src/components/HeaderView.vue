@@ -83,6 +83,7 @@
         align-center
         :close-on-click-modal="false"
         :close-on-press-escape="false"
+        @close="onDialogClose"
       >
         <div style="text-align: center">
           <el-button type="primary" @click="switchChain">Switch Network</el-button>
@@ -106,6 +107,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { useProfile } from '@/hooks';
+import { useGlobalStore } from '@/stores/useGlobal';
 import { useWalletStore } from '@/stores/useWallet';
 
 const route = useRoute();
@@ -113,20 +115,21 @@ const router = useRouter();
 const isStore = computed(() => route.path.indexOf('/store') === 0);
 const isAgent = computed(() => route.path.indexOf('/goods') === 0);
 const isProd = computed(() => ['www.portus.world', 'portus.world'].includes(window.location.host));
-const networkDialogVisible = ref(false);
 
 const walletStore = useWalletStore();
+const globalStore = useGlobalStore();
 
 const elMenu = ref(null);
+
+const networkDialogVisible = computed(() => globalStore.state.networkDialogVisible);
 
 watchNetwork((network) => {
   const { chains, chain } = network;
   const chainIds = chains.map((v) => v.id);
   if (!chainIds.includes(chain.id)) {
-    console.log('current chain not support');
-    networkDialogVisible.value = true;
+    globalStore.setNetworkDialog(true);
   } else {
-    networkDialogVisible.value = false;
+    globalStore.setNetworkDialog(false);
   }
 });
 
@@ -148,22 +151,11 @@ onMounted(() => {
 });
 
 const account = computed(() => walletStore.state.account);
-// const shortAddress = computed(
-//   () =>
-//     walletStore.state.account &&
-//     `${walletStore.state.account.slice(0, 6)}...${walletStore.state.account.slice(-4)}`,
-// );
-
 const kolAddress = computed(() => route.params.kolAddress as string);
 const profile = useProfile(kolAddress);
 const agentNickName = computed(() => {
   return profile?.data?.value?.nickName || 'Agent';
 });
-
-function connect() {
-  switchMenu(true);
-  walletStore.connect();
-}
 function gotoGoods() {
   router.push('/goods');
 }
@@ -171,6 +163,10 @@ function gotoGoods() {
 const switchChain = () => {
   const { chains } = getNetwork();
   switchNetwork({ chainId: chains[0].id });
+};
+
+const onDialogClose = () => {
+  globalStore.setNetworkDialog(false);
 };
 </script>
 <style lang="less">
@@ -333,9 +329,9 @@ const switchChain = () => {
         display: block;
       }
     }
-  }
-  w3m-network-button {
-    display: none;
+    w3m-network-button {
+      display: none;
+    }
   }
 }
 </style>

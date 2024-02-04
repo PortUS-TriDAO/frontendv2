@@ -36,6 +36,7 @@ import type { RuleForm } from '@/components/your-info-confirm/index.vue';
 import YourInfoConfirm from '@/components/your-info-confirm/index.vue';
 import { useSkuDetail } from '@/hooks';
 import { useERC20Contract } from '@/stores/useERC20Contract';
+import { useGlobalStore } from '@/stores/useGlobal';
 import { useProjectStore } from '@/stores/useProject';
 import type { SkuData, SkuSpuData } from '@/types';
 import { extendsDecimals, toBN } from '@/utils/bn';
@@ -50,6 +51,7 @@ const qrcodeVisible = ref(false);
 // your info
 const yourInfoConfirmVisible = ref(false);
 const isEnd = ref(false);
+const globalStore = useGlobalStore();
 
 // const nftAddress = computed(() => route.params.nftAddress as string);
 // const skuId = computed(() => route.params.skuId as string);
@@ -61,6 +63,11 @@ const { data, refetch } = useSkuDetail(skuId);
 
 async function handleBuy(data: SkuData) {
   console.log('handleBuy=========', data);
+  const isSupportNetwork = globalStore.checkNetwork();
+  if (!isSupportNetwork) {
+    ElMessage.error('Current network not support');
+    return;
+  }
   if (!data?.isSold) {
     yourInfoConfirmVisible.value = true;
   }

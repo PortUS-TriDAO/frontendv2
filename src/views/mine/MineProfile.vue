@@ -27,7 +27,8 @@
       </el-form-item>
     </el-form>
     <div v-show="!editMode" class="profile">
-      <img :src="form.logo" alt="" />
+      <img v-if="form.logo" :src="form.logo" alt="" />
+      <div v-else class="logo" @click="handleEdit">Upload Image</div>
       <div class="profile-right">
         <div class="contact">
           <span>{{ form.nickName }}</span>
@@ -210,6 +211,15 @@ const onSubmit = async () => {
       width: 150px;
       height: 150px;
       margin-right: 15px;
+    }
+    .logo {
+      width: 150px;
+      height: 150px;
+      margin-right: 15px;
+      border: solid 1px #fff;
+      text-align: center;
+      line-height: 150px;
+      cursor: pointer;
     }
     &-right {
       display: flex;
