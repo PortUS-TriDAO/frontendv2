@@ -2,7 +2,7 @@
   <div class="business-item">
     <!-- <img v-if="avatar" alt="avatar" :src="avatar" /> -->
     <div class="business-item-detail">
-      <div class="flex-row-between">
+      <div class="flex-row-between line-1">
         <h3>{{ item.contractName }}</h3>
         <div style="padding-right: 50px">
           <div style="margin-bottom: 10px">
@@ -16,7 +16,7 @@
           />
         </div>
       </div>
-      <p v-if="scenes !== 'submitted'">Project intro: {{ item.briefIntro }}.</p>
+      <p v-if="scenes !== 'submitted'">{{ item.briefIntro }}.</p>
       <div>
         <div>
           <label>Commission rate:</label>
@@ -194,6 +194,28 @@ function handleUploadAirdropList(e: Event) {
       height: 24px;
       cursor: pointer;
       background: transparent url('@/assets/images/icon-upload.png') center center;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 16px;
+    .flex-row-between.line-1 {
+      flex-direction: column;
+      h3 {
+        font-size: 18px;
+        + div {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    }
+    .business-item-detail {
+      > p {
+        display: none;
+      }
+      .el-button--primary.is-round {
+        min-width: 90px;
+        font-size: 20px !important;
+      }
     }
   }
 }
