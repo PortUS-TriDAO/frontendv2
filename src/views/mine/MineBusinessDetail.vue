@@ -250,6 +250,16 @@ function handleSubmit() {
     //   height: 100px;
     // }
   }
+  @media screen and (max-width: 800px) {
+    .business-title {
+      > h2 {
+        height: auto;
+      }
+    }
+    .right-action {
+      position: relative !important;
+    }
+  }
 }
 </style>
 @/hooks

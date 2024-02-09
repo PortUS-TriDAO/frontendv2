@@ -198,5 +198,10 @@ function handleAddNft() {
       overflow: hidden;
     }
   }
+  @media screen and (max-width: 800px) {
+    .list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 }
 </style>
