@@ -477,6 +477,53 @@ export const useProjectStore = defineStore('project', () => {
 
     return { ticketToken: data.ticketToken };
   }
+  async function handleTickVerifyV2(params: {
+    nftAddress: string;
+    tokenId: number;
+    skuId: number;
+    mobile?: string;
+    name?: string;
+    email?: string;
+    industry?: string;
+    company?: string;
+    jobTitle?: string;
+    countryOrRegion?: string;
+  }): Promise<{ ticketToken: string }> {
+    const { address } = getAccount();
+    const {
+      nftAddress,
+      tokenId,
+      skuId,
+      mobile,
+      name,
+      email,
+      industry,
+      company,
+      jobTitle,
+      countryOrRegion,
+    } = params;
+    const { message, signature } = await postTicketInfo();
+    // if (returnDesc !== 'Success') throw new Error('get ticket info failed');
+
+    // const { owner, ticketStatus, ticketToken } = data;
+    const { data } = await projectApi.postUserByTicketV2({
+      skuId,
+      address,
+      contractAddress: nftAddress,
+      tokenId,
+      message,
+      signature,
+      mobile,
+      name,
+      email,
+      industry,
+      company,
+      jobTitle,
+      countryOrRegion,
+    });
+
+    return data;
+  }
 
   return {
     state,
@@ -494,5 +541,6 @@ export const useProjectStore = defineStore('project', () => {
     operatorPendingRewards,
     referrerPendingReward,
     handleTickVerify,
+    handleTickVerifyV2,
   };
 });

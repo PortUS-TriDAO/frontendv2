@@ -1,0 +1,43 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "erc1155Token",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "tokenIds",
+                "type": "uint256[]"
+            }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "tokenId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct ERC11155Enumrate.TokenBalance[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]

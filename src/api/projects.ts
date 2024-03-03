@@ -150,6 +150,23 @@ export const postUserByTicket = (params: {
   countryOrRegion?: string;
 }) => axios.post('/user/buyticket', params);
 
+// post hashkey 返回的tickInfo发到服务端
+export const postUserByTicketV2 = (params: {
+  skuId: number;
+  address: string;
+  contractAddress: string;
+  tokenId: number;
+  message: string;
+  signature: string;
+  mobile?: string;
+  name?: string;
+  email?: string;
+  industry?: string;
+  company?: string;
+  jobTitle?: string;
+  countryOrRegion?: string;
+}) => axios.post('/user/checkticketv2', params);
+
 // get user tickets
 export const getUserTickets = (params: { owner: string }): Promise<IListResponse<TicketInfo>> =>
   axios.get('/user/tickets', { params });

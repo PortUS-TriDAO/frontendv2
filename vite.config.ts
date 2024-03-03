@@ -17,8 +17,8 @@ export default defineConfig({
     proxy: {
       // with options
       '/v2': {
-        // target: 'http://8.217.91.191:8000',
-        target: 'http://test.portus.world',
+        target: 'http://8.217.214.25:8000',
+        // target: 'http://test.portus.world',
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ''),
       },

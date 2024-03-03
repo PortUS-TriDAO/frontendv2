@@ -81,9 +81,11 @@
 import { getAccount, watchAccount } from '@wagmi/core';
 import { useWeb3Modal } from '@web3modal/wagmi/vue';
 import QrcodeVue from 'qrcode.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-import { useTicketToken } from '@/hooks';
+import { useProjectStore } from '@/stores/useProject';
+import { NFT_ADDRESS, useTicketStore } from '@/stores/useTicket';
+// import { useTicketToken } from '@/hooks';
 
 defineOptions({
   name: 'ticketPage',
@@ -91,6 +93,9 @@ defineOptions({
 
 const account = getAccount();
 const web3Modal = useWeb3Modal();
+const ticketTokenStore = useTicketStore();
+const projectStore = useProjectStore();
+const ticketToken = ref('');
 
 const address = ref(account.address);
 
@@ -101,8 +106,32 @@ const unwatch = watchAccount((account) => {
 function connectWallet() {
   web3Modal.open();
 }
+interface Balances {
+  balance: bigint;
+  tokenId: bigint;
+}
+onMounted(async () => {
+  const balances = (await ticketTokenStore.balanceOf()) as Balances[];
+  if (!balances.length) return;
+  const tokenInfo = balances[0];
+  const data = await projectStore.handleTickVerifyV2({
+    nftAddress: NFT_ADDRESS,
+    tokenId: Number(tokenInfo.tokenId),
+    skuId: 0,
+    mobile: '',
+    name: '',
+    email: '',
+    industry: '',
+    company: '',
+    jobTitle: '',
+    countryOrRegion: '',
+  });
+  if (data && data.t && data.t.ticketToken) {
+    ticketToken.value = data.t.ticketToken;
+  }
+});
 
-const { data: ticketToken } = useTicketToken(address);
+// const { data: ticketToken } = useTicketToken(address);
 </script>
 <style lang="less">
 * {

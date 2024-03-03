@@ -12,6 +12,8 @@ export const ContractAddress = {
     rights: '0x34aC005A59cd4Ec5831e28Eb269AAB125b44789a',
     usdt: '0x99479872494dc582af1F7fBBE43Ea9CC6143d159',
     deployer: '0xaeAF44FA4F1b8533E5fe844D0C280dC5B8EfaD48',
+    enumrate: '0x49d7cD10A99612d43ff9b155904cB2d333796E11',
+    enumNft: '0x4f9b3024EbcFbac44cEA45e65f7292cFa3B570eD',
   },
   137: {
     router: '0x53A38cCd4B32Cd3dbcedc515f1171C5b3761A6e4',
@@ -20,6 +22,8 @@ export const ContractAddress = {
     rights: '0x67391c17850389B4e924bBA240d5EDB3c4A23BbD',
     usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
     deployer: '0xae950Cb6dd6e033057F9844BD0B67c576c915A0C',
+    enumrate: '0x49d7cD10A99612d43ff9b155904cB2d333796E11',
+    enumNft: '0x4f9b3024EbcFbac44cEA45e65f7292cFa3B570eD',
   },
 };
 

@@ -8,6 +8,7 @@ import {
 } from '@wagmi/core';
 import type { ContractInterface } from 'ethers';
 
+import ENUM_ABI from '@/abi/enumrate.abi.json';
 import ERC20_ABI from '@/abi/erc20.abi.json';
 import PROJECT_ABI from '@/abi/project.abi.json';
 import RIGHTS_ABI from '@/abi/rights.abi.json';
@@ -30,7 +31,12 @@ export function getContracts() {
     abi: ROUTER_ABI,
   };
 
-  return { routerContract };
+  const enumContract = {
+    address: ContractAddress[chainId].enumrate,
+    abi: ENUM_ABI,
+  };
+
+  return { routerContract, enumContract };
 }
 
 export function getRouterContractFunctions() {
