@@ -63,6 +63,13 @@
       5.If you have any questions about the event or the NFT Pass, please send an email to
       w3@blockchainlabs.org.<br />
     </p>
+    <P> NOTE </P>
+    <el-divider />
+    <p>
+      Please make sure you have read and understood all terms and conditions from the vendor before
+      you make any purchase. If you have any questions regarding the products please contact the
+      vendor for further information.
+    </p>
   </div>
 </template>
 <script setup lang="ts">

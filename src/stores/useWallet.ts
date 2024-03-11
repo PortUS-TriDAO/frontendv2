@@ -1,4 +1,4 @@
-import { watchAccount, watchNetwork } from '@wagmi/core';
+import { disconnect, watchAccount, watchNetwork } from '@wagmi/core';
 import { defineStore } from 'pinia';
 import { computed, reactive } from 'vue';
 
@@ -13,12 +13,14 @@ export const useWalletStore = defineStore('wallet', () => {
   }
 
   watchAccount((newAccount) => {
-    console.log({ newAccount });
     state.account = newAccount.address;
   });
 
   watchNetwork((newnetwork) => {
     console.log({ newnetwork });
+    if (!newnetwork.chain) {
+      disconnect();
+    }
   });
 
   const shortAddress = computed(() => `${state.account.slice(0, 4)}...${state.account.slice(-6)}`);
