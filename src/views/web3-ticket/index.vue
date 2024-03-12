@@ -101,6 +101,9 @@ const address = ref(account.address);
 
 const unwatch = watchAccount((account) => {
   address.value = account.address;
+  if (account.address) {
+    checkTicket();
+  }
 });
 
 function connectWallet() {
@@ -111,6 +114,12 @@ interface Balances {
   tokenId: bigint;
 }
 onMounted(async () => {
+  if (account.address) {
+    checkTicket();
+  }
+});
+
+async function checkTicket() {
   const balances = (await ticketTokenStore.balanceOf()) as Balances[];
   if (!balances.length) return;
   const tokenInfo = balances[0];
@@ -129,7 +138,7 @@ onMounted(async () => {
   if (data && data.t && data.t.ticketToken) {
     ticketToken.value = data.t.ticketToken;
   }
-});
+}
 
 // const { data: ticketToken } = useTicketToken(address);
 </script>
